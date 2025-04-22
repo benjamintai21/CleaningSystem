@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <!-- Your header content -->
+</header>
+
+<section id="login">
+    <div class="pop-section tab2">
+        <div id="login-section" class="login">
+            <div class="selectiontabs">
+                <div id="logintab"><h1>Login</h1></div>
+            </div>
+            <div class="forms">
+                <div id="L-form">
+                    <form th:action="@{/dashboard}" method="post" th:object="${loginForm}">
+                        <br><label>Profile Type</label><br>
+
+                        <input type="radio" id="H_owner" th:field="*{profileID}" value="3">
+                        <label for="H_owner">Home owner</label><br>
+
+                        <input type="radio" id="Cleaner" th:field="*{profileID}" value="4">
+                        <label for="Cleaner">Cleaner</label><br>
+
+                        <input type="radio" id="userAdmin" th:field="*{profileID}" value="2">
+                        <label for="userAdmin">User Admin</label><br>
+
+                        <input type="radio" id="PM" th:field="*{profileID}" value="1">
+                        <label for="PM">Platform Manager</label><br>
+
+
+                        <br><label>Username</label><br>
+                        <input type="text" id="username" th:field="*{username}" placeholder="Username required"><br>
+
+                        <br><label>Password</label><br>
+                        <input type="password" id="password" th:field="*{password}" placeholder="Password required"><br><br>
+
+                        <input type="submit" class="cta-button logreg" value="Login">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
