@@ -22,19 +22,12 @@
                 <div id="L-form">
                     <form th:action="@{/dashboard}" method="post" th:object="${loginForm}">
                         <br><label>Profile Type</label><br>
-
-                        <input type="radio" id="H_owner" th:field="*{profileID}" value="3">
-                        <label for="H_owner">Home owner</label><br>
-
-                        <input type="radio" id="Cleaner" th:field="*{profileID}" value="4">
-                        <label for="Cleaner">Cleaner</label><br>
-
-                        <input type="radio" id="userAdmin" th:field="*{profileID}" value="2">
-                        <label for="userAdmin">User Admin</label><br>
-
-                        <input type="radio" id="PM" th:field="*{profileID}" value="1">
-                        <label for="PM">Platform Manager</label><br>
-
+                        <select th:field="*{profileID}">
+                            <option value="1" >Platform Manager</option>
+                            <option value="2">User Admin</option>
+                            <option value="3">Home Owner</option>
+                            <option value="4">Cleaner</option>
+                        </select>
 
                         <br><label>Username</label><br>
                         <input type="text" id="username" th:field="*{username}" placeholder="Username required"><br>
