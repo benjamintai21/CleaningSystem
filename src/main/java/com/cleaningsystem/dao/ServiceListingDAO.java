@@ -16,23 +16,39 @@ public class ServiceListingDAO {
 
     private final RowMapper<ServiceListing> listingRowMapper = (ResultSet rs, int rowNum) -> {
         ServiceListing listing = new ServiceListing();
-        listing.setListingID(rs.getInt("listing_id"));
-        listing.setTitle(rs.getString("title"));
+        listing.setServiceID(rs.getInt("servicegId"));
+        listing.setName(rs.getString("namee"));
+        listing.setCategory(rs.getString("category"));
         listing.setDescription(rs.getString("description"));
         listing.setPricePerHour(rs.getDouble("price_per_hour"));
         listing.setAvailableDays(rs.getString("available_days"));
-        listing.setCleanerID(rs.getInt("cleaner_id"));
-        listing.setActive(rs.getBoolean("active"));
+        listing.setCleanerID(rs.getInt("cleanerID"));
+        listing.setStatus(rs.getString("status"));
         return listing;
     };
 
     public int createListing(ServiceListing listing) {
-        String sql = "INSERT INTO service_listings (title, description, price_per_hour, " +
-                    "available_days, cleaner_id, active) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO service_listings (name, category, description, price_per_hour, status) VALUES (?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql, 
-            listing.getTitle(), listing.getDescription(), listing.getPricePerHour(),
-            listing.getAvailableDays(), listing.getCleanerID(), listing.isActive());
+            listing.getName(), listing.getDescription(), listing.getCategory(), listing.getPricePerHour(),
+            listing.getStatus());
+        
     }
+
+    // private bool CreateServiceListing(int CleanerID, str name,int price, int categoryID, str description, int status){
+    //     ArrayList<UserAccount> Cleaner = getCleanerAccounts();
+    //     for(UserAccount C : Cleaner ){
+    //         if(C.getUserID() == CleanerID){
+    //             ServiceListing = new ServiceListing(int CleanerID, str name,int price, int categoryID, str description, int status);
+    //             //insert into db here
+
+    //             return true;
+    //         }
+    //     }
+
+    //     return false;
+
+    // }
 
     public ServiceListing getListingByID(int listingId) {
         String sql = "SELECT * FROM service_listings WHERE listing_id = ?";
@@ -50,9 +66,8 @@ public class ServiceListingDAO {
                     "price_per_hour = ?, available_days = ?, active = ? " +
                     "WHERE listing_id = ? AND cleaner_id = ?";
         return jdbcTemplate.update(sql, 
-            listing.getTitle(), listing.getDescription(), listing.getPricePerHour(),
-            listing.getAvailableDays(), listing.isActive(), 
-            listing.getListingID(), listing.getCleanerID()) > 0;
+        listing.getName(), listing.getDescription(), listing.getCategory(), listing.getPricePerHour(),
+        listing.getStatus()) > 0;
     }
 
     public boolean deleteListing(int listingId) {

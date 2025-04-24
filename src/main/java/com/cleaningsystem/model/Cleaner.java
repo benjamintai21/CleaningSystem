@@ -12,6 +12,7 @@ import com.cleaningsystem.model.ServiceListing;
 
 @Component
 public class Cleaner {
+	private ArrayList<ServiceListing> serviceListings;
 	private int uid;
 	private String username;
 	
@@ -80,14 +81,16 @@ public class Cleaner {
 		String description = scanner.nextLine();
 		
 		System.out.print("Price per Hour ($/hr): ");
-		double pricePerHour = scanner.nextDouble();
+		double price = scanner.nextDouble();
 		scanner.nextLine();
 		
 		System.out.print("Available Days (comma-separated, e.g. Mon,Tue,Wed): ");
 		String availableDays = scanner.nextLine();
-		
-		ServiceListing listing = new ServiceListing(name,description, pricePerHour, 
-			availableDays, uid);
+
+		System.out.print("Status (Active/Inactive): ");
+		String status = scanner.nextLine();
+
+		ServiceListing listing = new ServiceListing(name,description, category, price, status); 
 		
 		if (serviceListingDAO.createListing(listing) > 0) {
 			System.out.println("Service listing created successfully.");
@@ -118,7 +121,7 @@ public class Cleaner {
 		
 		System.out.println("\n=== Your Service Listings ===");
 		for (ServiceListing listing : listings) {
-			System.out.println(listing.getListingID() + ": " + listing.getTitle());
+			System.out.println(listing.getServiceID() + ": " + listing.getName());
 		}
 		
 		System.out.print("\nEnter Listing ID to update: ");
@@ -133,9 +136,9 @@ public class Cleaner {
 		
 		System.out.println("Leave blank to keep existing value.");
 		
-		System.out.print("New Title (" + listing.getTitle() + "): ");
+		System.out.print("New Title (" + listing.getName() + "): ");
 		String title = scanner.nextLine();
-		if (!title.isEmpty()) listing.setTitle(title);
+		if (!title.isEmpty()) listing.setName(title);
 		
 		System.out.print("New Description (" + listing.getDescription() + "): ");
 		String description = scanner.nextLine();
@@ -167,7 +170,7 @@ public class Cleaner {
 		
 		System.out.println("\n=== Your Service Listings ===");
 		for (ServiceListing listing : listings) {
-			System.out.println(listing.getListingID() + ": " + listing.getTitle());
+			System.out.println(listing.getServiceID() + ": " + listing.getName());
 		}
 		
 		System.out.print("\nEnter Listing ID to delete: ");
@@ -207,33 +210,7 @@ public class Cleaner {
 			System.out.println(listing);
 		}
 	}
-
-	private void viewProfile() {
-		UserAccount account = userAccountDAO.getUserByID(uid);
-		if (account != null) {
-			System.out.println(account);
-		}
-	}
-
-	private void updateProfile() {
-		UserAccount account = userAccountDAO.getUserByID(uid);
-		if (account != null) {
-			System.out.println("Leave blank to keep existing value.");
-			System.out.print("New Email (" + account.getEmail() + "): ");
-			String email = scanner.nextLine();
-			if (!email.isEmpty()) account.setEmail(email);
-
-			System.out.print("New Address (" + account.getAddress() + "): ");
-			String address = scanner.nextLine();
-			if (!address.isEmpty()) account.setAddress(address);
-
-			if (userAccountDAO.updateUserAccount(account)) {
-				System.out.println("Profile updated successfully.");
-			} else {
-				System.out.println("Update failed.");
-			}
-		}
-	}
+	
 
 	private void viewAvailableJobs() {
 		// TODO: Implement job listing functionality

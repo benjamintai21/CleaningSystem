@@ -1,65 +1,49 @@
 package com.cleaningsystem.model;
 
 public class ServiceListing {
-    private int listingID;
-    private String title;
+    private int serviceID;
+    private String name;
+    private String category;
     private String description;
-    private double pricePerHour;
-    private String availableDays;
+    private double price;
+    private String status;
+    private int views;
+    private int shortlist;
     private int cleanerID;
-    private boolean active;
+    private String availableDays;
 
     // No-args constructor
     public ServiceListing() {}
 
     // Constructor without ID
-    public ServiceListing(String title, String description, double pricePerHour, 
-                         String availableDays, int cleanerID) {
-        this.title = title;
+    public ServiceListing(String name, String category, String description, double price,
+                         String status) {
+        this.name = name;
+        this.category = category;
         this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.availableDays = availableDays;
-        this.cleanerID = cleanerID;
-        this.active = true;
-    }
-
-    // Constructor with ID
-    public ServiceListing(int listingID, String title, String description, 
-                         double pricePerHour, String availableDays, 
-                         int cleanerID, boolean active) {
-        this(title, description, pricePerHour, availableDays, cleanerID);
-        this.listingID = listingID;
-        this.active = active;
+        this.price = price;
+        this.status = status;
     }
 
     // Getters
-    public int getListingID() { return listingID; }
-    public String getTitle() { return title; }
+    public int getServiceID() { return serviceID; }
+    public String getName() { return name; }
+    public String getCategory() {return category; }
     public String getDescription() { return description; }
-    public double getPricePerHour() { return pricePerHour; }
+    public double getPricePerHour() { return price; }
     public String getAvailableDays() { return availableDays; }
+    public String getStatus() { return status; }
     public int getCleanerID() { return cleanerID; }
-    public boolean isActive() { return active; }
 
-    // Setters
-    public void setListingID(int listingID) { this.listingID = listingID; }
-    public void setTitle(String title) { this.title = title; }
-    public void setDescription(String description) { this.description = description; }
-    public void setPricePerHour(double pricePerHour) { this.pricePerHour = pricePerHour; }
-    public void setAvailableDays(String availableDays) { this.availableDays = availableDays; }
-    public void setCleanerID(int cleanerID) { this.cleanerID = cleanerID; }
-    public void setActive(boolean active) { this.active = active; }
 
-    @Override
-    public String toString() {
-        return "ServiceListing{" +
-                "listingID=" + listingID +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", pricePerHour=" + pricePerHour +
-                ", availableDays='" + availableDays + '\'' +
-                ", cleanerID=" + cleanerID +
-                ", active=" + active +
-                '}';
-    }
+    //Setters
+    public void setServiceID(int serviceID) { this.serviceID = serviceID; }
+    public void setName(String new_name) { this.name = new_name; }
+    public void setDescription(String new_description) { this.description = new_description; }
+    public void setCategory(String new_category) { this.category = new_category; }
+    public void setPricePerHour(double new_price) { this.price = new_price; }
+    public void setCleanerID(int new_cleanerID) { this.cleanerID = new_cleanerID; }
+    public void setAvailableDays(String new_availableDays) { this.availableDays = new_availableDays; }
+    public void setStatus(String new_status) { this.status = new_status; }
+
 }

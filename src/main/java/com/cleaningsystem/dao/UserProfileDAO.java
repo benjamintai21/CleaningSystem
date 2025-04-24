@@ -5,8 +5,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import com.cleaningsystem.model.UserProfile;
+import static com.cleaningsystem.dao.SQL_query.*;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -24,44 +24,37 @@ public class UserProfileDAO {
 	};
 
 	public int insertUserProfile(UserProfile profile) {
-		String sql = "INSERT INTO USERPROFILE (profilename, description, suspension) VALUES (?, ?, ?)";
-		return jdbcTemplate.update(sql, 
+		return jdbcTemplate.update(CREATE_USER_PROFILE, 
 			profile.getProfileName(), profile.getDescription(), profile.isSuspended());
 	}
 
 	public UserProfile getProfileByID(int profileId) {
-		String sql = "SELECT * FROM USERPROFILE WHERE profileID = ?";
-		List<UserProfile> profiles = jdbcTemplate.query(sql, profileRowMapper, profileId);
+		List<UserProfile> profiles = jdbcTemplate.query(GET_USER_PROFILE_BY_ID, profileRowMapper, profileId);
 		return profiles.isEmpty() ? null : profiles.get(0);
 	}
 
+	public int getProfileIDByName(String profileName) {
+		List<Integer> ids = jdbcTemplate.query(GET_PROFILE_ID_BY_NAME, 
+			(rs, rowNum) -> rs.getInt("profileID"), profileName);
+		return ids.isEmpty() ? -1 : ids.get(0);
+	}
+
 	public boolean updateUserProfile(UserProfile profile) {
-		String sql = "UPDATE USERPROFILE SET profilename = ?, description = ?, suspension = ? WHERE profileID = ?";
-		return jdbcTemplate.update(sql, 
+		return jdbcTemplate.update(UPDATE_USER_PROFILE, 
 			profile.getProfileName(), profile.getDescription(), profile.isSuspended(), 
 			profile.getProfileID()) > 0;
 	}
 
 	public boolean setSuspensionStatus(int profileId, boolean suspension) {
-		String sql = "UPDATE USERPROFILE SET suspension = ? WHERE profileID = ?";
-		return jdbcTemplate.update(sql, suspension, profileId) > 0;
-	}
-
-	public List<UserProfile> getAllProfiles() {
-		String sql = "SELECT * FROM USERPROFILE";
-		return jdbcTemplate.query(sql, profileRowMapper);
-	}
-
-	public int getProfileIDByName(String profileName) {
-		String sql = "SELECT profileID FROM USERPROFILE WHERE profilename = ?";
-		List<Integer> ids = jdbcTemplate.query(sql, 
-			(rs, rowNum) -> rs.getInt("profileID"), profileName);
-		return ids.isEmpty() ? -1 : ids.get(0);
+		return jdbcTemplate.update(SET_SUSPENSION_STATUS, suspension, profileId) > 0;
 	}
 
 	public List<UserProfile> searchProfilesByName(String keyword) {
-		String sql = "SELECT * FROM USERPROFILE WHERE profilename LIKE ?";
-		return jdbcTemplate.query(sql, profileRowMapper, "%" + keyword + "%");
+		return jdbcTemplate.query(SEARCH_PROFILE_BY_NAME, profileRowMapper, "%" + keyword + "%");
+	}
+
+	public List<UserProfile> getAllProfiles() {
+		return jdbcTemplate.query(GET_ALL_PROFILES, profileRowMapper);
 	}
 } 
 
