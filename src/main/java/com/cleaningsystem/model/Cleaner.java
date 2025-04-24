@@ -90,7 +90,7 @@ public class Cleaner {
 		System.out.print("Status (Active/Inactive): ");
 		String status = scanner.nextLine();
 
-		ServiceListing listing = new ServiceListing(name,description, category, price, status); 
+		ServiceListing listing = new ServiceListing(name, uid, description, category, price, availableDays, status); 
 		
 		if (serviceListingDAO.createListing(listing) > 0) {
 			System.out.println("Service listing created successfully.");
