@@ -134,7 +134,7 @@ public class UserAdmin {
         System.out.print("Email: ");
         String email = scanner.nextLine();
         System.out.print("Username: ");
-        String username = scanner.nextLine();
+        String n_username = scanner.nextLine();
         System.out.print("Password: ");
         String password = scanner.nextLine();
         System.out.print("Profile Name (e.g. Cleaner, Home Owner): ");
@@ -146,7 +146,7 @@ public class UserAdmin {
         }
 
         UserAccount account = new UserAccount(name, age, dob, gender, address, email,
-                username, password, profileID);
+                n_username, password, profileID);
 
         if (userAccountDAO.insertUserAccount(account) > 0) {
             System.out.println("User account created successfully.");
@@ -179,9 +179,9 @@ public class UserAdmin {
 
     private void updateUserAccount() {
         System.out.print("Enter user ID to update: ");
-        int uid = scanner.nextInt();
+        int n_uid = scanner.nextInt();
         scanner.nextLine();
-        UserAccount acc = userAccountDAO.getUserByID(uid);
+        UserAccount acc = userAccountDAO.getUserByID(n_uid);
         if (acc == null) {
             System.out.println("User not found.");
             return;
@@ -208,8 +208,9 @@ public class UserAdmin {
 
     private void deleteUserAccount() {
         System.out.print("Enter user ID to delete: ");
-        int uid = scanner.nextInt();
-        if (userAccountDAO.deleteUserAccount(uid)) {
+        int n_uid = scanner.nextInt();
+        scanner.nextLine();
+        if (userAccountDAO.deleteUserAccount(n_uid)) {
             System.out.println("User account deleted.");
         } else {
             System.out.println("Delete failed.");
@@ -276,9 +277,9 @@ public class UserAdmin {
 
     private void updateUserProfile() {
         System.out.print("Enter Profile ID to update: ");
-        int uid = scanner.nextInt();
+        int n_uid = scanner.nextInt();
         scanner.nextLine();
-        UserProfile pro = userProfileDAO.getProfileByID(uid);
+        UserProfile pro = userProfileDAO.getProfileByID(n_uid);
         if (pro == null) {
             System.out.println("Profile not found.");
             return;
@@ -301,9 +302,9 @@ public class UserAdmin {
 
     private void suspendUserProfile() {
         System.out.print("Enter Profile ID to suspend/unsuspend: ");
-        int uid = scanner.nextInt();
+        int n_uid = scanner.nextInt();
         scanner.nextLine();
-        UserProfile pro = userProfileDAO.getProfileByID(uid);
+        UserProfile pro = userProfileDAO.getProfileByID(n_uid);
         if (pro == null) {
             System.out.println("Profile not found.");
             return;

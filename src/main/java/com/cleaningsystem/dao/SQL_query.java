@@ -35,11 +35,13 @@ public class SQL_query {
     public static final String GET_ALL_PROFILES = "SELECT * FROM USERPROFILE";
     
     //Service Listing
-    public static final String CREATE_SERVICE_LISTING = "INSERT INTO service_listings (name, category, description, price_per_hour, status) VALUES (?, ?, ?, ?, ?)";
+    public static final String CREATE_SERVICE_LISTING = "INSERT INTO service_listings (name, cleanerID, categoryID, description, price_per_hour, startDate, endDate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     
-    public static final String GET_SERVICE_LISTING_BY_ID = "SELECT * FROM service_listings WHERE servicegId = ?";
+    public static final String GET_SERVICE_LISTING_BY_ID = "SELECT * FROM service_listings WHERE serviceId = ?";
+
+    public static final String GET_SERVICE_LISTING_BY_CLEANER_ID = "SELECT * FROM service_listings WHERE cleaner_id = ?";
     
-    public static final String UPDATE_SERVICE_LISTING = "UPDATE service_listings SET name = ?, category = ?, description = ?, price_per_hour = ?, status = ? WHERE servicegId = ?";
+    public static final String UPDATE_SERVICE_LISTING = "UPDATE service_listings SET name = ?, category = ?, description = ?, price_per_hour = ?, status = ? WHERE serviceId = ?";
     
     public static final String DELETE_SERVICE_LISTING = "DELETE FROM service_listings WHERE servicegId = ?";
     

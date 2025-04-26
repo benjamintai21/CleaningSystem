@@ -34,21 +34,23 @@ CREATE TABLE USERACCOUNT (
 );
 
 CREATE TABLE SERVICECATEGORIES (
-	cID int not null auto_increment,
+	categoryID int not null auto_increment,
     name varchar(50),
     description varchar(512),
     
-    PRIMARY KEY(cID)
+    PRIMARY KEY(categoryID)
 );
 
 CREATE TABLE SERVICELISTINGS (
     serviceID int not null auto_increment,
     name varchar(50) not null,
-    cleanerID int not null,
-    cID int not null,
+	cleanerID int not null,
+    categoryID int not null,
     description varchar(512) not null,
     price int not null,
     status ENUM('ONGOING', 'COMPLETED'),
+    startDate date not null,
+    endDate date not null,
     views int not null,
     shortlisting int not null,
 
@@ -56,7 +58,7 @@ CREATE TABLE SERVICELISTINGS (
     
     FOREIGN KEY (cleanerID) REFERENCES USERACCOUNT(UID),
     FOREIGN KEY (cID) REFERENCES SERVICECATEGORIES(cID)
-);
+); 
 
 CREATE TABLE REPORT (
 	reportID int(10) not null auto_increment,

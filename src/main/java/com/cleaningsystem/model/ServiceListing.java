@@ -6,24 +6,27 @@ public class ServiceListing {
     private int cleanerID;
     private String category;
     private String description;
-    private double price;
+    private double price_per_hour;
+    private String startDate;
+    private String endDate;
+    private String status;
+
     private int views;
     private int shortlist;
-    private String availableDays;
-    private String status;
 
     // No-args constructor
     public ServiceListing() {}
 
     // Constructor without ID
-    public ServiceListing(String name, int cleanerID, String category, String description, double price, String availableDays,
+    public ServiceListing(String name, int cleanerID, String category, String description, double price_per_hour, String startDate, String endDate,
                          String status) {
         this.name = name;
         this.cleanerID = cleanerID;
         this.category = category;
         this.description = description;
-        this.price = price;
-        this.availableDays = availableDays;
+        this.price_per_hour = price_per_hour;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.status = status;
     }
 
@@ -33,9 +36,13 @@ public class ServiceListing {
     public int getCleanerID() { return cleanerID; }
     public String getCategory() {return category; }
     public String getDescription() { return description; }
-    public double getPricePerHour() { return price; }
-    public String getAvailableDays() { return availableDays; }
+    public double getPricePerHour() { return price_per_hour; }
+    public String getStartDate() { return startDate; }
+    public String getEndDate() { return endDate; }
     public String getStatus() { return status; }
+
+    public int getViews() { return views; }
+    public int getShortlist() { return shortlist; }
 
 
     //Setters
@@ -44,8 +51,11 @@ public class ServiceListing {
     public void setCleanerID(int new_cleanerID) { this.cleanerID = new_cleanerID; }
     public void setDescription(String new_description) { this.description = new_description; }
     public void setCategory(String new_category) { this.category = new_category; }
-    public void setPricePerHour(double new_price) { this.price = new_price; }
-    public void setAvailableDays(String new_availableDays) { this.availableDays = new_availableDays; }
+    public void setPricePerHour(double new_price) { this.price_per_hour = new_price; }
+    public void setStartDate(String new_startDate) { this.startDate = new_startDate; }
+    public void setEndDate(String new_endDate) { this.endDate = new_endDate; }
     public void setStatus(String new_status) { this.status = new_status; }
 
+    public void setViews(int new_views) { this.views = new_views; }
+    public void setShortlist(int new_shortlist) { this.shortlist = new_shortlist; }
 }

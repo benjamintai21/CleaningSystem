@@ -81,16 +81,19 @@ public class Cleaner {
 		String description = scanner.nextLine();
 		
 		System.out.print("Price per Hour ($/hr): ");
-		double price = scanner.nextDouble();
+		double price_per_hour = scanner.nextDouble();
 		scanner.nextLine();
 		
-		System.out.print("Available Days (comma-separated, e.g. Mon,Tue,Wed): ");
-		String availableDays = scanner.nextLine();
+		System.out.print("Start Date: ");
+		String startDate = scanner.nextLine();
 
-		System.out.print("Status (Active/Inactive): ");
+		System.out.print("End Date: ");
+		String endDate = scanner.nextLine();
+
+		System.out.print("Status (ONGOING/COMPLETED): ");
 		String status = scanner.nextLine();
 
-		ServiceListing listing = new ServiceListing(name, uid, description, category, price, availableDays, status); 
+		ServiceListing listing = new ServiceListing(name, uid, category, description, price_per_hour, startDate, endDate, status); 
 		
 		if (serviceListingDAO.createListing(listing) > 0) {
 			System.out.println("Service listing created successfully.");
@@ -150,9 +153,9 @@ public class Cleaner {
 			listing.setPricePerHour(Double.parseDouble(priceStr));
 		}
 		
-		System.out.print("New Available Days (" + listing.getAvailableDays() + "): ");
+		System.out.print("New Available Days (" + listing.getStartDate() + "): ");
 		String days = scanner.nextLine();
-		if (!days.isEmpty()) listing.setAvailableDays(days);
+		if (!days.isEmpty()) listing.setStartDate(days);
 		
 		if (serviceListingDAO.updateListing(listing)) {
 			System.out.println("Service listing updated successfully.");
