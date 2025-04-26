@@ -92,7 +92,7 @@ public class UserAccountController {
     public ResponseEntity<?> updateUserAccount(@PathVariable int id, @RequestBody UserAccount userAccount) {
         try {
             // Ensure the ID in path matches the user account
-            userAccount.setUID(id);
+            userAccount.setUid(id);
             
             // Validate required fields
             if (userAccount.getUsername() == null || userAccount.getUsername().trim().isEmpty()) {
@@ -104,7 +104,7 @@ public class UserAccountController {
 
             // Check if username exists for other users
             UserAccount existingUser = userAccountDAO.getUserByUsername(userAccount.getUsername());
-            if (existingUser != null && existingUser.getUID() != id) {
+            if (existingUser != null && existingUser.getUid() != id) {
                 return ResponseEntity.badRequest().body("Username already exists");
             }
 

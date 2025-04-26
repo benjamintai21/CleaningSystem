@@ -4,7 +4,6 @@ com\cleaningsystem\model\PlatformManager.class
 com\cleaningsystem\controller\LoginController.class
 com\cleaningsystem\dao\UserAccountDAO.class
 com\cleaningsystem\dto\UserDataDTO.class
-com\cleaningsystem\dao\SQL_query.class
 com\cleaningsystem\model\UserAdmin.class
 com\cleaningsystem\controller\UserProfileController.class
 com\cleaningsystem\model\Cleaner.class
@@ -14,6 +13,7 @@ com\cleaningsystem\util\UserAccountService.class
 com\cleaningsystem\db\DatabaseConnection.class
 com\cleaningsystem\dao\UserProfileDAO.class
 com\cleaningsystem\config\DatabaseConfig.class
+com\cleaningsystem\dao\Queries.class
 com\cleaningsystem\config\WebConfig.class
 com\cleaningsystem\model\ServiceProvider.class
 com\cleaningsystem\dto\UserProfileDTO.class
