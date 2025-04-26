@@ -44,6 +44,7 @@ CREATE TABLE SERVICECATEGORIES (
 CREATE TABLE SERVICELISTINGS (
     serviceID int not null auto_increment,
     name varchar(50) not null,
+    cleanerID int not null,
     cID int not null,
     description varchar(512) not null,
     price int not null,
@@ -53,8 +54,9 @@ CREATE TABLE SERVICELISTINGS (
 
     PRIMARY KEY(serviceID),
     
+    FOREIGN KEY (cleanerID) REFERENCES USERACCOUNT(UID),
     FOREIGN KEY (cID) REFERENCES SERVICECATEGORIES(cID)
-); 
+);
 
 CREATE TABLE REPORT (
 	reportID int(10) not null auto_increment,
