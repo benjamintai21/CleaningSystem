@@ -18,7 +18,7 @@ public class LoginController {
     @GetMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("loginForm", new UserAccount());
-        return "loginpage";
+        return "login";
     }
 
     @PostMapping("/dashboard")
@@ -29,4 +29,10 @@ public class LoginController {
     return "dashboard"; 
 
     }
+
+    // @GetMapping("/signup")
+    // public String showSignUpForm(Model model) {
+    //     model.addAttribute("signUpForm", new UserAccount());
+    //     return "signup";
+    // }
 }

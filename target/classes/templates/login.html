@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-section {
+            width: 40%;
+            background-color: #c5c1b9;
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .left-section img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .welcome-text {
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+
+        .welcome-text h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .right-section {
+            width: 60%;
+            background-color: white;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-form {
+            width: 100%;
+        }
+
+        .login-form h2 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #222;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .dropdown {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px top 50%;
+            background-size: 10px auto;
+        }
+
+        .password-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .forgot-password {
+            text-align: right;
+            font-size: 14px;
+            color: #888;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            color: #f8b133;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            background-color: #f8b133;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .login-button:hover {
+            background-color: #e9a424;
+        }
+
+        .signup-text {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .signup-text a {
+            color: #666;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        .signup-text a:hover {
+            color: #f8b133;
+            text-decoration: underline;
+        }
+
+        .staff-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                border-radius: 0;
+            }
+            .left-section, .right-section {
+                width: 100%;
+                padding: 30px;
+            }
+            .right-section {
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="logo">Logo</div>
+            <img src="Images/login-img.png" alt="Staff member in greeting pose" class="staff-image">
+            <div class="welcome-text">
+                <h1>Welcome Back</h1>
+                <p>Access a wide range of professional cleaning services that fit your needs</p>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="login-form">
+                <h2>Join Name</h2>
+                <form id="loginForm" th:action="@{/dashboard}" method="post" th:object="${loginForm}">
+                    <div class="form-group">
+                        <label for="role">Login as</label>
+                        <select id="role" class="dropdown" th:field="*{profileID}">
+                            <option value="1">Platform Manager</option>
+                            <option value="2">User Admin</option>
+                            <option value="3">Home Owner</option>
+                            <option value="4">Cleaner</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="input-field" th:field="*{username}" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="password-row">
+                            <label for="password">Password</label>
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+                        <input type="password" id="password" class="input-field" th:field="*{password}" required>
+                    </div>
+                    <button type="submit" class="login-button">Login</button>
+                </form>
+                <div class="signup-text">
+                    Don't have account yet? <a href="#" id="signupLink">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const signupLink = document.getElementById('signupLink');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const role = document.getElementById('role').value;
+                
+                if (username && password) {
+                    // Here you would normally send the data to a server
+                    console.log('Login attempt:', {
+                        username,
+                        password: '****', // Don't log actual password
+                        role
+                    });
+                    
+                    // Simulate successful login
+                    alert('Login successful!');
+                    // Redirect would happen here in a real application
+                } else {
+                    alert('Please fill in all required fields');
+                }
+            });
+            
+            signupLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Redirecting to sign up page...');
+                // Redirect would happen here in a real application
+            });
+        });
+    </script> -->
+</body>
+</html>
