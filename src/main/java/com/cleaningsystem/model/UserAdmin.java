@@ -163,7 +163,7 @@ public class UserAdmin {
         } else {
             System.out.println("Available Accounts:");
             for (UserAccount acc : accounts) {
-                System.out.println(acc.getUID() + ": " + acc.getUsername());
+                System.out.println(acc.getUid() + ": " + acc.getUsername());
             }
             System.out.print("Enter Account ID to view details: ");
             int selectedId = scanner.nextInt();
@@ -225,7 +225,7 @@ public class UserAdmin {
             System.out.println("No users found.");
         } else {
             for (UserAccount acc : results) {
-                System.out.println(acc.getUID() + ": " + acc.getUsername());
+                System.out.println(acc.getUid() + ": " + acc.getUsername());
             }
         }
     }
@@ -234,7 +234,7 @@ public class UserAdmin {
         System.out.println("\n--- All User Accounts ---");
         List<UserAccount> accounts = userAccountDAO.getAllUsers();
         for (UserAccount acc : accounts) {
-            System.out.println(acc.getUID() + ": " + acc.getUsername());
+            System.out.println(acc.getUid() + ": " + acc.getUsername());
         }
     }
 

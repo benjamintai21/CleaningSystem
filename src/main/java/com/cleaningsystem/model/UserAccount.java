@@ -43,10 +43,10 @@ public class UserAccount {
 	}
 	
 	//Getters
-	public int getUID() {return uid;}
+	public int getUid() {return uid;}
 	public String getName() {return name;}
 	public int getAge() {return age;}
-	public String getDOB() {return dob;}
+	public String getDob() {return dob;}
 	public String getGender() {return gender;}
 	public String getAddress() {return address;}
 	public String getEmail() {return email;}
@@ -55,10 +55,10 @@ public class UserAccount {
 	public int getProfileID() {return profileID;}
 	
 	//Setters
-	public void setUID(int new_uid) {this.uid = new_uid;}
+	public void setUid(int new_uid) {this.uid = new_uid;}
 	public void setName(String new_name) {this.name = new_name;}
 	public void setAge(int new_age) {this.age = new_age;}
-	public void setDOB(String new_dob) {this.dob = new_dob;}
+	public void setDob(String new_dob) {this.dob = new_dob;}
 	public void setGender(String new_gender) {this.gender = new_gender;}
 	public void setAddress(String new_address) {this.address = new_address;}
 	public void setEmail(String new_email) {this.email = new_email;}

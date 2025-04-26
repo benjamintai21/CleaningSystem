@@ -51,25 +51,25 @@ public class Main implements CommandLineRunner {
         switch (profileName.toLowerCase()) {
             case "user admin" -> {
                 UserAdmin admin = applicationContext.getBean(UserAdmin.class);
-                admin.setUid(currentUser.getUID());
+                admin.setUid(currentUser.getUid());
                 admin.setUsername(currentUser.getUsername());
                 admin.showAdminMenu();
             }
             case "cleaner" -> {
                 Cleaner cleaner = applicationContext.getBean(Cleaner.class);
-                cleaner.setUid(currentUser.getUID());
+                cleaner.setUid(currentUser.getUid());
                 cleaner.setUsername(currentUser.getUsername());
                 cleaner.showCleanerMenu();
             }
             case "home owner" -> {
                 HomeOwner homeOwner = applicationContext.getBean(HomeOwner.class);
-                homeOwner.setUid(currentUser.getUID());
+                homeOwner.setUid(currentUser.getUid());
                 homeOwner.setUsername(currentUser.getUsername());
                 homeOwner.showHomeOwnerMenu();
             }
             case "platform manager" -> {
                 PlatformManager platformManager = applicationContext.getBean(PlatformManager.class);
-                platformManager.setUid(currentUser.getUID());
+                platformManager.setUid(currentUser.getUid());
                 platformManager.setUsername(currentUser.getUsername());
                 platformManager.showPlatformManagerMenu();
             }

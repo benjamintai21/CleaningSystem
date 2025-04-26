@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import com.cleaningsystem.model.ServiceListing;
-import static com.cleaningsystem.dao.SQL_query.*;
+import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;
 import java.util.List;
 import java.sql.Date;
