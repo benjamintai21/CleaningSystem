@@ -48,23 +48,17 @@ public class ServiceListingDAO {
     }
 
     public boolean updateListing(ServiceListing listing) {
-        String sql = "UPDATE service_listings SET title = ?, description = ?, " +
-                    "price_per_hour = ?, available_days = ?, active = ? " +
-                    "WHERE listing_id = ? AND cleaner_id = ?";
-        return jdbcTemplate.update(sql, 
+        return jdbcTemplate.update(UPDATE_SERVICE_LISTING, 
         listing.getName(), listing.getDescription(), listing.getCategory(), listing.getPricePerHour(),
         listing.getStatus()) > 0;
     }
 
     public boolean deleteListing(int listingId) {
-        String sql = "DELETE FROM service_listings WHERE listing_id = ?";
-        return jdbcTemplate.update(sql, listingId) > 0;
+        return jdbcTemplate.update(DELETE_SERVICE_LISTING, listingId) > 0;
     }
 
     public List<ServiceListing> searchListingsByCleanerAndKeyword(int cleanerId, String keyword) {
-        String sql = "SELECT * FROM service_listings WHERE cleaner_id = ? AND " +
-                    "(title LIKE ? OR description LIKE ?)";
         String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(sql, listingRowMapper, cleanerId, pattern, pattern);
+        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_CLEANER_AND_KEYWORD, listingRowMapper, cleanerId, pattern, pattern);
     }
 } 
