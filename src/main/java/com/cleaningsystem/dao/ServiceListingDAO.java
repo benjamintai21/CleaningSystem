@@ -68,4 +68,36 @@ public class ServiceListingDAO {
     public List<ServiceListing> getAllListings(){
         return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
     }
+
+    //HomeOwner
+    public List<ServiceListing> searchListingsByKeyword(String keyword) {
+        String pattern = "%" + keyword + "%";
+        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_KEYWORD, listingRowMapper, pattern);
+    }
+    
+    public boolean saveServiceListing(int homeownerUID, int serviceId) {
+        int rows_affected = jdbcTemplate.update(SAVE_SHORTLISTED_SERVICE, 
+            homeownerUID, serviceId);
+
+        return rows_affected > 0;
+    }
+
+    public List<ServiceListing> getShortlistedServices(int homeownerUID) {
+        return jdbcTemplate.query(GET_SHORTLISTED_SERVICES, listingRowMapper, homeownerUID);
+    }
+
+    public List<ServiceListing> searchShortlistedService(int homeownerUID, String keyword) {
+        String pattern = "%" + keyword + "%";
+        return jdbcTemplate.query(SEARCH_SHORTLISTED_SERVICE_BY_NAME, listingRowMapper, homeownerUID, pattern);
+    }
+
+    public List<ServiceListing> getPastBookings(int homeownerUID) {
+        return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerUID);
+    }
+
+    public List<ServiceListing> searchPastBookings(int homeownerUID, String keyword) {
+        String pattern = "%" + keyword + "%";
+        return jdbcTemplate.query(SEARCH_PAST_BOOKINGS, listingRowMapper, homeownerUID, pattern);
+    }
+    
 } 

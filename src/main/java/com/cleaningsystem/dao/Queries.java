@@ -64,4 +64,18 @@ public class Queries {
 
     public static final String GET_ALL_SERVICE_CATEGORIES = "SELECT * FROM SERVICECATEGORIES";
     
+    //HomeOwner
+    public static final String SEARCH_SERVICE_LISTING_BY_KEYWORD = "SELECT * FROM SERVICELISTINGS WHERE name LIKE ?";
+
+    public static final String SAVE_SHORTLISTED_SERVICE = "INSERT INTO SHORTLISTEDSERVICES (homeownerUID, serviceId) VALUES (?, ?)";
+
+    public static final String GET_SHORTLISTED_SERVICES = "SELECT * FROM SHORTLISTEDSERVICES WHERE homeownerUID = ?";
+
+    public  static final String DELETE_SHORTLISTED_SERVICE = "DELETE FROM SHORTLISTEDSERVICES WHERE homeownerUID = ? AND serviceId = ?";
+
+    public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT sl.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerUID = ? AND sl.name LIKE ?";
+
+    public static final String GET_COMPLETED_SERVICES = "SELECT * FROM SERVICELISTINGS WHERE status = 'completed'";
+    
+    public static final String SEARCH_PAST_BOOKINGS = "SELECT * FROM SERVICELISTINGS WHERE status = 'completed' AND name LIKE ?";
 }
