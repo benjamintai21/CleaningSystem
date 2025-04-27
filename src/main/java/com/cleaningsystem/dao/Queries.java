@@ -41,7 +41,7 @@ public class Queries {
 
     public static final String GET_SERVICE_LISTING_BY_CLEANER_ID = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ?";
     
-    public static final String UPDATE_SERVICE_LISTING = "UPDATE SERVICELISTINGS SET name = ?, category = ?, description = ?, price_per_hour = ?, status = ? WHERE serviceId = ?";
+    public static final String UPDATE_SERVICE_LISTING = "UPDATE SERVICELISTINGS SET name = ?, cleanerId = ?, categoryId = ?, description = ?, price_per_hour = ?, status = ? WHERE serviceId = ?";
     
     public static final String DELETE_SERVICE_LISTING = "DELETE FROM SERVICELISTINGS WHERE serviceId = ?";
     

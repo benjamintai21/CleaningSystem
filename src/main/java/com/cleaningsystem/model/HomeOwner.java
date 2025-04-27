@@ -1,25 +1,35 @@
 package com.cleaningsystem.model;
 
 import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.cleaningsystem.dao.UserAccountDAO;
 import com.cleaningsystem.dao.UserProfileDAO;
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
 import com.cleaningsystem.dao.ServiceListingDAO;
 
+@Component
 public class HomeOwner {
     private int uid;
     private String username;
+    
+    @Autowired
     private UserAccountDAO userAccountDAO;
+    
+    @Autowired
     private UserProfileDAO userProfileDAO;
+    
     private static Scanner scanner = new Scanner(System.in);
+    
     private ServiceListingDAO serviceListingDAO;
+
+    // No-args constructor for Spring
+    public HomeOwner() {}
 
     public HomeOwner(int uid, String username) {
         this.uid = uid;
         this.username = username;
-        this.userAccountDAO = new UserAccountDAO();
-        this.userProfileDAO = new UserProfileDAO();
     }
 
     public void showHomeOwnerMenu() {
@@ -81,7 +91,7 @@ public class HomeOwner {
             System.out.println("\n===== Shortlist Menu =====");
             System.out.println("1. Search Shortlist");
             System.out.println("2. View Shortlisted Services");
-            System.out.println("4. Back to Main Menu");
+            System.out.println("0. Back to Main Menu");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -102,7 +112,7 @@ public class HomeOwner {
             System.out.println("\n===== Past Bookings Menu =====");
             System.out.println("1. Search Past Bookings");
             System.out.println("2. View Past Bookings");
-            System.out.println("3. Back to Main Menu"); 
+            System.out.println("0. Back to Main Menu"); 
             System.out.print("Select an option: ");
 
             int choice = scanner.nextInt();

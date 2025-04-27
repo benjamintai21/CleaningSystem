@@ -114,7 +114,7 @@ public class Cleaner {
 
 	private void viewServiceListing() {
 		List<ServiceListing> listings = serviceListingDAO.getListingsByCleanerId(uid);
-		if (listings.isEmpty()) {
+		if (listings == null || listings.isEmpty()) {
 			System.out.println("You have no service listings.");
 			return;
 		}
@@ -127,7 +127,7 @@ public class Cleaner {
 
 	private void updateServiceListing() {
 		List<ServiceListing> listings = serviceListingDAO.getListingsByCleanerId(uid);
-		if (listings.isEmpty()) {
+		if (listings == null || listings.isEmpty()) {
 			System.out.println("You have no service listings to update.");
 			return;
 		}
@@ -162,16 +162,7 @@ public class Cleaner {
 		if (!priceStr.isEmpty()) {
 			listing.setPricePerHour(Double.parseDouble(priceStr));
 		}
-		
-		System.out.print("New Start Date (" + listing.getStartDate() + "): ");
-		String startDate = scanner.nextLine();
 
-		System.out.print("New End Date (" + listing.getEndDate() + "): ");
-		String endDate = scanner.nextLine();
-
-		if (!startDate.isEmpty()) listing.setStartDate(startDate);
-		if (!endDate.isEmpty()) listing.setEndDate(endDate);
-		
 		if (serviceListingDAO.updateListing(listing)) {
 			System.out.println("Service listing updated successfully.");
 		} else {
@@ -181,7 +172,7 @@ public class Cleaner {
 
 	private void deleteServiceListing() {
 		List<ServiceListing> listings = serviceListingDAO.getListingsByCleanerId(uid);
-		if (listings.isEmpty()) {
+		if (listings == null || listings.isEmpty()) {
 			System.out.println("You have no service listings to delete.");
 			return;
 		}
@@ -218,7 +209,7 @@ public class Cleaner {
 		String keyword = scanner.nextLine();
 		
 		List<ServiceListing> results = serviceListingDAO.searchListingsByCleanerAndKeyword(uid, keyword);
-		if (results.isEmpty()) {
+		if (results == null || results.isEmpty()) {
 			System.out.println("No matching listings found.");
 			return;
 		}

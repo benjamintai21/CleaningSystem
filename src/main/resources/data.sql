@@ -51,3 +51,5 @@ VALUES ('Maintenance', 'Plumbing', 'Plumbing services for leak repairs, installa
 INSERT INTO SERVICECATEGORIES (type, name, description)
 VALUES ('Maintenance', 'Electrical', 'Electrical installations and repairs');
 
+INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, status, startDate, endDate)
+VALUES ('Listing 1', 2 , 1 , 'Ironing your clothes for cheap', 50, 'ONGOING' , '2025-10-10', '2025-12-12');

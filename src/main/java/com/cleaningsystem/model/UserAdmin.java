@@ -158,7 +158,7 @@ public class UserAdmin {
     private void viewUserAccount() {
         List<UserAccount> accounts = userAccountDAO.getAllUsers();
 
-        if (accounts.isEmpty()) {
+        if (accounts == null || accounts.isEmpty()) {
             System.out.println("No accounts available.");
         } else {
             System.out.println("Available Accounts:");
@@ -221,7 +221,7 @@ public class UserAdmin {
         System.out.print("Enter keyword to search usernames: ");
         String keyword = scanner.nextLine();
         List<UserAccount> results = userAccountDAO.searchUsersByUsername(keyword);
-        if (results.isEmpty()) {
+        if (results == null || results.isEmpty()) {
             System.out.println("No users found.");
         } else {
             for (UserAccount acc : results) {
@@ -256,7 +256,7 @@ public class UserAdmin {
     private void viewUserProfile() {
         List<UserProfile> profiles = userProfileDAO.getAllProfiles();
 
-        if (profiles.isEmpty()) {
+        if (profiles == null || profiles.isEmpty()) {
             System.out.println("No profiles available.");
         } else {
             System.out.println("Available Profiles:");
@@ -336,7 +336,7 @@ public class UserAdmin {
         System.out.print("Enter keyword to search User Profile: ");
         String keyword = scanner.nextLine();
         List<UserProfile> results = userProfileDAO.searchProfilesByName(keyword);
-        if (results.isEmpty()) {
+        if (results == null || results.isEmpty()) {
             System.out.println("No profiles found.");
         } else {
             for (UserProfile pro : results) {

@@ -46,14 +46,13 @@ public class ServiceListingDAO {
     }
 
     public List<ServiceListing> getListingsByCleanerId(int cleanerId) {
-        List<ServiceListing> listings = jdbcTemplate.query(GET_SERVICE_LISTING_BY_CLEANER_ID, listingRowMapper, cleanerId);
-        return listings.isEmpty() ? null : listings;
+        return jdbcTemplate.query(GET_SERVICE_LISTING_BY_CLEANER_ID, listingRowMapper, cleanerId);
     }
 
     public boolean updateListing(ServiceListing listing) {
         return jdbcTemplate.update(UPDATE_SERVICE_LISTING, 
-        listing.getName(), listing.getDescription(), listing.getCategory(), listing.getPricePerHour(),
-        listing.getStatus()) > 0;
+        listing.getName(), listing.getCleanerId(), listing.getCategory(), listing.getDescription(), listing.getPricePerHour(),
+        listing.getStatus(), listing.getServiceId()) > 0;
     }
 
     public boolean deleteListing(int listingId) {

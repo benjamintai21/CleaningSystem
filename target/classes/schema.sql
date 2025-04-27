@@ -48,8 +48,8 @@ CREATE TABLE SERVICELISTINGS (
 	cleanerId int not null,
     categoryId int not null,
     description varchar(512) not null,
-    price_per_hour int not null,
-    status ENUM('ONGOING', 'COMPLETED'),
+    price_per_hour double not null,
+    status ENUM('AVAILABLE', 'ONGOING', 'COMPLETED'),
     startDate date not null,
     endDate date not null,
     views int default 0,
@@ -71,19 +71,6 @@ CREATE TABLE REPORT (
     no_cleaners int(50) not null,
     
 	PRIMARY KEY (reportID)
-);
-
-CREATE TABLE REVIEWS (
-	cleanerID int not null,
-    serviceID int not null,
-	rating int(5) not null,
-    description varchar(512) not null,
-    comments varchar(512),
-    
-    PRIMARY KEY (cleanerID, serviceID),
-    
-    FOREIGN KEY (cleanerID) REFERENCES USERACCOUNT(UID),
-    FOREIGN KEY (serviceID) REFERENCES SERVICELISTINGS(serviceID)
 );
 
 CREATE TABLE SHORTLISTEDSERVICES (
