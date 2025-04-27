@@ -54,5 +54,15 @@ VALUES ('Maintenance', 'Electrical', 'Electrical installations and repairs');
 INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, status, startDate, endDate)
 VALUES ('Listing 1', 2 , 1 , 'Ironing your clothes for cheap', 50, 'ONGOING' , '2025-10-10', '2025-12-12');
 
-INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, status, startDate, endDate)
-VALUES ('Listing 1', 2 , 1 , 'Ironing your clothes for cheap', 50, 'ONGOING' , '2025-10-10', '2025-12-12');
+DELIMITER //
+CREATE TRIGGER after_status_update
+AFTER UPDATE ON SERVICELISTINGS
+FOR EACH ROW
+BEGIN
+    IF NEW.status = 'completed' THEN
+        UPDATE bookhistory SET NEW.status = 'completed' WHERE serviceId = NEW.serviceId;
+    END IF;
+END;
+//
+DELIMITER ;
+

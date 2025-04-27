@@ -94,14 +94,15 @@ CREATE TABLE SHORTLISTEDCLEANERS (
 );
 
 CREATE TABLE BOOKINGHISTORY (
-	historyID int not null auto_increment,
-    serviceID int,
-    homeownerID int,
+	historyId int not null auto_increment,
+    serviceId int,
+    homeownerId int,
+    status varchar(15),
     
     PRIMARY KEY (historyID),
     
-    FOREIGN KEY (serviceID) REFERENCES SERVICELISTINGS(serviceID),
-	FOREIGN KEY (homeownerID) REFERENCES USERACCOUNT(UID)
+    FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId),
+	FOREIGN KEY (homeownerId) REFERENCES USERACCOUNT(UID)
 );
 
 CREATE TABLE REPORTHISTORY (
