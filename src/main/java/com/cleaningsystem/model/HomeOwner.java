@@ -151,7 +151,7 @@ public class HomeOwner {
 
     private void viewServiceListing() {
         List<ServiceListing> listings = serviceListingDAO.getAllListings();
-        if (listings.isEmpty()) {
+        if (listings == null || listings.isEmpty()) {
             System.out.println("There are no service listings.");
         } else {
             System.out.println("Available Listings:");
@@ -179,7 +179,7 @@ public class HomeOwner {
 
     private void saveServiceListing() {
         List<ServiceListing> listings = serviceListingDAO.getAllListings();
-        if (listings.isEmpty()) {
+        if (listings == null || listings.isEmpty()) {
             System.out.println("There are no service listings.");
         } else {
             System.out.println("Available Listings:");
@@ -209,21 +209,28 @@ public class HomeOwner {
 		String name = scanner.nextLine();
 
         List<ServiceListing> listings = serviceListingDAO.searchShortlistedService(uid, name);
-        if (listings != null) {
-            for (ServiceListing listing : listings) {
-                System.out.println(listing);
-            }
+        if (listings == null || listings.isEmpty()) {
+            System.out.println("There are no service listings.");
         } else {
-            System.out.println("No listings found.");
+            System.out.println("Available Listings:");
+            for (ServiceListing listing : listings) {
+                System.out.printf("%d | %s | %s | %s | %d\n",
+                    listing.getServiceId(),
+                    listing.getName(),
+                    listing.getCategory(),
+                    listing.getDescription(),
+                    listing.getCleanerId()
+                );
+            }
         }
     }
 
     private void viewShortList() {
         List<ServiceListing> listings = serviceListingDAO.getShortlistedServices(uid);
-        if (listings.isEmpty()) {
+        if (listings == null || listings.isEmpty()) {
             System.out.println("There are no service listings.");
         } else {
-            System.out.println("Available Shortlisted Services:");
+            System.out.println("Shortlisted Services:");
             for (ServiceListing listing : listings) {
                 System.out.printf("%d | %s | %s | %s | %d\n",
                     listing.getServiceId(),
@@ -243,18 +250,23 @@ public class HomeOwner {
 		String name = scanner.nextLine();
 
         List<BookingHistory> listings = bookingHistoryDAO.searchPastBookings(uid, name);
-        if (listings != null) {
-            for (BookingHistory listing : listings) {
-                System.out.println(listing);
-            }
+        if (listings == null || listings.isEmpty()) {
+            System.out.println("No completed bookings found.");
         } else {
-            System.out.println("No listings found.");
+            System.out.println("Completed Bookings:");
+            for (BookingHistory listing : listings) {
+                System.out.printf("%s | %s | %s | %s\n",
+                    listing.getHistoryId(),
+                    listing.getHomeownerId(),
+                    listing.getServiceId(),
+                    listing.getStatus());
+            }
         }
     }
 
     private void viewPastBookings() {
         List<BookingHistory> listings = bookingHistoryDAO.getPastBookings(uid);
-        if (listings.isEmpty()) {
+        if (listings == null || listings.isEmpty()) {
             System.out.println("No completed bookings found.");
         } else {
             for (BookingHistory listing : listings) {
