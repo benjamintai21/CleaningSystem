@@ -75,7 +75,9 @@ public class Queries {
 
     public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT sl.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerUID = ? AND sl.name LIKE ?";
 
-    public static final String GET_COMPLETED_SERVICES = "SELECT * FROM SERVICELISTINGS WHERE status = 'completed'";
+    //Booking History
+    public static final String GET_COMPLETED_SERVICES = "SELECT * FROM BOOKINGHISTORY WHERE status = 'completed' AND homeownerId = ?";
     
-    public static final String SEARCH_PAST_BOOKINGS = "SELECT * FROM SERVICELISTINGS WHERE status = 'completed' AND name LIKE ?";
-}
+    public static final String SEARCH_PAST_BOOKINGS = "SELECT bh.*, sl.name FROM BOOKINGHISTORY bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND bh.homeownerId = ? AND sl.name LIKE ?";  
+}         
+

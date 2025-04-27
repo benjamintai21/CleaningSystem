@@ -54,6 +54,9 @@ VALUES ('Maintenance', 'Electrical', 'Electrical installations and repairs');
 INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, status, startDate, endDate)
 VALUES ('Listing 1', 2 , 1 , 'Ironing your clothes for cheap', 50, 'ONGOING' , '2025-10-10', '2025-12-12');
 
+INSERT INTO BOOKINGHISTORY (serviceId, homeownerId, status)
+VALUES (1, 3, 'completed');
+
 DELIMITER //
 CREATE TRIGGER after_status_update
 AFTER UPDATE ON SERVICELISTINGS

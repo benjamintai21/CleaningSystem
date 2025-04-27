@@ -89,14 +89,4 @@ public class ServiceListingDAO {
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_SHORTLISTED_SERVICE_BY_NAME, listingRowMapper, homeownerUID, pattern);
     }
-
-    public List<ServiceListing> getPastBookings(int homeownerUID) {
-        return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerUID);
-    }
-
-    public List<ServiceListing> searchPastBookings(int homeownerUID, String keyword) {
-        String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_PAST_BOOKINGS, listingRowMapper, homeownerUID, pattern);
-    }
-    
 } 

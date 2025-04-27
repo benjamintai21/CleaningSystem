@@ -8,6 +8,7 @@ import com.cleaningsystem.dao.UserProfileDAO;
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
 import com.cleaningsystem.dao.ServiceListingDAO;
+import com.cleaningsystem.dao.BookingHistoryDao;
 
 @Component
 public class HomeOwner {
@@ -15,14 +16,18 @@ public class HomeOwner {
     private String username;
     
     @Autowired
-    private UserAccountDAO userAccountDAO;
-    
-    @Autowired
-    private UserProfileDAO userProfileDAO;
-    
-    private static Scanner scanner = new Scanner(System.in);
-    
-    private ServiceListingDAO serviceListingDAO;
+	private UserAccountDAO userAccountDAO;
+	
+	@Autowired
+	private UserProfileDAO userProfileDAO;
+	
+	@Autowired
+	private ServiceListingDAO serviceListingDAO;
+	
+	@Autowired
+	private BookingHistoryDao bookingHistoryDAO;
+	
+	private static Scanner scanner = new Scanner(System.in);
 
     // No-args constructor for Spring
     public HomeOwner() {}
@@ -237,9 +242,9 @@ public class HomeOwner {
 		System.out.print("Service Name: ");
 		String name = scanner.nextLine();
 
-        List<ServiceListing> listings = serviceListingDAO.searchPastBookings(uid, name);
+        List<BookingHistory> listings = bookingHistoryDAO.searchPastBookings(uid, name);
         if (listings != null) {
-            for (ServiceListing listing : listings) {
+            for (BookingHistory listing : listings) {
                 System.out.println(listing);
             }
         } else {
@@ -248,16 +253,15 @@ public class HomeOwner {
     }
 
     private void viewPastBookings() {
-        List<ServiceListing> listings = serviceListingDAO.getPastBookings(uid);
+        List<BookingHistory> listings = bookingHistoryDAO.getPastBookings(uid);
         if (listings.isEmpty()) {
             System.out.println("No completed bookings found.");
         } else {
-            for (ServiceListing listing : listings) {
-                System.out.printf("%s | %s | %s | %.2f\n",
-                    listing.getName(),
-                    listing.getCleanerId(),
-                    listing.getDescription(),
-                    listing.getPricePerHour(),
+            for (BookingHistory listing : listings) {
+                System.out.printf("%s | %s | %s | %s\n",
+                    listing.getHistoryId(),
+                    listing.getHomeownerId(),
+                    listing.getServiceId(),
                     listing.getStatus());
             }
         }

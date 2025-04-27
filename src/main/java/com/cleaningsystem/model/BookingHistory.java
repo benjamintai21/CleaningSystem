@@ -7,11 +7,13 @@ import jakarta.persistence.GenerationType;
 
 @Entity
 public class BookingHistory {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int historyId;
     private int homeownerId;
     private int serviceId;
+    private String status;
 
     //No-args constructor for Spring
     public BookingHistory() {}
@@ -20,6 +22,7 @@ public class BookingHistory {
         this.historyId = historyId;
         this.homeownerId = homeownerId;
         this.serviceId = serviceId;
+        this.status = status;
     }
     
     public int getHistoryId() {return historyId;}
@@ -28,10 +31,14 @@ public class BookingHistory {
 
     public int getServiceId() {return serviceId;}
 
+    public String getStatus() {return status;}
+
     public void setHistoryId(int historyId) {this.historyId = historyId;}       
 
     public void setHomeownerId(int homeownerId) {this.homeownerId = homeownerId;}
 
     public void setServiceId(int serviceId) {this.serviceId = serviceId;}
+
+    public void setStatus(String status) {this.status = status;}
     
 }
