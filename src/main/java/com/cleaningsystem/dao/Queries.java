@@ -5,7 +5,7 @@ public class Queries {
     public static final String LOGIN = "SELECT * FROM USERACCOUNT WHERE username = ? AND password = ?";
 
     //User Admin
-    public static final String CREATE_USER_ACCOUNT = "INSERT INTO USERACCOUNT (name, age, dob, gender, address, email, username, password, profileID, accountCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+    public static final String CREATE_USER_ACCOUNT = "INSERT INTO USERACCOUNT (name, age, dob, gender, address, email, username, password, profileId, accountCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
     
     public static final String GET_USER_ACCOUNT_BY_ID = "SELECT * FROM USERACCOUNT WHERE UID = ?";
 

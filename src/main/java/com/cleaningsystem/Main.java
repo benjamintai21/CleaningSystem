@@ -39,7 +39,7 @@ public class Main implements CommandLineRunner {
 
         currentUser = userAccountDAO.login(username, password);
         if (currentUser != null) {
-            String profileName = userProfileDAO.getProfileByID(currentUser.getProfileID()).getProfileName();
+            String profileName = userProfileDAO.getProfileById(currentUser.getProfileId()).getProfileName();
             routeToUserMenu(profileName);
         } else {
             System.out.println("Invalid credentials. Please try again.");

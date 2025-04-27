@@ -29,8 +29,8 @@ public class UserAccountController {
             if (userAccount.getPassword() == null || userAccount.getPassword().trim().isEmpty()) {
                 return ResponseEntity.badRequest().body("Password is required");
             }
-            if (userAccount.getProfileID() <= 0) {
-                return ResponseEntity.badRequest().body("Valid profile ID is required");
+            if (userAccount.getProfileId() <= 0) {
+                return ResponseEntity.badRequest().body("Valid profile Id is required");
             }
 
             // Check if username already exists
@@ -39,8 +39,7 @@ public class UserAccountController {
             }
 
             // Create the user account
-            int result = userAccountDAO.insertUserAccount(userAccount);
-            if (result > 0) {
+            if (userAccountDAO.insertUserAccount(userAccount)) {
                 return ResponseEntity.ok("User account created successfully");
             } else {
                 return ResponseEntity.internalServerError().body("Failed to create user account");
@@ -77,7 +76,7 @@ public class UserAccountController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserAccount(@PathVariable int id) {
         try {
-            UserAccount userAccount = userAccountDAO.getUserByID(id);
+            UserAccount userAccount = userAccountDAO.getUserById(id);
             if (userAccount != null) {
                 return ResponseEntity.ok(userAccount);
             } else {
@@ -91,15 +90,15 @@ public class UserAccountController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUserAccount(@PathVariable int id, @RequestBody UserAccount userAccount) {
         try {
-            // Ensure the ID in path matches the user account
+            // Ensure the Id in path matches the user account
             userAccount.setUid(id);
             
             // Validate required fields
             if (userAccount.getUsername() == null || userAccount.getUsername().trim().isEmpty()) {
                 return ResponseEntity.badRequest().body("Username is required");
             }
-            if (userAccount.getProfileID() <= 0) {
-                return ResponseEntity.badRequest().body("Valid profile ID is required");
+            if (userAccount.getProfileId() <= 0) {
+                return ResponseEntity.badRequest().body("Valid profile Id is required");
             }
 
             // Check if username exists for other users

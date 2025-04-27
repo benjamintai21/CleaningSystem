@@ -22,7 +22,7 @@ public class UserProfileController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserProfile> getProfile(@PathVariable int id) {
-        UserProfile profile = userProfileDAO.getProfileByID(id);
+        UserProfile profile = userProfileDAO.getProfileById(id);
         return (profile != null) ? ResponseEntity.ok(profile) : ResponseEntity.notFound().build();
     }
 
@@ -50,21 +50,23 @@ public class UserProfileController {
             return ResponseEntity.status(403).body("Forbidden: Admins only");
         }
 
-        updatedProfile.setProfileID(id);
+        updatedProfile.setProfileId(id);
         boolean updated = userProfileDAO.updateUserProfile(updatedProfile);
         return updated ? ResponseEntity.ok("Profile updated.") : ResponseEntity.badRequest().body("Failed to update profile.");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProfile(@PathVariable int id,
-                                                @RequestHeader("X-Profile-Name") String profileName) {
-        if (!"User Admin".equalsIgnoreCase(profileName)) {
-            return ResponseEntity.status(403).body("Forbidden: Admins only");
-        }
+    @PatchMapping("/suspend/{id}")
+    public ResponseEntity<String> suspendProfile(@PathVariable int id,
+                                              @RequestHeader("X-Profile-Name") String profileName) {
+    if (!"User Admin".equalsIgnoreCase(profileName)) {
+        return ResponseEntity.status(403).body("Forbidden: Admins only");
+    }
 
-        // Since there's no delete method, we'll use setSuspensionStatus to mark as suspended
-        boolean deleted = userProfileDAO.setSuspensionStatus(id, true);
-        return deleted ? ResponseEntity.ok("Profile suspended.") : ResponseEntity.badRequest().body("Failed to suspend profile.");
+    boolean suspended = userProfileDAO.setSuspension(id, true);
+
+    return suspended
+            ? ResponseEntity.ok("Profile suspended successfully.")
+            : ResponseEntity.badRequest().body("Failed to suspend profile.");
     }
 
     @GetMapping("/search")

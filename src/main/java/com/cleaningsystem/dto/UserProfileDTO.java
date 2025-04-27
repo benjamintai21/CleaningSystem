@@ -1,22 +1,22 @@
 package com.cleaningsystem.dto;
 
 public class UserProfileDTO {
-	private int profileID;
+	private int profileId;
 	private String profileName;
 	private String description;
 	private boolean suspension;
 
 	// Constructor
-	public UserProfileDTO(int profileID, String profileName, String description, boolean suspension) {
-		this.profileID = profileID;
+	public UserProfileDTO(int profileId, String profileName, String description, boolean suspension) {
+		this.profileId = profileId;
 		this.profileName = profileName;
 		this.description = description;
 		this.suspension = suspension;
 	}
 
 	// Getters and Setters
-	public int getProfileID() { return profileID; }
-	public void setProfileID(int profileID) { this.profileID = profileID; }
+	public int getProfileId() { return profileId; }
+	public void setProfileId(int profileId) { this.profileId = profileId; }
 
 	public String getProfileName() { return profileName; }
 	public void setProfileName(String profileName) { this.profileName = profileName; }

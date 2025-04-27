@@ -16,7 +16,7 @@ public class UserProfileDAO {
 
 	private final RowMapper<UserProfile> profileRowMapper = (ResultSet rs, int rowNum) -> {
 		UserProfile profile = new UserProfile();
-		profile.setProfileID(rs.getInt("profileID"));
+		profile.setProfileId(rs.getInt("profileId"));
 		profile.setProfileName(rs.getString("profilename"));
 		profile.setDescription(rs.getString("description"));
 		profile.setSuspended(rs.getBoolean("suspension"));
@@ -28,24 +28,24 @@ public class UserProfileDAO {
 			profile.getProfileName(), profile.getDescription(), profile.isSuspended());
 	}
 
-	public UserProfile getProfileByID(int profileId) {
+	public UserProfile getProfileById(int profileId) {
 		List<UserProfile> profiles = jdbcTemplate.query(GET_USER_PROFILE_BY_ID, profileRowMapper, profileId);
 		return profiles.isEmpty() ? null : profiles.get(0);
 	}
 
-	public int getProfileIDByName(String profileName) {
+	public int getProfileIdByName(String profileName) {
 		List<Integer> ids = jdbcTemplate.query(GET_PROFILE_ID_BY_NAME, 
-			(rs, rowNum) -> rs.getInt("profileID"), profileName);
+			(rs, rowNum) -> rs.getInt("profileId"), profileName);
 		return ids.isEmpty() ? -1 : ids.get(0);
 	}
 
 	public boolean updateUserProfile(UserProfile profile) {
 		return jdbcTemplate.update(UPDATE_USER_PROFILE, 
 			profile.getProfileName(), profile.getDescription(), profile.isSuspended(), 
-			profile.getProfileID()) > 0;
+			profile.getProfileId()) > 0;
 	}
 
-	public boolean setSuspensionStatus(int profileId, boolean suspension) {
+	public boolean setSuspension(int profileId, boolean suspension) {
 		return jdbcTemplate.update(SET_SUSPENSION_STATUS, suspension, profileId) > 0;
 	}
 

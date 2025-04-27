@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -188,7 +188,7 @@
 
     <a href="index.html" class="back-btn">← Back</a>
 
-    <form th:action="@{/details}" method="post" th:object="${signUpForm}">
+    <form th:action="@{/signup}" method="post" th:object="${signUpForm}">
       <div class="form-row">
         <div class="form-group">
           <label for="fname">First name*</label>
@@ -198,7 +198,7 @@
           <label for="lname">Last name*</label>
           <input type="text" id="lname" required>
         </div> -->
-        <select th:field="*{profileID}">
+        <select th:field="*{profileId}">
           <option value="1">Platform Manager</option>
           <option value="2">User Admin</option>
           <option value="3">Home Owner</option>

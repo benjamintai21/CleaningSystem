@@ -17,7 +17,7 @@ public class UserAccountDAO {
 
     private final RowMapper<UserAccount> userRowMapper = (ResultSet rs, int rowNum) -> {
         UserAccount user = new UserAccount();
-        user.setUid(rs.getInt("UID"));
+        user.setUid(rs.getInt("UId"));
         user.setName(rs.getString("name"));
         user.setAge(rs.getInt("age"));
         user.setDob(rs.getDate("dob").toLocalDate().toString());
@@ -25,7 +25,7 @@ public class UserAccountDAO {
         user.setAddress(rs.getString("address"));
         user.setEmail(rs.getString("email"));
         user.setUsername(rs.getString("username"));
-        user.setProfileID(rs.getInt("profileID"));
+        user.setProfileId(rs.getInt("profileId"));
         return user;
     };
 
@@ -34,16 +34,18 @@ public class UserAccountDAO {
         return users.isEmpty() ? null : users.get(0);
     }
 
-    public int insertUserAccount(UserAccount user) {
+    public boolean insertUserAccount(UserAccount user) {
         java.sql.Date sqlDob = java.sql.Date.valueOf(user.getDob());
-        return jdbcTemplate.update(CREATE_USER_ACCOUNT, 
+        int rowsAffected = jdbcTemplate.update(CREATE_USER_ACCOUNT, 
             user.getName(), user.getAge(), sqlDob, user.getGender(), 
             user.getAddress(), user.getEmail(), user.getUsername(), user.getPassword(), 
-            user.getProfileID(),
+            user.getProfileId(),
             new Date(System.currentTimeMillis()));
+        
+        return rowsAffected > 0;  // Return true if one or more rows were affected
     }
 
-    public UserAccount getUserByID(int uid) {
+    public UserAccount getUserById(int uid) {
         List<UserAccount> users = jdbcTemplate.query(GET_USER_ACCOUNT_BY_ID, userRowMapper, uid);
         return users.isEmpty() ? null : users.get(0);
     }
@@ -56,7 +58,7 @@ public class UserAccountDAO {
     public boolean updateUserAccount(UserAccount user) {
         return jdbcTemplate.update(UPDATE_USER_ACCOUNT,
             user.getName(), user.getAge(), user.getDob(), user.getGender(),
-            user.getAddress(), user.getEmail(), user.getUsername(), user.getProfileID(),
+            user.getAddress(), user.getEmail(), user.getUsername(), user.getProfileId(),
             user.getUid()) > 0;
     }
 

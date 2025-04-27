@@ -1,7 +1,7 @@
 package com.cleaningsystem.model;
 
 public class UserProfile {
-	private int profileID;
+	private int profileId;
 	private String profileName;
 	private String description;
 	private boolean suspended;
@@ -9,27 +9,27 @@ public class UserProfile {
 	// No-args constructor
 	public UserProfile() {}
 	
-	// Constructor with all fields except ID
+	// Constructor with all fields except Id
 	public UserProfile(String profileName, String description, boolean suspended) {
 		this.profileName = profileName;
 		this.description = description;
 		this.suspended = suspended;
 	}
 	
-	// Constructor with all fields including ID
-	public UserProfile(int profileID, String profileName, String description, boolean suspended) {
+	// Constructor with all fields including Id
+	public UserProfile(int profileId, String profileName, String description, boolean suspended) {
 		this(profileName, description, suspended);
-		this.profileID = profileID;
+		this.profileId = profileId;
 	}
 	
 	//Getters
-	public int getProfileID() {return profileID;}
+	public int getProfileId() {return profileId;}
 	public String getProfileName() {return profileName;}
 	public String getDescription() {return description;}
 	public boolean isSuspended() {return suspended;}
 	
 	//Setters
-	public void setProfileID(int profileID) {this.profileID = profileID;}
+	public void setProfileId(int profileId) {this.profileId = profileId;}
 	public void setProfileName(String profileName) {this.profileName = profileName;}
 	public void setDescription(String description) {this.description = description;}
 	public void setSuspended(boolean suspended) {this.suspended = suspended;}
@@ -37,7 +37,7 @@ public class UserProfile {
 	@Override
 	public String toString() {
 		return "UserProfile{" +
-				"profileID=" + profileID +
+				"profileId=" + profileId +
 				", profileName='" + profileName + '\'' +
 				", description='" + description + '\'' +
 				", suspended=" + suspended +

@@ -1,9 +1,9 @@
 package com.cleaningsystem.model;
 
 public class ServiceListing {
-    private int serviceID;
+    private int serviceId;
     private String name;
-    private int cleanerID;
+    private int cleanerId;
     private String category;
     private String description;
     private double price_per_hour;
@@ -17,11 +17,11 @@ public class ServiceListing {
     // No-args constructor
     public ServiceListing() {}
 
-    // Constructor without ID
-    public ServiceListing(String name, int cleanerID, String category, String description, double price_per_hour, String startDate, String endDate,
+    // Constructor without Id
+    public ServiceListing(String name, int cleanerId, String category, String description, double price_per_hour, String startDate, String endDate,
                          String status) {
         this.name = name;
-        this.cleanerID = cleanerID;
+        this.cleanerId = cleanerId;
         this.category = category;
         this.description = description;
         this.price_per_hour = price_per_hour;
@@ -31,9 +31,9 @@ public class ServiceListing {
     }
 
     // Getters
-    public int getServiceID() { return serviceID; }
+    public int getServiceId() { return serviceId; }
     public String getName() { return name; }
-    public int getCleanerID() { return cleanerID; }
+    public int getCleanerId() { return cleanerId; }
     public String getCategory() {return category; }
     public String getDescription() { return description; }
     public double getPricePerHour() { return price_per_hour; }
@@ -46,9 +46,9 @@ public class ServiceListing {
 
 
     //Setters
-    public void setServiceID(int serviceID) { this.serviceID = serviceID; }
+    public void setServiceId(int serviceId) { this.serviceId = serviceId; }
     public void setName(String new_name) { this.name = new_name; }
-    public void setCleanerID(int new_cleanerID) { this.cleanerID = new_cleanerID; }
+    public void setCleanerId(int new_cleanerId) { this.cleanerId = new_cleanerId; }
     public void setDescription(String new_description) { this.description = new_description; }
     public void setCategory(String new_category) { this.category = new_category; }
     public void setPricePerHour(double new_price) { this.price_per_hour = new_price; }

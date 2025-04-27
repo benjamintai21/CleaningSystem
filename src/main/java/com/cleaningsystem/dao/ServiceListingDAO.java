@@ -17,14 +17,14 @@ public class ServiceListingDAO {
 
     private final RowMapper<ServiceListing> listingRowMapper = (ResultSet rs, int rowNum) -> {
         ServiceListing listing = new ServiceListing();
-        listing.setServiceID(rs.getInt("servicegId"));
+        listing.setServiceId(rs.getInt("serviceId"));
         listing.setName(rs.getString("namee"));
         listing.setCategory(rs.getString("category"));
         listing.setDescription(rs.getString("description"));
         listing.setPricePerHour(rs.getDouble("price_per_hour"));
         listing.setStartDate(rs.getDate("startDate").toLocalDate().toString());
         listing.setEndDate(rs.getDate("endDate").toLocalDate().toString());
-        listing.setCleanerID(rs.getInt("cleanerID"));
+        listing.setCleanerId(rs.getInt("cleanerId"));
         listing.setStatus(rs.getString("status"));
         return listing;
     };
@@ -33,16 +33,16 @@ public class ServiceListingDAO {
         java.sql.Date sqlStart = java.sql.Date.valueOf(listing.getStartDate());
         java.sql.Date sqlEnd = java.sql.Date.valueOf(listing.getEndDate());
         return jdbcTemplate.update(CREATE_SERVICE_LISTING, 
-            listing.getName(), listing.getCleanerID(), listing.getCategory(), listing.getDescription(), listing.getPricePerHour(),
+            listing.getName(), listing.getCleanerId(), listing.getCategory(), listing.getDescription(), listing.getPricePerHour(),
             sqlStart, sqlEnd, listing.getStatus());
     }
 
-    public ServiceListing getListingByID(int listingId) {
+    public ServiceListing getListingById(int listingId) {
         List<ServiceListing> listings = jdbcTemplate.query(GET_SERVICE_LISTING_BY_ID, listingRowMapper, listingId);
         return listings.isEmpty() ? null : listings.get(0);
     }
 
-    public List<ServiceListing> getListingsByCleanerID(int cleanerId) {
+    public List<ServiceListing> getListingsByCleanerId(int cleanerId) {
         List<ServiceListing> listings = jdbcTemplate.query(GET_SERVICE_LISTING_BY_CLEANER_ID, listingRowMapper, cleanerId);
         return listings.isEmpty() ? null : listings;
     }

@@ -103,7 +103,7 @@ public class Cleaner {
 	}
 
 	private void viewServiceListing() {
-		List<ServiceListing> listings = serviceListingDAO.getListingsByCleanerID(uid);
+		List<ServiceListing> listings = serviceListingDAO.getListingsByCleanerId(uid);
 		if (listings.isEmpty()) {
 			System.out.println("You have no service listings.");
 			return;
@@ -116,7 +116,7 @@ public class Cleaner {
 	}
 
 	private void updateServiceListing() {
-		List<ServiceListing> listings = serviceListingDAO.getListingsByCleanerID(uid);
+		List<ServiceListing> listings = serviceListingDAO.getListingsByCleanerId(uid);
 		if (listings.isEmpty()) {
 			System.out.println("You have no service listings to update.");
 			return;
@@ -124,16 +124,16 @@ public class Cleaner {
 		
 		System.out.println("\n=== Your Service Listings ===");
 		for (ServiceListing listing : listings) {
-			System.out.println(listing.getServiceID() + ": " + listing.getName());
+			System.out.println(listing.getServiceId() + ": " + listing.getName());
 		}
 		
-		System.out.print("\nEnter Listing ID to update: ");
+		System.out.print("\nEnter Listing Id to update: ");
 		int listingId = scanner.nextInt();
 		scanner.nextLine();
 		
-		ServiceListing listing = serviceListingDAO.getListingByID(listingId);
-		if (listing == null || listing.getCleanerID() != uid) {
-			System.out.println("Invalid listing ID or you don't own this listing.");
+		ServiceListing listing = serviceListingDAO.getListingById(listingId);
+		if (listing == null || listing.getCleanerId() != uid) {
+			System.out.println("Invalid listing Id or you don't own this listing.");
 			return;
 		}
 		
@@ -165,7 +165,7 @@ public class Cleaner {
 	}
 
 	private void deleteServiceListing() {
-		List<ServiceListing> listings = serviceListingDAO.getListingsByCleanerID(uid);
+		List<ServiceListing> listings = serviceListingDAO.getListingsByCleanerId(uid);
 		if (listings.isEmpty()) {
 			System.out.println("You have no service listings to delete.");
 			return;
@@ -173,16 +173,16 @@ public class Cleaner {
 		
 		System.out.println("\n=== Your Service Listings ===");
 		for (ServiceListing listing : listings) {
-			System.out.println(listing.getServiceID() + ": " + listing.getName());
+			System.out.println(listing.getServiceId() + ": " + listing.getName());
 		}
 		
-		System.out.print("\nEnter Listing ID to delete: ");
+		System.out.print("\nEnter Listing Id to delete: ");
 		int listingId = scanner.nextInt();
 		scanner.nextLine();
 		
-		ServiceListing listing = serviceListingDAO.getListingByID(listingId);
-		if (listing == null || listing.getCleanerID() != uid) {
-			System.out.println("Invalid listing ID or you don't own this listing.");
+		ServiceListing listing = serviceListingDAO.getListingById(listingId);
+		if (listing == null || listing.getCleanerId() != uid) {
+			System.out.println("Invalid listing Id or you don't own this listing.");
 			return;
 		}
 		

@@ -1,9 +1,21 @@
 package com.cleaningsystem.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 import java.time.LocalDate;
 
+@Entity
+
 public class UserAccount {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int uid;
+
 	private String name;
 	private int age;
 	private String dob;
@@ -13,7 +25,7 @@ public class UserAccount {
 	private String username;
 	private String password;
 	
-	private int profileID;
+	private int profileId;
 	
 	// No-args constructor
 	public UserAccount() {}
@@ -21,7 +33,7 @@ public class UserAccount {
 	// Constructor with all fields
 	public UserAccount(String name, int age, String dob, String gender, 
 						String address, String email, 
-						String username, String password, int profileID) {
+						String username, String password, int profileId) {
 		this.name = name;
 		this.age = age;
 		this.dob = dob;
@@ -31,14 +43,14 @@ public class UserAccount {
 		this.username = username;
 		this.password = password;
 		
-		this.profileID = profileID;
+		this.profileId = profileId;
 	}
 	
-	// Constructor with UID
+	// Constructor with UId
 	public UserAccount(int uid, String name, int age, String dob, String gender, 
 			String address, String email, 
-			String username, String password, int profileID) {
-		this(name, age, dob, gender, address, email, username, password, profileID);
+			String username, String password, int profileId) {
+		this(name, age, dob, gender, address, email, username, password, profileId);
 		this.uid = uid;
 	}
 	
@@ -52,7 +64,7 @@ public class UserAccount {
 	public String getEmail() {return email;}
 	public String getUsername() {return username;}
 	public String getPassword() {return password;}
-	public int getProfileID() {return profileID;}
+	public int getProfileId() {return profileId;}
 	
 	//Setters
 	public void setUid(int new_uid) {this.uid = new_uid;}
@@ -64,7 +76,7 @@ public class UserAccount {
 	public void setEmail(String new_email) {this.email = new_email;}
 	public void setUsername(String new_username) {this.username = new_username;}
 	public void setPassword(String new_password) {this.password = new_password;}
-	public void setProfileID(int new_profileID) {this.profileID = new_profileID;}
+	public void setProfileId(int new_profileId) {this.profileId = new_profileId;}
 	
 	@Override
 	public String toString() {
@@ -77,7 +89,7 @@ public class UserAccount {
 				", address='" + address + '\'' +
 				", email='" + email + '\'' +
 				", username='" + username + '\'' +
-				", profileID=" + profileID +
+				", profileId=" + profileId +
 				'}';
 	}
 }

@@ -53,14 +53,14 @@ public class HomeOwner {
     }
 
     private void viewProfile() {
-        UserAccount account = userAccountDAO.getUserByID(uid);
+        UserAccount account = userAccountDAO.getUserById(uid);
         if (account != null) {
             System.out.println(account);
         }
     }
 
     private void updateProfile() {
-        UserAccount account = userAccountDAO.getUserByID(uid);
+        UserAccount account = userAccountDAO.getUserById(uid);
         if (account != null) {
             System.out.println("Leave blank to keep existing value.");
             System.out.print("New Email (" + account.getEmail() + "): ");

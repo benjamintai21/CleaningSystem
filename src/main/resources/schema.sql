@@ -72,19 +72,6 @@ CREATE TABLE REPORT (
 	PRIMARY KEY (reportID)
 );
 
-CREATE TABLE REVIEWS (
-	cleanerID int not null,
-    serviceID int not null,
-	rating int(5) not null,
-    description varchar(512) not null,
-    comments varchar(512),
-    
-    PRIMARY KEY (cleanerID, serviceID),
-    
-    FOREIGN KEY (cleanerID) REFERENCES USERACCOUNT(UID),
-    FOREIGN KEY (serviceID) REFERENCES SERVICELISTINGS(serviceID)
-);
-
 CREATE TABLE SHORTLISTEDSERVICES (
     homeownerUID int,
     serviceID int,

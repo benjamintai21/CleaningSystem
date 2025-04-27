@@ -140,15 +140,15 @@ public class UserAdmin {
         System.out.print("Profile Name (e.g. Cleaner, Home Owner): ");
         String profileName = scanner.nextLine();
 
-        int profileID = userProfileDAO.getProfileIDByName(profileName);
-        if (profileID == -1) {
+        int profileId = userProfileDAO.getProfileIdByName(profileName);
+        if (profileId == -1) {
             System.out.println("Profile name not found. Moved to unassigned profile");
         }
 
         UserAccount account = new UserAccount(name, age, dob, gender, address, email,
-                n_username, password, profileID);
+                n_username, password, profileId);
 
-        if (userAccountDAO.insertUserAccount(account) > 0) {
+        if (userAccountDAO.insertUserAccount(account)) {
             System.out.println("User account created successfully.");
         } else {
             System.out.println("Failed to create user account.");
@@ -165,10 +165,10 @@ public class UserAdmin {
             for (UserAccount acc : accounts) {
                 System.out.println(acc.getUid() + ": " + acc.getUsername());
             }
-            System.out.print("Enter Account ID to view details: ");
+            System.out.print("Enter Account Id to view details: ");
             int selectedId = scanner.nextInt();
             scanner.nextLine();
-            UserAccount selectedAccount = userAccountDAO.getUserByID(selectedId);
+            UserAccount selectedAccount = userAccountDAO.getUserById(selectedId);
             if (selectedAccount != null) {
                 System.out.println(selectedAccount);
             } else {
@@ -178,10 +178,10 @@ public class UserAdmin {
     }
 
     private void updateUserAccount() {
-        System.out.print("Enter user ID to update: ");
+        System.out.print("Enter user Id to update: ");
         int n_uid = scanner.nextInt();
         scanner.nextLine();
-        UserAccount acc = userAccountDAO.getUserByID(n_uid);
+        UserAccount acc = userAccountDAO.getUserById(n_uid);
         if (acc == null) {
             System.out.println("User not found.");
             return;
@@ -207,7 +207,7 @@ public class UserAdmin {
     }
 
     private void deleteUserAccount() {
-        System.out.print("Enter user ID to delete: ");
+        System.out.print("Enter user Id to delete: ");
         int n_uid = scanner.nextInt();
         scanner.nextLine();
         if (userAccountDAO.deleteUserAccount(n_uid)) {
@@ -261,12 +261,12 @@ public class UserAdmin {
         } else {
             System.out.println("Available Profiles:");
             for (UserProfile pro : profiles) {
-                System.out.println(pro.getProfileID() + ": " + pro.getProfileName());
+                System.out.println(pro.getProfileId() + ": " + pro.getProfileName());
             }
-            System.out.print("Enter Profile ID to view details: ");
+            System.out.print("Enter Profile Id to view details: ");
             int selectedId = scanner.nextInt();
             scanner.nextLine();
-            UserProfile selectedProfile = userProfileDAO.getProfileByID(selectedId);
+            UserProfile selectedProfile = userProfileDAO.getProfileById(selectedId);
             if (selectedProfile != null) {
                 System.out.println(selectedProfile);
             } else {
@@ -276,10 +276,10 @@ public class UserAdmin {
     }
 
     private void updateUserProfile() {
-        System.out.print("Enter Profile ID to update: ");
+        System.out.print("Enter Profile Id to update: ");
         int n_uid = scanner.nextInt();
         scanner.nextLine();
-        UserProfile pro = userProfileDAO.getProfileByID(n_uid);
+        UserProfile pro = userProfileDAO.getProfileById(n_uid);
         if (pro == null) {
             System.out.println("Profile not found.");
             return;
@@ -301,10 +301,10 @@ public class UserAdmin {
     }
 
     private void suspendUserProfile() {
-        System.out.print("Enter Profile ID to suspend/unsuspend: ");
+        System.out.print("Enter Profile Id to suspend/unsuspend: ");
         int n_uid = scanner.nextInt();
         scanner.nextLine();
-        UserProfile pro = userProfileDAO.getProfileByID(n_uid);
+        UserProfile pro = userProfileDAO.getProfileById(n_uid);
         if (pro == null) {
             System.out.println("Profile not found.");
             return;
@@ -313,7 +313,7 @@ public class UserAdmin {
             System.out.print(pro.getProfileName() + " Profile currently suspended. Unsuspend Profile? ('yes' to confirm): ");
             String confirm = scanner.nextLine();
             if (confirm.equalsIgnoreCase("yes")) {
-                if(userProfileDAO.setSuspensionStatus(pro.getProfileID(), false)) {
+                if(userProfileDAO.setSuspension(pro.getProfileId(), false)) {
                     System.out.println("User Profile unsuspended.");
                 } else {
                     System.out.println("Unsuspension failed.");
@@ -323,7 +323,7 @@ public class UserAdmin {
             System.out.print("Suspend (" + pro.getProfileName() + ") Profile? ('yes' to confirm): ");
             String confirm = scanner.nextLine();
             if (confirm.equalsIgnoreCase("yes")) {
-                if (userProfileDAO.setSuspensionStatus(pro.getProfileID(), true)) {
+                if (userProfileDAO.setSuspension(pro.getProfileId(), true)) {
                     System.out.println("User Profile suspended.");
                 } else {
                     System.out.println("Suspension failed.");
@@ -340,7 +340,7 @@ public class UserAdmin {
             System.out.println("No profiles found.");
         } else {
             for (UserProfile pro : results) {
-                System.out.println(pro.getProfileID() + ": " + pro.getProfileName());
+                System.out.println(pro.getProfileId() + ": " + pro.getProfileName());
             }
         }
     }
@@ -349,7 +349,7 @@ public class UserAdmin {
         System.out.println("\n--- All User Profiles ---");
         List<UserProfile> profiles = userProfileDAO.getAllProfiles();
         for (UserProfile pro : profiles) {
-            System.out.println(pro.getProfileID() + ": " + pro.getProfileName());
+            System.out.println(pro.getProfileId() + ": " + pro.getProfileName());
         }
     }
 
