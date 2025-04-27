@@ -38,8 +38,8 @@ public class UserProfileController {
         profile.setDescription(dto.getDescription());
         profile.setSuspended(dto.isSuspended());
         
-        int result = userProfileDAO.insertUserProfile(profile);
-        return (result > 0) ? ResponseEntity.ok("Profile created successfully.") : ResponseEntity.badRequest().body("Failed to create profile.");
+        boolean result = userProfileDAO.insertUserProfile(profile);
+        return (result) ? ResponseEntity.ok("Profile created successfully.") : ResponseEntity.badRequest().body("Failed to create profile.");
     }
 
     @PutMapping("/{id}")

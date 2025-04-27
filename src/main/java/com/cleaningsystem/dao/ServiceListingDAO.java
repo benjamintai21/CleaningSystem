@@ -18,23 +18,26 @@ public class ServiceListingDAO {
     private final RowMapper<ServiceListing> listingRowMapper = (ResultSet rs, int rowNum) -> {
         ServiceListing listing = new ServiceListing();
         listing.setServiceId(rs.getInt("serviceId"));
-        listing.setName(rs.getString("namee"));
-        listing.setCategory(rs.getString("category"));
+        listing.setName(rs.getString("name"));
+        listing.setCleanerId(rs.getInt("cleanerId"));
+        listing.setCategory(rs.getInt("categoryId"));
         listing.setDescription(rs.getString("description"));
         listing.setPricePerHour(rs.getDouble("price_per_hour"));
         listing.setStartDate(rs.getDate("startDate").toLocalDate().toString());
         listing.setEndDate(rs.getDate("endDate").toLocalDate().toString());
-        listing.setCleanerId(rs.getInt("cleanerId"));
+        
         listing.setStatus(rs.getString("status"));
         return listing;
     };
 
-    public int createListing(ServiceListing listing) {
+    public boolean createListing(ServiceListing listing) {
         java.sql.Date sqlStart = java.sql.Date.valueOf(listing.getStartDate());
         java.sql.Date sqlEnd = java.sql.Date.valueOf(listing.getEndDate());
-        return jdbcTemplate.update(CREATE_SERVICE_LISTING, 
+        int rows_affected = jdbcTemplate.update(CREATE_SERVICE_LISTING, 
             listing.getName(), listing.getCleanerId(), listing.getCategory(), listing.getDescription(), listing.getPricePerHour(),
             sqlStart, sqlEnd, listing.getStatus());
+
+        return rows_affected > 0;
     }
 
     public ServiceListing getListingById(int listingId) {
@@ -59,6 +62,10 @@ public class ServiceListingDAO {
 
     public List<ServiceListing> searchListingsByCleanerAndKeyword(int cleanerId, String keyword) {
         String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_CLEANER_AND_KEYWORD, listingRowMapper, cleanerId, pattern, pattern);
+        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_CLEANER_AND_KEYWORD, listingRowMapper, cleanerId, pattern);
+    }
+
+    public List<ServiceListing> getAllListings(){
+        return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
     }
 } 

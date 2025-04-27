@@ -22,3 +22,32 @@ VALUES ('Bennett Siew',	49,	'2001-10-10', 'Female',	'123 ABC',	'b@gmail.com',	'b
 
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
 VALUES ('Benjamin',	24,	'2001-12-12', 'Male', '123 ABC', 'ben@gmail.com', 'benjamin_owner', 'owner', 3, CURRENT_DATE);
+
+
+INSERT INTO SERVICECATEGORIES (type, name, description)
+VALUES ('Cleaning', 'Ironing', 'Ironing of clothes');
+
+INSERT INTO SERVICECATEGORIES (type, name, description)
+VALUES ('Cleaning', 'Vacuuming', 'Vacuuming the floor');
+
+INSERT INTO SERVICECATEGORIES (type, name, description)
+VALUES ('Cleaning', 'Mopping', 'Mopping of floors');
+
+INSERT INTO SERVICECATEGORIES (type, name, description)
+VALUES ('Cleaning', 'Dusting', 'Dusting of furniture and surfaces');
+
+INSERT INTO SERVICECATEGORIES (type, name, description)
+VALUES ('Cleaning', 'Window Cleaning', 'Cleaning of windows and glass surfaces');
+
+INSERT INTO SERVICECATEGORIES (type, name, description)
+VALUES ('Cleaning', 'Laundry', 'Washing and folding clothes');
+
+INSERT INTO SERVICECATEGORIES (type, name, description)
+VALUES ('Maintenance', 'Gardening', 'General gardening and landscaping services');
+
+INSERT INTO SERVICECATEGORIES (type, name, description)
+VALUES ('Maintenance', 'Plumbing', 'Plumbing services for leak repairs, installations');
+
+INSERT INTO SERVICECATEGORIES (type, name, description)
+VALUES ('Maintenance', 'Electrical', 'Electrical installations and repairs');
+

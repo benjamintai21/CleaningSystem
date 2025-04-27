@@ -35,15 +35,33 @@ public class Queries {
     public static final String GET_ALL_PROFILES = "SELECT * FROM USERPROFILE";
     
     //Service Listing
-    public static final String CREATE_SERVICE_LISTING = "INSERT INTO service_listings (name, cleanerID, categoryID, description, price_per_hour, startDate, endDate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String CREATE_SERVICE_LISTING = "INSERT INTO SERVICELISTINGS (name, cleanerID, categoryID, description, price_per_hour, startDate, endDate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     
-    public static final String GET_SERVICE_LISTING_BY_ID = "SELECT * FROM service_listings WHERE serviceId = ?";
+    public static final String GET_SERVICE_LISTING_BY_ID = "SELECT * FROM SERVICELISTINGS WHERE serviceId = ?";
 
-    public static final String GET_SERVICE_LISTING_BY_CLEANER_ID = "SELECT * FROM service_listings WHERE cleaner_id = ?";
+    public static final String GET_SERVICE_LISTING_BY_CLEANER_ID = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ?";
     
-    public static final String UPDATE_SERVICE_LISTING = "UPDATE service_listings SET name = ?, category = ?, description = ?, price_per_hour = ?, status = ? WHERE serviceId = ?";
+    public static final String UPDATE_SERVICE_LISTING = "UPDATE SERVICELISTINGS SET name = ?, category = ?, description = ?, price_per_hour = ?, status = ? WHERE serviceId = ?";
     
-    public static final String DELETE_SERVICE_LISTING = "DELETE FROM service_listings WHERE servicegId = ?";
+    public static final String DELETE_SERVICE_LISTING = "DELETE FROM SERVICELISTINGS WHERE serviceId = ?";
     
-    public static final String SEARCH_SERVICE_LISTING_BY_CLEANER_AND_KEYWORD = "SELECT * FROM service_listings WHERE cleanerID = ? AND name LIKE ?";
+    public static final String SEARCH_SERVICE_LISTING_BY_CLEANER_AND_KEYWORD = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ? AND name LIKE ?";
+
+    public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS";
+
+    //Service Categories
+    public static final String CREATE_SERVICE_CATEGORIES = "INSERT INTO SERVICECATEGORIES (type, name, description) VALUES (?, ?, ?)";
+
+    public static final String GET_SERVICE_CATEGORY_BY_ID = "SELECT * FROM SERVICECATEGORIES WHERE categoryId = ?";
+
+    public static final String GET_SERVICE_CATEGORY_BY_NAME = "SELECT * FROM SERVICECATEGORIES WHERE name = ?";
+
+    public static final String UPDATE_SERVICE_CATEGORY = "UPDATE SERVICECATEGORIES SET type = ?, name = ?, description = ? WHERE categoryId = ?";
+
+    public static final String DELETE_SERVICE_CATEGORY = "DELETE FROM SERVICECATEGORIES WHERE categoryId = ?";
+
+    public static final String SEARCH_SERVICE_CATEGORY_BY_NAME = "SELECT * FROM SERVICECATEGORIES WHERE name LIKE ?";
+
+    public static final String GET_ALL_SERVICE_CATEGORIES = "SELECT * FROM SERVICECATEGORIES";
+    
 }

@@ -9,6 +9,8 @@ import com.cleaningsystem.dao.ServiceListingDAO;
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
 import com.cleaningsystem.model.ServiceListing;
+import com.cleaningsystem.dao.ServiceCategoriesDAO;
+import com.cleaningsystem.model.ServiceCategories;
 
 @Component
 public class Cleaner {
@@ -24,6 +26,9 @@ public class Cleaner {
 	
 	@Autowired
 	private ServiceListingDAO serviceListingDAO;
+	
+	@Autowired
+	private ServiceCategoriesDAO serviceCategoriesDAO;
 	
 	private static Scanner scanner = new Scanner(System.in);
 
@@ -74,8 +79,13 @@ public class Cleaner {
 		System.out.print("Service Name: ");
 		String name = scanner.nextLine();
 		
-		System.out.print("Service Category: ");
-		String category = scanner.nextLine();
+		List<ServiceCategories> categories = serviceCategoriesDAO.getAllCategories();
+		System.out.println("Service Categories:");
+		for (ServiceCategories cat : categories) {
+			System.out.println(cat.getCategoryId() + ". " + cat.getType() + "-" + cat.getName() + ": " + cat.getDescription());
+		}
+		int category = scanner.nextInt();
+		scanner.nextLine();
 		
 		System.out.print("Description: ");
 		String description = scanner.nextLine();
@@ -95,7 +105,7 @@ public class Cleaner {
 
 		ServiceListing listing = new ServiceListing(name, uid, category, description, price_per_hour, startDate, endDate, status); 
 		
-		if (serviceListingDAO.createListing(listing) > 0) {
+		if (serviceListingDAO.createListing(listing)) {
 			System.out.println("Service listing created successfully.");
 		} else {
 			System.out.println("Failed to create service listing.");
@@ -124,7 +134,7 @@ public class Cleaner {
 		
 		System.out.println("\n=== Your Service Listings ===");
 		for (ServiceListing listing : listings) {
-			System.out.println(listing.getServiceId() + ": " + listing.getName());
+			System.out.println(listing.getServiceId() + ". " + listing.getName());
 		}
 		
 		System.out.print("\nEnter Listing Id to update: ");
@@ -139,7 +149,7 @@ public class Cleaner {
 		
 		System.out.println("Leave blank to keep existing value.");
 		
-		System.out.print("New Title (" + listing.getName() + "): ");
+		System.out.print("New Name (" + listing.getName() + "): ");
 		String title = scanner.nextLine();
 		if (!title.isEmpty()) listing.setName(title);
 		
@@ -153,9 +163,14 @@ public class Cleaner {
 			listing.setPricePerHour(Double.parseDouble(priceStr));
 		}
 		
-		System.out.print("New Available Days (" + listing.getStartDate() + "): ");
-		String days = scanner.nextLine();
-		if (!days.isEmpty()) listing.setStartDate(days);
+		System.out.print("New Start Date (" + listing.getStartDate() + "): ");
+		String startDate = scanner.nextLine();
+
+		System.out.print("New End Date (" + listing.getEndDate() + "): ");
+		String endDate = scanner.nextLine();
+
+		if (!startDate.isEmpty()) listing.setStartDate(startDate);
+		if (!endDate.isEmpty()) listing.setEndDate(endDate);
 		
 		if (serviceListingDAO.updateListing(listing)) {
 			System.out.println("Service listing updated successfully.");
@@ -173,7 +188,7 @@ public class Cleaner {
 		
 		System.out.println("\n=== Your Service Listings ===");
 		for (ServiceListing listing : listings) {
-			System.out.println(listing.getServiceId() + ": " + listing.getName());
+			System.out.println(listing.getServiceId() + ". " + listing.getName());
 		}
 		
 		System.out.print("\nEnter Listing Id to delete: ");
@@ -212,17 +227,6 @@ public class Cleaner {
 		for (ServiceListing listing : results) {
 			System.out.println(listing);
 		}
-	}
-	
-
-	private void viewAvailableJobs() {
-		// TODO: Implement job listing functionality
-		System.out.println("Available jobs functionality coming soon...");
-	}
-
-	private void viewMyJobs() {
-		// TODO: Implement my jobs functionality
-		System.out.println("My jobs functionality coming soon...");
 	}
 
 	// Getters

@@ -2,10 +2,10 @@ E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\Main.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\UserAdmin.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\CleaningSystemApplication.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dto\UserAccountDTO.java
-E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceProvider.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\config\WebConfig.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\PlatformManager.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\MainController.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\ServiceCategoriesDAO.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dto\UserProfileDTO.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\ServiceListingDAO.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\HomeOwner.java
@@ -14,6 +14,7 @@ E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\Serv
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserAccountController.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\UserProfileDAO.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\db\DatabaseConnection.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceCategories.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\service\UserAccountService.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\UserProfile.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\Cleaner.java

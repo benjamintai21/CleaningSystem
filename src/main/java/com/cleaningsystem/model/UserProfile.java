@@ -1,7 +1,21 @@
 package com.cleaningsystem.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import java.time.LocalDate;
+
+@Entity
+
 public class UserProfile {
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int profileId;
+
 	private String profileName;
 	private String description;
 	private boolean suspended;

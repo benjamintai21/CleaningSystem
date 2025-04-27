@@ -163,7 +163,7 @@ public class UserAdmin {
         } else {
             System.out.println("Available Accounts:");
             for (UserAccount acc : accounts) {
-                System.out.println(acc.getUid() + ": " + acc.getUsername());
+                System.out.println(acc.getUid() + ". " + acc.getUsername());
             }
             System.out.print("Enter Account Id to view details: ");
             int selectedId = scanner.nextInt();
@@ -225,7 +225,7 @@ public class UserAdmin {
             System.out.println("No users found.");
         } else {
             for (UserAccount acc : results) {
-                System.out.println(acc.getUid() + ": " + acc.getUsername());
+                System.out.println(acc.getUid() + ". " + acc.getUsername());
             }
         }
     }
@@ -234,7 +234,7 @@ public class UserAdmin {
         System.out.println("\n--- All User Accounts ---");
         List<UserAccount> accounts = userAccountDAO.getAllUsers();
         for (UserAccount acc : accounts) {
-            System.out.println(acc.getUid() + ": " + acc.getUsername());
+            System.out.println(acc.getUid() + ". " + acc.getUsername());
         }
     }
 
@@ -246,7 +246,7 @@ public class UserAdmin {
 
         UserProfile profile = new UserProfile(name, description, false);
 
-        if (userProfileDAO.insertUserProfile(profile) > 0) {
+        if (userProfileDAO.insertUserProfile(profile)) {
             System.out.println("User profile created successfully.");
         } else {
             System.out.println("Failed to create user profile.");
@@ -261,7 +261,7 @@ public class UserAdmin {
         } else {
             System.out.println("Available Profiles:");
             for (UserProfile pro : profiles) {
-                System.out.println(pro.getProfileId() + ": " + pro.getProfileName());
+                System.out.println(pro.getProfileId() + ". " + pro.getProfileName());
             }
             System.out.print("Enter Profile Id to view details: ");
             int selectedId = scanner.nextInt();
@@ -340,7 +340,7 @@ public class UserAdmin {
             System.out.println("No profiles found.");
         } else {
             for (UserProfile pro : results) {
-                System.out.println(pro.getProfileId() + ": " + pro.getProfileName());
+                System.out.println(pro.getProfileId() + ". " + pro.getProfileName());
             }
         }
     }
@@ -349,7 +349,7 @@ public class UserAdmin {
         System.out.println("\n--- All User Profiles ---");
         List<UserProfile> profiles = userProfileDAO.getAllProfiles();
         for (UserProfile pro : profiles) {
-            System.out.println(pro.getProfileId() + ": " + pro.getProfileName());
+            System.out.println(pro.getProfileId() + ". " + pro.getProfileName());
         }
     }
 

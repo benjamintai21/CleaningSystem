@@ -23,9 +23,11 @@ public class UserProfileDAO {
 		return profile;
 	};
 
-	public int insertUserProfile(UserProfile profile) {
-		return jdbcTemplate.update(CREATE_USER_PROFILE, 
+	public boolean insertUserProfile(UserProfile profile) {
+		int rows_affected = jdbcTemplate.update(CREATE_USER_PROFILE, 
 			profile.getProfileName(), profile.getDescription(), profile.isSuspended());
+			
+		return rows_affected > 0;
 	}
 
 	public UserProfile getProfileById(int profileId) {
@@ -33,10 +35,10 @@ public class UserProfileDAO {
 		return profiles.isEmpty() ? null : profiles.get(0);
 	}
 
-	public int getProfileIdByName(String profileName) {
+	public Integer getProfileIdByName(String profileName) {
 		List<Integer> ids = jdbcTemplate.query(GET_PROFILE_ID_BY_NAME, 
 			(rs, rowNum) -> rs.getInt("profileId"), profileName);
-		return ids.isEmpty() ? -1 : ids.get(0);
+		return ids.isEmpty() ? null : ids.get(0);
 	}
 
 	public boolean updateUserProfile(UserProfile profile) {
