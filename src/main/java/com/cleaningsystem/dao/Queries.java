@@ -34,7 +34,7 @@ public class Queries {
 
     public static final String GET_ALL_PROFILES = "SELECT * FROM USERPROFILE";
     
-    //Service Listing
+    //Cleaner
     public static final String CREATE_SERVICE_LISTING = "INSERT INTO SERVICELISTINGS (name, cleanerID, categoryID, description, price_per_hour, startDate, endDate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     
     public static final String GET_SERVICE_LISTING_BY_ID = "SELECT * FROM SERVICELISTINGS WHERE serviceId = ?";
@@ -48,6 +48,10 @@ public class Queries {
     public static final String SEARCH_MY_SERVICE_LISTING = "SELECT * FROM SERVICE LISTING WHERE WHERE cleanerId = ? and name LIKE ?";
 
     public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS";
+
+    public static final String GET_NO_OF_SHORTLISTS = "SELECT shortlists FROM SERVICELISTINGS WHERE cleanerId = ?";
+   
+    public static final String GET_NO_OF_VIEWS = "SELECT views FROM SERVICELISTINGS where cleanerId = ?";
 
     //Service Categories
     public static final String CREATE_SERVICE_CATEGORIES = "INSERT INTO SERVICECATEGORIES (type, name, description) VALUES (?, ?, ?)";

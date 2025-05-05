@@ -96,13 +96,3 @@ CREATE TABLE BOOKINGHISTORY (
     FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId),
 	FOREIGN KEY (homeownerId) REFERENCES USERACCOUNT(UID)
 );
-
-CREATE TABLE REPORTHISTORY (
-    reportID int not null,
-    historyID int not null,
-
-    PRIMARY KEY (reportID, historyID),
-
-    FOREIGN KEY (reportID) REFERENCES REPORT(reportID),
-    FOREIGN KEY (historyID) REFERENCES BOOKINGHISTORY(historyID)
-);

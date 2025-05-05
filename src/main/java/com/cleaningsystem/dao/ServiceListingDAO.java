@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import com.cleaningsystem.model.ServiceListing;
+import com.mysql.cj.protocol.Resultset;
+
 import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;
 import java.util.List;
@@ -102,13 +104,13 @@ public class ServiceListingDAO {
     }
 
     //???
-    public int getNumberofViews(){
-        return 0;
+    public List<ServiceListing> getNumberofViews(int cleanerId){
+        return jdbcTemplate.query(GET_NO_OF_VIEWS, listingRowMapper, cleanerId);
     }
 
-    public int getNumberOfShortlists(int cleanerId){
+    public List<ServiceListing> getNumberOfShortlists(int serviceId){
+        return jdbcTemplate.query(GET_NO_OF_SHORTLISTS, listingRowMapper, serviceId);
         //eg SELECT COUNT(*) FROM SHORTLISTEDSERVICES WHERE cleanerId = ? GROUP BY cleanerId;
-        return 0;
     }
 
 
