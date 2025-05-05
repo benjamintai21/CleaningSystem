@@ -8,4 +8,4 @@ public class CleaningSystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(CleaningSystemApplication.class, args);
     }
-} 
+}

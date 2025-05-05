@@ -44,8 +44,8 @@ public class Queries {
     public static final String UPDATE_SERVICE_LISTING = "UPDATE SERVICELISTINGS SET name = ?, cleanerId = ?, categoryId = ?, description = ?, price_per_hour = ?, status = ? WHERE serviceId = ?";
     
     public static final String DELETE_SERVICE_LISTING = "DELETE FROM SERVICELISTINGS WHERE serviceId = ?";
-    
-    public static final String SEARCH_SERVICE_LISTING_BY_CLEANER_AND_KEYWORD = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ? AND name LIKE ?";
+
+    public static final String SEARCH_MY_SERVICE_LISTING = "SELECT * FROM SERVICE LISTING WHERE WHERE cleanerId = ? and name LIKE ?";
 
     public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS";
 
@@ -65,7 +65,9 @@ public class Queries {
     public static final String GET_ALL_SERVICE_CATEGORIES = "SELECT * FROM SERVICECATEGORIES";
     
     //HomeOwner
-    public static final String SEARCH_SERVICE_LISTING_BY_KEYWORD = "SELECT * FROM SERVICELISTINGS WHERE name LIKE ?";
+    public static final String SEARCH_SERVICE_LISTING_BY_SERVICE = "SELECT * FROM SERVICELISTINGS WHERE name = ?";
+    
+    public static final String SEARCH_SERVICE_LISTING_BY_CLEANER = "SELECT s.* FROM SERVICELISTINGS s JOIN USERACCOUNT u ON s.cleanerId = u.UID WHERE u.profileID = 4 AND u.name LIKE ?";
 
     public static final String SAVE_SHORTLISTED_SERVICE = "INSERT INTO SHORTLISTEDSERVICES (homeownerUID, serviceId) VALUES (?, ?)";
 

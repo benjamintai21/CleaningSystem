@@ -5,7 +5,7 @@ CREATE DATABASE DB_CLEANINGSYSTEM;
 USE DB_CLEANINGSYSTEM;
 
 CREATE TABLE USERPROFILE (
-    profileID int not null auto_increment,
+    profileId int not null auto_increment,
     profilename varchar(32) not null,
     description varchar(512) not null,
     suspension bool not null,
@@ -15,7 +15,7 @@ CREATE TABLE USERPROFILE (
 );
 
 CREATE TABLE USERACCOUNT (
-    UID int not null auto_increment, 
+    UId int not null auto_increment, 
     name varchar(50) not null,
     age int not null,
     dob date not null,
@@ -57,12 +57,12 @@ CREATE TABLE SERVICELISTINGS (
 
     PRIMARY KEY(serviceID),
     
-    FOREIGN KEY (cleanerId) REFERENCES USERACCOUNT(UID),
+    FOREIGN KEY (cleanerId) REFERENCES USERACCOUNT(UId),
     FOREIGN KEY (categoryId) REFERENCES SERVICECATEGORIES(categoryId)
 ); 
 
 CREATE TABLE REPORT (
-	reportID int(10) not null auto_increment,
+	reportId int(10) not null auto_increment,
 	type varchar(15) not null,
 	date date not null,
     views int(50) not null,
@@ -70,27 +70,19 @@ CREATE TABLE REPORT (
     no_homeowners int (50) not null,
     no_cleaners int(50) not null,
     
-	PRIMARY KEY (reportID)
+	PRIMARY KEY (reportId)
 );
 
 CREATE TABLE SHORTLISTEDSERVICES (
-    homeownerUID int,
-    serviceID int,
+    homeownerUId int,
+    serviceId int,
+    cleanerId int,
     
     PRIMARY KEY (homeownerUID, serviceID),
     
-    FOREIGN KEY (homeownerUID) REFERENCES USERACCOUNT(UID),
-    FOREIGN KEY (serviceID) REFERENCES SERVICELISTINGS(serviceID)
-);
-
-CREATE TABLE SHORTLISTEDCLEANERS (
-    homeownerUID int,
-    cleanerUID int,
-    
-    PRIMARY KEY (homeownerUID, cleanerUID),
-    
-    FOREIGN KEY (homeownerUID) REFERENCES USERACCOUNT(UID),
-    FOREIGN KEY (cleanerUID) REFERENCES USERACCOUNT(UID)
+    FOREIGN KEY (homeownerUId) REFERENCES USERACCOUNT(UId),
+    FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId),
+    FOREIGN KEY (cleanerId) REFERENCES USERACCOUNT(UId)
 );
 
 CREATE TABLE BOOKINGHISTORY (
@@ -114,4 +106,3 @@ CREATE TABLE REPORTHISTORY (
     FOREIGN KEY (reportID) REFERENCES REPORT(reportID),
     FOREIGN KEY (historyID) REFERENCES BOOKINGHISTORY(historyID)
 );
-

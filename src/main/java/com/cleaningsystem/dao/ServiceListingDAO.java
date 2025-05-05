@@ -30,6 +30,9 @@ public class ServiceListingDAO {
         return listing;
     };
 
+
+
+    //Cleaner
     public boolean createListing(ServiceListing listing) {
         java.sql.Date sqlStart = java.sql.Date.valueOf(listing.getStartDate());
         java.sql.Date sqlEnd = java.sql.Date.valueOf(listing.getEndDate());
@@ -59,19 +62,27 @@ public class ServiceListingDAO {
         return jdbcTemplate.update(DELETE_SERVICE_LISTING, listingId) > 0;
     }
 
-    public List<ServiceListing> searchListingsByCleanerAndKeyword(int cleanerId, String keyword) {
-        String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_CLEANER_AND_KEYWORD, listingRowMapper, cleanerId, pattern);
+    public List<ServiceListing> searchMyServiceListings(int cleanerId, String keyword){
+        String pattern = "%" + keyword + "$";
+        return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING, listingRowMapper, pattern);
     }
 
     public List<ServiceListing> getAllListings(){
         return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
     }
 
+
+
+
     //HomeOwner
-    public List<ServiceListing> searchListingsByKeyword(String keyword) {
+    public List<ServiceListing> searchListingsByService(String keyword) {
+        String pattern = "%" + keyword + "$";
+        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_SERVICE, listingRowMapper, pattern);
+    }
+
+    public List<ServiceListing> searchListingsByCleaner(String keyword) {
         String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_KEYWORD, listingRowMapper, pattern);
+        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_CLEANER, listingRowMapper, pattern);
     }
     
     public boolean saveServiceListing(int homeownerUID, int serviceId) {
@@ -89,4 +100,16 @@ public class ServiceListingDAO {
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_SHORTLISTED_SERVICE_BY_NAME, listingRowMapper, homeownerUID, pattern);
     }
+
+    //???
+    public int getNumberofViews(){
+        return 0;
+    }
+
+    public int getNumberOfShortlists(int cleanerId){
+        //eg SELECT COUNT(*) FROM SHORTLISTEDSERVICES WHERE cleanerId = ? GROUP BY cleanerId;
+        return 0;
+    }
+
+
 } 

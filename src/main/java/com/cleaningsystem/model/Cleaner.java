@@ -208,7 +208,7 @@ public class Cleaner {
 		System.out.print("Enter search keyword: ");
 		String keyword = scanner.nextLine();
 		
-		List<ServiceListing> results = serviceListingDAO.searchListingsByCleanerAndKeyword(uid, keyword);
+		List<ServiceListing> results = serviceListingDAO.searchMyServiceListings(uid, keyword);
 		if (results == null || results.isEmpty()) {
 			System.out.println("No matching listings found.");
 			return;

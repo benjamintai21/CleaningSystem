@@ -70,9 +70,10 @@ public class HomeOwner {
     public void showServiceListingMenu() {
         while (true) {
             System.out.println("\n===== Service Listing Menu =====");
-            System.out.println("1. Search Service Listing");
-            System.out.println("2. View Service Listing");
-            System.out.println("3. Save Service Listing");
+            System.out.println("1. Search Listing By Service");
+            System.out.println("2. Search Listing By Cleaner");
+            System.out.println("3. View Service Listing");
+            System.out.println("4. Save Service Listing");
             System.out.println("0. Back to Main Menu");
             System.out.print("Select an option: ");
 
@@ -80,9 +81,10 @@ public class HomeOwner {
             scanner.nextLine();
             
             switch (choice) {
-                case 1 -> searchServiceListing();
-                case 2 -> viewServiceListing();
-                case 3 -> saveServiceListing();
+                case 1 -> searchListingByService();
+                case 2 -> searchListingByCleaner();
+                case 3 -> viewServiceListing();
+                case 4 -> saveServiceListing();
                 case 0 -> {
                     return;
                 }
@@ -134,12 +136,27 @@ public class HomeOwner {
         }
     }
 
-    private void searchServiceListing() {
-        System.out.println("\n=== Search Service Listing ===");
+    private void searchListingByService() {
+        System.out.println("\n=== Search Listing By Service===");
 		System.out.print("Service Name: ");
-		String name = scanner.nextLine();
+		String keyword = scanner.nextLine();
 
-        List<ServiceListing> listings = serviceListingDAO.searchListingsByKeyword(name);
+        List<ServiceListing> listings = serviceListingDAO.searchListingsByService(keyword);
+        if (listings != null) {
+            for (ServiceListing listing : listings) {
+                System.out.println(listing);
+            }
+        } else {
+            System.out.println("No listings found.");
+        }
+    }
+
+    private void searchListingByCleaner(){
+        System.out.println("\n=== Search Listing By Cleaner===");
+		System.out.print("CleanerName: ");
+		String keyword= scanner.nextLine();
+
+        List<ServiceListing> listings = serviceListingDAO.searchListingsByCleaner(keyword);
         if (listings != null) {
             for (ServiceListing listing : listings) {
                 System.out.println(listing);

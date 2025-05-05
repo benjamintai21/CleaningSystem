@@ -23,10 +23,6 @@ public class BookingHistoryDao {
         bookingHistory.setStatus(rs.getString("status"));
         return bookingHistory;
     };
-
-    public List<BookingHistory> getCompletedServices(int homeownerId) {
-        return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerId);
-    }      
     
     public List<BookingHistory> getPastBookings(int homeownerUID) {
         return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerUID);

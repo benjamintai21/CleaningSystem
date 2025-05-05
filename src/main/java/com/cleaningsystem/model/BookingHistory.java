@@ -22,7 +22,6 @@ public class BookingHistory {
         this.historyId = historyId;
         this.homeownerId = homeownerId;
         this.serviceId = serviceId;
-        this.status = status;
     }
     
     public int getHistoryId() {return historyId;}
