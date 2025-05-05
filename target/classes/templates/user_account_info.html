@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Account Info</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+  <div class="main-wrapper">
+
+    <!-- Top section with logo and nav -->
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a href="#" class="nav-home">Home</a>
+        <a href="#" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="form-title">User Account Info</div>
+
+    <!-- Back Button -->
+    <div class="register-container">
+      <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
+
+      <!-- Account Info Box -->
+      <div class="account-box" th:object="${userAccountInfo}">
+        <div>
+          <p><strong>Name: </strong><span th:text="*{name}"></span></p>
+          <p><strong>Gender: </strong><span th:text="*{gender}"></span></p>
+          <p><strong>Email: </strong><span th:text="*{email}"></span></p>
+          <p><strong>DOB: </strong><span th:text="*{dob}"></span></p>
+          <p><strong>Age: </strong><span th:text="*{age}"></span></p>
+          <p><strong>Address: </strong><span th:text="*{address}"></p>
+        </div>
+        <div>
+          <p><strong>Username: </strong><span th:text="*{username}"></span></p>
+          <p><strong>Profile Type: </strong><span th:text="${profileName}"></span></p>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="form-actions">
+        <a th:href="@{/UpdateUserAccount(username=${userAccountInfo.username})}">Update Info</a>
+        <button type="button" class="submit-btn">Suspend</button>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="modal-overlay" style="display:none">
+    <div class="modal-box">
+      <h2>Are you sure?</h2>
+      <p>You are suspending</p>
+      <p>User: JohnDoe, Email: Johndoe@gmail.com, User-ID: 123-456-789</p>
+      <p>This action is irreversible</p>
+  
+      <div class="form-actions" style="justify-content: space-between; max-width: 400px; margin: 20px auto 0 auto;">
+        <button class="submit-btn">Cancel</button>
+        <button class="submit-btn">Suspend user</button>
+      </div>
+
+    </div>
+  </div>  
+</body>
+</html>

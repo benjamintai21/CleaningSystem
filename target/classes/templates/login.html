@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Cleaning Service Login</title>
     <style>
         * {
             margin: 0;
@@ -30,18 +30,12 @@
 
         .left-section {
             width: 40%;
-            background-color: #c5c1b9;
+            background-color: #bbb8b1;
             color: white;
             padding: 40px;
             display: flex;
             flex-direction: column;
             position: relative;
-        }
-
-        .left-section img {
-            max-width: 100%;
-            height: auto;
-            margin: 20px 0;
         }
 
         .logo {
@@ -50,15 +44,23 @@
             margin-bottom: 20px;
         }
 
+        .staff-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
         .welcome-text {
-            margin-top: auto;
-            margin-bottom: 20px;
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            right: 40px;
         }
 
         .welcome-text h1 {
             font-size: 36px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .welcome-text p {
@@ -77,10 +79,12 @@
 
         .login-form {
             width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
         }
 
         .login-form h2 {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: bold;
             margin-bottom: 40px;
             color: #222;
@@ -99,25 +103,18 @@
 
         .input-field {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+            height: 46px; /* Taller input fields as shown in image */
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #333;
+            background-color: #fff;
         }
 
-        .dropdown {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: white;
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px top 50%;
-            background-size: 10px auto;
+        .input-field:focus {
+            border-color: #ccc;
+            outline: none;
         }
 
         .password-row {
@@ -127,29 +124,50 @@
             margin-bottom: 8px;
         }
 
-        .forgot-password {
-            text-align: right;
+        .password-label {
             font-size: 14px;
-            color: #888;
+            color: #555;
+        }
+
+        .forgot-password {
+            color: #999;
+            font-size: 14px;
             text-decoration: none;
         }
 
         .forgot-password:hover {
             text-decoration: underline;
-            color: #f8b133;
+        }
+
+        .dropdown {
+            width: 100%;
+            height: 46px; /* Taller dropdown as shown in image */
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #333;
+            background-color: #fff;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px auto;
+            cursor: pointer;
         }
 
         .login-button {
             width: 100%;
-            padding: 14px;
+            height: 46px; /* Taller button as shown in image */
             background-color: #f8b133;
             color: white;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 500;
             border: none;
-            border-radius: 4px;
+            border-radius: 12px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 30px;
+            margin-bottom: 20px;
         }
 
         .login-button:hover {
@@ -157,28 +175,19 @@
         }
 
         .signup-text {
-            margin-top: 20px;
             text-align: center;
             font-size: 14px;
             color: #666;
         }
 
-        .signup-text a {
-            color: #666;
+        .signup-link {
+            color: #999;
             text-decoration: none;
-            margin-left: 5px;
+            margin-left: 4px;
         }
 
-        .signup-text a:hover {
-            color: #f8b133;
+        .signup-link:hover {
             text-decoration: underline;
-        }
-
-        .staff-image {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 8px;
         }
 
         @media (max-width: 768px) {
@@ -210,7 +219,7 @@
         <div class="right-section">
             <div class="login-form">
                 <h2>Join Name</h2>
-                <form id="loginForm" th:action="@{/dashboard}" method="post" th:object="${loginForm}">
+                <form id="loginForm" th:action="@{/Home}" method="post" th:object="${loginForm}">
                     <div class="form-group">
                         <label for="role">Login as</label>
                         <select id="role" class="dropdown" th:field="*{profileId}">
@@ -234,7 +243,7 @@
                     <button type="submit" class="login-button">Login</button>
                 </form>
                 <div class="signup-text">
-                    Don't have an account yet? <a th:href="@{/signup}">Sign up</a>
+                    Don't have an account yet? <a th:href="@{/CleanerUserCreation}">Sign up</a>
                 </div>
             </div>
         </div>

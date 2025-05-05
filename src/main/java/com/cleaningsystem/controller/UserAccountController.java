@@ -18,7 +18,6 @@ public class UserAccountController {
     @Autowired
     private UserProfileDAO userProfileDAO;
     
-
     @PostMapping
     public ResponseEntity<?> createUserAccount(@RequestBody UserAccount userAccount) {
         try {
