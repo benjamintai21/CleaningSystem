@@ -1,28 +1,16 @@
 package com.cleaningsystem.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import java.time.LocalDate;
 
-import org.springframework.stereotype.Component;
-
-@Component
-
+@Entity
 public class ServiceCategories {
 	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int categoryId;
-
     private String type;
     private String name;
     private String description;
 
-    // No-args constructor
+    // Constructors
     public ServiceCategories() {}
 
     public ServiceCategories(String type, String name, String description){
@@ -31,7 +19,6 @@ public class ServiceCategories {
         this.description = description;
     }
 
-    // Constructor with all fields including Id
 	public ServiceCategories(int categoryId, String type, String name, String description) {
 		this.categoryId = categoryId;
 		this.type = type;

@@ -1,75 +1,48 @@
 package com.cleaningsystem.controller;
-import com.cleaningsystem.model.UserProfile;
-import com.cleaningsystem.dao.UserProfileDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/profiles")
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cleaningsystem.dao.UserProfileDAO;
+import com.cleaningsystem.model.UserProfile;
+
+@Service
 public class UserProfileController {
 
     @Autowired
     private UserProfileDAO userProfileDAO;
+    
+    public boolean insertUserProfile(UserProfile profile) {
+		return userProfileDAO.insertUserProfile(profile);
+	}
 
-    @GetMapping
-    public List<UserProfile> getAllProfiles() {
-        return userProfileDAO.getAllProfiles();
-    }
+	public UserProfile getProfileById(int profileId) {
+		return userProfileDAO.getProfileById(profileId);
+	}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserProfile> getProfile(@PathVariable int id) {
-        UserProfile profile = userProfileDAO.getProfileById(id);
-        return (profile != null) ? ResponseEntity.ok(profile) : ResponseEntity.notFound().build();
-    }
+	public Integer getProfileIdByName(String profileName) {
+		return userProfileDAO.getProfileIdByName(profileName);
+	}
 
-    @PostMapping
-    public ResponseEntity<String> createProfile(@RequestBody UserProfile userProfile,
-                                                @RequestHeader("X-Profile-Name") String profileName) {
-        if (!"User Admin".equalsIgnoreCase(profileName)) {
-            return ResponseEntity.status(403).body("Forbidden: Admins only");
-        }
+    public List<String> getProfileNames() {
+        return userProfileDAO.getProfileNames();
+	}
 
-        UserProfile profile = new UserProfile();
-        profile.setProfileName(userProfile.getProfileName());
-        profile.setDescription(userProfile.getDescription());
-        profile.setSuspended(userProfile.isSuspended());
-        
-        boolean result = userProfileDAO.insertUserProfile(profile);
-        return (result) ? ResponseEntity.ok("Profile created successfully.") : ResponseEntity.badRequest().body("Failed to create profile.");
-    }
+	public boolean updateUserProfile(UserProfile profile) {
+		return userProfileDAO.updateUserProfile(profile);
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateProfile(@PathVariable int id,
-                                                @RequestBody UserProfile updatedProfile,
-                                                @RequestHeader("X-Profile-Name") String profileName) {
-        if (!"User Admin".equalsIgnoreCase(profileName)) {
-            return ResponseEntity.status(403).body("Forbidden: Admins only");
-        }
+	public boolean setSuspension(int profileId, boolean suspension) {
+		return userProfileDAO.setSuspension(profileId, suspension);
+	}
 
-        updatedProfile.setProfileId(id);
-        boolean updated = userProfileDAO.updateUserProfile(updatedProfile);
-        return updated ? ResponseEntity.ok("Profile updated.") : ResponseEntity.badRequest().body("Failed to update profile.");
-    }
+	public List<UserProfile> searchProfilesByName(String keyword) {
+		return userProfileDAO.searchProfilesByName(keyword);
+	}
 
-    @PatchMapping("/suspend/{id}")
-    public ResponseEntity<String> suspendProfile(@PathVariable int id,
-                                              @RequestHeader("X-Profile-Name") String profileName) {
-    if (!"User Admin".equalsIgnoreCase(profileName)) {
-        return ResponseEntity.status(403).body("Forbidden: Admins only");
-    }
-
-    boolean suspended = userProfileDAO.setSuspension(id, true);
-
-    return suspended
-            ? ResponseEntity.ok("Profile suspended successfully.")
-            : ResponseEntity.badRequest().body("Failed to suspend profile.");
-    }
-
-    @GetMapping("/search")
-    public List<UserProfile> searchProfiles(@RequestParam String keyword) {
-        return userProfileDAO.searchProfilesByName(keyword);
-    }
+	public List<UserProfile> getAllProfiles() {
+		return userProfileDAO.getAllProfiles();
+	}
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
 import com.cleaningsystem.model.UserProfile;
 import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;
@@ -39,6 +40,10 @@ public class UserProfileDAO {
 		List<Integer> ids = jdbcTemplate.query(GET_PROFILE_ID_BY_NAME, 
 			(rs, rowNum) -> rs.getInt("profileId"), profileName);
 		return ids.isEmpty() ? null : ids.get(0);
+	}
+
+	public List<String> getProfileNames() {
+		return jdbcTemplate.query(GET_PROFILE_NAMES, (rs, rowNum) -> rs.getString("profilename"));
 	}
 
 	public boolean updateUserProfile(UserProfile profile) {

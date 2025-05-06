@@ -4,13 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import java.time.LocalDate;
 
-import org.springframework.stereotype.Component;
 
-@Component
+@Entity
 
 public class UserProfile {
 

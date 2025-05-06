@@ -4,20 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import com.cleaningsystem.dao.UserAccountDAO;
-
-@Component
+@Entity
 public class UserAccount {
 	
 	@Id
@@ -32,12 +20,8 @@ public class UserAccount {
 	private String email;
 	private String username;
 	private String password;
-	
 	private int profileId;
-	
-	@Autowired
-	private UserAccountDAO userAccountDAO;
-	
+		
 	// No-args constructor
 	public UserAccount() {}
 	
@@ -103,42 +87,6 @@ public class UserAccount {
 				", profileId=" + profileId +
 				'}';
 	}
-
-	public UserAccount login(String username, String password) {
-        return userAccountDAO.login(username, password);	
-    }
-
-    public boolean insertUserAccount(UserAccount user) {
-        return userAccountDAO.insertUserAccount(user);
-    }
-
-    public UserAccount getUserById(int uid) {
-        return userAccountDAO.getUserById(uid);
-    }
-
-    public UserAccount getUserByUsername(String username) {
-        return userAccountDAO.getUserByUsername(username);
-    }
-
-    public boolean updateUserAccount(UserAccount user) {
-        return userAccountDAO.updateUserAccount(user);
-    }
-
-    public boolean deleteUserAccount(int uid) {
-        return userAccountDAO.deleteUserAccount(uid);
-    }
-
-    public List<UserAccount> searchUsersByUsername(String keyword) {
-        return userAccountDAO.searchUsersByUsername(keyword);
-    }
-
-    public List<UserAccount> searchUsersByProfileId(int profileId) {
-        return userAccountDAO.searchUsersByProfileId(profileId);
-    }
-
-    public List<UserAccount> getAllUsers() {
-        return userAccountDAO.getAllUsers();
-    }
 }
 
 

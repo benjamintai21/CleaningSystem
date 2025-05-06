@@ -8,7 +8,6 @@ import com.cleaningsystem.model.ServiceCategories;
 import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;
 import java.util.List;
-import java.sql.Date;
 
 @Repository
 public class ServiceCategoriesDAO {
