@@ -1,12 +1,16 @@
 package com.cleaningsystem.controller;
 
 import com.cleaningsystem.dao.UserAccountDAO;
+<<<<<<< HEAD
 import com.cleaningsystem.dao.UserProfileDAO;
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
 
 import java.util.ArrayList;
 import java.util.List;
+=======
+import com.cleaningsystem.model.UserAccount;
+>>>>>>> 6bd535b67ce027f050dc555ce4d701b7d1b2e079
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +22,11 @@ import org.springframework.web.bind.annotation.*;
 public class MainController {
 
     @Autowired
+<<<<<<< HEAD
     private UserAccount userAccount;
+=======
+    private UserAccountDAO userAccountDAO;
+>>>>>>> 6bd535b67ce027f050dc555ce4d701b7d1b2e079
 
     @Autowired
     private UserProfileDAO userProfileDAO;
@@ -29,6 +37,7 @@ public class MainController {
         return "login";
     }
 
+<<<<<<< HEAD
     @PostMapping("/Home")
     public String processLogin(@ModelAttribute("loginForm") UserAccount user, Model model) {
         UserAccount loggedInUser = userAccount.login(user.getUsername(), user.getPassword());
@@ -49,6 +58,12 @@ public class MainController {
         //         // return "Cleaner_Home";
         //         break;
         // }
+=======
+    @PostMapping("/dashboard")
+    public String processLogin(@ModelAttribute("loginForm") UserAccount userAccount, Model model) {
+        UserAccount loggedInUser =  userAccountDAO.login(userAccount.getUsername(), userAccount.getPassword());
+        model.addAttribute("displayForm", userAccount);
+>>>>>>> 6bd535b67ce027f050dc555ce4d701b7d1b2e079
         if (loggedInUser != null) {
             model.addAttribute("userAccountInfo", loggedInUser);
             model.addAttribute("profileName", profileName);
@@ -59,6 +74,7 @@ public class MainController {
         }
     }
 
+<<<<<<< HEAD
     @GetMapping("/CleanerUserCreation")
     public String showCleanerSignUpForm(Model model) {
         model.addAttribute("CleanerUserCreationForm", new UserAccount()); // Make sure this matches the form data type
@@ -83,6 +99,21 @@ public class MainController {
             System.out.println("Signup failed");
             return "cleaner_user_creation";
         }
+=======
+    @GetMapping("/signup")
+    public String showSignUpForm(Model model) {
+        model.addAttribute("signUpForm", new UserAccount()); // Make sure this matches the form data type
+        return "signup"; // Ensure this matches the signup.html template
+    }
+
+    @PostMapping("/signup")
+    public String processSignUp(@ModelAttribute UserAccount userAccount, Model model) {
+        // Handle signup logic
+        userAccountDAO.insertUserAccount(userAccount);
+        UserAccount userAcc = userAccountDAO.login(userAccount.getUsername(), userAccount.getPassword());
+        model.addAttribute("displayForm", userAcc);
+        return "dashboard"; 
+>>>>>>> 6bd535b67ce027f050dc555ce4d701b7d1b2e079
     }
 
     @GetMapping("/UpdateUserAccount")

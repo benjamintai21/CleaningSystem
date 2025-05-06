@@ -1,6 +1,5 @@
 package com.cleaningsystem.controller;
 import com.cleaningsystem.model.UserProfile;
-import com.cleaningsystem.dto.UserProfileDTO;
 import com.cleaningsystem.dao.UserProfileDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,16 +26,16 @@ public class UserProfileController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createProfile(@RequestBody UserProfileDTO dto,
+    public ResponseEntity<String> createProfile(@RequestBody UserProfile userProfile,
                                                 @RequestHeader("X-Profile-Name") String profileName) {
         if (!"User Admin".equalsIgnoreCase(profileName)) {
             return ResponseEntity.status(403).body("Forbidden: Admins only");
         }
 
         UserProfile profile = new UserProfile();
-        profile.setProfileName(dto.getProfileName());
-        profile.setDescription(dto.getDescription());
-        profile.setSuspended(dto.isSuspended());
+        profile.setProfileName(userProfile.getProfileName());
+        profile.setDescription(userProfile.getDescription());
+        profile.setSuspended(userProfile.isSuspended());
         
         boolean result = userProfileDAO.insertUserProfile(profile);
         return (result) ? ResponseEntity.ok("Profile created successfully.") : ResponseEntity.badRequest().body("Failed to create profile.");

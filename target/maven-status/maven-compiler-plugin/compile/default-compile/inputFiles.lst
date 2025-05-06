@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceCategories.java
 D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserAccountController.java
 D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\HomeOwner.java
@@ -53,3 +54,28 @@ C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\config\Da
 C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\dao\UserProfileDAO.java
 C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\Main.java
 >>>>>>> 67ef3677db9813c363d07d53e7ae7b5f979dab90
+=======
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\Main.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\UserAdmin.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\CleaningSystemApplication.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\BookingHistoryDao.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\config\WebConfig.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\PlatformManager.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\MainController.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\ServiceCategoriesDAO.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\ServiceListingDAO.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\HomeOwner.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\Queries.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceListing.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserAccountController.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\UserProfileDAO.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\db\DatabaseConnection.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceCategories.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\UserProfile.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\Cleaner.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\BookingHistory.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\UserAccount.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserProfileController.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\UserAccountDAO.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\config\DatabaseConfig.java
+>>>>>>> 6bd535b67ce027f050dc555ce4d701b7d1b2e079

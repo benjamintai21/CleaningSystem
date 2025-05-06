@@ -1,9 +1,7 @@
 com\cleaningsystem\dao\ServiceCategoriesDAO.class
 com\cleaningsystem\controller\UserAccountController.class
-com\cleaningsystem\service\UserAccountService.class
 com\cleaningsystem\model\HomeOwner.class
 com\cleaningsystem\model\PlatformManager.class
-com\cleaningsystem\dto\UserAccountDTO.class
 com\cleaningsystem\dao\UserAccountDAO.class
 com\cleaningsystem\model\UserAdmin.class
 com\cleaningsystem\controller\UserProfileController.class
@@ -17,7 +15,6 @@ com\cleaningsystem\dao\UserProfileDAO.class
 com\cleaningsystem\config\DatabaseConfig.class
 com\cleaningsystem\dao\Queries.class
 com\cleaningsystem\config\WebConfig.class
-com\cleaningsystem\dto\UserProfileDTO.class
 com\cleaningsystem\model\ServiceListing.class
 com\cleaningsystem\Main.class
 com\cleaningsystem\model\UserAccount.class
