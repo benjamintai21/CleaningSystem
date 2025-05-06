@@ -17,6 +17,8 @@ public class Queries {
 
     public static final String SEARCH_USER_ACCOUNT_BY_USERNAME = "SELECT * FROM USERACCOUNT WHERE username LIKE ?";
 
+    public static final String SEARCH_USER_ACCOUNT_BY_PROFILEID = "SELECT * FROM USERACCOUNT WHERE profileID = ?";
+
     public static final String GET_ALL_USER_ACCOUNT = "SELECT * FROM USERACCOUNT";
 
     //User Profile

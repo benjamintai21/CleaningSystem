@@ -70,10 +70,13 @@ public class UserAccountDAO {
         return jdbcTemplate.query(SEARCH_USER_ACCOUNT_BY_USERNAME, userRowMapper, "%" + keyword + "%");
     }
 
+    public List<UserAccount> searchUsersByProfileId(int profileId) {
+        return jdbcTemplate.query(SEARCH_USER_ACCOUNT_BY_PROFILEID, userRowMapper, profileId);
+    }
+
     public List<UserAccount> getAllUsers() {
         return jdbcTemplate.query(GET_ALL_USER_ACCOUNT, userRowMapper);
     }
-
 } 
 
 
