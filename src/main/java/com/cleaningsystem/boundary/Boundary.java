@@ -76,7 +76,7 @@ public class Boundary {
     @PostMapping("/CleanerUserCreation")
     public String processCleanerSignUp(@ModelAttribute UserAccount user, Model model) {
         user.setProfileId(4);
-        boolean isSuccessful = userAccountC.insertUserAccount(user);
+        boolean isSuccessful = userAccountC.createUserAccount(user);
 
         if (isSuccessful) {
             UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
@@ -173,7 +173,7 @@ public class Boundary {
     @PostMapping("/CreateUserProfile")
     public String processUserProfile(@ModelAttribute UserProfile userProfile, Model model) {
         System.out.println(userProfile.isSuspended());
-        boolean isSuccessful = userProfileC.insertUserProfile(userProfile);
+        boolean isSuccessful = userProfileC.createUserProfile(userProfile);
 
         if (isSuccessful) {
             model.addAttribute("userProfileInfo", userProfile);

@@ -14,7 +14,7 @@ public class UserProfileController {
     @Autowired
     private UserProfileDAO userProfileDAO;
     
-    public boolean insertUserProfile(UserProfile profile) {
+    public boolean createUserProfile(UserProfile profile) {
 		return userProfileDAO.insertUserProfile(profile);
 	}
 

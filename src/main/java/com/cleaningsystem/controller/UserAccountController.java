@@ -18,7 +18,7 @@ public class UserAccountController {
         return userAccountDAO.login(username, password);	
     }
 
-    public boolean insertUserAccount(UserAccount user) {
+    public boolean createUserAccount(UserAccount user) {
         return userAccountDAO.insertUserAccount(user);
     }
 
