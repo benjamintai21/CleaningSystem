@@ -7,6 +7,11 @@ public class UserProfileDTO {
 	private boolean suspension;
 
 	// Constructor
+	
+	public UserProfileDTO(){
+		// Default constructor
+	}
+
 	public UserProfileDTO(int profileId, String profileName, String description, boolean suspension) {
 		this.profileId = profileId;
 		this.profileName = profileName;

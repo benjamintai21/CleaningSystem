@@ -18,11 +18,17 @@ public class UserProfile {
 
 	private String profileName;
 	private String description;
-	private boolean suspended;
+	private boolean suspended = false; // default value
 	
 	// No-args constructor
 	public UserProfile() {}
 	
+	// Constructor with all defult boolean suspended
+    public UserProfile(String profileName, String description) {
+        this.profileName = profileName;
+        this.description = description;
+    }
+
 	// Constructor with all fields except Id
 	public UserProfile(String profileName, String description, boolean suspended) {
 		this.profileName = profileName;

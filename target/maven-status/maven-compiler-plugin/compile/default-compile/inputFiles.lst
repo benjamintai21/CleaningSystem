@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceCategories.java
 D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserAccountController.java
 D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\HomeOwner.java
@@ -24,3 +25,31 @@ D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\db\DatabaseCon
 D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dto\UserProfileDTO.java
 D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\CleaningSystemApplication.java
 D:\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\UserAccount.java
+=======
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\model\UserAccount.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\dao\BookingHistoryDao.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\dao\ServiceListingDAO.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\dto\UserAccountDTO.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\model\PlatformManager.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserProfileController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\model\HomeOwner.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\model\Cleaner.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\db\DatabaseConnection.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\service\UserAccountService.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceListing.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceCategories.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\config\WebConfig.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\dto\UserProfileDTO.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\MainController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\model\UserProfile.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\CleaningSystemApplication.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\dao\Queries.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\dao\UserAccountDAO.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\dao\ServiceCategoriesDAO.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\model\UserAdmin.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\model\BookingHistory.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserAccountController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\config\DatabaseConfig.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\dao\UserProfileDAO.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\Main.java
+>>>>>>> 67ef3677db9813c363d07d53e7ae7b5f979dab90
