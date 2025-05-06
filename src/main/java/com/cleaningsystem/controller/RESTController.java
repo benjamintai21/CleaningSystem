@@ -34,7 +34,7 @@ public class RESTController {
             }
 
             // Create the user account
-            if (userAccountDAO.insertUserAccount(userAccount)) {
+            if (userAccountDAO.createUserAccount(userAccount.getName(), userAccount.getAge(), userAccount.getDob(), userAccount.getGender(), userAccount.getAddress(), userAccount.getEmail(), userAccount.getUsername(), userAccount.getPassword(), userAccount.getProfileId())) {
                 return ResponseEntity.ok("User account created successfully");
             } else {
                 return ResponseEntity.internalServerError().body("Failed to create user account");
@@ -103,7 +103,7 @@ public class RESTController {
             }
 
             // Update the user account
-            if (userAccountDAO.updateUserAccount(userAccount)) {
+            if (userAccountDAO.updateUserAccount(userAccount.getName(), userAccount.getAge(), userAccount.getDob(), userAccount.getGender(), userAccount.getAddress(), userAccount.getEmail(), userAccount.getUsername(), userAccount.getPassword(), userAccount.getProfileId(), userAccount.getUid())) {
                 return ResponseEntity.ok("User account updated successfully");
             } else {
                 return ResponseEntity.internalServerError().body("Failed to update user account");

@@ -34,15 +34,11 @@ public class UserAccountDAO {
         return users.isEmpty() ? null : users.get(0);
     }
 
-    public boolean insertUserAccount(UserAccount user) {
-        java.sql.Date sqlDob = java.sql.Date.valueOf(user.getDob());
-        int rowsAffected = jdbcTemplate.update(CREATE_USER_ACCOUNT, 
-            user.getName(), user.getAge(), sqlDob, user.getGender(), 
-            user.getAddress(), user.getEmail(), user.getUsername(), user.getPassword(), 
-            user.getProfileId(),
-            new Date(System.currentTimeMillis()));
-        
-        return rowsAffected > 0;  // Return true if one or more rows were affected
+    public boolean createUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
+        java.sql.Date sqlDob = java.sql.Date.valueOf(dob);
+        return jdbcTemplate.update(CREATE_USER_ACCOUNT, 
+            name,age,sqlDob,gender,address,email,username,password,profileId,
+            new Date(System.currentTimeMillis())) > 0;
     }
 
     public UserAccount getUserById(int uid) {
@@ -55,11 +51,10 @@ public class UserAccountDAO {
         return users.isEmpty() ? null : users.get(0);
     }
 
-    public boolean updateUserAccount(UserAccount user) {
-        return jdbcTemplate.update(UPDATE_USER_ACCOUNT,
-            user.getName(), user.getAge(), user.getDob(), user.getGender(),
-            user.getAddress(), user.getEmail(), user.getUsername(), user.getProfileId(),
-            user.getUid()) > 0;
+    public boolean updateUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId, int Uid) {
+        java.sql.Date sqlDob = java.sql.Date.valueOf(dob);
+        return jdbcTemplate.update(UPDATE_USER_ACCOUNT, 
+            name,age,sqlDob,gender,address,email,username,password,profileId, Uid) > 0;
     }
 
     public boolean deleteUserAccount(int uid) {

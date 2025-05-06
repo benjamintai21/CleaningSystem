@@ -11,7 +11,7 @@ public class Queries {
 
     public static final String GET_USER_ACCOUNT_BY_USERNAME = "SELECT * FROM USERACCOUNT WHERE username = ?";
 
-    public static final String UPDATE_USER_ACCOUNT = "UPDATE USERACCOUNT SET name = ?, age = ?, dob = ?, gender = ?, address = ?, email = ?, username = ?, profileID = ? WHERE UID = ?";
+    public static final String UPDATE_USER_ACCOUNT = "UPDATE USERACCOUNT SET name = ?, age = ?, dob = ?, gender = ?, address = ?, email = ?, username = ?, password = ?, profileID = ? WHERE UID = ?";
     
     public static final String DELETE_USER_ACCOUNT = "DELETE FROM USERACCOUNT WHERE UID = ?";
 

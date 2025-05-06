@@ -18,35 +18,35 @@ public class UserAccountController {
         return userAccountDAO.login(username, password);	
     }
 
-    public boolean createUserAccount(UserAccount user) {
-        return userAccountDAO.insertUserAccount(user);
+    public boolean CreateAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
+        return userAccountDAO.createUserAccount(name, age, dob, gender, address, email, username, password, profileId);
     }
 
-    public UserAccount getUserById(int uid) {
+    public UserAccount ViewUserAccount(int uid) {
         return userAccountDAO.getUserById(uid);
     }
 
-    public UserAccount getUserByUsername(String username) {
+    public UserAccount ViewUserAccount(String username) {
         return userAccountDAO.getUserByUsername(username);
     }
 
-    public boolean updateUserAccount(UserAccount user) {
-        return userAccountDAO.updateUserAccount(user);
+    public boolean UpdateUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId, int UId) {
+        return userAccountDAO.updateUserAccount(name, age, dob, gender, address, email, username, password, profileId, UId);
     }
 
-    public boolean deleteUserAccount(int uid) {
+    public boolean DeleteUserAccount(int uid) {
         return userAccountDAO.deleteUserAccount(uid);
     }
 
-    public List<UserAccount> searchUsersByUsername(String keyword) {
+    public List<UserAccount> SearchUser(String keyword) {
         return userAccountDAO.searchUsersByUsername(keyword);
     }
 
-    public List<UserAccount> searchUsersByProfileId(int profileId) {
+    public List<UserAccount> SearchUser(int profileId) {
         return userAccountDAO.searchUsersByProfileId(profileId);
     }
 
-    public List<UserAccount> getAllUsers() {
+    public List<UserAccount> GetAllUsers() {
         return userAccountDAO.getAllUsers();
     }
 }

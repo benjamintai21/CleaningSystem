@@ -6,6 +6,8 @@
   <title>User List</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+      <link href="style/shared.css" rel="stylesheet" type="text/css"/>
+<link href="style/cleaner.css" rel="stylesheet" type="text/css"/>
 <body>
 
   <div class="main-wrapper">
@@ -20,7 +22,7 @@
     </div>
 
     <!-- Title -->
-    <div class="form-title">User List</div>
+    <div class="form-title">Service Listing</div>
 
     <!-- Back + Search -->
     <div class="register-container">
@@ -34,17 +36,25 @@
 
       <!-- User Cards -->
       <a th:each="userAccount, iterStat : ${userAccounts}" 
-      th:href="@{/ViewUserAccount(uid=${userAccount.uid})}" 
+      th:href="@{/UserAccount(uid=${userAccount.uid})}" 
       style="text-decoration: none; color: #1C1C1C; display: block;">
-      <div class="user-card">
+      <div class="user-card cleanercard">
         <div>
-          <p><strong>Name: </strong><span th:text="${userAccount.name}"></span></p>
-          <p><strong>Email: </strong><span th:text="${userAccount.email}"></span></p>
+          <p><strong>Service Name: </strong><span th:text="${userAccount.name}"></span></p>
+            <div class="emptyspace"></div>
+          <p><strong>Service ID: </strong><span th:text="${userAccount.email}"></span></p>
         </div>
+          
         <div>
-          <p><strong>Role: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
-          <div class="thin-arrow"></div>
+            <p><strong>Status: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
+            <div class="emptyspace"></div>
+            <div class="stat_containerList">
+                <div class="icons viewimg"></div><div class="icons text">123</div>
+                <div class="icons shortlistimg"></div><div class="icons text">123</div>
+             </div>
+          
         </div>
+          <div class="thin-arrow cleaner_arrow"></div>
       </div>
       </a>
     </div>

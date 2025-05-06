@@ -1,0 +1,83 @@
+.icons{
+    width: 23%;
+    height: 2vh;
+    text-align: center;
+    padding-right: 1%;
+    float: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: auto;
+}
+.shortlistimg{
+    background-image: url(../image/shortlist.png);
+
+}
+.viewimg{
+    background-image: url(../image/view.png);
+}
+.edit_flex{
+    flex-direction: column;
+    gap: 1vh;
+}
+.flex_row{
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+}
+.S_description{
+    width: 90%;
+    height: 14vh;
+}
+select,textarea{
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+.cleaner_arrow{
+    width: 15px;
+    height: 15px;
+    margin-left: 0;
+    margin-top: 1.75vh;
+}
+.stat_containerList{
+    width: 172%;
+    .text{
+        padding-right: 5%;
+        margin-left: -3%;
+    }
+}
+.cleanercard{
+    height: auto;
+    align-items: flex-start;
+}
+.emptyspace{
+    height: 1vh;
+    width: 1px;
+}
+.unactivated{
+    transform: rotate(135deg);
+}
+.activated{
+    transform: rotate(315deg);
+    margin-top: 3vh;
+}
+.fullsize{
+    width: 100%;
+    p{
+        width: 33vh;
+    }
+}
+.extendedtext{
+    z-index: 0;
+    width: 100%;
+    text-align: left;
+    gap: 0 !important;
+
+}
+.S_desc_alignment{
+    align-self: flex-start;
+}
+.none{
+    display: none !important;
+}
