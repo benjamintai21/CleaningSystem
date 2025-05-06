@@ -8,7 +8,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import java.time.LocalDate;
 
-@Entity
+import org.springframework.stereotype.Component;
+
+@Component
 
 public class UserProfile {
 

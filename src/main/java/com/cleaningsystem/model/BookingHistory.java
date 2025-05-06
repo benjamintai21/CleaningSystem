@@ -1,11 +1,13 @@
 package com.cleaningsystem.model;
 
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
-@Entity
+@Component
 public class BookingHistory {
     
     @Id
