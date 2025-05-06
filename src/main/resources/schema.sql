@@ -85,7 +85,7 @@ CREATE TABLE SHORTLISTEDSERVICES (
     FOREIGN KEY (cleanerId) REFERENCES USERACCOUNT(UId)
 );
 
-CREATE TABLE BOOKINGHISTORY (
+CREATE TABLE BOOKING (
 	historyId int not null auto_increment,
     serviceId int,
     homeownerId int,
