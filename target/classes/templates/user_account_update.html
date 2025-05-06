@@ -36,11 +36,13 @@
         <div class="form-row">
           <div class="form-group">
             <label for="age">Age*</label>
-            <input type="number" id="age" min="18" th:field="*{age}" required>
+            <input type="number" id="age" min="18" th:field="*{age}" disabled>
+            <input type="hidden" th:field="*{age}" />
           </div>
           <div class="form-group">
             <label for="dob">Date of Birth*</label>
-            <input type="date" id="dob" th:field="*{dob}" required>
+            <input type="date" id="dob" th:field="*{dob}" disabled>
+            <input type="hidden" th:field="*{dob}" />
           </div>
         </div>
 

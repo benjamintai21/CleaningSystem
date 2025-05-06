@@ -210,7 +210,7 @@
     <div class="container">
         <div class="left-section">
             <div class="logo">Logo</div>
-            <img src="Images/login-img.png" alt="Staff member in greeting pose" class="staff-image">
+            <img th:src="@{/images/login-img.png}" alt="Staff member in greeting pose" class="staff-image">
             <div class="welcome-text">
                 <h1>Welcome Back</h1>
                 <p>Access a wide range of professional cleaning services that fit your needs</p>
@@ -219,14 +219,11 @@
         <div class="right-section">
             <div class="login-form">
                 <h2>Join Name</h2>
-                <form id="loginForm" th:action="@{/Home}" method="post" th:object="${loginForm}">
+                <form id="loginForm" th:action="@{/UserAdminHome}" method="post" th:object="${loginForm}">
                     <div class="form-group">
                         <label for="role">Login as</label>
-                        <select id="role" class="dropdown" th:field="*{profileId}">
-                            <option value="1">Platform Manager</option>
-                            <option value="2">User Admin</option>
-                            <option value="3">Home Owner</option>
-                            <option value="4">Cleaner</option>
+                        <select id="role" class="dropdown" th:field="*{profileId}" >
+                            <option th:each="userProfileName, iterStat : ${userProfileNames}" th:value="${iterStat.index+1}"><span th:text="${userProfileName}"></span></option>
                         </select>
                     </div>
                     <div class="form-group">

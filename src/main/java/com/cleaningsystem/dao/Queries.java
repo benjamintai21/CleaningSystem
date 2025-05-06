@@ -28,6 +28,8 @@ public class Queries {
 
     public static final String GET_PROFILE_ID_BY_NAME = "SELECT profileID FROM USERPROFILE WHERE profilename = ?";
 
+    public static final String GET_PROFILE_NAMES = "SELECT profilename FROM db_cleaningsystem.userprofile ORDER BY profileID";
+
     public static final String UPDATE_USER_PROFILE = "UPDATE USERPROFILE SET profilename = ?, description = ?, suspension = ? WHERE profileID = ?"; 
 
     public static final String SET_SUSPENSION_STATUS = "UPDATE USERPROFILE SET suspension = ? WHERE profileID = ?";
