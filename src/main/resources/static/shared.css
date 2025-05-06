@@ -370,3 +370,8 @@
       font-weight: bold;
       cursor: pointer;
   }
+
+  .card-link {
+    text-decoration: none !important; /* removes underline */
+    color: black !important;          /* sets text color to black */
+  }

@@ -5,6 +5,9 @@ import com.cleaningsystem.dao.UserProfileDAO;
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class MainController {
 
     @Autowired
-    private UserAccountDAO userAccountDAO;
+    private UserAccount userAccount;
 
     @Autowired
     private UserProfileDAO userProfileDAO;
@@ -27,9 +30,9 @@ public class MainController {
     }
 
     @PostMapping("/Home")
-    public String processLogin(@ModelAttribute("loginForm") UserAccount userAccount, Model model) {
-        UserAccount loggedInUser = userAccountDAO.login(userAccount.getUsername(), userAccount.getPassword());
-        UserProfile userProfile = userProfileDAO.getProfileById(userAccount.getProfileId());
+    public String processLogin(@ModelAttribute("loginForm") UserAccount user, Model model) {
+        UserAccount loggedInUser = userAccount.login(user.getUsername(), user.getPassword());
+        UserProfile userProfile = userProfileDAO.getProfileById(user.getProfileId());
         String profileName = userProfile.getProfileName();
         // int profileId = loggedInUser.getProfileId();
         // switch (profileId) {
@@ -63,15 +66,15 @@ public class MainController {
     }
 
     @PostMapping("/CleanerUserCreation")
-    public String processCleanerSignUp(@ModelAttribute UserAccount userAccount, Model model) {
-        userAccount.setProfileId(4);
-        boolean isSuccessful = userAccountDAO.insertUserAccount(userAccount);
+    public String processCleanerSignUp(@ModelAttribute UserAccount user, Model model) {
+        user.setProfileId(4);
+        boolean isSuccessful = userAccount.insertUserAccount(user);
 
         if (isSuccessful) {
-            UserProfile userProfile = userProfileDAO.getProfileById(userAccount.getProfileId());
+            UserProfile userProfile = userProfileDAO.getProfileById(user.getProfileId());
             String profileName = userProfile.getProfileName();  
             
-            model.addAttribute("userAccountInfo", userAccount);
+            model.addAttribute("userAccountInfo", user);
             model.addAttribute("profileName", profileName);
             System.out.println("Signup successful");
             return "user_account_info";
@@ -84,22 +87,22 @@ public class MainController {
 
     @GetMapping("/UpdateUserAccount")
     public String updateUserAccount(@RequestParam String username, Model model) {
-        UserAccount userAccount = userAccountDAO.getUserByUsername(username);
-        System.out.println(userAccount.getProfileId());
-        model.addAttribute("updateUserAccountForm", userAccount);
+        UserAccount user = userAccount.getUserByUsername(username);
+        System.out.println(user.getProfileId());
+        model.addAttribute("updateUserAccountForm", user);
         return "user_account_update";
     }
 
     @PostMapping("/UpdateUserAccount")
-    public String processUpdateUserAccount(@ModelAttribute UserAccount userAccount, Model model) {
-        System.out.println(userAccount.getUid());
-        boolean isSuccessful = userAccountDAO.updateUserAccount(userAccount);
+    public String processUpdateUserAccount(@ModelAttribute UserAccount user, Model model) {
+        System.out.println(user.getUid());
+        boolean isSuccessful = userAccount.updateUserAccount(user);
 
         if (isSuccessful) {
-            UserProfile userProfile = userProfileDAO.getProfileById(userAccount.getProfileId());
+            UserProfile userProfile = userProfileDAO.getProfileById(user.getProfileId());
             String profileName = userProfile.getProfileName();
 
-            model.addAttribute("userAccountInfo", userAccount);
+            model.addAttribute("userAccountInfo", user);
             model.addAttribute("profileName", profileName);
             System.out.println("Signup successful");
             return "user_account_info";
@@ -108,6 +111,49 @@ public class MainController {
             System.out.println("Profile update failed");
             return "user_account_update";
         }
+    }
+
+    @GetMapping("/UserAccountList")
+    public String showUserAccountList(Model model) {
+        List<UserAccount> userAccounts = userAccount.getAllUsers();
+        List<String> profileNames = new ArrayList<>();
+
+        for (UserAccount user : userAccounts) {
+        UserProfile userProfile = userProfileDAO.getProfileById(user.getProfileId());
+        String profileName = userProfile.getProfileName();
+        profileNames.add(profileName);
+        }
+
+        model.addAttribute("userAccounts", userAccounts);
+        model.addAttribute("profileNames", profileNames);
+        return "user_account_list";
+    }
+
+    @GetMapping("/UserAccount")
+    public String showUserAccount(@RequestParam int uid, Model model) {
+        UserAccount user = userAccount.getUserById(uid);
+        UserProfile userProfile = userProfileDAO.getProfileById(user.getProfileId());
+        String profileName = userProfile.getProfileName();
+
+        model.addAttribute("userAccountInfo", user);
+        model.addAttribute("profileName", profileName);
+        return "user_account_info";
+    }
+
+    @GetMapping("/searchUserAccount")
+    public String searchUserAccounts(@RequestParam String query, Model model) {
+    List<UserAccount> userAccounts = userAccount.searchUsersByUsername(query);
+    List<String> profileNames = new ArrayList<>();
+
+    for (UserAccount user : userAccounts) {
+    UserProfile userProfile = userProfileDAO.getProfileById(user.getProfileId());
+    String profileName = userProfile.getProfileName();
+    profileNames.add(profileName);
+    }
+
+    model.addAttribute("userAccounts", userAccounts);
+    model.addAttribute("profileNames", profileNames);
+    return "user_account_list";
     }
 
     @GetMapping("/CreateUserProfile")
@@ -153,5 +199,43 @@ public class MainController {
             System.out.println("Profile update failed");
             return "user_profile_update";
         }
+    }
+
+    @GetMapping("/UserProfileList")
+    public String showUserProfileList(Model model) {
+        List<UserProfile> userProfiles = userProfileDAO.getAllProfiles();
+        List<Integer> profilesUserCounter = new ArrayList<>();
+
+        for (UserProfile userProfile : userProfiles) {
+            List<UserAccount> userAccounts = userAccount.searchUsersByProfileId(userProfile.getProfileId());
+            profilesUserCounter.add(userAccounts.size());
+        }
+
+        model.addAttribute("userProfiles", userProfiles);
+        model.addAttribute("profilesUserCounter", profilesUserCounter);
+        return "user_profile_list";
+    }
+
+    @GetMapping("/UserProfile")
+    public String showUserProfile(@RequestParam int profileId, Model model) {
+        UserProfile userProfile = userProfileDAO.getProfileById(profileId);
+    
+        model.addAttribute("userProfileInfo", userProfile);
+        return "user_profile_info";
+    }
+
+    @GetMapping("/searchUserProfile")
+    public String searchUserProfile(@RequestParam String query, Model model) {
+    List<UserProfile> userProfiles = userProfileDAO.searchProfilesByName(query);
+    List<Integer> profilesUserCounter = new ArrayList<>();
+
+    for (UserProfile userProfile : userProfiles) {
+        List<UserAccount> userAccounts = userAccount.searchUsersByProfileId(userProfile.getProfileId());
+        profilesUserCounter.add(userAccounts.size());
+    }
+
+    model.addAttribute("userProfiles", userProfiles);
+    model.addAttribute("profilesUserCounter", profilesUserCounter);
+    return "user_profile_list";
     }
 }

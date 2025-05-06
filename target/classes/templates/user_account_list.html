@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User List</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+<body>
+
+  <div class="main-wrapper">
+
+    <!-- Header -->
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a href="#" class="nav-home">Home</a>
+        <a href="#" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="form-title">User List</div>
+
+    <!-- Back + Search -->
+    <div class="register-container">
+      <a href="#" class="back-btn">← Back</a>
+
+      <!-- Search -->
+      <form class="search-bar" th:action="@{/searchUserAccount(query=${query})}" method="GET">
+        <input type="text" placeholder="Search users..." name="query" />
+        <button type="submit" class="search-btn">&#x1F50D;</button>
+      </form>    
+
+      <!-- User Cards -->
+      <a th:each="userAccount, iterStat : ${userAccounts}" 
+      th:href="@{/UserAccount(uid=${userAccount.uid})}" 
+      style="text-decoration: none; color: #1C1C1C; display: block;">
+      <div class="user-card">
+        <div>
+          <p><strong>Name: </strong><span th:text="${userAccount.name}"></span></p>
+          <p><strong>Email: </strong><span th:text="${userAccount.email}"></span></p>
+        </div>
+        <div>
+          <p><strong>Role: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
+          <div class="thin-arrow"></div>
+        </div>
+      </div>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>
