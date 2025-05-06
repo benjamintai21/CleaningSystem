@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Creation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="main-wrapper">
+      <!-- Header -->
+      <div class="header-box">
+        <div class="logo">Logo</div>
+        <div class="nav-actions">
+          <a href="#" class="nav-home">Home</a>
+          <a href="#" class="logout-btn">Logout</a>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="form-title">User Profile Creation</div>
+
+      <!-- Back -->
+      <div class="register-container">
+        <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
+      </div>
+
+      <form th:action="@{/CreateUserProfile}" method="post" th:object="${userProfileForm}">
+        <div class="form-container1">
+          <div class="form-group1">
+              <label for="profileName" class="form-label1">Profile Name</label>
+              <input type="text" id="profileName" class="form-control1" th:field="*{profileName}">
+          </div>
+
+          <div class="form-group1">
+              <label for="profileDescription" class="form-label1">Profile Description</label>
+              <textarea id="profileDescription" class="form-control1" th:field="*{description}"></textarea>
+          </div>
+        </div>
+      
+        <div class="form-actions">
+            <button type="reset" class="reset-btn" onclick="document.querySelector('form').reset()">Reset</button>
+            <button type="submit" class="submit-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+</body>
+</html>
