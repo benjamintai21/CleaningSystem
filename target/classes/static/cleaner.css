@@ -35,7 +35,7 @@ select,textarea{
     font-size: 16px;
   }
 .cleaner_arrow{
-    width: 15px;
+    width:15px;
     height: 15px;
     margin-left: 0;
     margin-top: 1.75vh;
@@ -60,12 +60,12 @@ select,textarea{
 }
 .activated{
     transform: rotate(315deg);
-    margin-top: 3vh;
+    margin-top: 3.25vh;
 }
 .fullsize{
     width: 100%;
     p{
-        width: 33vh;
+        width: 30vh;
     }
 }
 .extendedtext{
@@ -80,4 +80,13 @@ select,textarea{
 }
 .none{
     display: none !important;
+}
+.record{
+    background-image: url(../image/Record_icon.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 4vh;
+    width: 4vw;
+    background-position: center;
+    margin-bottom: -1vh;
 }

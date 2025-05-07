@@ -13,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpSession;
+
+
 @Controller
 @RequestMapping("/")
 public class Boundary {
@@ -34,6 +37,12 @@ public class Boundary {
         model.addAttribute("loginForm", new UserAccount());
         model.addAttribute("userProfileNames", userProfileNames);
         return "login";
+    }
+
+    @GetMapping("/Logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Clears the session
+        return "redirect:/login"; // Redirect to login page
     }
 
     @PostMapping("/UserAdminHome")
