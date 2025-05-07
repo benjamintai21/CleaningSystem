@@ -42,7 +42,7 @@ public class Boundary {
     @GetMapping("/Logout")
     public String logout(HttpSession session) {
         session.invalidate(); // Clears the session
-        return "redirect:/login"; // Redirect to login page
+        return "redirect:/Login"; // Redirect to login page
     }
 
     @PostMapping("/UserAdminHome")
