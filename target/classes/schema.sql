@@ -26,8 +26,9 @@ CREATE TABLE USERACCOUNT (
     password varchar(32) not null,
     profileID int not null,
     accountCreated date not null,
+    suspended bool default false,
 
-    PRIMARY KEY(UID),
+    PRIMARY KEY(UId),
     CONSTRAINT unique_username UNIQUE (username),
     
     FOREIGN KEY (profileID) REFERENCES USERPROFILE(profileID)

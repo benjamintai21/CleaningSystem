@@ -52,10 +52,11 @@ public class Boundary {
         return "redirect:/Login"; // Redirect to login page
     }
 
-    @PostMapping("/UserAdminHome")
+    @PostMapping("/RedirectToPage")
     public String processLogin(@ModelAttribute("loginForm") UserAccount user, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
             UserAccount loggedInUser = userAccountC.login(user.getUsername(), user.getPassword(), user.getProfileId());
+            System.out.println(user.getProfileId());
 
             if (loggedInUser == null) {
                 redirectAttributes.addFlashAttribute("toastMessage", "Invalid username or password");
@@ -65,32 +66,15 @@ public class Boundary {
             UserProfile userProfile = userProfileC.getProfileById(loggedInUser.getProfileId());
             String profileName = userProfile.getProfileName();
 
-            session.setAttribute("UId", loggedInUser.getUid());
+            session.setAttribute("uid", loggedInUser.getUid());
             session.setAttribute("username", loggedInUser.getUsername());
             session.setAttribute("profileId", loggedInUser.getProfileId());
-            // int profileId = loggedInUser.getProfileId();
-            // switch (profileId) {
-            //     case 1:
-            //         // return "PM_Home";
-            //         break;
-            //     case 2:
-            //         // return "User_Admin_Home";
-            //         break;
-            //     case 3:
-            //         // return "Home_Owner_Home";
-            //         break;
-            //     case 4:
-            //         // return "Cleaner_Home";
-            //         break;
-            // }
-
-            
 
             model.addAttribute("userAccountInfo", loggedInUser);
             model.addAttribute("profileName", profileName);
-            model.addAttribute("username", loggedInUser.getUsername());  
+            // model.addAttribute("username", loggedInUser.getUsername());  
 
-            return profileName.toLowerCase().trim().replaceAll(" ", "") + "_home_page";
+            return "redirect:/" + profileName.trim().replaceAll(" ", "") + "Home";
             //return "user_account_info";
 
         } catch (Exception e) {
@@ -98,6 +82,32 @@ public class Boundary {
             return "redirect:/Login";
         }
     }
+
+    //--AdminPage
+    @GetMapping("/UserAdminHome")
+    public String showUserAdminHome(HttpSession session, Model model) {
+        model.addAttribute("username", session.getAttribute("username"));
+        return "useradmin_home_page";
+    }
+
+    @GetMapping("/CleanerHome")
+    public String showCleanerHome(HttpSession session, Model model) {
+        model.addAttribute("username", session.getAttribute("username"));
+        return "cleaner_home_page";
+    }
+
+    @GetMapping("/HomeOwnerHome")
+    public String showHomeOwnerHome(HttpSession session, Model model) {
+        model.addAttribute("username", session.getAttribute("username"));
+        return "homeowner_home_page";
+    }
+
+    @GetMapping("/PlatformManagerHome")
+    public String showPlatformManagerHome(HttpSession session, Model model) {
+        model.addAttribute("username", session.getAttribute("username"));
+        return "platformmanager_home_page";
+    }
+
 
     //Create User aAccount
     @GetMapping("/CleanerUserCreation")
@@ -154,9 +164,9 @@ public class Boundary {
 
     //Update User Account
     @GetMapping("/UpdateUserAccount")
-    public String updateUserAccount(@RequestParam String username, Model model) {
+    public String showUpdateUserAccount(@RequestParam String username, Model model) {
         UserAccount user = userAccountC.ViewUserAccount(username);
-        model.addAttribute("updateUserAccountForm", user);
+        model.addAttribute("userAccountInfo", user);
         return "user_account_update";
     }
 
@@ -178,10 +188,32 @@ public class Boundary {
     }
 
     //Suspend User Accounts
-    @PostMapping("/SuspendUserAccount")
-    public String suspendUserAccounts(@ModelAttribute UserAccount user, Model model) {
-        return "user_account_suspend";
+    @GetMapping("/SuspendUserAccount")
+    public String showSuspendUserAccount(@RequestParam int uid, Model model) {
+        UserAccount user = userAccountC.ViewUserAccount(uid);
+        model.addAttribute("userAccountInfo", user); // Make sure this matches the form data type
+        return "user_account_info";
     }
+
+    @PostMapping("/SuspendUserAccount")
+    public String processSuspendUserAccount(@ModelAttribute UserAccount user, Model model) {
+    boolean isSuccessful = userAccountC.SuspendUserAccount(user.getUid()); 
+
+    if (isSuccessful) {
+        UserAccount updatedUser = userAccountC.ViewUserAccount(user.getUid());
+        System.out.println(updatedUser.getSuspended()); // <-- re-fetch after update
+        UserProfile userProfile = userProfileC.getProfileById(updatedUser.getProfileId());
+        String profileName = userProfile.getProfileName();
+
+        model.addAttribute("userAccountInfo", updatedUser); // Use the updated user
+        model.addAttribute("profileName", profileName);
+        model.addAttribute("message", "User suspended successfully");
+    } else {
+        model.addAttribute("error", "Failed to suspend user");
+    }
+
+    return "user_account_info";
+}
 
     //Search User Account
     @GetMapping("/searchUserAccount")
@@ -296,8 +328,8 @@ public class Boundary {
 
     @PostMapping("/CleanerCreateService")
     public String processServiceListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
-        Integer Uid = (Integer) session.getAttribute("UId");
-        boolean isSuccessful = serviceListingC.CreateServiceListing(serviceListing.getName(), Uid, serviceListing.getCategory(),
+        Integer uid = (Integer) session.getAttribute("uid");
+        boolean isSuccessful = serviceListingC.CreateServiceListing(serviceListing.getName(), uid, serviceListing.getCategory(),
                                                                         serviceListing.getDescription(), serviceListing.getPricePerHour(), serviceListing.getStatus(),
                                                                         serviceListing.getStartDate(), serviceListing.getEndDate());
         if (isSuccessful) {

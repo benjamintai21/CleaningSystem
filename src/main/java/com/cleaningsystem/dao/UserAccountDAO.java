@@ -30,7 +30,7 @@ public class UserAccountDAO {
     };
 
     public UserAccount login(String username, String password, int profileId) {
-        List<UserAccount> users = jdbcTemplate.query(LOGIN, userRowMapper, username, password);
+        List<UserAccount> users = jdbcTemplate.query(LOGIN, userRowMapper, username, password, profileId);
         return users.isEmpty() ? null : users.get(0);
     }
 
@@ -57,8 +57,8 @@ public class UserAccountDAO {
             name,age,sqlDob,gender,address,email,username,password,profileId, Uid) > 0;
     }
 
-    public boolean deleteUserAccount(int uid) {
-        return jdbcTemplate.update(DELETE_USER_ACCOUNT, uid) > 0;
+    public boolean suspendUserAccount(int uid) {
+        return jdbcTemplate.update(SUSPEND_USER_ACCOUNT, uid) > 0;
     }
 
     public List<UserAccount> searchUsersByUsername(String keyword) {

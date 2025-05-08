@@ -21,6 +21,7 @@ public class UserAccount {
 	private String username;
 	private String password;
 	private int profileId;
+	private boolean suspended;
 		
 	// No-args constructor
 	public UserAccount() {}
@@ -60,7 +61,8 @@ public class UserAccount {
 	public String getUsername() {return username;}
 	public String getPassword() {return password;}
 	public int getProfileId() {return profileId;}
-	
+	public boolean getSuspended() {return suspended;}
+
 	//Setters
 	public void setUid(int new_uid) {this.uid = new_uid;}
 	public void setName(String new_name) {this.name = new_name;}
@@ -72,7 +74,8 @@ public class UserAccount {
 	public void setUsername(String new_username) {this.username = new_username;}
 	public void setPassword(String new_password) {this.password = new_password;}
 	public void setProfileId(int new_profileId) {this.profileId = new_profileId;}
-	
+	public void setSuspended(boolean new_suspended) {this.suspended = new_suspended;}
+
 	@Override
 	public String toString() {
 		return "UserAccount{" +

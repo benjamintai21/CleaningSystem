@@ -24,7 +24,7 @@
     <div class="register-container">
       <a th:href="@{UserAdminHome}" class="back-btn">← Back</a>
 
-      <form th:action="@{/UpdateUserAccount}" method="post" th:object="${updateUserAccountForm}">
+      <form th:action="@{/UpdateUserAccount}" method="post" th:object="${userAccountInfo}">
         <input type="hidden" th:field="*{uid}" />
         <div class="form-row">
           <div class="form-group full-width">

@@ -13,7 +13,7 @@ public class Queries {
 
     public static final String UPDATE_USER_ACCOUNT = "UPDATE USERACCOUNT SET name = ?, age = ?, dob = ?, gender = ?, address = ?, email = ?, username = ?, password = ?, profileID = ? WHERE UID = ?";
     
-    public static final String DELETE_USER_ACCOUNT = "DELETE FROM USERACCOUNT WHERE UID = ?";
+    public static final String SUSPEND_USER_ACCOUNT = "UPDATE USERACCOUNT SET suspended = true WHERE UId = ?";
 
     public static final String SEARCH_USER_ACCOUNT_BY_USERNAME = "SELECT * FROM USERACCOUNT WHERE username LIKE ?";
 
