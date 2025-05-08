@@ -14,8 +14,8 @@ public class UserAccountController {
     @Autowired
 	private UserAccountDAO userAccountDAO;
 
-    public UserAccount login(String username, String password) {
-        return userAccountDAO.login(username, password);	
+    public UserAccount login(String username, String password, int profileId) {
+        return userAccountDAO.login(username, password, profileId);	
     }
 
     public boolean CreateAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {

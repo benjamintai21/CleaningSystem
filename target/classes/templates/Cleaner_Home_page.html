@@ -7,10 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <link th:href="@{/shared.css}" rel ="stylesheet" type="text/css"/>
   <link th:href="@{/cleaner.css}" rel ="stylesheet" type="text/css"/>
-  <link th:href="@{/style.css}" rel ="stylesheet" type="text/css"/>
-  <!-- <link rel="stylesheet" href="./style/shared.css" />
-  <link rel="stylesheet" href="./style/cleaner.css" /> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}">
 </head>
 <body>
 
@@ -36,22 +33,27 @@
       <!-- User Account Section -->
       <h3 class="section-title">Manage Services</h3>
       <div class="action-card-row">
+        <a th:href="@{/CleanerCreateService}" class="action_link">
         <div class="action-card">
           <div class="icon"><i class="fa-solid fa-user-plus"></i></div>
-          <a th:href="@{/CleanerCreateService}"><h4>Create A New Service Listing</h4></a>
+          <h4>Create A New Service Listing</h4>
           <p>Offer New Services to Employers</p>
         </div>
+        </a>
+        <a th:href="@{/CleanerUpdateService}" class="action_link">
         <div class="action-card">
           <div class="icon"><i class="fa-solid fa-pen"></i></div>
-          <a th:href="@{/CleanerUpdateService}"><h4>Update A Service Listing</h4></a>
+          <h4>Update A Service Listing</h4>
           <p>Modify an existing service</p>
         </div>
+        </a>
+        <a th:href="@{/CleanerSearchService}" class="action_link">
         <div class="action-card">
           <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-          <a th:href="@{/CleanerSearchService}"><h4>Search My Service Listings</h4></a>
-          <h4>Search Services</h4>
-          <p>View and Search all services.</p>
+          <h4>Search My Listings</h4>
+          <p>View and Search my services.</p>
         </div>
+        </a>
         <div class="action-card">
         <div class="icon"><i class="fa-solid record"></i></div>
           <h4>My Service Records</h4>

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -52,13 +53,13 @@ public class Boundary {
     }
 
     @PostMapping("/UserAdminHome")
-    public String processLogin(@ModelAttribute("loginForm") UserAccount user, Model model, HttpSession session) {
+    public String processLogin(@ModelAttribute("loginForm") UserAccount user, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
-            UserAccount loggedInUser = userAccountC.login(user.getUsername(), user.getPassword());
+            UserAccount loggedInUser = userAccountC.login(user.getUsername(), user.getPassword(), user.getProfileId());
 
             if (loggedInUser == null) {
-                model.addAttribute("error", "Invalid username or password");
-                return "login";
+                redirectAttributes.addFlashAttribute("toastMessage", "Invalid username or password");
+                return "redirect:/Login";
             }
 
             UserProfile userProfile = userProfileC.getProfileById(loggedInUser.getProfileId());
@@ -89,12 +90,12 @@ public class Boundary {
             model.addAttribute("profileName", profileName);
             model.addAttribute("username", loggedInUser.getUsername());  
 
-            return profileName.toLowerCase().strip() + "_home_page";
+            return profileName.toLowerCase().trim().replaceAll(" ", "") + "_home_page";
             //return "user_account_info";
 
         } catch (Exception e) {
-            model.addAttribute("error", "An unexpected error occurred");
-            return "login";
+            redirectAttributes.addFlashAttribute("toastMessage", "Invalid username or password");
+            return "redirect:/Login";
         }
     }
 
@@ -231,7 +232,7 @@ public class Boundary {
         return "user_profile_info";
     }
 
-    @GetMapping("/UserProfileList")
+    @GetMapping("/ViewAllUserProfiles")
     public String showUserProfileList(Model model) {
         List<UserProfile> userProfiles = userProfileC.getAllProfiles();
         List<Integer> profilesUserCounter = new ArrayList<>();

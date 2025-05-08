@@ -29,7 +29,7 @@ public class UserAccountDAO {
         return user;
     };
 
-    public UserAccount login(String username, String password) {
+    public UserAccount login(String username, String password, int profileId) {
         List<UserAccount> users = jdbcTemplate.query(LOGIN, userRowMapper, username, password);
         return users.isEmpty() ? null : users.get(0);
     }

@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>User List</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
   <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}">
 </head>
 <body>
 
@@ -21,22 +22,24 @@
     </div>
 
     <!-- Title -->
-    <div class="form-title">User List</div>
+    <div class="form-title">User Profile List</div>
 
     <!-- Back + Search -->
     <div class="register-container">
-      <a href="#" class="back-btn">← Back</a>
+      <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
 
       <!-- Search -->
       <form class="search-bar" th:action="@{/searchUserProfile(query=${query})}" method="GET">
         <input type="text" placeholder="Search users..." name="query" />
-        <button type="submit" class="search-btn">&#x1F50D;</button>
+        <button type="submit" class="search-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </form>     
 
       <!-- User Cards -->
       <a th:each="userProfile, iterStat : ${userProfiles}" 
       th:href="@{/UserProfile(profileId=${userProfile.profileId})}" 
-      style="text-decoration: none; color: #1C1C1C; display: block;">
+      class="action_link">
       <div class="user-card">
         <div>
           <p><strong>Profile Name: </strong><span th:text="${userProfile.profileName}"></span></p>

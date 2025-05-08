@@ -2,7 +2,7 @@ package com.cleaningsystem.dao;
 
 public class Queries {
     //Login
-    public static final String LOGIN = "SELECT * FROM USERACCOUNT WHERE username = ? AND password = ?";
+    public static final String LOGIN = "SELECT * FROM USERACCOUNT WHERE username = ? AND password = ? AND profileId = ?";
 
     //User Admin
     public static final String CREATE_USER_ACCOUNT = "INSERT INTO USERACCOUNT (name, age, dob, gender, address, email, username, password, profileId, accountCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
