@@ -9,11 +9,11 @@
     margin: auto;
 }
 .shortlistimg{
-    background-image: url(../image/shortlist.png);
+    background-image: url(../images/shortlist.png);
 
 }
 .viewimg{
-    background-image: url(../image/view.png);
+    background-image: url(../images/view.png);
 }
 .edit_flex{
     flex-direction: column;
@@ -82,7 +82,7 @@ select,textarea{
     display: none !important;
 }
 .record{
-    background-image: url(../image/Record_icon.png);
+    background-image: url(../images/Record_icon.png);
     background-size: contain;
     background-repeat: no-repeat;
     height: 4vh;

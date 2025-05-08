@@ -13,7 +13,6 @@ VALUES ('Home Owner', 'Hiring cleaners for jobs', 0);
 INSERT INTO USERPROFILE (profileName, description, suspension)
 VALUES ('Cleaner', 'Responsible for cleaning jobs', 0);
 
-
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
 values ('Admin', 25, '2001-01-01', 'Male', '123 Clementi', 'admin@gmail.com', 'admin', 'password', 2, '2025-04-19');
 

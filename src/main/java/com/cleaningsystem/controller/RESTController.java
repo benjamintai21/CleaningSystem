@@ -57,7 +57,7 @@ public class RESTController {
                 return ResponseEntity.badRequest().body("Password is required");
             }
 
-            UserAccount user = userAccountDAO.login(username, password);
+            UserAccount user = userAccountDAO.login(username, password, loginRequest.getProfileId());
             if (user != null) {
                 return ResponseEntity.ok(user);
             } else {
