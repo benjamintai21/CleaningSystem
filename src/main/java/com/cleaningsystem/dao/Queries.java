@@ -83,9 +83,13 @@ public class Queries {
 
     public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT sl.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerUID = ? AND sl.name LIKE ?";
 
-    //Booking History
-    public static final String GET_COMPLETED_SERVICES = "SELECT * FROM BOOKINGY WHERE status = 'completed' AND homeownerId = ?";
+    //Booking
+    public static final String GET_COMPLETED_SERVICES = "SELECT * FROM BOOKING WHERE status = 'completed' AND homeownerId = ?";
     
-    public static final String SEARCH_PAST_BOOKINGS = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND bh.homeownerId = ? AND sl.name LIKE ?";  
+    public static final String SEARCH_PAST_BOOKINGS = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND bh.homeownerId = ? AND sl.name LIKE ?";
+
+    public static final String GET_CONFIRMED_MATCHES = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ?";
+
+    public static final String SEARCH_CONFIRMED_MATCHES = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ? AND sl.name LIKE ?";
 }         
 

@@ -4,13 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import com.cleaningsystem.model.Booking;
+
 import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;
 import java.util.List;
-import com.cleaningsystem.model.Booking;
+
 
 @Repository
-public class BookingDao {
+public class BookingDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -22,13 +24,24 @@ public class BookingDao {
         booking.setStatus(rs.getString("status"));
         return booking;
     };
-    
-    public List<Booking> getPastBookings(int homeownerUID) {
-        return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerUID);
+
+    // HomeOwner
+    public List<Booking> getPastBookings(int homeownerUId) {
+        return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerUId);
     }
 
-    public List<Booking> searchPastBookings(int homeownerUID, String keyword) {
+    public List<Booking> searchPastBookings(int homeownerUId, String keyword) {
         String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_PAST_BOOKINGS, listingRowMapper, homeownerUID, pattern);
+        return jdbcTemplate.query(SEARCH_PAST_BOOKINGS, listingRowMapper, homeownerUId, pattern);
+    }
+
+    // CLeaner
+    public List<Booking> getConfirmedMatches(int cleanerId) {
+        return jdbcTemplate.query(GET_CONFIRMED_MATCHES, listingRowMapper, cleanerId);
+    }
+
+    public List<Booking> searchConfirmedMatches(int cleanerId, String keyword) {
+        String pattern = "%" + keyword + "%";
+        return jdbcTemplate.query(SEARCH_CONFIRMED_MATCHES, listingRowMapper, cleanerId, pattern);
     }
 }
