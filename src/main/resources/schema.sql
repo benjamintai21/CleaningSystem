@@ -78,7 +78,7 @@ CREATE TABLE SHORTLISTEDSERVICES (
     serviceId int,
     cleanerId int,
     
-    PRIMARY KEY (homeownerUID, serviceID),
+    PRIMARY KEY (homeownerUId, serviceId),
     
     FOREIGN KEY (homeownerUId) REFERENCES USERACCOUNT(UId),
     FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId),

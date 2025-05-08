@@ -33,46 +33,38 @@ public class ServiceListingDAO {
 
 
     //Cleaner
-    public boolean createListing(ServiceListing listing) {
-        java.sql.Date sqlStart = java.sql.Date.valueOf(listing.getStartDate());
-        java.sql.Date sqlEnd = java.sql.Date.valueOf(listing.getEndDate());
-        int rows_affected = jdbcTemplate.update(CREATE_SERVICE_LISTING, 
-            listing.getName(), listing.getCleanerId(), listing.getCategory(), listing.getDescription(), listing.getPricePerHour(),
-            sqlStart, sqlEnd, listing.getStatus());
-
-        return rows_affected > 0;
+    public boolean createListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
+                                    String status, String startDate, String endDate) {
+        java.sql.Date sqlStart = java.sql.Date.valueOf(startDate);
+        java.sql.Date sqlEnd = java.sql.Date.valueOf(endDate);
+        return jdbcTemplate.update(CREATE_SERVICE_LISTING, 
+        name, cleanerId, categoryId, description, price_per_hour, status, sqlStart, sqlEnd) > 0;
     }
 
-    public ServiceListing getListingById(int listingId) {
-        List<ServiceListing> listings = jdbcTemplate.query(GET_SERVICE_LISTING_BY_ID, listingRowMapper, listingId);
+    public ServiceListing getListingById(int serviceId , int cleanerId) {
+        List<ServiceListing> listings = jdbcTemplate.query(GET_SERVICE_LISTING_BY_ID, listingRowMapper, serviceId, cleanerId);
         return listings.isEmpty() ? null : listings.get(0);
     }
 
-    public List<ServiceListing> getListingsByCleanerId(int cleanerId) {
-        return jdbcTemplate.query(GET_SERVICE_LISTING_BY_CLEANER_ID, listingRowMapper, cleanerId);
-    }
-
-    public boolean updateListing(ServiceListing listing) {
+    public boolean updateListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
+                                    String status, String startDate, String endDate, int serviceId) {
         return jdbcTemplate.update(UPDATE_SERVICE_LISTING, 
-        listing.getName(), listing.getCleanerId(), listing.getCategory(), listing.getDescription(), listing.getPricePerHour(),
-        listing.getStatus(), listing.getServiceId()) > 0;
+        name, cleanerId, categoryId, description, price_per_hour, 
+        status, startDate, endDate, serviceId) > 0;
     }
 
     public boolean deleteListing(int listingId) {
         return jdbcTemplate.update(DELETE_SERVICE_LISTING, listingId) > 0;
     }
 
-    public List<ServiceListing> searchMyServiceListings(int cleanerId, String keyword){
+    public List<ServiceListing> searchMyListings(int cleanerId, String keyword){
         String pattern = "%" + keyword + "$";
-        return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING, listingRowMapper, pattern);
+        return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING, listingRowMapper, cleanerId, pattern);
     }
 
     public List<ServiceListing> getAllListings(){
         return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
     }
-
-
-
 
     //HomeOwner
     public List<ServiceListing> searchListingsByService(String keyword) {

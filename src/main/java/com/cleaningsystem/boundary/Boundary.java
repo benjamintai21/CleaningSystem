@@ -2,8 +2,12 @@ package com.cleaningsystem.boundary;
 
 import com.cleaningsystem.controller.UserAccountController;
 import com.cleaningsystem.controller.UserProfileController;
+import com.cleaningsystem.controller.ServiceListingController;
+import com.cleaningsystem.controller.ServiceCategoriesController;
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
+import com.cleaningsystem.model.ServiceListing;
+import com.cleaningsystem.model.ServiceCategories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,8 @@ public class Boundary {
     @Autowired
     private UserProfileController userProfileC;
 
+    @Autowired ServiceListingController serviceListingC;
+
     @GetMapping("/")
     public String showHomePage(){
         return "home";
@@ -46,7 +52,7 @@ public class Boundary {
     }
 
     @PostMapping("/UserAdminHome")
-    public String processLogin(@ModelAttribute("loginForm") UserAccount user, Model model) {
+    public String processLogin(@ModelAttribute("loginForm") UserAccount user, Model model, HttpSession session) {
         try {
             UserAccount loggedInUser = userAccountC.login(user.getUsername(), user.getPassword());
 
@@ -58,10 +64,33 @@ public class Boundary {
             UserProfile userProfile = userProfileC.getProfileById(loggedInUser.getProfileId());
             String profileName = userProfile.getProfileName();
 
+            session.setAttribute("UId", loggedInUser.getUid());
+            session.setAttribute("username", loggedInUser.getUsername());
+            session.setAttribute("profileId", loggedInUser.getProfileId());
+            // int profileId = loggedInUser.getProfileId();
+            // switch (profileId) {
+            //     case 1:
+            //         // return "PM_Home";
+            //         break;
+            //     case 2:
+            //         // return "User_Admin_Home";
+            //         break;
+            //     case 3:
+            //         // return "Home_Owner_Home";
+            //         break;
+            //     case 4:
+            //         // return "Cleaner_Home";
+            //         break;
+            // }
+
+            
+
             model.addAttribute("userAccountInfo", loggedInUser);
             model.addAttribute("profileName", profileName);
+            model.addAttribute("username", loggedInUser.getUsername());  
 
-            return "user_account_info";
+            return profileName.toLowerCase().strip() + "_home_page";
+            //return "user_account_info";
 
         } catch (Exception e) {
             model.addAttribute("error", "An unexpected error occurred");
@@ -256,4 +285,52 @@ public class Boundary {
     model.addAttribute("profilesUserCounter", profilesUserCounter);
     return "user_profile_list";
     }
+
+    //Cleaner
+    @GetMapping("/CleanerCreateService")
+    public String showServiceListing(Model model) {
+        model.addAttribute("serviceListing", new ServiceListing());
+        return "cleaner_create_service_listing";
+    }
+
+    @PostMapping("/CleanerCreateService")
+    public String processServiceListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
+        Integer Uid = (Integer) session.getAttribute("UId");
+        boolean isSuccessful = serviceListingC.CreateServiceListing(serviceListing.getName(), Uid, serviceListing.getCategory(),
+                                                                        serviceListing.getDescription(), serviceListing.getPricePerHour(), serviceListing.getStatus(),
+                                                                        serviceListing.getStartDate(), serviceListing.getEndDate());
+        if (isSuccessful) {
+            model.addAttribute("serrviceListingInfo", serviceListing);
+            System.out.println("Service Listing creation successful");
+            return "user_profile_info";
+        } else {
+            model.addAttribute("error", "Service Listing creation failed! Please try again.");
+            System.out.println("Service Listing creation failed");
+            return "cleaner_create_service_listing";
+        }
+    }
+
+    @GetMapping("/CleanerUpdateService")
+    public String showUpdateListing(Model model) {
+        model.addAttribute("serviceListing", new ServiceListing());
+        return "cleaner_update_service_listing";
+    }
+
+    // @PostMapping("/CleanerUpdateService")
+    // public String processUpdateListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
+
+    // public String createService(@ModelAttribute UserProfile userProfile, Model model) {
+    //     boolean isSuccessful = serviceListingC.(userProfile);
+
+    //     if (isSuccessful) {
+    //         model.addAttribute("userProfileInfo", userProfile);
+    //         System.out.println("Signup successful");
+    //         return "user_profile_info";
+    //     } else {
+    //         model.addAttribute("error", "Profile creation failed! Please try again.");
+    //         System.out.println("Profile creation failed");
+    //         return "cleaner_user_creation";
+    //     }
+        
+    // }
 }

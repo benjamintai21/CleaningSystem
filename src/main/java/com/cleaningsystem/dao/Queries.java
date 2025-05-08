@@ -41,9 +41,7 @@ public class Queries {
     //Cleaner
     public static final String CREATE_SERVICE_LISTING = "INSERT INTO SERVICELISTINGS (name, cleanerID, categoryID, description, price_per_hour, startDate, endDate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     
-    public static final String GET_SERVICE_LISTING_BY_ID = "SELECT * FROM SERVICELISTINGS WHERE serviceId = ?";
-
-    public static final String GET_SERVICE_LISTING_BY_CLEANER_ID = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ?";
+    public static final String GET_SERVICE_LISTING_BY_ID = "SELECT * FROM SERVICELISTINGS WHERE serviceId = ? and cleanerId = ?";
     
     public static final String UPDATE_SERVICE_LISTING = "UPDATE SERVICELISTINGS SET name = ?, cleanerId = ?, categoryId = ?, description = ?, price_per_hour = ?, status = ? WHERE serviceId = ?";
     
@@ -86,8 +84,8 @@ public class Queries {
     public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT sl.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerUID = ? AND sl.name LIKE ?";
 
     //Booking History
-    public static final String GET_COMPLETED_SERVICES = "SELECT * FROM BOOKINGHISTORY WHERE status = 'completed' AND homeownerId = ?";
+    public static final String GET_COMPLETED_SERVICES = "SELECT * FROM BOOKINGY WHERE status = 'completed' AND homeownerId = ?";
     
-    public static final String SEARCH_PAST_BOOKINGS = "SELECT bh.*, sl.name FROM BOOKINGHISTORY bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND bh.homeownerId = ? AND sl.name LIKE ?";  
+    public static final String SEARCH_PAST_BOOKINGS = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND bh.homeownerId = ? AND sl.name LIKE ?";  
 }         
 
