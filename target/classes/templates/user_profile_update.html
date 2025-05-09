@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update User Profile</title>
-    <link th:href="{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
+    <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
     <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -14,7 +14,7 @@
       <div class="header-box">
         <div class="logo">Logo</div>
         <div class="nav-actions">
-          <a href="#" class="nav-home">Home</a>
+          <a th:href="@{/UserAdminHome}" class="nav-home">Home</a>
           <a th:href="@{/Logout}" class="logout-btn">Logout</a>
         </div>
       </div>

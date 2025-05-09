@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import com.cleaningsystem.model.ServiceListing;
+import com.cleaningsystem.model.ServiceCategory;
 
 import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;
@@ -20,7 +21,13 @@ public class ServiceListingDAO {
         listing.setServiceId(rs.getInt("serviceId"));
         listing.setName(rs.getString("name"));
         listing.setCleanerId(rs.getInt("cleanerId"));
-        listing.setCategory(rs.getInt("categoryId"));
+        
+        ServiceCategory category = new ServiceCategory();
+        category.setCategoryId(rs.getInt("categoryId"));
+        // Optional: if your query joins with category table and includes category name
+        // category.setName(rs.getString("categoryName"));
+        listing.setServiceCategory(category);
+
         listing.setDescription(rs.getString("description"));
         listing.setPricePerHour(rs.getDouble("price_per_hour"));
         listing.setStartDate(rs.getDate("startDate").toLocalDate().toString());

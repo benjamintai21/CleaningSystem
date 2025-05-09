@@ -29,7 +29,7 @@
     <div class="header-box">
       <div class="logo">Logo</div>
       <div class="nav-actions">
-        <a href="#" class="nav-home">Home</a>
+        <a th:href="@{/UserAdminHome}" class="nav-home">Home</a>
         <a th:href="@{/Logout}" class="logout-btn">Logout</a>
       </div>
     </div>
@@ -39,7 +39,7 @@
 
     <!-- Back Button -->
     <div class="register-container">
-      <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
+      <a th:href="@{/UserAdminHome}" class="back-btn">← Back</a>
 
       <!-- Account Info Box -->
       <div class="account-box" th:object="${userAccountInfo}">

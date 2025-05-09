@@ -8,7 +8,7 @@ public class ServiceListing {
     private int serviceId;
     private String name;
     private int cleanerId;
-    private int category;
+    private ServiceCategory category;
     private String description;
     private double price_per_hour;
     private String startDate;
@@ -22,7 +22,7 @@ public class ServiceListing {
     public ServiceListing() {}
 
     // Constructor without Id
-    public ServiceListing(String name, int cleanerId, int category, String description, double price_per_hour, String startDate, String endDate,
+    public ServiceListing(String name, int cleanerId, ServiceCategory category, String description, double price_per_hour, String startDate, String endDate,
                          String status) {
         this.name = name;
         this.cleanerId = cleanerId;
@@ -38,7 +38,7 @@ public class ServiceListing {
     public int getServiceId() { return serviceId; }
     public String getName() { return name; }
     public int getCleanerId() { return cleanerId; }
-    public int getCategory() {return category; }
+    public ServiceCategory getServiceCategory() {return category; }
     public String getDescription() { return description; }
     public double getPricePerHour() { return price_per_hour; }
     public String getStartDate() { return startDate; }
@@ -54,7 +54,7 @@ public class ServiceListing {
     public void setName(String new_name) { this.name = new_name; }
     public void setCleanerId(int new_cleanerId) { this.cleanerId = new_cleanerId; }
     public void setDescription(String new_description) { this.description = new_description; }
-    public void setCategory(int new_category) { this.category = new_category; }
+    public void setServiceCategory(ServiceCategory new_category) { this.category = new_category; }
     public void setPricePerHour(double new_price) { this.price_per_hour = new_price; }
     public void setStartDate(String new_startDate) { this.startDate = new_startDate; }
     public void setEndDate(String new_endDate) { this.endDate = new_endDate; }

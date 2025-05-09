@@ -1,4 +1,3 @@
-E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\ServiceCategoriesController.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\BookingDAO.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\PlatformManager.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\RESTController.java
@@ -8,19 +7,20 @@ E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\boundary\B
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\Queries.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserAccountController.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\UserProfile.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceCategory.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserProfileController.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\UserAccountDAO.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\RESTUserPController.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\config\DatabaseConfig.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\ServiceCategoryDAO.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\UserAdmin.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\CleaningSystemApplication.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\config\WebConfig.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\Booking.java
-E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\ServiceCategoriesDAO.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\ServiceListingController.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceListing.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\dao\UserProfileDAO.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\db\DatabaseConnection.java
-E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\ServiceCategories.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\Cleaner.java
+E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\controller\ServiceCategoryController.java
 E:\UNI\WorkSpace\Java\CleaningSystem\src\main\java\com\cleaningsystem\model\UserAccount.java

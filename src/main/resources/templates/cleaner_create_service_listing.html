@@ -15,7 +15,7 @@
     <div class="header-box">
       <div class="logo">Logo</div>
       <div class="nav-actions">
-        <a th:href="@{/CleanerHomePage}" class="nav-home">Home</a>
+        <a th:href="@{/CleanerHome}" class="nav-home">Home</a>
         <a th:href="@{/Logout}" class="logout-btn">Logout</a>
       </div>
     </div>
@@ -23,7 +23,7 @@
     <div class="form-title">Create Service Listing</div>
 
     <div class="register-container">
-      <a th:href="@{/UserAdminHome}" class="back-btn">← Back</a>
+      <a th:href="@{/CleanerHome}" class="back-btn">← Back</a>
 
       <form th:action="@{/CreateServiceListing}" method="post" th:object="${serviceListing}">
         <input type="hidden" th:field="*{serviceId}" />
@@ -38,10 +38,12 @@
         <div class="form-row">
           <div class="form-group full-width">
             <label for="S_Category">Service Category*</label>
-            <select id="S_Category" th:field="*{category}" required>
-                <option th:each="serviceCategory : ${serviceCategories}" 
-                        th:value="${serviceCategory}" 
-                        th:text="${serviceCategory}"></option>
+            <select id="S_Category" class="dropdown" th:field="*{serviceCategory.categoryId}" required>
+              <option value="" disabled selected>Select a category</option>
+              <option th:each="category : ${serviceCategory}" 
+                      th:value="${category.categoryId}" 
+                      th:text="${category.name}">
+              </option>
             </select>
           </div>
         </div>

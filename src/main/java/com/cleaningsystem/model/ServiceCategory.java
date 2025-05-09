@@ -3,7 +3,7 @@ package com.cleaningsystem.model;
 import jakarta.persistence.Entity;
 
 @Entity
-public class ServiceCategories {
+public class ServiceCategory {
 	
 	private int categoryId;
     private String type;
@@ -11,15 +11,15 @@ public class ServiceCategories {
     private String description;
 
     // Constructors
-    public ServiceCategories() {}
+    public ServiceCategory() {}
 
-    public ServiceCategories(String type, String name, String description){
+    public ServiceCategory(String type, String name, String description){
         this.type = type;
         this.name = name;
         this.description = description;
     }
 
-	public ServiceCategories(int categoryId, String type, String name, String description) {
+	public ServiceCategory(int categoryId, String type, String name, String description) {
 		this.categoryId = categoryId;
 		this.type = type;
 		this.name = name;

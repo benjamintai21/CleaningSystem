@@ -3,11 +3,11 @@ package com.cleaningsystem.boundary;
 import com.cleaningsystem.controller.UserAccountController;
 import com.cleaningsystem.controller.UserProfileController;
 import com.cleaningsystem.controller.ServiceListingController;
-import com.cleaningsystem.controller.ServiceCategoriesController;
+import com.cleaningsystem.controller.ServiceCategoryController;
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
 import com.cleaningsystem.model.ServiceListing;
-import com.cleaningsystem.model.ServiceCategories;
+import com.cleaningsystem.model.ServiceCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,11 @@ public class Boundary {
     @Autowired
     private UserProfileController userProfileC;
 
-    @Autowired ServiceListingController serviceListingC;
+    @Autowired 
+    private ServiceListingController serviceListingC;
+
+    @Autowired
+    private ServiceCategoryController serviceCategoryC;
 
     @GetMapping("/")
     public String showHomePage(){
@@ -56,15 +60,14 @@ public class Boundary {
     public String processLogin(@ModelAttribute("loginForm") UserAccount user, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
         try {
             UserAccount loggedInUser = userAccountC.login(user.getUsername(), user.getPassword(), user.getProfileId());
-            System.out.println(user.getProfileId());
 
             if (loggedInUser == null) {
                 redirectAttributes.addFlashAttribute("toastMessage", "Invalid username or password");
                 return "redirect:/Login";
             }
-
             UserProfile userProfile = userProfileC.getProfileById(loggedInUser.getProfileId());
             String profileName = userProfile.getProfileName();
+            System.out.println(loggedInUser.getProfileId());
 
             session.setAttribute("uid", loggedInUser.getUid());
             session.setAttribute("username", loggedInUser.getUsername());
@@ -187,13 +190,13 @@ public class Boundary {
         }
     }
 
-    //Suspend User Accounts
-    @GetMapping("/SuspendUserAccount")
-    public String showSuspendUserAccount(@RequestParam int uid, Model model) {
-        UserAccount user = userAccountC.ViewUserAccount(uid);
-        model.addAttribute("userAccountInfo", user); // Make sure this matches the form data type
-        return "user_account_info";
-    }
+    // //Suspend User Accounts
+    // @GetMapping("/SuspendUserAccount")
+    // public String showSuspendUserAccount(@RequestParam int uid, Model model) {
+    //     UserAccount user = userAccountC.ViewUserAccount(uid);
+    //     model.addAttribute("userAccountInfo", user); // Make sure this matches the form data type
+    //     return "user_account_info";
+    // }
 
     @PostMapping("/SuspendUserAccount")
     public String processSuspendUserAccount(@ModelAttribute UserAccount user, Model model) {
@@ -212,24 +215,24 @@ public class Boundary {
         model.addAttribute("error", "Failed to suspend user");
     }
 
-    return "user_account_info";
-}
+    return "redirect:/ViewUserAccount?uid=" + user.getUid();
+    }
 
     //Search User Account
     @GetMapping("/searchUserAccount")
     public String searchUserAccounts(@RequestParam String query, Model model) {
-    List<UserAccount> userAccounts = userAccountC.SearchUser(query);
-    List<String> profileNames = new ArrayList<>();
+        List<UserAccount> userAccounts = userAccountC.SearchUser(query);
+        List<String> profileNames = new ArrayList<>();
 
-    for (UserAccount user : userAccounts) {
-    UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
-    String profileName = userProfile.getProfileName();
-    profileNames.add(profileName);
-    }
+        for (UserAccount user : userAccounts) {
+            UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
+            String profileName = userProfile.getProfileName();
+            profileNames.add(profileName);
+        }
 
-    model.addAttribute("userAccounts", userAccounts);
-    model.addAttribute("profileNames", profileNames);
-    return "user_account_list";
+        model.addAttribute("userAccounts", userAccounts);
+        model.addAttribute("profileNames", profileNames);
+        return "user_account_list";
     }
 
     //Create User Profile
@@ -306,32 +309,33 @@ public class Boundary {
     //Search User Profile
     @GetMapping("/searchUserProfile")
     public String searchUserProfile(@RequestParam String query, Model model) {
-    List<UserProfile> userProfiles = userProfileC.searchProfilesByName(query);
-    List<Integer> profilesUserCounter = new ArrayList<>();
+        List<UserProfile> userProfiles = userProfileC.searchProfilesByName(query);
+        List<Integer> profilesUserCounter = new ArrayList<>();
 
-    for (UserProfile userProfile : userProfiles) {
-        List<UserAccount> userAccounts = userAccountC.SearchUser(userProfile.getProfileId());
-        profilesUserCounter.add(userAccounts.size());
-    }
+        for (UserProfile userProfile : userProfiles) {
+            List<UserAccount> userAccounts = userAccountC.SearchUser(userProfile.getProfileId());
+            profilesUserCounter.add(userAccounts.size());
+        }
 
-    model.addAttribute("userProfiles", userProfiles);
-    model.addAttribute("profilesUserCounter", profilesUserCounter);
-    return "user_profile_list";
+        model.addAttribute("userProfiles", userProfiles);
+        model.addAttribute("profilesUserCounter", profilesUserCounter);
+        return "user_profile_list";
     }
 
     //Cleaner
     @GetMapping("/CleanerCreateService")
     public String showServiceListing(Model model) {
+        List<ServiceCategory> categories = serviceCategoryC.GetAllCategories(); // Your service call
         model.addAttribute("serviceListing", new ServiceListing());
+        model.addAttribute("serviceCategory", categories);
         return "cleaner_create_service_listing";
     }
 
     @PostMapping("/CleanerCreateService")
     public String processServiceListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
         Integer uid = (Integer) session.getAttribute("uid");
-        boolean isSuccessful = serviceListingC.CreateServiceListing(serviceListing.getName(), uid, serviceListing.getCategory(),
-                                                                        serviceListing.getDescription(), serviceListing.getPricePerHour(), serviceListing.getStatus(),
-                                                                        serviceListing.getStartDate(), serviceListing.getEndDate());
+        boolean isSuccessful = serviceListingC.CreateServiceListing(serviceListing.getName(), uid, serviceListing.getServiceCategory().getCategoryId(),
+                                                                        serviceListing.getDescription(), serviceListing.getPricePerHour(), serviceListing.getStatus(),                                                                  serviceListing.getStartDate(), serviceListing.getEndDate());
         if (isSuccessful) {
             model.addAttribute("serrviceListingInfo", serviceListing);
             System.out.println("Service Listing creation successful");
