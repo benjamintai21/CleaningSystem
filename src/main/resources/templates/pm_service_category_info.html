@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Service Category</title>
+  <script>
+    function openPopup() {
+      document.getElementById('popup-modal').style.display = 'flex';
+    }
+  
+    function closePopup() {
+      document.getElementById('popup-modal').style.display = 'none';
+    }
+  
+    // Attach openPopup to Delete button
+    document.querySelector('.delete-btn').addEventListener('click', function (e) {
+      e.preventDefault(); // Prevent default action if needed
+      openPopup();
+    });
+  </script>
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/pm_styles.css}" type="text/css">
+</head>
+<body>
+
+  <div class="main-wrapper">
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a th:href="@{/PlatformManagerHome}" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <div class="form-title">View Service Category</div>
+
+    <div class="register-container">
+        <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
+      
+        <div class="form-box" th:object="${serviceCategoryInfo}">
+          <div class="account-box">
+            <p><strong>Service Category Type: </strong><span th:text="*{type}"></span></p>
+            <p><strong>Service Category Name: </strong><span th:text="*{name}"></span></p>
+          
+            <p><strong>Service Category Description: </strong></span></p>
+            <div class="view-description-box">
+              <span th:text="*{description}"></span>
+            </div>
+          </div>
+      
+        <div class="form-actions">
+            <a th:href="@{/UpdateServiceCategory(categoryId=${serviceCategoryInfo.categoryId})}" class="link-btn">Update Info</a>
+            <button class="delete-btn" onclick="openPopup()">Delete</button>
+        </div>
+      </div>
+  </div>
+  <!-- Popup Modal for Delete Confirmation -->
+  <form class="service-form"  th:action="@{/DeleteServiceCategory(categoryId=${serviceCategoryInfo.categoryId})}" method="post" th:object="${serviceCategoryInfo}">
+    <div id="popup-modal" class="popup-overlay">
+      <div class="popup-box">
+        <h3>Are you sure?</h3>
+        <p>You are deleting a service category</p>
+        <p>Category Id: <span th:text="*{categoryId}"></span></p>
+        <p>Category type: <span th:text="*{type}"></span></p>
+        <p>Category name: <span th:text="*{name}"></span></p>
+        <p>This action is irreversible</p>
+        <div class="popup-buttons">
+          <button onclick="closePopup()" class="popup-cancel">Cancel</button>
+          <button class="popup-delete" type="submit">Delete</button>
+        </div>
+      </div>
+    </div>
+  </form> 
+</body>
+</html>

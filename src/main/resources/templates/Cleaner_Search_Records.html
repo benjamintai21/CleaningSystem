@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User List</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+    <!-- <link href="style/shared.css" rel="stylesheet" type="text/css"/> -->
+    <link href="style/cleaner.css" rel="stylesheet" type="text/css"/>
+<body>
+
+  <div class="main-wrapper">
+
+    <!-- Header -->
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a href="#" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="form-title">Record of completed services</div>
+
+    <!-- Back + Search -->
+    <div class="register-container">
+      <a href="#" class="back-btn">← Back</a>
+
+      <!-- Search -->
+      <form class="search-bar" th:action="@{/searchUserAccount(query=${query})}" method="GET">
+        <input type="text" placeholder="Search users..." name="query" />
+        <button type="submit" class="search-btn">&#x1F50D;</button>
+      </form>    
+
+      <!-- User Cards -->
+      <a th:each="userAccount, iterStat : ${userAccounts}" 
+      th:href="@{/UserAccount(uid=${userAccount.uid})}" 
+      style="text-decoration: none; color: #1C1C1C; display: flex;">
+
+      <div class="user-card cleanercard edit_flex" >
+          <div class="flex_row fullsize">
+        <div>
+          <p><strong>Service Name: </strong><span th:text="${userAccount.name}"></span></p>
+            <div class="emptyspace"></div>
+          <p><strong>Service Type: </strong><span th:text="${userAccount.email}"></span></p>
+        </div>
+          <br>
+        <div>
+            <p><strong>Home Owner: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
+            <div class="emptyspace"></div>
+           <p><strong>Status: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
+
+        </div>
+          <!--              auto increment of data tab number pls-->
+            <a data-tab="1" onclick="activate(this)">
+<!--                make the id auto increase with tab value eg id = arrow+ tab value-->
+                <div class="thin-arrow cleaner_arrow unactivated" id="arrow1"></div>
+            </a>    
+        </div>
+          <!--          id = card+ datatab value-->
+        <div class="extendedtext edit_flex none" id ="card1">
+            <div class="emptyspace"></div>
+            <p class="S_desc_alignment"><strong>Service Description: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
+            <div class="account-box S_description">
+
+              <span th:text="*{ServiceName}"></span>
+    <!--            insert description data here    -->
+
+            </div>
+          
+          
+        </div>
+          
+      </div>
+      </a>
+    </div>
+  </div>
+<script src="cleaner.js"></script>
+</body>
+</html>

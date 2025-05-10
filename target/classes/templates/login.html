@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Service Login</title>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+          const toast = document.getElementById('toast');
+          if (toast.classList.contains('show')) {
+            setTimeout(() => {
+              toast.classList.remove('show');
+            }, 3000); // Hide after 3 seconds
+          }
+        });
+    </script>
+    <link th:href="@{/login.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="logo">Logo</div>
+            <img th:src="@{/images/login-img.png}" alt="Staff member in greeting pose" class="staff-image">
+            <div class="welcome-text">
+                <h1>Welcome Back</h1>
+                <p>Access a wide range of professional cleaning services that fit your needs</p>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="login-form">
+                <h2>Join Name</h2>
+                <form id="loginForm" th:action="@{/RedirectToPage}" method="post" th:object="${loginForm}">
+                    <div class="form-group">
+                        <label for="role">Login as</label>
+                        <select id="role" class="dropdown" th:field="*{profileId}" >
+                            <option th:each="userProfileName, iterStat : ${userProfileNames}" th:value="${iterStat.index}"><span th:text="${userProfileName}"></span></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="input-field" th:field="*{username}" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="password-row">
+                            <label for="password">Password</label>
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+                        <input type="password" id="password" class="input-field" th:field="*{password}" required>
+                    </div>
+                    <button type="submit" class="login-button">Login</button>
+                </form>
+                <div class="signup-text">
+                    Don't have an account yet? <a th:href="@{/CleanerUserCreation}">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="toast" class="toast" 
+        th:text="${toastMessage}" 
+        th:classappend="${toastMessage} ? ' show' : ''">
+    </div>
+    
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const signupLink = document.getElementById('signupLink');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const role = document.getElementById('role').value;
+                
+                if (username && password) {
+                    // Here you would normally send the data to a server
+                    console.log('Login attempt:', {
+                        username,
+                        password: '****', // Don't log actual password
+                        role
+                    });
+                    
+                    // Simulate successful login
+                    alert('Login successful!');
+                    // Redirect would happen here in a real application
+                } else {
+                    alert('Please fill in all required fields');
+                }
+            });
+            
+            signupLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Redirecting to sign up page...');
+                // Redirect would happen here in a real application
+            });
+        });
+    </script> -->
+</body>
+</html>

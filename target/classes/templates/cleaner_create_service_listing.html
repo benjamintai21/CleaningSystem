@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Service Listing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+  <link th:href="@{/cleaner.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+  <div class="main-wrapper">
+
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a th:href="@{/CleanerHome}" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <div class="form-title">Create Service Listing</div>
+
+    <div class="register-container">
+      <a th:href="@{/CleanerHome}" class="back-btn">← Back</a>
+
+      <form th:action="@{/CleanerCreateService}" method="post" th:object="${serviceListing}">
+        <input type="hidden" th:field="*{serviceId}" />
+        <input type="hidden" th:field="*{cleanerId}"/>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_name">Service Name*</label>
+            <input type="text" id="S_name" th:field="*{name}" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_Category">Service Category*</label>
+            <select id="S_Category" class="dropdown" th:field="*{categoryId}" required>
+              <option value="0" disabled selected>Select a category</option>
+              <option th:each="category : ${serviceCategories}" 
+                      th:value="${category.categoryId}" 
+                      th:text="${category.type + ' - ' + category.name}">
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_Description">Service Price*</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="text" id="S_Price" th:field="*{pricePerHour}" required />
+          </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_StartDate">Start Date*</label>
+            <input type="date" id="S_StartDate" th:field="*{startDate}" required></input>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_EndDate">End Date*</label>
+            <input type="date" id="S_EndDate" th:field="*{endDate}" required></input>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_Description">Service Description*</label>
+            <textarea id="S_Description" th:field="*{description}" rows="8" cols="20" required></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_Status">Service Status*</label>
+            <select id="S_Status" class="dropdown" th:field="*{status}" required>
+                <option value="0" selected disabled>Select a status</option>
+                <option th:each="serviceStatus : ${serviceStatuses}" 
+                        th:value="${serviceStatus}" 
+                        th:text="${serviceStatus}">
+                </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="reset" class="reset-btn" onclick="document.querySelector('form').reset()">Reset</button>
+          <button type="submit" class="submit-btn">Submit</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</body>
+</html>

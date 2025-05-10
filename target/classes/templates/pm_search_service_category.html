@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User List</title>
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/pm_styles.css}" type="text/css">
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}">
+</head>
+<body>
+
+  <div class="main-wrapper">
+
+    <!-- Header -->
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a th:href="@{/PlatformManagerHome}" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="form-title">Search Service Category</div>
+
+    <!-- Back + Search -->
+    <div class="register-container">
+      <a href="#" class="back-btn">← Back</a>
+
+      <!-- Search -->
+      <form class="search-bar" th:action="@{/searchServiceCategory(query=${query})}" method="GET">
+        <input type="text" placeholder="Search service category..." name="query" />
+        <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>      
+
+      <!-- User Cards -->
+      <a th:each="category, iterStat : ${serviceCategories}" 
+      th:href="@{/ServiceCategory(categoryId=${category.categoryId})}" 
+      class="action_link">
+      <div class="user-card">
+        <div>
+          <p><strong>Category name: </strong><span th:text="${category.name}"></span></p>
+          <p><strong>Total Listing: </strong>(<span th:text="${serviceListingsCount[iterStat.index]}"></span>)</p>
+        </div>
+        <div>
+          <p><strong>Category-ID: </strong><span th:text="${category.categoryId}"></span></p>
+          <div class="thin-arrow"></div>
+        </div>
+      </div>
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>

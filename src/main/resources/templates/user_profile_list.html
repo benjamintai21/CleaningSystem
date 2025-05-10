@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User List</title>
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
+  <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}">
+</head>
+<body>
+
+  <div class="main-wrapper">
+
+    <!-- Header -->
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a th:href="@{/UserAdminHome}" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="form-title">User Profile List</div>
+
+    <!-- Back + Search -->
+    <div class="register-container">
+      <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
+
+      <!-- Search -->
+      <form class="search-bar" th:action="@{/searchUserProfile(query=${query})}" method="GET">
+        <input type="text" placeholder="Search users..." name="query" />
+        <button type="submit" class="search-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>     
+
+      <!-- User Cards -->
+      <a th:each="userProfile, iterStat : ${userProfiles}" 
+      th:href="@{/UserProfile(profileId=${userProfile.profileId})}" 
+      class="action_link">
+      <div class="user-card">
+        <div>
+          <p><strong>Profile Name: </strong><span th:text="${userProfile.profileName}"></span></p>
+          <p><strong>Profile-ID: </strong><span  th:text="${userProfile.profileId}"></span></p>
+        </div>
+        <div>
+          <p><strong>Total Users: </strong><span th:text="${profilesUserCounter[iterStat.index]}"></span></p>
+          <div class="thin-arrow"></div>
+        </div>
+      </div>
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>

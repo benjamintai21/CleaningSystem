@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Management</title>
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
+  <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}">
+</head>
+<body>
+
+  <div class="main-wrapper">
+    <!-- Header Section -->
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a th:href="@{/UserAdminHome}" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <!-- Welcome Message -->
+    <div class="user-management-header">
+      <h2>Hello <span th:text="${username}">Admin’s Name.</span></h2>
+      <p>Welcome To User Management</p>
+    </div>
+
+    <!-- All User Action Boxes Container -->
+    <div class="action-container-outline">
+
+      <!-- User Account Section -->
+      <h3 class="section-title">User Account</h3>
+      <div class="action-card-row">
+        <a th:href="@{/CleanerUserCreation}" class="action_link">
+            <div class="action-card">
+                <div class="icon"><i class="fa-solid fa-user-plus"></i></div>
+                <h4>Create Cleaner Account</h4>
+                <p>Add new cleaner’s account</p>
+            </div>
+        </a>
+        <a th:href="@{/ViewAllUserAccounts}" class="action_link">
+            <div class="action-card">
+                <div class="icon"><i class="fa-solid fa-pen"></i></div>
+                <h4>Update User Account</h4>
+                <p>Modify an existing user account</p>
+            </div>
+        </a>
+        <a th:href="@{/ViewAllUserAccounts}" class="action_link">
+            <div class="action-card">
+                <div class="icon"><i class="fa-solid fa-ban"></i></div>
+                <h4>Suspend User Account</h4>
+                <p>Temporary disable an user account</p>
+            </div>
+        </a>
+        <a th:href="@{/ViewAllUserAccounts}" class="action_link">
+            <div class="action-card">
+                <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <h4>Search User Account</h4>
+                <p>View and Search an user account</p>
+            </div>
+        </a>
+      </div>
+
+
+      <!-- Divider -->
+      <hr class="divider"/>
+
+      <!-- User Profile Section -->
+      <h3 class="section-title">User Profile</h3>
+      <div class="action-card-row">
+        <a th:href="@{/CreateUserProfile}" class="action_link">
+            <div class="action-card">
+                <div class="icon"><i class="fa-solid fa-user-plus"></i></div>
+                <h4>Create User Profile</h4>
+                <p>Add new user’s profile</p>
+            </div>
+        </a>
+        <a th:href="@{/ViewAllUserProfiles}" class="action_link">
+            <div class="action-card">
+                <div class="icon"><i class="fa-solid fa-pen"></i></div>
+                <h4>Update User Profile</h4>
+                <p>Modify an existing user profile.</p>
+            </div>
+        </a>
+        <a th:href="@{/ViewAllUserProfiles}" class="action_link">
+            <div class="action-card">
+                <div class="icon"><i class="fa-solid fa-ban"></i></div>
+                <h4>Suspend User Profile</h4>
+                <p>Temporary disable an user profile</p>
+            </div>
+        </a>
+        <a th:href="@{/ViewAllUserProfiles}" class="action_link">
+            <div class="action-card">
+                <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <h4>Search User Profile</h4>
+                <p>View and Search an user profile.</p>
+            </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

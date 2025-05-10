@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Service Category</title>
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/pm_styles.css}" type="text/css">
+</head>
+<body>
+
+  <div class="main-wrapper">
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a th:href="@{/PlatformManagerHome}" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <div class="form-title">Create Service Category</div>
+
+    <div class="register-container">
+        <a href="#" class="back-btn">← Back</a>
+      
+        <div class="form-box">
+          <form class="service-form"  th:action="@{/CreateServiceCategory}" method="post" th:object="${serviceCategory}">
+
+            <div class="form-group full-width">
+              <label for="category-type">Service Category Type*</label>
+              <select id="category-type" class="dropdown" th:field="*{type}" required>
+                <option th:value="Cleaning">Cleaning</option>
+                <option th:value="Maintenance">Maintenance</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="category-name">Service Category Name*</label>
+              <input type="text" id="category-name" name="category-name" th:field="*{name}" required />
+            </div>
+      
+            <div class="form-group full-width">
+              <label for="category-description">Service Description*</label>
+              <textarea id="category-description" name="category-description" rows="10" th:field="*{description}" required></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="reset" class="reset-btn">Reset</button>
+              <button type="submit" class="submit-btn">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+</body>
+</html>

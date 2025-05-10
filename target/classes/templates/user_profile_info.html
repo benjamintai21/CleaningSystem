@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile Info</title>
+  <script>
+    function toggleDropdown() {
+      const content = document.getElementById('dropdownContent');
+      const label = document.getElementById('dropdownLabel');
+      const arrow = document.getElementById('dropdownArrow');
+
+      const isOpen = content.style.display === 'block';
+      content.style.display = isOpen ? 'none' : 'block';
+      label.textContent = isOpen ? 'Show all users' : 'Hide all users';
+      arrow.textContent = isOpen ? '▼' : '▲';
+    }
+
+    function showModal() {
+      document.getElementById("confirmModal").style.display = "block";
+    }
+  
+    function hideModal() {
+      document.getElementById("confirmModal").style.display = "none";
+    }
+  
+    function showModal2() {
+      document.getElementById("confirmModal2").style.display = "block";
+    }
+  
+    function hideModal2() {
+      document.getElementById("confirmModal2").style.display = "none";
+    }
+
+  </script>
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
+  <link th:href="@{/userprofile.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+  <div class="main-wrapper">
+
+    <!-- Top section with logo and nav -->
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a th:href="@{/UserAdminHome}" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <div class="form-title">User Profile Info</div>
+
+    <div class="register-container">
+      <a th:href="@{/UserAdminHome}" class="back-btn">← Back</a>
+
+      <!-- Profile Info -->
+      <div class="account-box" th:object="${userProfileInfo}">
+        <p><strong>Profile Name: </strong><span th:text="*{profileName}"></span></p>
+        <p><strong>Profile Description: </strong></p>
+        <p class="description-text">
+          <span th:text="*{description}"></span>
+        </p>
+      </div>            
+
+      <!-- Total Users Label -->
+        <div class="total-users-label">Total Users: <span th:text="${usersCount}"></span></div>
+
+      <!-- Dropdown -->
+        <div class="dropdown-wrapper">
+        <button id="toggleDropdown" class="dropdown-toggle" onclick="toggleDropdown()">
+            <span id="dropdownLabel">Show all users</span>
+            <span id="dropdownArrow">▼</span>
+        </button>
+
+        <div id="dropdownContent" class="dropdown-content">
+          <a th:each="userAccount, iterStat : ${userAccounts}" 
+          th:href="@{/UserAccount(uid=${userAccount.uid})}" 
+          class="action_link">
+            <div class="user-row">
+              <div class="user-left">
+                  <p><strong>Name: </strong><span th:text="*{userAccount.name}"></span></p>
+                  <p><strong>ID: </strong><span th:text="*{userAccount.uid}"></span></p>
+              </div>
+              <div class="user-right">
+                  <!-- <p><strong>Role: </strong> Home Owner</p>
+                  <span class="arrow">›</span> -->
+              </div>
+            </div>
+          </a>
+        </div>
+        </div>
+
+
+      <!-- Action Buttons -->
+      <div class="form-actions-wrapper">
+        <div class="form-actions">
+          <a th:href="@{/UpdateUserProfile(profileName=${userProfileInfo.profileName})}" class="link-btn">Update Info</a>
+          <button th:if="${userProfileInfo.suspended}" type="button" class="submit-btn" onclick="showModal2()">Unsuspend</button>
+          <button th:if="!${userProfileInfo.suspended}" type="button" class="submit-btn" onclick="showModal()">Suspend</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Your suspend form -->
+  <!-- Confirmation Modal -->
+  <form id="suspendForm" th:action="@{/SetProfileSuspensionStatus(suspended=true)}" method="post" th:object="${userProfileInfo}">
+    <div class="modal-overlay" id="confirmModal" style="display:none; position: fixed; top: 0; left: 0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+      <div class="modal-box" style="background: white; padding: 20px; max-width: 400px; margin: 10% auto; border-radius: 10px;">
+        <input type="hidden" name="uid" th:field="*{profileId}" />
+        <h2>Are you sure?</h2>
+        <p>You are suspending</p>
+
+        <p>Profile-ID: <strong><span th:text="*{profileId}">UserId</strong></span></p>
+        <p>Profile Name: <strong><span th:text="*{profileName}">Username</strong></span></p> 
+        <p><strong>Suspension Status: </strong>
+          <span th:text="*{suspended} ? 'Suspended' : 'Active'"></span>
+        </p>
+
+        <p>All users in the profile will be unable to login.</p>
+        <div style="margin-top: 20px; display: flex; justify-content: right; gap: 10px;">
+          <button type="button" class="cancel-btn" onclick="hideModal()">Cancel</button>
+          <button type="submit" class="suspension-btn" >Yes, Suspend</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Your unsuspend form -->
+  <!-- Confirmation Modal -->
+  <form id="suspendForm" th:action="@{/SetProfileSuspensionStatus(suspended=false)}" method="post" th:object="${userProfileInfo}">
+    <div class="modal-overlay" id="confirmModal2" style="display:none; position: fixed; top: 0; left: 0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+      <div class="modal-box" style="background: white; padding: 20px; max-width: 400px; margin: 10% auto; border-radius: 10px;">
+        <input type="hidden" name="uid" th:field="*{profileId}" />
+        <h2>Are you sure?</h2>
+        <p>You are unsuspending</p>
+
+        <p>Profile-ID: <strong><span th:text="*{profileId}">UserId</strong></span></p>
+        <p>Profile Name: <strong><span th:text="*{profileName}">Username</strong></span></p> 
+        <p><strong>Suspension Status: </strong>
+          <span th:text="*{suspended} ? 'Suspended' : 'Active'"></span>
+        </p>
+
+        <p>All users in the profile will be unable to login.</p>
+        <div style="margin-top: 20px; display: flex; justify-content: right; gap: 10px;">
+          <button type="button" class="cancel-btn" onclick="hideModal2()">Cancel</button>
+          <button type="submit" class="suspension-btn" >Yes, Unsuspend</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+</html>

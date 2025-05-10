@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Dashboard</title>
+    <link rel="stylesheet" th:href="@{/pm_styles.css}" type="text/css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="header-box">
+          <div class="logo">Logo</div>
+          <div class="nav-actions">
+            <a th:href="@{/PlatformManagerHome}" class="nav-home">Home</a>
+            <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+          </div>
+        </div>
+    
+        <div class="form-title">Generate Report</div>
+    
+        <div class="register-container">
+            <a href="#" class="back-btn">← Back</a>
+
+        <!-- Main Content Area -->
+        <main>
+            <!-- Main Content - Dynamic based on page -->
+            <div id="content">
+                <!-- Default page content (first image) -->
+                <div id="home-page" class="page active">
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-number">50</div>
+                            <div class="stat-label">Cleaners</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">150</div>
+                            <div class="stat-label">Home Owner</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">20</div>
+                            <div class="stat-label">Service Listing</div>
+                        </div>
+                    </div>
+
+                    <div class="report-buttons">
+                        <button class="report-btn" id="daily-btn">Generate Daily Report</button>
+                        <button class="report-btn" id="weekly-btn">Generate Weekly Report</button>
+                        <button class="report-btn" id="monthly-btn">Generate Monthly Report</button>
+                    </div>
+                </div>
+
+                <!-- Daily Report page content (second image) -->
+                <div id="daily-page" class="page">
+                    <h2>Daily Report</h2>
+                    <div class="date-selector">
+                        <label>Select day*</label>
+                        <div class="date-input-container">
+                            <input type="text" class="date-input" value="1/04/2025">
+                            <button class="generate-btn">Generate</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-label">Total Booking</div>
+                            <div class="stat-number">50</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Shortlisted</div>
+                            <div class="stat-number">100</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Home Active</div>
+                            <div class="stat-number">45</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Sign-up</div>
+                            <div class="stat-number">20</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Suspend</div>
+                            <div class="stat-number">2</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Revenue</div>
+                            <div class="stat-number">230.25 $</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Report page content (third image) -->
+                <div id="weekly-page" class="page">
+                    <h2>Weekly Report</h2>
+                    <div class="date-selector">
+                        <label>Select day*</label>
+                        <div class="date-input-container">
+                            <input type="text" class="date-input" value="8/04/2025">
+                            <button class="generate-btn">Generate</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-label">Total Booking</div>
+                            <div class="stat-number">50</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Shortlisted</div>
+                            <div class="stat-number">100</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Home Active</div>
+                            <div class="stat-number">45</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Sign-up</div>
+                            <div class="stat-number">20</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Suspend</div>
+                            <div class="stat-number">2</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Revenue</div>
+                            <div class="stat-number">230.25 $</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Report page content (fourth image) -->
+                <div id="monthly-page" class="page">
+                    <h2>Monthly Report</h2>
+                    <div class="date-selector">
+                        <label>Select month*</label>
+                        <div class="date-input-container">
+                            <input type="text" class="date-input" value="04/2025">
+                            <button class="generate-btn">Generate</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-label">Total Booking</div>
+                            <div class="stat-number">50</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Shortlisted</div>
+                            <div class="stat-number">100</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Home Active</div>
+                            <div class="stat-number">45</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Sign-up</div>
+                            <div class="stat-number">20</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Suspend</div>
+                            <div class="stat-number">2</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Total Revenue</div>
+                            <div class="stat-number">1000.25 $</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get page elements
+        const homePageElement = document.getElementById('home-page');
+        const dailyPageElement = document.getElementById('daily-page');
+        const weeklyPageElement = document.getElementById('weekly-page');
+        const monthlyPageElement = document.getElementById('monthly-page');
+        
+        // Get button elements
+        const dailyButton = document.getElementById('daily-btn');
+        const weeklyButton = document.getElementById('weekly-btn');
+        const monthlyButton = document.getElementById('monthly-btn');
+        const backButtons = document.querySelectorAll('.back-btn');
+        
+        // Function to show a specific page and hide others
+        function showPage(pageElement) {
+            // Hide all pages
+            homePageElement.classList.remove('active');
+            dailyPageElement.classList.remove('active');
+            weeklyPageElement.classList.remove('active');
+            monthlyPageElement.classList.remove('active');
+            
+            // Show the selected page
+            pageElement.classList.add('active');
+        }
+        
+        // Daily report button click handler
+        dailyButton.addEventListener('click', function() {
+            showPage(dailyPageElement);
+        });
+        
+        // Weekly report button click handler
+        weeklyButton.addEventListener('click', function() {
+            showPage(weeklyPageElement);
+        });
+        
+        // Monthly report button click handler
+        monthlyButton.addEventListener('click', function() {
+            showPage(monthlyPageElement);
+        });
+        
+        // Back button click handlers
+        backButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                showPage(homePageElement);
+            });
+        });
+        
+        // Generate button handlers
+        const generateButtons = document.querySelectorAll('.generate-btn');
+        generateButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // In a real app, this would trigger the report generation
+                alert('Generating report...');
+            });
+        });
+    });
+    </script>
+</body>
+</html>
