@@ -34,8 +34,8 @@ public class UserProfileController {
 		return userProfileDAO.updateUserProfile(profile);
 	}
 
-	public boolean setSuspension(int profileId, boolean suspension) {
-		return userProfileDAO.setSuspension(profileId, suspension);
+	public boolean setSuspensionStatus(int profileId, boolean suspension) {
+		return userProfileDAO.setSuspensionStatusForAllAccounts(profileId, suspension);
 	}
 
 	public List<UserProfile> searchProfilesByName(String keyword) {

@@ -38,11 +38,11 @@
         <div class="form-row">
           <div class="form-group full-width">
             <label for="S_Category">Service Category*</label>
-            <select id="S_Category" class="dropdown" th:field="*{serviceCategory.categoryId}" required>
+            <select id="S_Category" class="dropdown" th:field="*{categoryId}" required>
               <option value="" disabled selected>Select a category</option>
-              <option th:each="category : ${serviceCategory}" 
+              <option th:each="category : ${serviceCategories}" 
                       th:value="${category.categoryId}" 
-                      th:text="${category.name}">
+                      th:text="${category.type + ' - ' + category.name}">
               </option>
             </select>
           </div>

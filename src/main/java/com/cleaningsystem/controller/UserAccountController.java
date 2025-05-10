@@ -34,8 +34,8 @@ public class UserAccountController {
         return userAccountDAO.updateUserAccount(name, age, dob, gender, address, email, username, password, profileId, UId);
     }
 
-    public boolean SuspendUserAccount(int uid) {
-        return userAccountDAO.suspendUserAccount(uid);
+    public boolean setSuspensionStatus(int uid, boolean suspended) {
+        return userAccountDAO.setSuspensionStatus(uid, suspended);
     }
 
     public List<UserAccount> SearchUser(String keyword) {

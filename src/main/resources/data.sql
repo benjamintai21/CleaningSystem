@@ -25,6 +25,9 @@ VALUES ('Benjamin',	24,	'2001-12-12', 'Male', '123 ABC', 'ben@gmail.com', 'benja
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
 VALUES ('Andy',	26,	'1999-03-03', 'Male', '123 ABC', 'andy@gmail.com', 'andy_owner', 'owner', 3, CURRENT_DATE);
 
+INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
+VALUES ('Hubert',	35,	'1989-04-11', 'Male', '123 ASDF', 'hurt@gmail.com', 'hubert_pm', 'pm', 1, CURRENT_DATE);
+
 INSERT INTO SERVICECATEGORIES (type, name, description)
 VALUES ('Cleaning', 'Ironing', 'Ironing of clothes');
 

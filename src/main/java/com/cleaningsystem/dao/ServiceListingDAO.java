@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import com.cleaningsystem.model.ServiceListing;
-import com.cleaningsystem.model.ServiceCategory;
 
 import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;
@@ -21,13 +20,7 @@ public class ServiceListingDAO {
         listing.setServiceId(rs.getInt("serviceId"));
         listing.setName(rs.getString("name"));
         listing.setCleanerId(rs.getInt("cleanerId"));
-        
-        ServiceCategory category = new ServiceCategory();
-        category.setCategoryId(rs.getInt("categoryId"));
-        // Optional: if your query joins with category table and includes category name
-        // category.setName(rs.getString("categoryName"));
-        listing.setServiceCategory(category);
-
+        listing.setCategoryId(rs.getInt("categoryId"));
         listing.setDescription(rs.getString("description"));
         listing.setPricePerHour(rs.getDouble("price_per_hour"));
         listing.setStartDate(rs.getDate("startDate").toLocalDate().toString());
@@ -37,10 +30,8 @@ public class ServiceListingDAO {
         return listing;
     };
 
-
-
     //Cleaner
-    public boolean createListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
+    public boolean insertListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
                                     String status, String startDate, String endDate) {
         java.sql.Date sqlStart = java.sql.Date.valueOf(startDate);
         java.sql.Date sqlEnd = java.sql.Date.valueOf(endDate);
@@ -73,7 +64,7 @@ public class ServiceListingDAO {
         return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
     }
 
-    //HomeOwner
+    //HomeOwner-----------------------------------------------------
     public List<ServiceListing> searchListingsByService(String keyword) {
         String pattern = "%" + keyword + "$";
         return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_SERVICE, listingRowMapper, pattern);
@@ -83,32 +74,8 @@ public class ServiceListingDAO {
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_CLEANER, listingRowMapper, pattern);
     }
-    
-    public boolean saveServiceListing(int homeownerUID, int serviceId) {
-        int rows_affected = jdbcTemplate.update(SAVE_SHORTLISTED_SERVICE, 
-            homeownerUID, serviceId);
 
-        return rows_affected > 0;
+    public List<ServiceListing> getServiceListingsByCategory(int categoryId) {
+        return jdbcTemplate.query(GET_SERVICE_LISTING_BY_CATEGORY, listingRowMapper, categoryId);
     }
-
-    public List<ServiceListing> getShortlistedServices(int homeownerUID) {
-        return jdbcTemplate.query(GET_SHORTLISTED_SERVICES, listingRowMapper, homeownerUID);
-    }
-
-    public List<ServiceListing> searchShortlistedService(int homeownerUID, String keyword) {
-        String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_SHORTLISTED_SERVICE_BY_NAME, listingRowMapper, homeownerUID, pattern);
-    }
-
-    //???
-    public List<ServiceListing> getNumberofViews(int cleanerId){
-        return jdbcTemplate.query(GET_NO_OF_VIEWS, listingRowMapper, cleanerId);
-    }
-
-    public List<ServiceListing> getNumberOfShortlists(int serviceId){
-        return jdbcTemplate.query(GET_NO_OF_SHORTLISTS, listingRowMapper, serviceId);
-        //eg SELECT COUNT(*) FROM SHORTLISTEDSERVICES WHERE cleanerId = ? GROUP BY cleanerId;
-    }
-
-
-} 
+}

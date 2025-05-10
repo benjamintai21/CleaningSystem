@@ -13,7 +13,7 @@ public class Queries {
 
     public static final String UPDATE_USER_ACCOUNT = "UPDATE USERACCOUNT SET name = ?, age = ?, dob = ?, gender = ?, address = ?, email = ?, username = ?, password = ?, profileID = ? WHERE UID = ?";
     
-    public static final String SUSPEND_USER_ACCOUNT = "UPDATE USERACCOUNT SET suspended = true WHERE UId = ?";
+    public static final String SET_ACCOUNT_SUSPENSION_STATUS = "UPDATE USERACCOUNT SET suspended = ? WHERE UId = ?";
 
     public static final String SEARCH_USER_ACCOUNT_BY_USERNAME = "SELECT * FROM USERACCOUNT WHERE username LIKE ?";
 
@@ -32,7 +32,7 @@ public class Queries {
 
     public static final String UPDATE_USER_PROFILE = "UPDATE USERPROFILE SET profilename = ?, description = ?, suspension = ? WHERE profileID = ?"; 
 
-    public static final String SET_SUSPENSION_STATUS = "UPDATE USERPROFILE SET suspension = ? WHERE profileID = ?";
+    public static final String SET_PROFILE_SUSPENSION_STATUS = "UPDATE USERPROFILE SET suspension = ? WHERE profileID = ?";
 
     public static final String SEARCH_PROFILE_BY_NAME = "SELECT * FROM USERPROFILE WHERE profilename LIKE ?";
 
@@ -47,13 +47,15 @@ public class Queries {
     
     public static final String DELETE_SERVICE_LISTING = "DELETE FROM SERVICELISTINGS WHERE serviceId = ?";
 
-    public static final String SEARCH_MY_SERVICE_LISTING = "SELECT * FROM SERVICE LISTING WHERE WHERE cleanerId = ? and name LIKE ?";
+    public static final String SEARCH_MY_SERVICE_LISTING = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ? and name LIKE ?";
 
     public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS";
 
     public static final String GET_NO_OF_SHORTLISTS = "SELECT shortlists FROM SERVICELISTINGS WHERE cleanerId = ?";
    
     public static final String GET_NO_OF_VIEWS = "SELECT views FROM SERVICELISTINGS where cleanerId = ?";
+
+    public static final String GET_SERVICE_LISTING_BY_CATEGORY = "SELECT * FROM SERVICELISTINGS WHERE categoryId = ?";
 
     //Service Categories
     public static final String CREATE_SERVICE_CATEGORIES = "INSERT INTO SERVICECATEGORIES (type, name, description) VALUES (?, ?, ?)";
@@ -77,7 +79,9 @@ public class Queries {
 
     public static final String SAVE_SHORTLISTED_SERVICE = "INSERT INTO SHORTLISTEDSERVICES (homeownerUID, serviceId) VALUES (?, ?)";
 
-    public static final String GET_SHORTLISTED_SERVICES = "SELECT * FROM SHORTLISTEDSERVICES WHERE homeownerUID = ?";
+    public static final String GET_SHORTLIST_BY_ID = "SELECT * FROM SHORTLISTEDSERVICES WHERE serviceId = ? AND homeownerId = ?";
+
+    public static final String GET_ALL_SHORTLISTS = "SELECT * FROM SHORTLISTEDSERVICES WHERE homeownerId = ?";
 
     public  static final String DELETE_SHORTLISTED_SERVICE = "DELETE FROM SHORTLISTEDSERVICES WHERE homeownerUID = ? AND serviceId = ?";
 

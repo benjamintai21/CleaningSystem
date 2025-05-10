@@ -8,7 +8,7 @@ public class ServiceListing {
     private int serviceId;
     private String name;
     private int cleanerId;
-    private ServiceCategory category;
+    private int categoryId;
     private String description;
     private double price_per_hour;
     private String startDate;
@@ -22,11 +22,11 @@ public class ServiceListing {
     public ServiceListing() {}
 
     // Constructor without Id
-    public ServiceListing(String name, int cleanerId, ServiceCategory category, String description, double price_per_hour, String startDate, String endDate,
+    public ServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, String startDate, String endDate,
                          String status) {
         this.name = name;
         this.cleanerId = cleanerId;
-        this.category = category;
+        this.categoryId = categoryId;
         this.description = description;
         this.price_per_hour = price_per_hour;
         this.startDate = startDate;
@@ -38,7 +38,7 @@ public class ServiceListing {
     public int getServiceId() { return serviceId; }
     public String getName() { return name; }
     public int getCleanerId() { return cleanerId; }
-    public ServiceCategory getServiceCategory() {return category; }
+    public int getCategoryId() {return categoryId; }
     public String getDescription() { return description; }
     public double getPricePerHour() { return price_per_hour; }
     public String getStartDate() { return startDate; }
@@ -54,7 +54,7 @@ public class ServiceListing {
     public void setName(String new_name) { this.name = new_name; }
     public void setCleanerId(int new_cleanerId) { this.cleanerId = new_cleanerId; }
     public void setDescription(String new_description) { this.description = new_description; }
-    public void setServiceCategory(ServiceCategory new_category) { this.category = new_category; }
+    public void setCategoryId(int new_categoryId) { this.categoryId = new_categoryId; }
     public void setPricePerHour(double new_price) { this.price_per_hour = new_price; }
     public void setStartDate(String new_startDate) { this.startDate = new_startDate; }
     public void setEndDate(String new_endDate) { this.endDate = new_endDate; }

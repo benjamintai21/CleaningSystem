@@ -23,9 +23,9 @@ public class ServiceCategoryDAO {
         return category;
     };
 
-    public boolean insertServiceCategories(ServiceCategory category){
+    public boolean insertServiceCategory(String type,String name, String description){
         int rows_affected = jdbcTemplate.update(CREATE_SERVICE_CATEGORIES, 
-            category.getType(), category.getName(), category.getDescription());
+                                                type, name, description);
 
         return rows_affected > 0;
     }
@@ -40,8 +40,8 @@ public class ServiceCategoryDAO {
         return categories.isEmpty() ? null : categories.get(0);
     }
 
-    public boolean updateCategory(ServiceCategory category){
-        return jdbcTemplate.update(UPDATE_SERVICE_CATEGORY, category.getType(), category.getName(), category.getDescription(), category.getCategoryId()) > 0;
+    public boolean updateCategory(String type,String name, String description){
+        return jdbcTemplate.update(UPDATE_SERVICE_CATEGORY, type, name, description) > 0;
     }
 
     public boolean deleteCategory(int categoryId){

@@ -21,7 +21,7 @@ public class UserAccount {
 	private String username;
 	private String password;
 	private int profileId;
-	private boolean suspended;
+	private boolean suspended = false;
 		
 	// No-args constructor
 	public UserAccount() {}
@@ -45,9 +45,10 @@ public class UserAccount {
 	// Constructor with UId
 	public UserAccount(int uid, String name, int age, String dob, String gender, 
 			String address, String email, 
-			String username, String password, int profileId) {
+			String username, String password, int profileId, boolean suspended) {
 		this(name, age, dob, gender, address, email, username, password, profileId);
 		this.uid = uid;
+		this.suspended = suspended;
 	}
 	
 	//Getters
@@ -61,7 +62,7 @@ public class UserAccount {
 	public String getUsername() {return username;}
 	public String getPassword() {return password;}
 	public int getProfileId() {return profileId;}
-	public boolean getSuspended() {return suspended;}
+	public boolean isSuspended() {return suspended;}
 
 	//Setters
 	public void setUid(int new_uid) {this.uid = new_uid;}

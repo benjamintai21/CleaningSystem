@@ -75,15 +75,13 @@ CREATE TABLE REPORT (
 );
 
 CREATE TABLE SHORTLISTEDSERVICES (
-    homeownerUId int,
+    homeownerId int,
     serviceId int,
-    cleanerId int,
-    
-    PRIMARY KEY (homeownerUId, serviceId),
-    
-    FOREIGN KEY (homeownerUId) REFERENCES USERACCOUNT(UId),
-    FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId),
-    FOREIGN KEY (cleanerId) REFERENCES USERACCOUNT(UId)
+
+    PRIMARY KEY (homeownerId, serviceId),
+
+    FOREIGN KEY (homeownerId) REFERENCES USERACCOUNT(UId),
+    FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId)
 );
 
 CREATE TABLE BOOKING (
