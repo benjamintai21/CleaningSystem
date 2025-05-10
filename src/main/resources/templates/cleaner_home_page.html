@@ -16,7 +16,7 @@
     <div class="header-box">
       <div class="logo">Logo</div>
       <div class="nav-actions">
-        <a href="#" class="nav-home">Home</a>
+        <a th:href="@{/CleanerHome}" class="nav-home">Home</a>
         <a th:href="@{/Logout}" class="logout-btn">Logout</a>
       </div>
     </div>
@@ -40,25 +40,26 @@
           <p>Offer New Services to Employers</p>
         </div>
         </a>
-        <a th:href="@{/CleanerUpdateService}" class="action_link">
+        <a th:href="@{/ViewAllServiceListings}" class="action_link">
         <div class="action-card">
           <div class="icon"><i class="fa-solid fa-pen"></i></div>
           <h4>Update A Service Listing</h4>
           <p>Modify an existing service</p>
         </div>
         </a>
-        <a th:href="@{/CleanerSearchService}" class="action_link">
+        <a th:href="@{/ViewAllServiceListings}" class="action_link">
         <div class="action-card">
           <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
           <h4>Search My Listings</h4>
           <p>View and Search my services.</p>
         </div>
         </a>
+        <a th:href="@{/ViewAllServiceListings}" class="action_link"></a>
         <div class="action-card">
-        <div class="icon"><i class="fa-solid record"></i></div>
-          <h4>My Service Records</h4>
-          <p>View all records from service taken.</p>
-        </div>
+          <div class="icon"><i class="fa-solid record"></i></div>
+            <h4>My Service Records</h4>
+            <p>View all records from service taken.</p>
+          </div>
       </div>
     </div>
   </div>

@@ -19,7 +19,7 @@ public class UserAccountController {
     }
 
     public boolean CreateAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
-        return userAccountDAO.createUserAccount(name, age, dob, gender, address, email, username, password, profileId);
+        return userAccountDAO.insertUserAccount(name, age, dob, gender, address, email, username, password, profileId);
     }
 
     public UserAccount ViewUserAccount(int uid) {
@@ -46,7 +46,7 @@ public class UserAccountController {
         return userAccountDAO.searchUsersByProfileId(profileId);
     }
 
-    public List<UserAccount> GetAllUsers() {
+    public List<UserAccount> getAllUsers() {
         return userAccountDAO.getAllUsers();
     }
 }

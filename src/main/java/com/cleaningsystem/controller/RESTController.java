@@ -34,7 +34,7 @@ public class RESTController {
             }
 
             // Create the user account
-            if (userAccountDAO.createUserAccount(userAccount.getName(), userAccount.getAge(), userAccount.getDob(), userAccount.getGender(), userAccount.getAddress(), userAccount.getEmail(), userAccount.getUsername(), userAccount.getPassword(), userAccount.getProfileId())) {
+            if (userAccountDAO.insertUserAccount(userAccount.getName(), userAccount.getAge(), userAccount.getDob(), userAccount.getGender(), userAccount.getAddress(), userAccount.getEmail(), userAccount.getUsername(), userAccount.getPassword(), userAccount.getProfileId())) {
                 return ResponseEntity.ok("User account created successfully");
             } else {
                 return ResponseEntity.internalServerError().body("Failed to create user account");

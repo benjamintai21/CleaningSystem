@@ -15,8 +15,8 @@ public class ServiceListingController {
 	private ServiceListingDAO serviceListingDAO;
 
     public boolean createServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
-                                        String status, String startDate, String endDate) {
-        return serviceListingDAO.insertListing(name, cleanerId, categoryId, description, price_per_hour, status, startDate, endDate);
+                                        String startDate, String endDate, String status) {
+        return serviceListingDAO.insertListing(name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status);
     }
 
     public ServiceListing viewServiceListing(int cleanerId, int serviceId) {
@@ -36,8 +36,8 @@ public class ServiceListingController {
         return serviceListingDAO.searchMyListings(cleanerId, keyword);
     }
 
-    public List<ServiceListing> getAllListings() {
-        return serviceListingDAO.getAllListings();
+    public List<ServiceListing> getAllListings(int cleanerId) {
+        return serviceListingDAO.getAllListings(cleanerId);
     }    
 
     public List<ServiceListing> getServiceListingsByCategory(int categoryId) {

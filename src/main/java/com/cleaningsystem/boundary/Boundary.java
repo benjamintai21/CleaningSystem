@@ -38,7 +38,7 @@ public class Boundary {
     private ServiceCategoryController serviceCategoryC;
 
     @GetMapping("/")
-    public String showHomePage(){
+    public String showHomePage(Model model){
         return "home";
     }
 
@@ -148,7 +148,7 @@ public class Boundary {
 
     @GetMapping("/ViewAllUserAccounts")
     public String showUserAccountList(Model model) {
-        List<UserAccount> userAccounts = userAccountC.GetAllUsers();
+        List<UserAccount> userAccounts = userAccountC.getAllUsers();
         List<String> profileNames = new ArrayList<>();
 
         for (UserAccount user : userAccounts) {
@@ -314,13 +314,6 @@ public class Boundary {
     boolean isSuccessful = userProfileC.setSuspensionStatus(profile.getProfileId(), suspended); 
     
     if (isSuccessful) {
-        // UserProfile updatedProfile = userProfileC.getProfileById(profile.getProfileId());
-        // List<UserAccount> userAccounts = userAccountC.SearchUser(updatedProfile.getProfileId());
-        // int usersCount = userAccounts.size();
-    
-        // model.addAttribute("userProfileInfo", updatedProfile);
-        // model.addAttribute("userAccounts", userAccounts);
-        // model.addAttribute("usersCount", usersCount);
 
         if (suspended) {
         model.addAttribute("message", "User suspended successfully");
@@ -360,23 +353,57 @@ public class Boundary {
         List<ServiceCategory> categories = serviceCategoryC.getAllCategories(); // Your service call
         model.addAttribute("serviceListing", new ServiceListing());
         model.addAttribute("serviceCategories", categories);
+        model.addAttribute("serviceStatuses", ServiceListing.Status.values()); // Enum values
         return "cleaner_create_service_listing";
     }
 
     @PostMapping("/CleanerCreateService")
     public String processServiceListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
-        Integer uid = (Integer) session.getAttribute("uid");
-        boolean isSuccessful = serviceListingC.createServiceListing(serviceListing.getName(), uid, serviceListing.getCategoryId(),
-                                                                        serviceListing.getDescription(), serviceListing.getPricePerHour(), serviceListing.getStatus(),                                                                  serviceListing.getStartDate(), serviceListing.getEndDate());
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            // Redirect to login or error page if user not logged in
+            return "redirect:/Login";
+        }
+        int uid = (int) uidObj;
+        serviceListing.setCleanerId(uid);
+        boolean isSuccessful = serviceListingC.createServiceListing(serviceListing.getName(), uid , serviceListing.getCategoryId(),
+                                                                        serviceListing.getDescription(), serviceListing.getPricePerHour(),
+                                                                        serviceListing.getStartDate(), serviceListing.getEndDate(), serviceListing.getStatus());
         if (isSuccessful) {
-            model.addAttribute("serrviceListingInfo", serviceListing);
+            model.addAttribute("serviceListingInfo", serviceListing);
             System.out.println("Service Listing creation successful");
-            return "user_profile_info";
+            return "cleaner_view_service_listing";
         } else {
             model.addAttribute("error", "Service Listing creation failed! Please try again.");
             System.out.println("Service Listing creation failed");
             return "cleaner_create_service_listing";
         }
+    }
+
+    //View User Account
+    @GetMapping("/ServiceListing")
+    public String showServiceListing(@RequestParam int uid, Model model) {
+        UserAccount user = userAccountC.ViewUserAccount(uid);
+        UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
+        String profileName = userProfile.getProfileName();
+
+        model.addAttribute("userAccountInfo", user);
+        model.addAttribute("profileName", profileName);
+        return "cleaner_view_service_listing";
+    }
+
+    @GetMapping("/ViewAllServiceListings")
+    public String showServiceListingList(HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            // Redirect to login or error page if user not logged in
+            return "redirect:/Login";
+        }
+        int uid = (int) uidObj;
+
+        List<ServiceListing> servicelistings = serviceListingC.getAllListings(uid);
+        model.addAttribute("serviceListings", servicelistings);
+        return "cleaner_service_list";
     }
 
     @GetMapping("/CleanerUpdateService")
@@ -452,8 +479,5 @@ public class Boundary {
         model.addAttribute("serviceCategories", serviceCategories);
         model.addAttribute("serviceListingsCount", serviceListingsCount);
         return "pm_search_service_category";
-    }
-
-
-    
+    }    
 }

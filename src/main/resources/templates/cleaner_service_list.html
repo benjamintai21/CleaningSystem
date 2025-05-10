@@ -15,7 +15,7 @@
     <div class="header-box">
       <div class="logo">Logo</div>
       <div class="nav-actions">
-        <a href="#" class="nav-home">Home</a>
+        <a th:href="@{/CleanerHome}" class="nav-home">Home</a>
         <a th:href="@{/Logout}" class="logout-btn">Logout</a>
       </div>
     </div>
@@ -28,36 +28,38 @@
       <a href="#" class="back-btn">← Back</a>
 
       <!-- Search -->
-      <form class="search-bar" th:action="@{/searchUserAccount(query=${query})}" method="GET">
-        <input type="text" placeholder="Search users..." name="query" />
-        <button type="submit" class="search-btn">&#x1F50D;</button>
+      <form class="search-bar" th:action="@{/searchServiceListing(query=${query})}" method="GET">
+        <input type="text" placeholder="Search My Listings" name="query" />
+        <button type="submit" class="search-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </form>    
 
-      <!-- User Cards -->
-      <a th:each="userAccount, iterStat : ${userAccounts}" 
-      th:href="@{/UserAccount(uid=${userAccount.uid})}" 
-      style="text-decoration: none; color: #1C1C1C; display: block;">
+      <!--User Cards-->
+      <a th:each="serviceListing, iterStat : ${serviceListings}" 
+      th:href="@{/ServiceListing(uid=${serviceListing.serviceId})}" 
+      class="action_link">
       <div class="user-card cleanercard">
         <div>
-          <p><strong>Service Name: </strong><span th:text="${userAccount.name}"></span></p>
+          <p><strong>Service Name: </strong><span th:text="${serviceListing.name}"></span></p>
             <div class="emptyspace"></div>
-          <p><strong>Service ID: </strong><span th:text="${userAccount.email}"></span></p>
+          <p><strong>Service ID: </strong><span th:text="${serviceListing.description}"></span></p>
         </div>
           
         <div>
-            <p><strong>Status: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
+            <p><strong>Status: </strong><span th:text="${serviceListing.status}"></span></p>
             <div class="emptyspace"></div>
             <div class="stat_containerList">
                 <div class="icons viewimg"></div><div class="icons text">123</div>
                 <div class="icons shortlistimg"></div><div class="icons text">123</div>
-             </div>
+            </div>
           
         </div>
           <div class="thin-arrow cleaner_arrow"></div>
       </div>
+      </div>
       </a>
     </div>
-  </div>
 
 </body>
 </html>
