@@ -454,7 +454,7 @@ public class Boundary {
         return "cleaner_service_list";
     }
 
-    //--Platform Managerrr
+    //--Platform Managerrrr
     @GetMapping("/PlatformManagerHome")
     public String showPlatformManagerHome(HttpSession session, Model model) {
         model.addAttribute("username", session.getAttribute("username"));
