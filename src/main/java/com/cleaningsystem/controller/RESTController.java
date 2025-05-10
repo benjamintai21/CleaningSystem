@@ -113,18 +113,18 @@ public class RESTController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserAccount(@PathVariable int id) {
-        try {
-            if (userAccountDAO.suspendUserAccount(id)) {
-                return ResponseEntity.ok("User account suspended successfully");
-            } else {
-                return ResponseEntity.internalServerError().body("Failed to suspend user account");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error suspend user account: " + e.getMessage());
-        }
-    }
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<?> deleteUserAccount(@PathVariable int id) {
+    //     try {
+    //         if (userAccountDAO.suspendUserAccount(id )) {
+    //             return ResponseEntity.ok("User account suspended successfully");
+    //         } else {
+    //             return ResponseEntity.internalServerError().body("Failed to suspend user account");
+    //         }
+    //     } catch (Exception e) {
+    //         return ResponseEntity.internalServerError().body("Error suspend user account: " + e.getMessage());
+    //     }
+    // }
 
     @GetMapping
     public ResponseEntity<?> getAllUserAccounts() {

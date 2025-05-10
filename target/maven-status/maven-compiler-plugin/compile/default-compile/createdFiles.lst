@@ -1,5 +1,6 @@
 com\cleaningsystem\model\Booking.class
 com\cleaningsystem\dao\UserAccountDAO.class
+com\cleaningsystem\controller\ShortlistController.class
 com\cleaningsystem\controller\UserProfileController.class
 com\cleaningsystem\model\Cleaner.class
 com\cleaningsystem\CleaningSystemApplication.class
@@ -16,10 +17,12 @@ com\cleaningsystem\boundary\Boundary.class
 com\cleaningsystem\controller\ServiceCategoryController.class
 com\cleaningsystem\controller\ServiceListingController.class
 com\cleaningsystem\dao\ServiceListingDAO.class
+com\cleaningsystem\dao\ShortlistDAO.class
 com\cleaningsystem\db\DatabaseConnection.class
 com\cleaningsystem\dao\UserProfileDAO.class
 com\cleaningsystem\config\DatabaseConfig.class
 com\cleaningsystem\dao\Queries.class
+com\cleaningsystem\model\Shortlist.class
 com\cleaningsystem\model\ServiceCategory.class
 com\cleaningsystem\config\WebConfig.class
 com\cleaningsystem\model\ServiceListing.class

@@ -97,6 +97,8 @@ body {
     cursor: pointer;
     transition: 0.2s;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    text-decoration: none; /* Remove underline */
+    text-align: center; /* Center the text */
 }
 
 .navbar-login:hover {

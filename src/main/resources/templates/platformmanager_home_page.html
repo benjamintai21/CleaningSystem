@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Platform Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/pm_styles.css}" type="text/css">
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}">
+</head>
+<body>
+
+  <div class="main-wrapper">
+    <!-- Header -->
+    <div class="header-box">
+      <div class="logo">Logo</div>
+      <div class="nav-actions">
+        <a th:href="@{/PlatformManagerHome}" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <!-- Welcome Message -->
+    <div class="user-management-header">
+      <h2>Hello <span th:text="${username}">Platform Manager’s Name.</span></h2>
+      <p>Welcome to Platform Management.</p>
+    </div>
+
+    <!-- Outer Box for Action Cards -->
+    <div class="action-container-outline">
+
+      <!-- Section Title -->
+      <h3 class="section-title">Manage Platform</h3>
+
+      <!-- Card Row -->
+      <div class="action-card-row">
+        <a th:href="@{/ServiceCategoryCreation}" class="action_link">
+        <div class="action-card">
+          <div class="icon"><i class="fa-solid fa-plus"></i></div>
+          <h4>Create a new Service Category</h4>
+          <p>create a new service category</p>
+        </div>
+        </a>
+        <a th:href="@{/ViewAllServiceCategories}" class="action_link">
+        <div class="action-card">
+          <div class="icon"><i class="fa-solid fa-pen"></i></div>
+          <h4>Update a Service Category</h4>
+          <p>Modify the existing service category</p>
+        </div>
+        </a>
+        <a th:href="@{/ViewAllServiceCategories}" class="action_link">
+        <div class="action-card">
+          <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <h4>Search the Services Category</h4>
+          <p>View and Search all services category.</p>
+        </div>
+        </a>
+        <a th:href="@{/GenerateReports}" class="action_link">
+        <div class="action-card">
+          <div class="icon"><i class="fa-solid fa-file-lines"></i></div>
+          <h4>Generate the Reports</h4>
+          <p style="font-size: 13px;">View the reports daily, weekly, monthly</p>
+        </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

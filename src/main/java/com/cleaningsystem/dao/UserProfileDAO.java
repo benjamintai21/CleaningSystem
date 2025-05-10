@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
 import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;
@@ -14,6 +16,9 @@ import java.util.List;
 public class UserProfileDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	private UserAccountDAO userAccountDAO;
 
 	private final RowMapper<UserProfile> profileRowMapper = (ResultSet rs, int rowNum) -> {
 		UserProfile profile = new UserProfile();
@@ -52,8 +57,30 @@ public class UserProfileDAO {
 			profile.getProfileId()) > 0;
 	}
 
-	public boolean setSuspension(int profileId, boolean suspension) {
-		return jdbcTemplate.update(SET_SUSPENSION_STATUS, suspension, profileId) > 0;
+	@Transactional
+	public boolean setSuspensionStatusForAllAccounts(int profileId, boolean suspension) {
+		List<UserAccount> userAccounts = userAccountDAO.searchUsersByProfileId(profileId);
+	
+		try {
+			for (UserAccount user : userAccounts) {
+				boolean userSuspensionUpdated = userAccountDAO.setSuspensionStatus(user.getUid(), suspension);
+				
+				if (!userSuspensionUpdated) {
+					throw new RuntimeException("Failed to update user suspension for user ID: " + user.getUid());
+				}
+			}
+			
+			int processProfileSuspension = jdbcTemplate.update(SET_PROFILE_SUSPENSION_STATUS, suspension, profileId);
+		
+			if (processProfileSuspension <= 0) {
+				throw new RuntimeException("Failed to update profile suspension status for profile ID: " + profileId);
+			}
+
+			return true;
+	
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public List<UserProfile> searchProfilesByName(String keyword) {

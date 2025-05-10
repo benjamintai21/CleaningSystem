@@ -61,7 +61,7 @@ public class RESTUserPController {
         return ResponseEntity.status(403).body("Forbidden: Admins only");
     }
 
-    boolean suspended = userProfileDAO.setSuspension(id, true);
+    boolean suspended = userProfileDAO.setSuspensionStatusForAllAccounts(id, true);
 
     return suspended
             ? ResponseEntity.ok("Profile suspended successfully.")

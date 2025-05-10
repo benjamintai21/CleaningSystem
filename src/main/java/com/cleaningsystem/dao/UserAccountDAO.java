@@ -26,6 +26,7 @@ public class UserAccountDAO {
         user.setEmail(rs.getString("email"));
         user.setUsername(rs.getString("username"));
         user.setProfileId(rs.getInt("profileId"));
+        user.setSuspended(rs.getBoolean("suspended"));
         return user;
     };
 
@@ -57,8 +58,8 @@ public class UserAccountDAO {
             name,age,sqlDob,gender,address,email,username,password,profileId, Uid) > 0;
     }
 
-    public boolean suspendUserAccount(int uid) {
-        return jdbcTemplate.update(SUSPEND_USER_ACCOUNT, uid) > 0;
+    public boolean setSuspensionStatus(int uid, boolean suspended) {
+        return jdbcTemplate.update(SET_ACCOUNT_SUSPENSION_STATUS, suspended, uid) > 0;
     }
 
     public List<UserAccount> searchUsersByUsername(String keyword) {

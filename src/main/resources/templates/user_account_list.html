@@ -37,7 +37,7 @@
 
       <!-- User Cards -->
       <a th:each="userAccount, iterStat : ${userAccounts}" 
-      th:href="@{/ViewUserAccount(uid=${userAccount.uid})}" 
+      th:href="@{/UserAccount(uid=${userAccount.uid})}" 
       class="action_link">
       <div class="user-card">
         <div>

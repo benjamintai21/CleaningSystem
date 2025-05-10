@@ -482,3 +482,42 @@
   .action_link:hover {
     color: black; /* Optional: keep color on hover */
   }
+
+  a.link-btn {
+    display: inline-block; /* Makes the link behave like a button */
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    color: var(--black);
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline */
+    text-align: center; /* Center the text */
+    }
+  
+    a.link-btn:hover {
+    /* Optional: Add a hover effect for interaction */
+    background-color: #e6e6e6; /* You can define a hover color */
+    }
+
+    .cancel-btn {
+      background-color: #e6e6e6;
+      border: none;
+      border-radius: 3px;
+      padding: 8px 15px;
+      color: var(--black);
+      font-weight: bold;
+      cursor: pointer;
+  }
+  
+    .suspension-btn {
+      background-color: #D62828;
+      border: none;
+      border-radius: 3px;
+      padding: 8px 15px;
+      color: var(--white);
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-block;
+    }

@@ -65,6 +65,10 @@ public class Boundary {
                 redirectAttributes.addFlashAttribute("toastMessage", "Invalid username or password");
                 return "redirect:/Login";
             }
+            if (loggedInUser.isSuspended()) {
+                redirectAttributes.addFlashAttribute("toastMessage", "Your account has been suspended");
+                return "redirect:/Login";
+            }
             UserProfile userProfile = userProfileC.getProfileById(loggedInUser.getProfileId());
             String profileName = userProfile.getProfileName();
             System.out.println(loggedInUser.getProfileId());
@@ -105,14 +109,7 @@ public class Boundary {
         return "homeowner_home_page";
     }
 
-    @GetMapping("/PlatformManagerHome")
-    public String showPlatformManagerHome(HttpSession session, Model model) {
-        model.addAttribute("username", session.getAttribute("username"));
-        return "platformmanager_home_page";
-    }
-
-
-    //Create User aAccount
+    //Create User Account
     @GetMapping("/CleanerUserCreation")
     public String showCleanerSignUpForm(Model model) {
         model.addAttribute("CleanerUserCreationForm", new UserAccount()); // Make sure this matches the form data type
@@ -138,7 +135,7 @@ public class Boundary {
     }
 
     //View User Account
-    @GetMapping("/ViewUserAccount")
+    @GetMapping("/UserAccount")
     public String showUserAccount(@RequestParam int uid, Model model) {
         UserAccount user = userAccountC.ViewUserAccount(uid);
         UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
@@ -183,39 +180,40 @@ public class Boundary {
 
             model.addAttribute("userAccountInfo", user);
             model.addAttribute("profileName", profileName);
-            return "user_account_info";
+            return "redirect:/UserAccount?uid=" + user.getUid();
         } else {
             model.addAttribute("error", "Profile update failed! Please try again.");
             return "user_account_update";
         }
     }
 
-    // //Suspend User Accounts
-    // @GetMapping("/SuspendUserAccount")
-    // public String showSuspendUserAccount(@RequestParam int uid, Model model) {
-    //     UserAccount user = userAccountC.ViewUserAccount(uid);
-    //     model.addAttribute("userAccountInfo", user); // Make sure this matches the form data type
-    //     return "user_account_info";
-    // }
-
-    @PostMapping("/SuspendUserAccount")
-    public String processSuspendUserAccount(@ModelAttribute UserAccount user, Model model) {
-    boolean isSuccessful = userAccountC.SuspendUserAccount(user.getUid()); 
+    // Suspend User Account
+    @PostMapping("/SetAccountSuspensionStatus")
+    public String processAccountSuspensionStatus(@RequestParam boolean suspended, @ModelAttribute UserAccount user, Model model) {
+    boolean isSuccessful = userAccountC.setSuspensionStatus(user.getUid(), suspended); 
 
     if (isSuccessful) {
         UserAccount updatedUser = userAccountC.ViewUserAccount(user.getUid());
-        System.out.println(updatedUser.getSuspended()); // <-- re-fetch after update
         UserProfile userProfile = userProfileC.getProfileById(updatedUser.getProfileId());
         String profileName = userProfile.getProfileName();
 
         model.addAttribute("userAccountInfo", updatedUser); // Use the updated user
         model.addAttribute("profileName", profileName);
+
+        if (updatedUser.isSuspended()) {
         model.addAttribute("message", "User suspended successfully");
+        } else {
+        model.addAttribute("message", "User unsuspended successfully");
+        }
     } else {
+        if(suspended){
         model.addAttribute("error", "Failed to suspend user");
+        } else {
+        model.addAttribute("error", "Failed to unsuspend user");
+        }
     }
 
-    return "redirect:/ViewUserAccount?uid=" + user.getUid();
+    return "redirect:/UserAccount?uid=" + user.getUid();
     }
 
     //Search User Account
@@ -262,8 +260,12 @@ public class Boundary {
     @GetMapping("/UserProfile")
     public String showUserProfile(@RequestParam int profileId, Model model) {
         UserProfile userProfile = userProfileC.getProfileById(profileId);
+        List<UserAccount> userAccounts = userAccountC.SearchUser(userProfile.getProfileId());
+        int usersCount = userAccounts.size();
     
         model.addAttribute("userProfileInfo", userProfile);
+        model.addAttribute("userAccounts", userAccounts);
+        model.addAttribute("usersCount", usersCount);
         return "user_profile_info";
     }
 
@@ -306,6 +308,36 @@ public class Boundary {
         }
     }
 
+    // Suspend User Profile
+    @PostMapping("/SetProfileSuspensionStatus")
+    public String processProfileSuspensionStatus(@RequestParam boolean suspended, @ModelAttribute UserProfile profile, Model model) {
+    boolean isSuccessful = userProfileC.setSuspensionStatus(profile.getProfileId(), suspended); 
+    
+    if (isSuccessful) {
+        // UserProfile updatedProfile = userProfileC.getProfileById(profile.getProfileId());
+        // List<UserAccount> userAccounts = userAccountC.SearchUser(updatedProfile.getProfileId());
+        // int usersCount = userAccounts.size();
+    
+        // model.addAttribute("userProfileInfo", updatedProfile);
+        // model.addAttribute("userAccounts", userAccounts);
+        // model.addAttribute("usersCount", usersCount);
+
+        if (suspended) {
+        model.addAttribute("message", "User suspended successfully");
+        } else {
+        model.addAttribute("message", "User unsuspended successfully");
+        }
+    } else {
+        if(suspended){
+        model.addAttribute("error", "Failed to suspend user");
+        } else {
+        model.addAttribute("error", "Failed to unsuspend user");
+        }
+    }
+
+    return "redirect:/UserProfile?profileId=" + profile.getProfileId();
+    }
+
     //Search User Profile
     @GetMapping("/searchUserProfile")
     public String searchUserProfile(@RequestParam String query, Model model) {
@@ -325,16 +357,16 @@ public class Boundary {
     //Cleaner
     @GetMapping("/CleanerCreateService")
     public String showServiceListing(Model model) {
-        List<ServiceCategory> categories = serviceCategoryC.GetAllCategories(); // Your service call
+        List<ServiceCategory> categories = serviceCategoryC.getAllCategories(); // Your service call
         model.addAttribute("serviceListing", new ServiceListing());
-        model.addAttribute("serviceCategory", categories);
+        model.addAttribute("serviceCategories", categories);
         return "cleaner_create_service_listing";
     }
 
     @PostMapping("/CleanerCreateService")
     public String processServiceListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
         Integer uid = (Integer) session.getAttribute("uid");
-        boolean isSuccessful = serviceListingC.CreateServiceListing(serviceListing.getName(), uid, serviceListing.getServiceCategory().getCategoryId(),
+        boolean isSuccessful = serviceListingC.createServiceListing(serviceListing.getName(), uid, serviceListing.getCategoryId(),
                                                                         serviceListing.getDescription(), serviceListing.getPricePerHour(), serviceListing.getStatus(),                                                                  serviceListing.getStartDate(), serviceListing.getEndDate());
         if (isSuccessful) {
             model.addAttribute("serrviceListingInfo", serviceListing);
@@ -370,4 +402,58 @@ public class Boundary {
     //     }
         
     // }
+
+    //--Platform Manager
+    @GetMapping("/PlatformManagerHome")
+    public String showPlatformManagerHome(HttpSession session, Model model) {
+        model.addAttribute("username", session.getAttribute("username"));
+        return "platformmanager_home_page";
+    }
+
+    // Create Service Catetory
+    @GetMapping("/ServiceCategoryCreation")
+    public String showServiceCategoryCreation(Model model) {
+        model.addAttribute("serviceCategory", new ServiceCategory());
+        return "pm_create_service_category";
+    }
+
+    @PostMapping("/CreateServiceCategory")
+    public String processServiceCategoryCreation(@ModelAttribute ServiceCategory serviceCategory, Model model) {
+        boolean isSuccessful = serviceCategoryC.createServiceCategory(serviceCategory.getType(), serviceCategory.getName(), serviceCategory.getDescription());
+
+        if (isSuccessful) {
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(serviceCategory.getName());
+            return "redirect:/ServiceCategory?categoryId=" + category.getCategoryId();
+        } else {
+            model.addAttribute("error", "Service Category creation failed! Please try again.");
+            return "pm_create_service_category";
+        }
+    }
+
+    // View Service Category
+    @GetMapping("/ServiceCategory")
+    public String showServiceCategory(@RequestParam int categoryId, Model model) { 
+        ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId); 
+        model.addAttribute("serviceCategoryInfo", serviceCategory);
+        return "pm_service_category_info";
+    }
+
+    @GetMapping("/ViewAllServiceCategories")
+    public String showServiceCategoryList(Model model) {
+        List<ServiceCategory> serviceCategories = serviceCategoryC.getAllCategories();
+        List<Integer> serviceListingsCount = new ArrayList<>();
+        
+        for(ServiceCategory category : serviceCategories) {  
+            List<ServiceListing> serviceListings = serviceListingC.getServiceListingsByCategory(category.getCategoryId());
+            int count = (serviceListings != null) ? serviceListings.size() : 0;
+            serviceListingsCount.add(count);
+        }
+            
+        model.addAttribute("serviceCategories", serviceCategories);
+        model.addAttribute("serviceListingsCount", serviceListingsCount);
+        return "pm_search_service_category";
+    }
+
+
+    
 }

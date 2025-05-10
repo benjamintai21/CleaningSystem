@@ -1,0 +1,318 @@
+:root {
+    --primary: #007C91;
+    --accent: #FFB703;
+    --white: #FFFFFF;
+    --black: #1C1C1C;
+    --gray: #FAFAFA;
+  }
+  
+  body {
+    background-color: var(--gray);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+  }
+  
+  .main-wrapper {
+    max-width: 1100px;
+    margin: 40px auto;
+    background-color: var(--white);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+  }
+  
+  .header-box {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: var(--white);
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+  }
+  
+  .logo {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .nav-home {
+    text-decoration: underline;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  
+  .logout-btn {
+    background-color: var(--accent);
+    color: var(--black);
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+  }
+  
+  .logout-btn:hover {
+    background-color: #e6a500;
+  }
+  
+  .form-title {
+    background: #e6e6e6;
+    padding: 30px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    text-decoration: underline;
+    border-radius: 10px;
+    max-width: 900px;
+    min-height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 30px auto;
+    color: var(--black);
+  }
+  
+  .register-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 0 0 0;
+  }
+  
+  .back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: var(--black);
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .account-box {
+    background-color: #f9f9f9;
+    padding: 20px 30px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  }
+  
+  .description-text {
+    color: #555;
+    margin-top: -5px;
+  }
+  
+  
+  .account-box p {
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+  
+  .dropdown-wrapper {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+  }
+  
+  .dropdown-toggle {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 30px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dropdown-content {
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 14px;
+    background-color: #f9f9f9;
+    display: none;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-row {
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .user-left p,
+  .user-right p {
+    margin: 4px 0;
+  }
+  
+  .user-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .arrow {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .form-actions-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 10px;
+  }
+  
+  .form-actions .submit-btn {
+    background-color: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 28px;
+    border-radius: 12px;
+    text-align: center;
+    width: 400px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-content h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .modal-content p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.4;
+  }
+  
+  .modal-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .modal-actions .submit-btn {
+    background-color: var(--accent);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    color: var(--black);
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .total-users-label {
+    font-weight: 600;
+    margin: 0 auto 8px auto;
+    max-width: 600px;
+    color: var(--black);
+  }
+  
+  .dropdown-wrapper {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+  }
+
+  .submit-btn {
+    background-color: var(--accent);
+    border: none;
+    border-radius: 3px;
+    padding: 8px 15px;
+    color: var(--black);
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  a.link-btn {
+  display: inline-block; /* Makes the link behave like a button */
+  background-color: #e6e6e6;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  color: var(--black);
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline */
+  text-align: center; /* Center the text */
+  }
+
+  a.link-btn:hover {
+  /* Optional: Add a hover effect for interaction */
+  background-color: #e6e6e6; /* You can define a hover color */
+  }
+
+  .action_link {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .action_link:hover {
+    color: black; /* Optional: keep color on hover */
+  }
+
+  .cancel-btn {
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 3px;
+    padding: 8px 15px;
+    color: var(--black);
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .suspension-btn {
+    background-color: #D62828;
+    border: none;
+    border-radius: 3px;
+    padding: 8px 15px;
+    color: var(--white);
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+  }
