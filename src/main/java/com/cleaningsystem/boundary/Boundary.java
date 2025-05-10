@@ -57,7 +57,7 @@ public class Boundary {
     }
 
     @PostMapping("/RedirectToPage")
-    public String processLogin(@ModelAttribute("loginForm") UserAccount user, Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String processLogin(@ModelAttribute("loginForm") UserAccount user, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         try {
             UserAccount loggedInUser = userAccountC.login(user.getUsername(), user.getPassword(), user.getProfileId());
 
@@ -386,7 +386,9 @@ public class Boundary {
         int uid = (int) uidObj;
 
         ServiceListing listing = serviceListingC.ViewServiceListing(serviceId, uid);
+        ServiceCategory category = serviceCategoryC.ViewServiceCategory(listing.getCategoryId());
         model.addAttribute("serviceListingInfo", listing);
+        model.addAttribute("serviceCategory", category);
         return "cleaner_view_service_listing";
     }
 
@@ -405,8 +407,18 @@ public class Boundary {
     }
 
     @GetMapping("/CleanerUpdateService")
-    public String showUpdateListing(Model model) {
-        model.addAttribute("serviceListing", new ServiceListing());
+    public String showUpdateListing(@RequestParam int serviceId, HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            // Redirect to login or error page if user not logged in
+            return "redirect:/Login";
+        }
+        int uid = (int) uidObj;
+
+        ServiceListing listing = serviceListingC.ViewServiceListing(serviceId, uid);
+        model.addAttribute("serviceListingInfo", listing);
+        model.addAttribute("serviceCategories", serviceCategoryC.getAllCategories());
+        model.addAttribute("serviceStatuses", ServiceListing.Status.values()); 
         return "cleaner_update_service_listing";
     }
 
@@ -419,6 +431,9 @@ public class Boundary {
                                                                     serviceListing.getServiceId());
 
         if (isSuccessful) {
+            ServiceCategory category = serviceCategoryC.ViewServiceCategory(serviceListing.getCategoryId());
+            model.addAttribute("serviceListingInfo", serviceListing);
+            model.addAttribute("serviceCategory", category);
             model.addAttribute("message", "Successfully updated");
             return "cleaner_view_service_listing";
         } else {
@@ -428,15 +443,15 @@ public class Boundary {
     }
 
     @PostMapping("CleanerDeleteService")
-    public String processDeleteListing(@ModelAttribute int serviceId, Model model, HttpSession session) {
-        boolean isSuccessful = serviceListingC.DeleteServiceListing(serviceId);
+    public String processDeleteListing(@ModelAttribute ServiceListing listing, Model model, HttpSession session) {
+        boolean isSuccessful = serviceListingC.DeleteServiceListing(listing.getServiceId());
 
         if (isSuccessful) {
             model.addAttribute("message", "Profile creation failed! Please try again.");
         } else {
             model.addAttribute("error", "Profile creation failed! Please try again.");
         }
-        return "cleaner_view_service_listing";
+        return "cleaner_service_list";
     }
 
     //--Platform Manager

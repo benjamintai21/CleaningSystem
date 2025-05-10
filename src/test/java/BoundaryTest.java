@@ -1,9 +1,9 @@
 
+
 import com.cleaningsystem.controller.UserAccountController;
 import com.cleaningsystem.controller.UserProfileController;
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
-import com.cleaningsystem.boundary.Boundary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
+import com.cleaningsystem.boundary.Boundary;
 
 import java.util.*;
+
 import javax.management.modelmbean.ModelMBean;
 import jdk.jfr.Timestamp;
 
@@ -110,19 +112,16 @@ public class BoundaryTest {
 
     @Test
     public void testShowCleanerSignUpForm() {
-        Model model = mock(Model.class);
-    
         String viewName = boundary.showCleanerSignUpForm(model);
-    
-        assertEquals("cleaner_user_creation", viewName);
-        verify(model).addAttribute(eq("CleanerUserCreationForm"), any(UserAccount.class));
+
+        verify(model).addAttribute(eq("UserAccount"), any());
+        assertEquals("cleaner_signup_form", viewName);
     }
-    
     @Test
-    public void testprocessCleanerSignUp() {
+    public void testprocessCleanerSignUp(){
         Model model = mock(Model.class);
         UserAccount mockuser = new UserAccount();
-    
+
         mockuser.setName("benja");
         mockuser.setUsername("cleaner");
         mockuser.setAge(40);
@@ -132,22 +131,13 @@ public class BoundaryTest {
         mockuser.setEmail("bytheeyeof___@gmail.com");
         mockuser.setPassword("minz");
         mockuser.setProfileId(4);
-    
-        // Mocking userAccountC and userProfileC behavior
-        when(userAccountC.CreateAccount(anyString(), anyInt(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyInt()))
-            .thenReturn(true);
-    
-        UserProfile mockProfile = new UserProfile();
-        mockProfile.setProfileName("Cleaner");
-        when(userProfileC.getProfileById(4)).thenReturn(mockProfile);
-    
-        String viewName = boundary.processCleanerSignUp(mockuser, model);
-    
-        assertEquals("user_account_info", viewName);
+
+        String viewName = boundary.processCleanerSignUp(mockuser , model);
+
+        assertEquals("user_cleaner_info", viewName);
         verify(model).addAttribute("userAccountInfo", mockuser);
-        verify(model).addAttribute("profileName", "Cleaner");
+
     }
-    
     @Test
     public void testProcessLogin() {
         UserAccount mockUser = new UserAccount();
@@ -166,7 +156,7 @@ public class BoundaryTest {
         loginForm.setPassword("testPass");
         loginForm.setProfileId(2);
 
-        String result = boundary.processLogin(loginForm, model, session, redirectAttributes);
+        String result = boundary.processLogin(loginForm, session, model, redirectAttributes);
 
         assertEquals("redirect:/UserHome", result);
 
@@ -188,12 +178,12 @@ public class BoundaryTest {
     @Test
     public void testShowUserAccount() {
         Model model = mock(Model.class);
-        int mockUID = 4;
+        int mockUId = 4;
     
         // Mock user account
         UserAccount mockuser = new UserAccount();
         mockuser.setName("jamin");
-        mockuser.setUid(mockUID);
+        mockuser.setUid(mockUId);
         mockuser.setProfileId(4);
     
         // Mock profile
@@ -202,11 +192,11 @@ public class BoundaryTest {
         mockProfile.setProfileId(4);
     
         // Stubbing the controller calls
-        when(userAccountC.ViewUserAccount(mockUID)).thenReturn(mockuser);
+        when(userAccountC.ViewUserAccount(mockUId)).thenReturn(mockuser);
         when(userProfileC.getProfileById(4)).thenReturn(mockProfile);
     
         // Call the method under test
-        String viewName = boundary.showUserAccount(mockUID, model);
+        String viewName = boundary.showUserAccount(mockUId, model);
     
         // Verify model attributes are added
         verify(model).addAttribute("userAccountInfo", mockuser);

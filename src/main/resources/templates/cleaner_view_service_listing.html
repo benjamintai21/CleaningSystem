@@ -54,49 +54,53 @@
             <div>
               <p><strong>Service Name: </strong><span th:text="*{name}"></span></p>
               <p><strong>Cleaner Name: </strong><span th:text="*{cleanerId}"></span></p>
-
+              <p><strong>Service Category: </strong><span th:text="${serviceCategory.name} + ' - ' + ${serviceCategory.type}"></span></p>
+              <p><strong>Price per hour: $</strong><span th:text="*{#numbers.formatDecimal(pricePerHour, 2, 2)}"></span></p>
             </div>
             <div>
               <p><strong>Service-ID: </strong><span th:text="*{serviceId}"></span></p>
-              <div class="stat_container">
+              <!-- <div class="stat_container">
                 <div class="icons viewimg"></div><div class="icons text">123</div>
                 <div class="icons shortlistimg"></div><div class="icons text">123</div>
-             </div>
+             </div> -->
             </div>
-      </div>
-     <div>
+          </div>
+
+          <div>
             <p><strong>Service Description: </strong></p>
             <div class="account-box S_description">
-
               <span th:text="*{description}"></span>
             </div>
-    </div>
-</div>
+          </div>
+      </div>
       <!-- Buttons -->
       <div class="form-actions">
-        <a th:href="@{/CleanerUpdateService(serviceListing=${serviceListingInfo})}" class="link-btn">Update Info</a>
-        <button type="button" class="submit-btn" onclick="showModal">Delete</button>
+        <a th:href="@{/CleanerUpdateService(serviceId=${serviceListingInfo.serviceId})}" class="link-btn">Update Info</a>
+        <button type="button" class="submit-btn" onclick="showModal()">Delete</button>
       </div>
 
     </div>
 
   </div>
 
-  <form id="deleteServiceForm" th:action="@{/CleanerDeleteService(serviceId=${serviceListingInfo.serviceId})}"
-  <div class="modal-overlay" style="display:none" >
-    <div class="modal-box">
-      <h2>Are you sure?</h2>
-      <p>You are deleting</p>
-<!--        add in the data here-->
-      <p>Service name: Deep Cleaning, Service-ID: SER-009</p>
-      <p>This action is irreversible</p>
-  
-      <div class="form-actions" style="justify-content: space-between; max-width: 400px; margin: 20px auto 0 auto;">
-        <button class="submit-btn">Cancel</button>
-        <button class="submit-btn">Delete</button>
-      </div>
+  <form id="deleteServiceForm" th:action="@{/CleanerDeleteService}" method="post" th:object="${serviceListingInfo}">
+    <div class="modal-overlay" id="confirmModal" style="display:none; position: fixed; top: 0; left: 0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+      <div class="modal-box" style="background: white; padding: 20px; max-width: 400px; margin: 10% auto; border-radius: 10px;">
+        <input type="hidden" th:field="${serviceListingInfo.serviceId}" />
+        <h2>Are you sure?</h2>
+        <p>You are deleting</p>
+  <!--        add in the data here-->
+        <p>Service Name: <strong><span th:text="*{name}">Name</strong></span></p>
+        <p>Service Description: <strong><span th:text="*{description}">Description</strong></span></p> 
+        <p><strong>This action is irreversible!</strong></p>
+    
+        <div style="margin-top: 20px; display: flex; justify-content: right; gap: 10px;">
+          <button type="button" class="cancel-btn" onclick="hideModal()" >Cancel</button>
+          <button type="submit" class="suspension-btn">Delete</button>
+        </div>
 
+      </div>
     </div>
-  </div>  
+  </form>  
 </body>
 </html>
