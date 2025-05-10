@@ -31,12 +31,12 @@ public class ServiceListingDAO {
     };
 
     //Cleaner
-    public boolean insertListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
-                                    String status, String startDate, String endDate) {
-        java.sql.Date sqlStart = java.sql.Date.valueOf(startDate);
-        java.sql.Date sqlEnd = java.sql.Date.valueOf(endDate);
+    public boolean insertListing(String name, int cleanerId, int categoryId, String description, double priceperhour, 
+                                 String startDate, String endDate, String status) {
+        // java.sql.Date sqlStart = java.sql.Date.valueOf(startDate);
+        // java.sql.Date sqlEnd = java.sql.Date.valueOf(endDate);
         return jdbcTemplate.update(CREATE_SERVICE_LISTING, 
-        name, cleanerId, categoryId, description, price_per_hour, status, sqlStart, sqlEnd) > 0;
+        name, cleanerId, categoryId, description, priceperhour, startDate, endDate, status) > 0;
     }
 
     public ServiceListing getListingById(int serviceId , int cleanerId) {
@@ -44,10 +44,10 @@ public class ServiceListingDAO {
         return listings.isEmpty() ? null : listings.get(0);
     }
 
-    public boolean updateListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
+    public boolean updateListing(String name, int cleanerId, int categoryId, String description, double PricePerHour, 
                                     String status, String startDate, String endDate, int serviceId) {
         return jdbcTemplate.update(UPDATE_SERVICE_LISTING, 
-        name, cleanerId, categoryId, description, price_per_hour, 
+        name, cleanerId, categoryId, description, PricePerHour, 
         status, startDate, endDate, serviceId) > 0;
     }
 
@@ -60,8 +60,8 @@ public class ServiceListingDAO {
         return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING, listingRowMapper, cleanerId, pattern);
     }
 
-    public List<ServiceListing> getAllListings(){
-        return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
+    public List<ServiceListing> getAllListings(int cleanerId){
+        return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper, cleanerId);
     }
 
     //HomeOwner-----------------------------------------------------

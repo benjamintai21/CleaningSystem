@@ -39,7 +39,7 @@ public class Queries {
     public static final String GET_ALL_PROFILES = "SELECT * FROM USERPROFILE";
     
     //Cleaner
-    public static final String CREATE_SERVICE_LISTING = "INSERT INTO SERVICELISTINGS (name, cleanerID, categoryID, description, price_per_hour, startDate, endDate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String CREATE_SERVICE_LISTING = "INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     
     public static final String GET_SERVICE_LISTING_BY_ID = "SELECT * FROM SERVICELISTINGS WHERE serviceId = ? and cleanerId = ?";
     
@@ -49,7 +49,7 @@ public class Queries {
 
     public static final String SEARCH_MY_SERVICE_LISTING = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ? and name LIKE ?";
 
-    public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS";
+    public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ?";
 
     public static final String GET_NO_OF_SHORTLISTS = "SELECT shortlists FROM SERVICELISTINGS WHERE cleanerId = ?";
    
@@ -77,15 +77,15 @@ public class Queries {
     
     public static final String SEARCH_SERVICE_LISTING_BY_CLEANER = "SELECT s.* FROM SERVICELISTINGS s JOIN USERACCOUNT u ON s.cleanerId = u.UID WHERE u.profileID = 4 AND u.name LIKE ?";
 
-    public static final String SAVE_SHORTLISTED_SERVICE = "INSERT INTO SHORTLISTEDSERVICES (homeownerUID, serviceId) VALUES (?, ?)";
+    public static final String SAVE_SHORTLISTED_SERVICE = "INSERT INTO SHORTLISTEDSERVICES (homeownerId, serviceId) VALUES (?, ?)";
 
     public static final String GET_SHORTLIST_BY_ID = "SELECT * FROM SHORTLISTEDSERVICES WHERE serviceId = ? AND homeownerId = ?";
 
     public static final String GET_ALL_SHORTLISTS = "SELECT * FROM SHORTLISTEDSERVICES WHERE homeownerId = ?";
 
-    public  static final String DELETE_SHORTLISTED_SERVICE = "DELETE FROM SHORTLISTEDSERVICES WHERE homeownerUID = ? AND serviceId = ?";
+    public  static final String DELETE_SHORTLISTED_SERVICE = "DELETE FROM SHORTLISTEDSERVICES WHERE homeownerId = ? AND serviceId = ?";
 
-    public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT sl.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerUID = ? AND sl.name LIKE ?";
+    public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT sl.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerId = ? AND sl.name LIKE ?";
 
     //Booking
     public static final String GET_COMPLETED_SERVICES = "SELECT * FROM BOOKING WHERE status = 'completed' AND homeownerId = ?";

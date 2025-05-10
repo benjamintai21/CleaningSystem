@@ -10,7 +10,7 @@ CREATE TABLE USERPROFILE (
     description varchar(512) not null,
     suspension bool not null,
 
-    PRIMARY KEY (profileID),
+    PRIMARY KEY (profileId),
     CONSTRAINT unique_profilename UNIQUE (profilename)
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE SERVICECATEGORIES (
     name varchar(50),
     description varchar(512),
     
-    PRIMARY KEY(categoryID)
+    PRIMARY KEY(categoryId)
 );
 
 CREATE TABLE SERVICELISTINGS (
@@ -49,14 +49,14 @@ CREATE TABLE SERVICELISTINGS (
 	cleanerId int not null,
     categoryId int not null,
     description varchar(512) not null,
-    price_per_hour double not null,
-    status ENUM('AVAILABLE', 'ONGOING', 'COMPLETED'),
+	price_per_hour DECIMAL(10, 2) NOT NULL,
     startDate date not null,
     endDate date not null,
+    status ENUM('AVAILABLE', 'PENDING', 'UNAVAILABLE') NOT NULL,
     views int default 0,
     shortlists int default 0,
 
-    PRIMARY KEY(serviceID),
+    PRIMARY KEY(serviceId),
     
     FOREIGN KEY (cleanerId) REFERENCES USERACCOUNT(UId),
     FOREIGN KEY (categoryId) REFERENCES SERVICECATEGORIES(categoryId)
@@ -85,12 +85,12 @@ CREATE TABLE SHORTLISTEDSERVICES (
 );
 
 CREATE TABLE BOOKING (
-	historyId int not null auto_increment,
+	bookingId int not null auto_increment,
     serviceId int,
     homeownerId int,
-    status varchar(15),
+    status ENUM('CONFIRMED', 'CANCELED', 'COMPLETED') NOT NULL,
     
-    PRIMARY KEY (historyID),
+    PRIMARY KEY (bookingId),
     
     FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId),
 	FOREIGN KEY (homeownerId) REFERENCES USERACCOUNT(UID)

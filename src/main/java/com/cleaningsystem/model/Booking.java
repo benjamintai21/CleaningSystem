@@ -13,11 +13,16 @@ public class Booking {
     //No-args constructor for Spring
     public Booking() {}
     
-    public Booking(int historyId, int homeownerId, int serviceId) {
-        this.bookingId = historyId;
+    public Booking(int bookingId, int homeownerId, int serviceId) {
+        this.bookingId = bookingId;
         this.homeownerId = homeownerId;
         this.serviceId = serviceId;
     }
+
+    public enum Status {
+        CONFIRMED, CANCELED, COMPLETED
+    }
+    
     
     public int getBookingId() {return bookingId;}
     public int getHomeownerId() {return homeownerId;}            

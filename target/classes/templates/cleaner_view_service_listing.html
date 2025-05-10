@@ -18,7 +18,7 @@
     <div class="header-box">
       <div class="logo">Logo</div>
       <div class="nav-actions">
-        <a href="#" class="nav-home">Home</a>
+        <a th:href="@{/CleanerHome}" class="nav-home">Home</a>
         <a th:href="@{/Logout}" class="logout-btn">Logout</a>
       </div>
     </div>
@@ -31,15 +31,15 @@
       <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
 
       <!-- Account Info Box -->
-      <div class="account-box edit_flex" th:object="${userAccountInfo}">
+      <div class="account-box edit_flex" th:object="${serviceListingInfo}">
           <div class="flex_row">
             <div>
-              <p><strong>Service Name: </strong><span th:text="*{ServiceName}"></span></p>
-              <p><strong>Cleaner Name: </strong><span th:text="*{Name}"></span></p>
+              <p><strong>Service Name: </strong><span th:text="*{name}"></span></p>
+              <p><strong>Cleaner Name: </strong><span th:text="*{cleanerId}"></span></p>
 
             </div>
             <div>
-              <p><strong>Service-ID: </strong><span th:text="*{ServiceID}"></span></p>
+              <p><strong>Service-ID: </strong><span th:text="*{serviceId}"></span></p>
               <div class="stat_container">
                 <div class="icons viewimg"></div><div class="icons text">123</div>
                 <div class="icons shortlistimg"></div><div class="icons text">123</div>
@@ -50,7 +50,7 @@
             <p><strong>Service Description: </strong></p>
             <div class="account-box S_description">
 
-              <span th:text="*{ServiceName}"></span>
+              <span th:text="*{description}"></span>
     <!--            insert description data here    -->
 
             </div>
@@ -58,7 +58,7 @@
 </div>
       <!-- Buttons -->
       <div class="form-actions">
-        <a th:href="@{/UpdateUserAccount(username=${userAccountInfo.username})}">Update Info</a>
+        <a th:href="@{/UpdateServiceListing(serviceId=${serviceListingInfo.serviceId})}" class="link-btn">Update Info</a>
         <button type="button" class="submit-btn">Delete</button>
       </div>
 

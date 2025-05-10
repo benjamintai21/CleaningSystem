@@ -25,8 +25,9 @@
     <div class="register-container">
       <a th:href="@{/CleanerHome}" class="back-btn">← Back</a>
 
-      <form th:action="@{/CreateServiceListing}" method="post" th:object="${serviceListing}">
+      <form th:action="@{/CleanerCreateService}" method="post" th:object="${serviceListing}">
         <input type="hidden" th:field="*{serviceId}" />
+        <input type="hidden" th:field="*{cleanerId}"/>
 
         <div class="form-row">
           <div class="form-group full-width">
@@ -39,7 +40,7 @@
           <div class="form-group full-width">
             <label for="S_Category">Service Category*</label>
             <select id="S_Category" class="dropdown" th:field="*{categoryId}" required>
-              <option value="" disabled selected>Select a category</option>
+              <option value="0" disabled selected>Select a category</option>
               <option th:each="category : ${serviceCategories}" 
                       th:value="${category.categoryId}" 
                       th:text="${category.type + ' - ' + category.name}">
@@ -49,13 +50,26 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group">
-            <label for="S_Status">Service Status*</label>
-            <select id="S_Status" th:field="*{status}" required>
-                <option th:each="serviceStatus : ${serviceStatuses}" 
-                        th:value="${serviceStatus}" 
-                        th:text="${serviceStatus}"></option>
-            </select>
+          <div class="form-group full-width">
+            <label for="S_Description">Service Price*</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="text" id="S_Price" th:field="*{pricePerHour}" required />
+          </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_StartDate">Start Date*</label>
+            <input type="date" id="S_StartDate" th:field="*{startDate}" required></input>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_EndDate">End Date*</label>
+            <input type="date" id="S_EndDate" th:field="*{endDate}" required></input>
           </div>
         </div>
 
@@ -63,6 +77,19 @@
           <div class="form-group full-width">
             <label for="S_Description">Service Description*</label>
             <textarea id="S_Description" th:field="*{description}" rows="8" cols="20" required></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="S_Status">Service Status*</label>
+            <select id="S_Status" class="dropdown" th:field="*{status}" required>
+                <option value="0" selected disabled>Select a status</option>
+                <option th:each="serviceStatus : ${serviceStatuses}" 
+                        th:value="${serviceStatus}" 
+                        th:text="${serviceStatus}">
+                </option>
+            </select>
           </div>
         </div>
 

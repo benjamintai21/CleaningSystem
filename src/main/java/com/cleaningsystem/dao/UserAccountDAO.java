@@ -35,7 +35,7 @@ public class UserAccountDAO {
         return users.isEmpty() ? null : users.get(0);
     }
 
-    public boolean createUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
+    public boolean insertUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
         java.sql.Date sqlDob = java.sql.Date.valueOf(dob);
         return jdbcTemplate.update(CREATE_USER_ACCOUNT, 
             name,age,sqlDob,gender,address,email,username,password,profileId,

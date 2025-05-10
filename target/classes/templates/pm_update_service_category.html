@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Update Service Category</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
   <link rel="stylesheet" th:href="@{/pm_styles.css}" type="text/css">
 </head>
 <body>
@@ -13,8 +13,8 @@
     <div class="header-box">
       <div class="logo">Logo</div>
       <div class="nav-actions">
-        <a href="#" class="nav-home">Home</a>
-        <a href="#" class="logout-btn">Logout</a>
+        <a th:href="@{/PlatformManagerHome}" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
       </div>
     </div>
 
@@ -24,25 +24,32 @@
         <a href="#" class="back-btn">← Back</a>
       
         <div class="form-box">
-          <form class="service-form">
+          <form class="service-form" th:action="@{/UpdateServiceCategory}" method="post" th:object="${updateServiceCategoryForm}">
+
+            <input type="hidden" th:field="*{categoryId}" />
+            <div class="form-group full-width">
+              <label for="category-type">Service Category Type*</label>
+              <input type="text" id="category-type" name="category-type" th:field="*{type}" required />
+            </div>
+
             <div class="form-group full-width">
               <label for="category-name">Service Category Name*</label>
-              <input type="text" id="category-name" name="category-name" required />
+              <input type="text" id="category-name" name="category-name" th:field="*{name}" required />
             </div>
       
             <div class="form-group full-width">
               <label for="category-description">Service Description*</label>
-              <textarea id="category-description" name="category-description" rows="10" required></textarea>
+              <textarea id="category-description" name="category-description" th:field="*{description}" rows="10" required></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="reset" class="reset-btn" onclick="document.querySelector('form').reset()">Reset</button>
+              <button type="submit" class="submit-btn">Submit</button>
             </div>
           </form>
         </div>
       
-        <div class="form-actions">
-          <button type="reset" class="reset-btn">Reset</button>
-          <button type="submit" class="submit-btn">Submit</button>
-        </div>
+        
       </div>
-  </div>
-  
+    </div>
 </body>
 </html>

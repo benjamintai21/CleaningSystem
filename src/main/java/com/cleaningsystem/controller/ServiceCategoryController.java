@@ -26,8 +26,8 @@ public class ServiceCategoryController {
         return serviceCategoryDAO.getCategoryByName(name);
     }
 
-    public boolean updateServiceCategory(String type, String name, String description){
-        return serviceCategoryDAO.updateCategory(type, name, description);
+    public boolean updateServiceCategory(ServiceCategory serviceCategory){
+        return serviceCategoryDAO.updateCategory(serviceCategory);
     }
 
     public boolean deleteServiceCategory(int serviceId) {

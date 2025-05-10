@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: BoundaryTest
+-------------------------------------------------------------------------------
+Tests run: 17, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.974 s <<< FAILURE! - in BoundaryTest
+BoundaryTest.testProcessUpdateUserAccount_Success  Time elapsed: 0.019 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <user_account_info> but was: <redirect:/UserAccount?uid=4>
+	at BoundaryTest.testProcessUpdateUserAccount_Success(BoundaryTest.java:279)
+
+BoundaryTest.testProcessSuspendUserAccount_Success  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <redirect:/ViewUserAccount?uid=5> but was: <redirect:/UserAccount?uid=5>
+	at BoundaryTest.testProcessSuspendUserAccount_Success(BoundaryTest.java:314)
+
