@@ -530,13 +530,11 @@ public class Boundary {
     public String searchServiceCategory(@RequestParam String query, Model model) {
         List<ServiceCategory> serviceCategories = serviceCategoryC.searchServiceCategory(query);
         List<Integer> serviceListingsCount = new ArrayList<>();
-
         for(ServiceCategory category : serviceCategories) {  
             List<ServiceListing> serviceListings = serviceListingC.getServiceListingsByCategory(category.getCategoryId());
             int count = (serviceListings != null) ? serviceListings.size() : 0;
             serviceListingsCount.add(count);
         }
-
         model.addAttribute("serviceCategories", serviceCategories);
         model.addAttribute("serviceListingsCount", serviceListingsCount);
         return "pm_search_service_category";

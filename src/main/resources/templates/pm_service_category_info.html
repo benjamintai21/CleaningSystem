@@ -19,7 +19,7 @@
       openPopup();
     });
   </script>
-  <link href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
   <link rel="stylesheet" th:href="@{/pm_styles.css}" type="text/css">
 </head>
 <body>
@@ -50,23 +50,27 @@
           </div>
       
         <div class="form-actions">
-            <button class="submit-btn">Update Info</button>
-            <button class="delete-btn">Delete</button>
+            <a th:href="@{/UpdateServiceCategory(categoryId=${serviceCategoryInfo.categoryId})}" class="link-btn">Update Info</a>
+            <button class="delete-btn" onclick="openPopup()">Delete</button>
         </div>
       </div>
   </div>
   <!-- Popup Modal for Delete Confirmation -->
-  <div id="popup-modal" class="popup-overlay">
-    <div class="popup-box">
-      <h3>Are you sure?</h3>
-      <p>You are deleting a service category<br>
-      Category name: House Cleaning, Category-ID: CATE-001<br>
-      This action is irreversible</p>
-      <div class="popup-buttons">
-        <button onclick="closePopup()" class="popup-cancel">Cancel</button>
-        <button class="popup-delete">Delete</button>
+  <form class="service-form"  th:action="@{/DeleteServiceCategory(categoryId=${serviceCategoryInfo.categoryId})}" method="post" th:object="${serviceCategoryInfo}">
+    <div id="popup-modal" class="popup-overlay">
+      <div class="popup-box">
+        <h3>Are you sure?</h3>
+        <p>You are deleting a service category</p>
+        <p>Category Id: <span th:text="*{categoryId}"></span></p>
+        <p>Category type: <span th:text="*{type}"></span></p>
+        <p>Category name: <span th:text="*{name}"></span></p>
+        <p>This action is irreversible</p>
+        <div class="popup-buttons">
+          <button onclick="closePopup()" class="popup-cancel">Cancel</button>
+          <button class="popup-delete" type="submit">Delete</button>
+        </div>
       </div>
     </div>
-  </div> 
+  </form> 
 </body>
 </html>
