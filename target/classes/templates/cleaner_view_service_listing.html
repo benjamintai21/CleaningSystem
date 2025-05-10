@@ -4,7 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>User Account Info</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script>
+    function showModal() {
+      document.getElementById("confirmModal").style.display = "block";
+    }
+  
+    function hideModal() {
+      document.getElementById("confirmModal").style.display = "none";
+    }
+
+    function showModal2() {
+      document.getElementById("confirmModal2").style.display = "block";
+    }
+  
+    function hideModal2() {
+      document.getElementById("confirmModal2").style.display = "none";
+    }
+  </script>
+
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
   <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
   <link th:href="@{/cleaner.css}" rel ="stylesheet" type="text/css"/>
   <!-- <link href="style/shared.css" rel="stylesheet" type="text/css"/>
@@ -28,7 +46,7 @@
 
     <!-- Back Button -->
     <div class="register-container ">
-      <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
+      <a th:href="@{/CleanerHome}" class="back-btn">← Back</a>
 
       <!-- Account Info Box -->
       <div class="account-box edit_flex" th:object="${serviceListingInfo}">
@@ -51,20 +69,20 @@
             <div class="account-box S_description">
 
               <span th:text="*{description}"></span>
-    <!--            insert description data here    -->
-
             </div>
     </div>
 </div>
       <!-- Buttons -->
       <div class="form-actions">
-        <a th:href="@{/UpdateServiceListing(serviceId=${serviceListingInfo.serviceId})}" class="link-btn">Update Info</a>
-        <button type="button" class="submit-btn">Delete</button>
+        <a th:href="@{/CleanerUpdateService(serviceListing=${serviceListingInfo})}" class="link-btn">Update Info</a>
+        <button type="button" class="submit-btn" onclick="showModal">Delete</button>
       </div>
 
     </div>
 
   </div>
+
+  <form id="deleteServiceForm" th:action="@{/CleanerDeleteService(serviceId=${serviceListingInfo.serviceId})}"
   <div class="modal-overlay" style="display:none" >
     <div class="modal-box">
       <h2>Are you sure?</h2>

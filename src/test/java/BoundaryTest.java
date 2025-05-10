@@ -230,7 +230,7 @@ public class BoundaryTest {
         UserProfile profile2 = new UserProfile(); profile2.setProfileName("Cleaner");
 
         // Stubbing
-        when(userAccountC.GetAllUsers()).thenReturn(mockAccounts);
+        when(userAccountC.getAllUsers()).thenReturn(mockAccounts);
         when(userProfileC.getProfileById(1)).thenReturn(profile1);
         when(userProfileC.getProfileById(2)).thenReturn(profile2);
 

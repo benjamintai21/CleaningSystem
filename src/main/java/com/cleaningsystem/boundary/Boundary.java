@@ -247,11 +247,9 @@ public class Boundary {
 
         if (isSuccessful) {
             model.addAttribute("userProfileInfo", userProfile);
-            System.out.println("Signup successful");
             return "user_profile_info";
         } else {
             model.addAttribute("error", "Profile creation failed! Please try again.");
-            System.out.println("Profile creation failed");
             return "cleaner_user_creation";
         }
     }
@@ -299,11 +297,9 @@ public class Boundary {
 
         if (isSuccessful) {
             model.addAttribute("userProfileInfo", userProfile);
-            System.out.println("Signup successful");
             return "user_profile_info";
         } else {
             model.addAttribute("error", "Profile update failed! Please try again.");
-            System.out.println("Profile update failed");
             return "user_profile_update";
         }
     }
@@ -365,30 +361,32 @@ public class Boundary {
             return "redirect:/Login";
         }
         int uid = (int) uidObj;
+        
         serviceListing.setCleanerId(uid);
-        boolean isSuccessful = serviceListingC.createServiceListing(serviceListing.getName(), uid , serviceListing.getCategoryId(),
+        boolean isSuccessful = serviceListingC.CreateServiceListing(serviceListing.getName(), uid , serviceListing.getCategoryId(),
                                                                         serviceListing.getDescription(), serviceListing.getPricePerHour(),
                                                                         serviceListing.getStartDate(), serviceListing.getEndDate(), serviceListing.getStatus());
         if (isSuccessful) {
             model.addAttribute("serviceListingInfo", serviceListing);
-            System.out.println("Service Listing creation successful");
             return "cleaner_view_service_listing";
         } else {
             model.addAttribute("error", "Service Listing creation failed! Please try again.");
-            System.out.println("Service Listing creation failed");
             return "cleaner_create_service_listing";
         }
     }
 
     //View User Account
     @GetMapping("/ServiceListing")
-    public String showServiceListing(@RequestParam int uid, Model model) {
-        UserAccount user = userAccountC.ViewUserAccount(uid);
-        UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
-        String profileName = userProfile.getProfileName();
+    public String showServiceListing(@RequestParam int serviceId, Model model, HttpSession session) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            // Redirect to login or error page if user not logged in
+            return "redirect:/Login";
+        }
+        int uid = (int) uidObj;
 
-        model.addAttribute("userAccountInfo", user);
-        model.addAttribute("profileName", profileName);
+        ServiceListing listing = serviceListingC.ViewServiceListing(serviceId, uid);
+        model.addAttribute("serviceListingInfo", listing);
         return "cleaner_view_service_listing";
     }
 
@@ -412,23 +410,34 @@ public class Boundary {
         return "cleaner_update_service_listing";
     }
 
-    // @PostMapping("/CleanerUpdateService")
-    // public String processUpdateListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
+    @PostMapping("/CleanerUpdateService")
+    public String processUpdateListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
+        boolean isSuccessful = serviceListingC.UpdateServiceListing(serviceListing.getName(), serviceListing.getCleanerId(),
+                                                                    serviceListing.getCategoryId(), serviceListing.getDescription(),
+                                                                    serviceListing.getPricePerHour(), serviceListing.getStartDate(),
+                                                                    serviceListing.getEndDate(), serviceListing.getStatus(),
+                                                                    serviceListing.getServiceId());
 
-    // public String createService(@ModelAttribute UserProfile userProfile, Model model) {
-    //     boolean isSuccessful = serviceListingC.(userProfile);
+        if (isSuccessful) {
+            model.addAttribute("message", "Successfully updated");
+            return "cleaner_view_service_listing";
+        } else {
+            model.addAttribute("error", "Update failed! Please try again.");
+            return "cleaner_update_service_listing";
+        }
+    }
 
-    //     if (isSuccessful) {
-    //         model.addAttribute("userProfileInfo", userProfile);
-    //         System.out.println("Signup successful");
-    //         return "user_profile_info";
-    //     } else {
-    //         model.addAttribute("error", "Profile creation failed! Please try again.");
-    //         System.out.println("Profile creation failed");
-    //         return "cleaner_user_creation";
-    //     }
-        
-    // }
+    @PostMapping("CleanerDeleteService")
+    public String processDeleteListing(@ModelAttribute int serviceId, Model model, HttpSession session) {
+        boolean isSuccessful = serviceListingC.DeleteServiceListing(serviceId);
+
+        if (isSuccessful) {
+            model.addAttribute("message", "Profile creation failed! Please try again.");
+        } else {
+            model.addAttribute("error", "Profile creation failed! Please try again.");
+        }
+        return "cleaner_view_service_listing";
+    }
 
     //--Platform Manager
     @GetMapping("/PlatformManagerHome")
@@ -479,5 +488,57 @@ public class Boundary {
         model.addAttribute("serviceCategories", serviceCategories);
         model.addAttribute("serviceListingsCount", serviceListingsCount);
         return "pm_search_service_category";
-    }    
+    }
+
+    // Update Service Category
+    @GetMapping("/UpdateServiceCategory")
+    public String updateServiceCategory(@RequestParam int categoryId, Model model) {
+        ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId); 
+        model.addAttribute("updateServiceCategoryForm", serviceCategory);
+        return "pm_update_service_category";
+    }
+
+    @PostMapping("/UpdateServiceCategory")
+    public String processUpdateServiceCategory(@ModelAttribute ServiceCategory category, Model model) {
+        boolean isSuccessful = serviceCategoryC.UpdateServiceCategory(category.getType(), category.getName(), category.getDescription());
+
+        if (isSuccessful) {
+            model.addAttribute("serviceCategoryInfo", category);
+            return "redirect:/ServiceCategory?categoryId="  + category.getCategoryId();
+        } else {
+            model.addAttribute("error", "Service category update failed! Please try again.");
+            return "redirect:/ServiceCategory?categoryId="  + category.getCategoryId();
+        }
+    }
+
+    // Delete Service Category
+    @PostMapping("/DeleteServiceCategory")
+    public String processDeleteServiceCategory(@RequestParam int categoryId, Model model) {
+        boolean isSuccessful = serviceCategoryC.deleteServiceCategory(categoryId);
+
+        if (isSuccessful) {
+            model.addAttribute("message", "Service category deleted successfully");
+        } else {
+            model.addAttribute("error", "Failed to delete service category");
+        }
+
+        return "redirect:/ViewAllServiceCategories";
+    }
+
+    //Search Service Category
+    @GetMapping("/searchServiceCategory")
+    public String searchServiceCategory(@RequestParam String query, Model model) {
+        List<ServiceCategory> serviceCategories = serviceCategoryC.searchServiceCategory(query);
+        List<Integer> serviceListingsCount = new ArrayList<>();
+
+        for(ServiceCategory category : serviceCategories) {  
+            List<ServiceListing> serviceListings = serviceListingC.getServiceListingsByCategory(category.getCategoryId());
+            int count = (serviceListings != null) ? serviceListings.size() : 0;
+            serviceListingsCount.add(count);
+        }
+
+        model.addAttribute("serviceCategories", serviceCategories);
+        model.addAttribute("serviceListingsCount", serviceListingsCount);
+        return "pm_search_service_category";
+    }
 }

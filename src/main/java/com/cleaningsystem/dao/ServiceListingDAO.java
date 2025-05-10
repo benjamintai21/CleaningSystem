@@ -44,11 +44,11 @@ public class ServiceListingDAO {
         return listings.isEmpty() ? null : listings.get(0);
     }
 
-    public boolean updateListing(String name, int cleanerId, int categoryId, String description, double PricePerHour, 
-                                    String status, String startDate, String endDate, int serviceId) {
+    public boolean updateListing(String name, int cleanerId, int categoryId, String description, double priceperhour, 
+                                    String startDate, String endDate, String status, int serviceId) {
         return jdbcTemplate.update(UPDATE_SERVICE_LISTING, 
-        name, cleanerId, categoryId, description, PricePerHour, 
-        status, startDate, endDate, serviceId) > 0;
+        name, cleanerId, categoryId, description, priceperhour, 
+        startDate, endDate, status, serviceId) > 0;
     }
 
     public boolean deleteListing(int listingId) {

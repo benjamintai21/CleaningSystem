@@ -14,27 +14,27 @@ public class ServiceCategoryController {
     @Autowired
 	private ServiceCategoryDAO serviceCategoryDAO;
 
-    public boolean createServiceCategory(String type, String name, String description){
+    public boolean CreateServiceCategory(String type, String name, String description){
         return serviceCategoryDAO.insertServiceCategory(type, name, description);
     }
 
-    public ServiceCategory viewServiceCategory(int categoryId) {
+    public ServiceCategory ViewServiceCategory(int categoryId) {
         return serviceCategoryDAO.getCategoryById(categoryId);
     }
 
-    public ServiceCategory viewServiceCategory(String name) {
+    public ServiceCategory ViewServiceCategory(String name) {
         return serviceCategoryDAO.getCategoryByName(name);
     }
 
-    public boolean updateServiceCategory(String type, String name, String description){
+    public boolean UpdateServiceCategory(String type, String name, String description){
         return serviceCategoryDAO.updateCategory(type, name, description);
     }
 
-    public boolean deleteServiceCategory(int serviceId) {
+    public boolean DeleteServiceCategory(int serviceId) {
         return serviceCategoryDAO.deleteCategory(serviceId);
     }
 
-    public List<ServiceCategory> searchServiceCategory(String keyword) {
+    public List<ServiceCategory> SearchServiceCategory(String keyword) {
         return serviceCategoryDAO.searchCategoriesByName(keyword);
     }
 

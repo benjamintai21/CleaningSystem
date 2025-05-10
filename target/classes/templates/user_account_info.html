@@ -20,7 +20,6 @@
     function hideModal2() {
       document.getElementById("confirmModal2").style.display = "none";
     }
-  
   </script>
   
   <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
@@ -44,7 +43,7 @@
 
     <!-- Back Button -->
     <div class="register-container">
-      <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
+      <<a th:href="@{/UserAdminHome}" class="back-btn">← Back</a>
 
       <!-- Account Info Box -->
       <div class="account-box" th:object="${userAccountInfo}">

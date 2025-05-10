@@ -14,25 +14,25 @@ public class ServiceListingController {
     @Autowired
 	private ServiceListingDAO serviceListingDAO;
 
-    public boolean createServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
+    public boolean CreateServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
                                         String startDate, String endDate, String status) {
         return serviceListingDAO.insertListing(name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status);
     }
 
-    public ServiceListing viewServiceListing(int cleanerId, int serviceId) {
-        return serviceListingDAO.getListingById(cleanerId, serviceId);
+    public ServiceListing ViewServiceListing(int serviceId, int cleanerId) {
+        return serviceListingDAO.getListingById(serviceId, cleanerId);
     }
 
-    public boolean updateServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
+    public boolean UpdateServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
                                         String status, String startDate, String endDate, int serviceId) {
         return serviceListingDAO.updateListing(name, cleanerId, categoryId, description, price_per_hour, status, startDate, endDate, serviceId);
     }
 
-    public boolean deleteServiceListing(int serviceId) {
+    public boolean DeleteServiceListing(int serviceId) {
         return serviceListingDAO.deleteListing(serviceId);
     }
 
-    public List<ServiceListing> searchServiceListing(int cleanerId, String keyword) {
+    public List<ServiceListing> SearchServiceListing(int cleanerId, String keyword) {
         return serviceListingDAO.searchMyListings(cleanerId, keyword);
     }
 

@@ -25,7 +25,7 @@
 
     <!-- Back + Search -->
     <div class="register-container">
-      <a href="#" class="back-btn" onclick="history.back(); return false;">← Back</a>
+      <a th:href="@{/UserAdminHome}" class="back-btn">← Back</a>
 
       <!-- Search -->
       <form class="search-bar" th:action="@{/searchUserAccount(query=${query})}" method="GET">

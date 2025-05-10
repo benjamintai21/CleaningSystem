@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>User List</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap}" rel="stylesheet" />
   <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
-<link href="style/cleaner.css" rel="stylesheet" type="text/css"/>
+  <link th:href="@{/cleaner.css}" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}">
 <body>
 
   <div class="main-wrapper">
@@ -25,41 +26,42 @@
 
     <!-- Back + Search -->
     <div class="register-container">
-      <a href="#" class="back-btn">← Back</a>
+      <a th:href="@{/CleanerHome}" class="back-btn">← Back</a>
 
       <!-- Search -->
       <form class="search-bar" th:action="@{/searchServiceListing(query=${query})}" method="GET">
-        <input type="text" placeholder="Search My Listings" name="query" />
+        <input type="text" placeholder="Search my listings..." name="query" />
         <button type="submit" class="search-btn">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>    
 
       <!--User Cards-->
-      <a th:each="serviceListing, iterStat : ${serviceListings}" 
-      th:href="@{/ServiceListing(uid=${serviceListing.serviceId})}" 
+      <a th:each="serviceListing, iterStat : ${serviceListings}"
+      th:href="@{/ServiceListing(serviceId=${serviceListing.serviceId})}" 
       class="action_link">
       <div class="user-card cleanercard">
         <div>
           <p><strong>Service Name: </strong><span th:text="${serviceListing.name}"></span></p>
-            <div class="emptyspace"></div>
           <p><strong>Service ID: </strong><span th:text="${serviceListing.description}"></span></p>
         </div>
           
-        <div>
-            <p><strong>Status: </strong><span th:text="${serviceListing.status}"></span></p>
-            <div class="emptyspace"></div>
-            <div class="stat_containerList">
+        <div> 
+            <!-- <div class="stat_containerList">
                 <div class="icons viewimg"></div><div class="icons text">123</div>
                 <div class="icons shortlistimg"></div><div class="icons text">123</div>
-            </div>
-          
+            </div> -->
+            <p><strong>Start Date: </strong><span th:text="${serviceListing.startDate}"></span></p>
+            <p><strong>End Date: </strong><span th:text="${serviceListing.endDate}"></span></p>
         </div>
+        <div>
+          <p><strong>Status: </strong><span th:text="${serviceListing.status}"></span></p>
           <div class="thin-arrow cleaner_arrow"></div>
-      </div>
+        </div>
       </div>
       </a>
     </div>
+  </div>
 
 </body>
 </html>
