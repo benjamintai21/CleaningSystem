@@ -455,10 +455,10 @@ public class Boundary {
 
     @PostMapping("/CreateServiceCategory")
     public String processServiceCategoryCreation(@ModelAttribute ServiceCategory serviceCategory, Model model) {
-        boolean isSuccessful = serviceCategoryC.createServiceCategory(serviceCategory.getType(), serviceCategory.getName(), serviceCategory.getDescription());
+        boolean isSuccessful = serviceCategoryC.CreateServiceCategory(serviceCategory.getType(), serviceCategory.getName(), serviceCategory.getDescription());
 
         if (isSuccessful) {
-            ServiceCategory category = serviceCategoryC.viewServiceCategory(serviceCategory.getName());
+            ServiceCategory category = serviceCategoryC.ViewServiceCategory(serviceCategory.getName());
             return "redirect:/ServiceCategory?categoryId=" + category.getCategoryId();
         } else {
             model.addAttribute("error", "Service Category creation failed! Please try again.");
@@ -469,7 +469,7 @@ public class Boundary {
     // View Service Category
     @GetMapping("/ServiceCategory")
     public String showServiceCategory(@RequestParam int categoryId, Model model) { 
-        ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId); 
+        ServiceCategory serviceCategory = serviceCategoryC.ViewServiceCategory(categoryId); 
         model.addAttribute("serviceCategoryInfo", serviceCategory);
         return "pm_service_category_info";
     }
@@ -493,7 +493,7 @@ public class Boundary {
     // Update Service Category
     @GetMapping("/UpdateServiceCategory")
     public String updateServiceCategory(@RequestParam int categoryId, Model model) {
-        ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId); 
+        ServiceCategory serviceCategory = serviceCategoryC.ViewServiceCategory(categoryId); 
         model.addAttribute("updateServiceCategoryForm", serviceCategory);
         return "pm_update_service_category";
     }
@@ -514,7 +514,7 @@ public class Boundary {
     // Delete Service Category
     @PostMapping("/DeleteServiceCategory")
     public String processDeleteServiceCategory(@RequestParam int categoryId, Model model) {
-        boolean isSuccessful = serviceCategoryC.deleteServiceCategory(categoryId);
+        boolean isSuccessful = serviceCategoryC.DeleteServiceCategory(categoryId);
 
         if (isSuccessful) {
             model.addAttribute("message", "Service category deleted successfully");
@@ -528,7 +528,7 @@ public class Boundary {
     //Search Service Category
     @GetMapping("/searchServiceCategory")
     public String searchServiceCategory(@RequestParam String query, Model model) {
-        List<ServiceCategory> serviceCategories = serviceCategoryC.searchServiceCategory(query);
+        List<ServiceCategory> serviceCategories = serviceCategoryC.SearchServiceCategory(query);
         List<Integer> serviceListingsCount = new ArrayList<>();
         for(ServiceCategory category : serviceCategories) {  
             List<ServiceListing> serviceListings = serviceListingC.getServiceListingsByCategory(category.getCategoryId());
