@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}" />
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap}" rel="stylesheet" />
+
+    <link rel="stylesheet" th:href="@{HMstyle/Homepage.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{HMstyle/Nav_Footer.css}" type="text/css">
+    <style>
+    html {
+        scroll-behavior: smooth !important;
+    }   
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar Start -->
+    <div class="navbar-container">
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <img th:src="@{images/logo.png}" alt="logo">
+            </div>
+            <div class="navbar-links">
+                <a th:href="@{HomeOwnerHome}" class="navbar-link active">Home</a>
+                <a href="#AboutUs" class="navbar-link">About Us</a>
+                <a th:href="@{ViewAllServices}" class="navbar-link">Services</a>
+                <a th:href="@{ViewCleanerShortlist}" class="navbar-link">Cleaner Shortlist</a>
+                <a th:href="@{ViewServiceShortlist}" class="navbar-link">Service Shortlist</a>
+                <a th:href="@{ViewMyBooking}" class="navbar-link">My Booking</a>
+                <a href="#ContactUs" class="navbar-link">Contact Us</a>
+            </div>
+            <a th:href="@{Login}" class="navbar-login">Logout</a>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Hero Section -->
+    <section class="section hero--gradient">
+        <div class="section__content">
+            <div class="section__label">
+                <span class="badge badge--white"><i class="fa-solid fa-circle-check"></i>&nbsp&nbsp The Best Cleaning Service Solution.</span>
+            </div>
+
+            <h1 class="section__title">
+                <span class="highlight-primary">Professional</span>
+                <span class="highlight-accent">Cleaning</span><br /> Services Provider.
+            </h1>
+
+            <p class="section__text">
+                "We provide reliable, eco-friendly, and professional cleaning solutions tailored to your lifestyle — because your time and comfort matter."
+            </p>
+
+            <div class="section__actions">
+                <a href="#ExploreMore" class="btn btn--primary">Explore More →</a>
+            </div>
+        </div>
+
+        <div class="section__image hero__image">
+            <img th:src="@{/images/hero image.png}" alt="Cleaning Professional" />
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="AboutUs">
+        <!-- Preview Circle -->
+        <div class="section__image">
+            <div class="preview-circle">
+                <img th:src="@{/images/video.png}" alt="About Thumbnail" />
+
+            </div>
+        </div>
+        <!-- Right: About Content -->
+        <div class="section__content">
+            <div class="section__label">
+                <span class="line"></span> About Us
+            </div>
+
+            <h2 class="section__title">
+                <span class="highlight-primary">Your Top Choice</span> for<br> Cleaning Services.
+            </h2>
+
+            <p class="section__text">
+                We offer trusted, professional, and eco-friendly cleaning solutions tailored to your lifestyle.
+            </p>
+
+            <div class="stats-row">
+                <div>
+                    <div class="stat">1000+</div>
+                    <span class="stat-label">Services Booked</span>
+                </div>
+                <div>
+                    <div class="stat">50+</div>
+                    <span class="stat-label">Professional Cleaners</span>
+                </div>
+                <div>
+                    <div class="stat">90%</div>
+                    <span class="stat-label">Satisfied Customers</span>
+                </div>
+            </div>
+
+            <ul class="checklist">
+                <li><i class="fa-solid fa-circle-check"></i> 5+ years of experience and a reputation for excellence.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Eco-friendly products: safe for family, pets, and planet.</li>
+                <li><i class="fa-solid fa-circle-check"></i> Flexible scheduling around your lifestyle.</li>
+            </ul>
+        </div>
+    </section>
+    </div>
+    <!--SerVice Features Saction-->
+
+    <section class="service-section" id="ExploreMore">
+        <!-- Header -->
+        <div class="section-header">
+            <div class="section__label">
+                <span class="line"></span> Our Service
+            </div>
+            <a class="btn btn--primary" th:href="@{ViewAllServices}">View All Services →</a>
+        </div>
+
+        <h2 class="section__title">
+            <span class="highlight-white">Explore Our Cleaning</span>
+            <span class="highlight-accent">Services.</span>
+        </h2>
+
+        <!-- Carousel -->
+        <div class="carousel-wrapper">
+            <button class="carousel-btn left" onclick="scrollCards(-1)">❮</button>
+
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Repeat this block for each card -->
+                <div class="service-card">
+                    <h3>Window Cleaning</h3>
+                    <p>Crystal-clear results for homes and offices.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Office Cleaning</h3>
+                    <p>Professional workspace sanitization and tidying.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Kitchen Cleaning</h3>
+                    <p>Spotless counters and appliances guaranteed.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Sofa Cleaning</h3>
+                    <p>Deep cleaning for upholstered furniture clean and clear.</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>Air-Condi Cleaning</h3>
+                    <p>Cooler air with our expert aircon cleaning. Remove dust, modle etc</p>
+                </div>
+
+                <div class="service-card">
+                    <h3>Floor Cleaning</h3>
+                    <p>Remove dust, bateria keep your living space clean and refresh.</p>
+                </div>
+                <!-- Add more cards as needed -->
+            </div>
+
+            <button class="carousel-btn right" onclick="scrollCards(1)">❯</button>
+        </div>
+    </section>
+
+    <!--Ads Banner-->
+    <section class="cta-banner">
+        <div class="cta-content">
+            <h2 class="cta-text">
+                <span class="highlight-primary">Book Affordable Services:</span>
+                <span class="highlight-light"> Save Time and Money With US!</span>
+            </h2>
+            <a type="button" class="btn btn--dark" th:href="@{ViewAllServices}">Book Services</a>
+        </div>
+    </section>
+
+    <!--Why Chooose Us Saction-->
+    <section class="section why-choose">
+        <div class="section__image">
+            <img class="why-img" th:src="@{images/cleaning team.png}" alt="Our Cleaners" />
+        </div>
+
+        <div class="section__content">
+            <div class="section__label">
+                <span class="line"></span> Why Choose Us
+            </div>
+
+            <h2 class="section__title">
+                Why Choose <span class="highlight-primary">Our Green<br>Service Solution.</span>
+            </h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img th:src="@{images/symbol2.png}" alt="">
+                    <div>
+                        <h4>Satisfaction Guarantee</h4>
+                        <p>We ensure top-quality service with every booking.
+
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img th:src="@{images/symbol7.png}" alt="">
+                    <div>
+                        <h4>Affordable Pricing</h4>
+                        <p>Transparent and competitive rates for all budgets.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img th:src="@{images/symbol4.png}" alt="">
+                    <div>
+                        <h4>Trusted Cleaners</h4>
+                        <p>All professionals are background-checked and verified.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <img th:src="@{images/symbol1.png}" alt="">
+                    <div>
+                        <h4>Flexible Scheduling</h4>
+                        <p>Schedule cleaning at your convenience, anytime.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--How it Work (Process Steps)-->
+
+    <section class="how-it-works">
+        <div class="how-it-works__banner">
+            <img th:src="@{images/banner.png}" alt="Cleaning Supplies" class="banner-image" />
+            <div class="section__content banner-overlay">
+                <div class="section__label">
+                    <span class="line"></span> Our Process
+                </div>
+                <h2 class="section__title">
+                    Here <span class="highlight-primary">How It Works</span>
+                </h2>
+            </div>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-image">
+                    <img th:src="@{images/symbol6.png}" alt="Browse Service">
+                    <span class="step-number">1</span>
+                </div>
+                <h4>Browse Service</h4>
+                <p class="step-subtitle">Explore available cleaning options.</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-image">
+                    <img th:src="@{images/symbol3.png}" alt="Choose Cleaner">
+                    <span class="step-number">2</span>
+                </div>
+                <h4>Choose Cleaner</h4>
+                <p class="step-subtitle">Pick your preferred professional.</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-image">
+                    <img th:src="@{images/symbol5.png}" alt="Book & Confirm">
+                    <span class="step-number">3</span>
+                </div>
+                <h4>Book & Confirm</h4>
+                <p class="step-subtitle"> Select time and confirm instantly</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-image">
+                    <img th:src="@{images/symbol8.png}" alt="Enjoy a Spotless Home">
+                    <span class="step-number">4</span>
+                </div>
+                <h4>Enjoy a Spotless Home</h4>
+                <p class="step-subtitle"> Relax while we clean for you.</p>
+            </div>
+        </div>
+    </section>>
+
+    <!--Feartures Cleaner Saction-->
+    <section class="featured-cleaners">
+        <!-- Section Header -->
+        <div class="section__header">
+            <div class="section__label">
+                <span class="line"></span>
+                <span class="label-text">Our Cleaner</span>
+            </div>
+            <h2 class="section__title">
+                Featured <span class="highlight-accent">Cleaners</span>
+            </h2>
+            <span class="section__text">Trusted professionals handpicked for you</span>
+        </div>
+
+        <!-- Cleaner Card Grid -->
+        <div class="card-grid">
+            <!-- Featured Card -->
+            <div class="cleaner-card featured">
+                <h3>James R.</h3>
+                <span class="badge badge--accent">Window Cleaning</span>
+                <p class="cleaner-desc">Detail-oriented and reliable cleaner</p>
+                <button class="btn btn--dark">View Profile</button>
+            </div>
+
+            <!-- Cleaner Cards -->
+            <div class="cleaner-card">
+                <h3>Alice W.</h3>
+                <span class="badge badge--accent">Deep Cleaning</span>
+                <p class="cleaner-desc">5 years of residential cleaning experience</p>
+                <button class="btn btn--dark">View Profile</button>
+            </div>
+
+            <div class="cleaner-card">
+                <h3>Rachel M.</h3>
+                <span class="badge badge--accent">Deep Cleaning</span>
+                <p class="cleaner-desc">Passionate about making homes shine</p>
+                <button class="btn btn--dark">View Profile</button>
+            </div>
+
+            <div class="cleaner-card">
+                <img src="image/cleaner4.png" alt="Ethan" class="cleaner-avatar" />
+                <h3>Ethan G.</h3>
+                <span class="badge badge--accent">Kitchen Cleaning</span>
+                <p class="cleaner-desc">5 years of residential cleaning experience</p>
+                <a class="btn btn--dark">View Profile</a>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="center-text" style="margin-top: 40px;">
+            <a class="btn btn--primary" th:href="@{ViewAllServices}">View more Cleaners & Services ➝</a>
+        </div>
+    </section>
+
+    <section class="testimonial-section faq-section">
+        <div class="section__header center-text">
+            <div class="section__label">
+                <span class="line"></span>
+                <span class="highlight-white">Faqs</span>
+            </div>
+            <h2 class="section__title">
+                <span class="highlight-white">Question? Look Here</span>
+            </h2>
+        </div>
+
+        <div class="faq-container">
+            <!-- FAQ Item 1 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h4>Do I need to provide cleaning supplies?</h4>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Most cleaners bring their own supplies. However, if you prefer specific products, you can let the cleaner know in advance.
+                </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h4>What types of cleaning services do you offer?</h4>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    We offer deep cleaning, kitchen cleaning, window cleaning, and more. You can view all services on our website.
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h4>Are your cleaners background-checked and verified?</h4>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, all our cleaners undergo background checks and are thoroughly verified before joining our platform.
+                </div>
+            </div>
+
+            <!-- Add more faq-item elements as needed -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="testimonial-section contact-container" id="ContactUs" style="scroll-margin-top: 40px;">
+        <div class="section__label">
+            <span class="line"></span> Contact Us
+        </div>
+        <h2 class="section__title">Leave Us Some Message Today!</h2>
+
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" placeholder="Your Name*" required />
+                <input type="email" placeholder="Email*" required />
+            </div>
+            <textarea placeholder="Your Message*" required></textarea>
+            <br />
+            <button type="submit" class="btn btn-submit">Submit</button>
+        </form>
+    </section>
+
+    <!--Newsletter Saction-->
+    <section class="newsletter-block">
+        <div class="newsletter-container">
+            <div class="newsletter-image">
+                <img th:src="@{images/img_news.png}" alt="Newsletter" />
+            </div>
+
+            <div class="newsletter-text">
+                <h2 class="newsletter-heading">
+                    Stay Updated With <span class="highlight-accent">Our Cleaning</span><span class="highlight-primary"> Tips & Offers!</span>
+                </h2>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email..." required />
+                    <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!--Footer-->
+    <footer class="footer">
+        <div class="footer-top">
+            <!-- Logo and Social -->
+            <div class="footer-section logo-section">
+                <div class="navbar-logo">
+                    <img th:src="@{images/logo.png}" alt="logo">
+                </div>
+                <p>
+                    Step into a world of mystery, challenge, and discovery. Explore interactive puzzles, sharpen your mind, and unlock the path forward—one room at a time
+                </p>
+                <div class="social-icons">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-youtube"></i>
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+            </div>
+
+            <!-- Company Links -->
+            <div class="footer-section company-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="footer-section contact-section">
+                <h3>Contact</h3>
+                <p>+65-123-4565</p>
+                <p>example@gmail.com</p>
+                <p>123 Road, Clementi Ave1, Singapore</p>
+                <p>
+                    Monday – Friday : 10:00 – 20:00
+                </p>
+                <p> Saturday – Sunday : 11:00 – 18:00</p>
+            </div>
+
+            <!-- Google Map -->
+            <div class="footer-section map-section">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.043698099326!2d103.76883741601177!3d1.3322467999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1ad5d9adf927%3A0x9cb80b6fcce59db5!2sClementi%20Ave%201%2C%20Singapore!5e0!3m2!1sen!2ssg!4v1715057761234!5m2!1sen!2sg"
+                    width="100%" height="180" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+            </div>
+        </div>
+
+        <!-- Footer Bottom inside the footer -->
+        <div class="footer-bottom">
+            <span>Copy Right 2025 Cleaning. All Right Reserved</span>
+            <span><a href="#">User Term & Condition</a> | <a href="#">Privacy Policy</a></span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

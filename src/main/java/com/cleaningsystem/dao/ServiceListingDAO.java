@@ -25,11 +25,9 @@ public class ServiceListingDAO {
         listing.setPricePerHour(rs.getDouble("price_per_hour"));
         listing.setStartDate(rs.getDate("startDate").toLocalDate().toString());
         listing.setEndDate(rs.getDate("endDate").toLocalDate().toString());
-        
         listing.setStatus(rs.getString("status"));
         listing.setViews(rs.getInt("views"));
         listing.setShortlists(rs.getInt("shortlists"));
-
         return listing;
     };
 
@@ -67,8 +65,8 @@ public class ServiceListingDAO {
         return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING_BY_ID, listingRowMapper, cleanerId, pattern);
     }
 
-    public List<ServiceListing> getAllListings(int cleanerId){
-        return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper, cleanerId);
+    public List<ServiceListing> getAllListingsById(int cleanerId){
+        return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS_BY_ID, listingRowMapper, cleanerId);
     }
 
     public ServiceListing getLastListing() {
@@ -78,7 +76,7 @@ public class ServiceListingDAO {
 
     //HomeOwner-----------------------------------------------------
     public List<ServiceListing> searchListingsByService(String keyword) {
-        String pattern = "%" + keyword + "$";
+        String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_SERVICE, listingRowMapper, pattern);
     }
 
@@ -89,5 +87,9 @@ public class ServiceListingDAO {
 
     public List<ServiceListing> getServiceListingsByCategory(int categoryId) {
         return jdbcTemplate.query(GET_SERVICE_LISTING_BY_CATEGORY, listingRowMapper, categoryId);
+    }
+
+    public List<ServiceListing> getAllListings(){
+        return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
     }
 }

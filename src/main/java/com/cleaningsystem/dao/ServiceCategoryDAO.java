@@ -67,7 +67,7 @@ public class ServiceCategoryDAO {
         } catch (Exception e) {
             return false;
         }
-    } 
+    }
 
     public List<ServiceCategory> searchCategoriesByName(String keyword){
         return jdbcTemplate.query(SEARCH_SERVICE_CATEGORY_BY_NAME, categoryRowMapper, "%" + keyword + "%");

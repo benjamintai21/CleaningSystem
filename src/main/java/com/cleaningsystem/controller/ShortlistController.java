@@ -26,11 +26,17 @@ public class ShortlistController {
         return shortlistDAO.searchShortlistedService(homeownerId, keyword);
     }
 
+    
+
     // public boolean DeleteShortlist(int serviceId) {
     //     return shortlistDAO.deleteListing(serviceId);
     // }
 
     public List<Shortlist> getAllShortlists(int homeownerId) {
         return shortlistDAO.getAllShortlists(homeownerId);
-    }    
+    } 
+    
+    public List<Shortlist> getNumberOfShortlists(int serviceId){
+        return shortlistDAO.getNumberOfShortlists(serviceId);
+    }   
 }

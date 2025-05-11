@@ -111,12 +111,6 @@ public class Boundary {
         return "cleaner_home_page";
     }
 
-    @GetMapping("/HomeOwnerHome")
-    public String showHomeOwnerHome(HttpSession session, Model model) {
-        model.addAttribute("username", session.getAttribute("username"));
-        return "homeowner_home_page";
-    }
-
     //Create User Account
     @GetMapping("/CleanerUserCreation")
     public String showCleanerSignUpForm(Model model) {
@@ -370,8 +364,6 @@ public class Boundary {
         }
         int uid = (int) uidObj;
         
-        // serviceListing.setCleanerId(uid);
-
         boolean isSuccessful = serviceListingC.createServiceListing(serviceListing.getName(), uid , serviceListing.getCategoryId(),
                                                                         serviceListing.getDescription(), serviceListing.getPricePerHour(),
                                                                         serviceListing.getStartDate(), serviceListing.getEndDate(), serviceListing.getStatus());
@@ -624,5 +616,74 @@ public class Boundary {
         model.addAttribute("serviceListingsCount", serviceListingsCount);
         return "pm_search_service_category";
     }
+
+    // HomeOwnerrrr
+    @GetMapping("/HomeOwnerHome")
+    public String showHomeOwnerHome(HttpSession session, Model model) {
+        model.addAttribute("username", session.getAttribute("username"));
+        return "homeowner_home_page";
+    }
+
+    // View All Services by Home Owner
+    @GetMapping("/ViewAllServices")
+    public String viewServices(Model model) {
+        List<ServiceListing> serviceListings = serviceListingC.getAllListings();
+        List<String> cleanersName = new ArrayList<>();
+        List<String> categoriesName = new ArrayList<>();
+        
+        for (ServiceListing listing : serviceListings) {
+            UserAccount user = userAccountC.viewUserAccount(listing.getCleanerId());
+            String cleanerName = user.getName();
+            cleanersName.add(cleanerName);
+
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
+            String categoryType = category.getType();
+            String categoryName = category.getName();
+            String categoryTypeandName = categoryType + "-" + categoryName;
+            categoriesName.add(categoryTypeandName);
+        }
+
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("cleanersName", cleanersName);
+        model.addAttribute("categoriesName", categoriesName);
+        return "homeowner_search_services";
+    }
+     
+    // Search Services by Home Owner
+    @GetMapping("/searchServices")
+    public String searchServices(@RequestParam String query, Model model) {
+        
+        List<ServiceListing> serviceListings = serviceListingC.searchListingsByService(query);
+
+        if (serviceListings == null || serviceListings.isEmpty()) {
+            serviceListings = serviceListingC.searchListingsByCleaner(query);
+        }
+
+        if (serviceListings == null || serviceListings.isEmpty()) {
+            return "redirect:/ViewAllServices";
+        }
+        
+        List<String> cleanersName = new ArrayList<>();
+        List<String> categoriesName = new ArrayList<>();
+        
+        for (ServiceListing listing : serviceListings) {
+            UserAccount user = userAccountC.viewUserAccount(listing.getCleanerId());
+            String cleanerName = user.getName();
+            cleanersName.add(cleanerName);
+
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
+            String categoryType = category.getType();
+            String categoryName = category.getName();
+            String categoryTypeandName = categoryType + "-" + categoryName;
+            categoriesName.add(categoryTypeandName);
+        }
+
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("cleanersName", cleanersName);
+        model.addAttribute("categoriesName", categoriesName);
+        return "homeowner_search_services";
+    }
+        
+
 }
 //testing
