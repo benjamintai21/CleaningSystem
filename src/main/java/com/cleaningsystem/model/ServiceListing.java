@@ -10,7 +10,7 @@ public class ServiceListing {
     private int cleanerId;
     private int categoryId;
     private String description;
-    private double priceperhour;
+    private double pricePerHour;
     private String startDate;
     private String endDate;
     private String status;
@@ -28,7 +28,7 @@ public class ServiceListing {
         this.cleanerId = cleanerId;
         this.categoryId = categoryId;
         this.description = description;
-        this.priceperhour = priceperhour;
+        this.pricePerHour = priceperhour;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -45,7 +45,7 @@ public class ServiceListing {
     public int getCleanerId() { return cleanerId; }
     public int getCategoryId() {return categoryId; }
     public String getDescription() { return description; }
-    public double getPricePerHour() { return priceperhour; }
+    public double getPricePerHour() { return pricePerHour; }
     public String getStartDate() { return startDate; }
     public String getEndDate() { return endDate; }
     public String getStatus() { return status; }
@@ -60,7 +60,7 @@ public class ServiceListing {
     public void setCleanerId(int new_cleanerId) { this.cleanerId = new_cleanerId; }
     public void setDescription(String new_description) { this.description = new_description; }
     public void setCategoryId(int new_categoryId) { this.categoryId = new_categoryId; }
-    public void setPricePerHour(double new_price) { this.priceperhour = new_price; }
+    public void setPricePerHour(double new_price) { this.pricePerHour = new_price; }
     public void setStartDate(String new_startDate) { this.startDate = new_startDate; }
     public void setEndDate(String new_endDate) { this.endDate = new_endDate; }
     public void setStatus(String new_status) { this.status = new_status; }

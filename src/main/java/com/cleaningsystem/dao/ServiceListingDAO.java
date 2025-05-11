@@ -25,8 +25,9 @@ public class ServiceListingDAO {
         listing.setPricePerHour(rs.getDouble("price_per_hour"));
         listing.setStartDate(rs.getDate("startDate").toLocalDate().toString());
         listing.setEndDate(rs.getDate("endDate").toLocalDate().toString());
-        
         listing.setStatus(rs.getString("status"));
+        listing.setViews(rs.getInt("views"));
+        listing.setShortlist(rs.getInt("shortlists"));
         return listing;
     };
 
@@ -55,18 +56,22 @@ public class ServiceListingDAO {
         return jdbcTemplate.update(DELETE_SERVICE_LISTING, listingId) > 0;
     }
 
+    public boolean deleteListingByCategory(int categoryId) {
+        return jdbcTemplate.update(DELETE_SERVICE_LISTING, categoryId) > 0;
+    }
+
     public List<ServiceListing> searchMyListings(int cleanerId, String keyword){
         String pattern = "%" + keyword + "$";
         return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING, listingRowMapper, cleanerId, pattern);
     }
 
-    public List<ServiceListing> getAllListings(int cleanerId){
-        return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper, cleanerId);
+    public List<ServiceListing> getAllListingsById(int cleanerId){
+        return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS_BY_ID, listingRowMapper, cleanerId);
     }
 
     //HomeOwner-----------------------------------------------------
     public List<ServiceListing> searchListingsByService(String keyword) {
-        String pattern = "%" + keyword + "$";
+        String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_SERVICE, listingRowMapper, pattern);
     }
 
@@ -77,5 +82,9 @@ public class ServiceListingDAO {
 
     public List<ServiceListing> getServiceListingsByCategory(int categoryId) {
         return jdbcTemplate.query(GET_SERVICE_LISTING_BY_CATEGORY, listingRowMapper, categoryId);
+    }
+
+    public List<ServiceListing> getAllListings(){
+        return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
     }
 }

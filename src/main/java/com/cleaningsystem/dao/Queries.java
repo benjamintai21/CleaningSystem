@@ -47,15 +47,19 @@ public class Queries {
     
     public static final String DELETE_SERVICE_LISTING = "DELETE FROM SERVICELISTINGS WHERE serviceId = ?";
 
+    public static final String DELETE_ALL_SERVICE_LISTING_BY_CATEGORY = "DELETE FROM SERVICELISTINGS WHERE categoryId = ?";
+
     public static final String SEARCH_MY_SERVICE_LISTING = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ? and name LIKE ?";
 
-    public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ?";
+    public static final String GET_ALL_SERVICE_LISTINGS_BY_ID = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ?";
 
     public static final String GET_NO_OF_SHORTLISTS = "SELECT shortlists FROM SERVICELISTINGS WHERE cleanerId = ?";
    
     public static final String GET_NO_OF_VIEWS = "SELECT views FROM SERVICELISTINGS where cleanerId = ?";
 
     public static final String GET_SERVICE_LISTING_BY_CATEGORY = "SELECT * FROM SERVICELISTINGS WHERE categoryId = ?";
+
+    public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS";
 
     //Service Categories
     public static final String CREATE_SERVICE_CATEGORIES = "INSERT INTO SERVICECATEGORIES (type, name, description) VALUES (?, ?, ?)";
@@ -73,7 +77,7 @@ public class Queries {
     public static final String GET_ALL_SERVICE_CATEGORIES = "SELECT * FROM SERVICECATEGORIES";
     
     //HomeOwner
-    public static final String SEARCH_SERVICE_LISTING_BY_SERVICE = "SELECT * FROM SERVICELISTINGS WHERE name = ?";
+    public static final String SEARCH_SERVICE_LISTING_BY_SERVICE = "SELECT * FROM SERVICELISTINGS WHERE name LIKE ?";
     
     public static final String SEARCH_SERVICE_LISTING_BY_CLEANER = "SELECT s.* FROM SERVICELISTINGS s JOIN USERACCOUNT u ON s.cleanerId = u.UID WHERE u.profileID = 4 AND u.name LIKE ?";
 

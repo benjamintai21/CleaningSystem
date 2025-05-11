@@ -14,23 +14,29 @@ public class ShortlistController {
     @Autowired
 	private ShortlistDAO shortlistDAO;
 
-    public boolean ShortlistCleaner(int homeownerId, int serviceId){
+    public boolean shortlistCleaner(int homeownerId, int serviceId){
         return shortlistDAO.saveToShortlist(homeownerId, serviceId);
     }
 
-    public Shortlist ViewShortlist(int shortlistId, int homeownerId) {
+    public Shortlist viewShortlist(int shortlistId, int homeownerId) {
         return shortlistDAO.getShortlistById(shortlistId, homeownerId);
     }
 
-    public List<Shortlist> SearchShortlist(int homeownerId, String keyword) {
+    public List<Shortlist> searchShortlist(int homeownerId, String keyword) {
         return shortlistDAO.searchShortlistedService(homeownerId, keyword);
     }
+
+    
 
     // public boolean DeleteShortlist(int serviceId) {
     //     return shortlistDAO.deleteListing(serviceId);
     // }
 
-    public List<Shortlist> GetAllShortlists(int homeownerId) {
+    public List<Shortlist> getAllShortlists(int homeownerId) {
         return shortlistDAO.getAllShortlists(homeownerId);
-    }    
+    } 
+    
+    public List<Shortlist> getNumberOfShortlists(int serviceId){
+        return shortlistDAO.getNumberOfShortlists(serviceId);
+    }   
 }

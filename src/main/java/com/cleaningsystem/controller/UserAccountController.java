@@ -18,19 +18,19 @@ public class UserAccountController {
         return userAccountDAO.login(username, password, profileId);	
     }
 
-    public boolean CreateAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
+    public boolean createAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
         return userAccountDAO.insertUserAccount(name, age, dob, gender, address, email, username, password, profileId);
     }
 
-    public UserAccount ViewUserAccount(int uid) {
+    public UserAccount viewUserAccount(int uid) {
         return userAccountDAO.getUserById(uid);
     }
 
-    public UserAccount ViewUserAccount(String username) {
+    public UserAccount viewUserAccount(String username) {
         return userAccountDAO.getUserByUsername(username);
     }
 
-    public boolean UpdateUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId, int UId) {
+    public boolean updateUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId, int UId) {
         return userAccountDAO.updateUserAccount(name, age, dob, gender, address, email, username, password, profileId, UId);
     }
 
@@ -38,11 +38,11 @@ public class UserAccountController {
         return userAccountDAO.setSuspensionStatus(uid, suspended);
     }
 
-    public List<UserAccount> SearchUser(String keyword) {
+    public List<UserAccount> searchUser(String keyword) {
         return userAccountDAO.searchUsersByUsername(keyword);
     }
 
-    public List<UserAccount> SearchUser(int profileId) {
+    public List<UserAccount> searchUser(int profileId) {
         return userAccountDAO.searchUsersByProfileId(profileId);
     }
 

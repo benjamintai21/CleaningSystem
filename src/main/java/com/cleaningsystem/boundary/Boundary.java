@@ -103,12 +103,6 @@ public class Boundary {
         return "cleaner_home_page";
     }
 
-    @GetMapping("/HomeOwnerHome")
-    public String showHomeOwnerHome(HttpSession session, Model model) {
-        model.addAttribute("username", session.getAttribute("username"));
-        return "homeowner_home_page";
-    }
-
     //Create User Account
     @GetMapping("/CleanerUserCreation")
     public String showCleanerSignUpForm(Model model) {
@@ -119,7 +113,7 @@ public class Boundary {
     @PostMapping("/CleanerUserCreation")
     public String processCleanerSignUp(@ModelAttribute UserAccount user, Model model) {
         user.setProfileId(4);
-        boolean isSuccessful = userAccountC.CreateAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId()); 
+        boolean isSuccessful = userAccountC.createAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId()); 
 
         if (isSuccessful) {
             UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
@@ -137,7 +131,7 @@ public class Boundary {
     //View User Account
     @GetMapping("/UserAccount")
     public String showUserAccount(@RequestParam int uid, Model model) {
-        UserAccount user = userAccountC.ViewUserAccount(uid);
+        UserAccount user = userAccountC.viewUserAccount(uid);
         UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
         String profileName = userProfile.getProfileName();
 
@@ -165,14 +159,14 @@ public class Boundary {
     //Update User Account
     @GetMapping("/UpdateUserAccount")
     public String showUpdateUserAccount(@RequestParam String username, Model model) {
-        UserAccount user = userAccountC.ViewUserAccount(username);
+        UserAccount user = userAccountC.viewUserAccount(username);
         model.addAttribute("userAccountInfo", user);
         return "user_account_update";
     }
 
     @PostMapping("/UpdateUserAccount")
     public String processUpdateUserAccount(@ModelAttribute UserAccount user, Model model) {
-        boolean isSuccessful = userAccountC.UpdateUserAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId(), user.getUid()); 
+        boolean isSuccessful = userAccountC.updateUserAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId(), user.getUid()); 
 
         if (isSuccessful) {
             UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
@@ -193,7 +187,7 @@ public class Boundary {
     boolean isSuccessful = userAccountC.setSuspensionStatus(user.getUid(), suspended); 
 
     if (isSuccessful) {
-        UserAccount updatedUser = userAccountC.ViewUserAccount(user.getUid());
+        UserAccount updatedUser = userAccountC.viewUserAccount(user.getUid());
         UserProfile userProfile = userProfileC.getProfileById(updatedUser.getProfileId());
         String profileName = userProfile.getProfileName();
 
@@ -219,7 +213,7 @@ public class Boundary {
     //Search User Account
     @GetMapping("/searchUserAccount")
     public String searchUserAccounts(@RequestParam String query, Model model) {
-        List<UserAccount> userAccounts = userAccountC.SearchUser(query);
+        List<UserAccount> userAccounts = userAccountC.searchUser(query);
         List<String> profileNames = new ArrayList<>();
 
         for (UserAccount user : userAccounts) {
@@ -258,7 +252,7 @@ public class Boundary {
     @GetMapping("/UserProfile")
     public String showUserProfile(@RequestParam int profileId, Model model) {
         UserProfile userProfile = userProfileC.getProfileById(profileId);
-        List<UserAccount> userAccounts = userAccountC.SearchUser(userProfile.getProfileId());
+        List<UserAccount> userAccounts = userAccountC.searchUser(userProfile.getProfileId());
         int usersCount = userAccounts.size();
     
         model.addAttribute("userProfileInfo", userProfile);
@@ -273,7 +267,7 @@ public class Boundary {
         List<Integer> profilesUserCounter = new ArrayList<>();
 
         for (UserProfile userProfile : userProfiles) {
-            List<UserAccount> userAccounts = userAccountC.SearchUser(userProfile.getProfileId());
+            List<UserAccount> userAccounts = userAccountC.searchUser(userProfile.getProfileId());
             profilesUserCounter.add(userAccounts.size());
         }
 
@@ -334,7 +328,7 @@ public class Boundary {
         List<Integer> profilesUserCounter = new ArrayList<>();
 
         for (UserProfile userProfile : userProfiles) {
-            List<UserAccount> userAccounts = userAccountC.SearchUser(userProfile.getProfileId());
+            List<UserAccount> userAccounts = userAccountC.searchUser(userProfile.getProfileId());
             profilesUserCounter.add(userAccounts.size());
         }
 
@@ -363,7 +357,7 @@ public class Boundary {
         int uid = (int) uidObj;
         
         serviceListing.setCleanerId(uid);
-        boolean isSuccessful = serviceListingC.CreateServiceListing(serviceListing.getName(), uid , serviceListing.getCategoryId(),
+        boolean isSuccessful = serviceListingC.createServiceListing(serviceListing.getName(), uid , serviceListing.getCategoryId(),
                                                                         serviceListing.getDescription(), serviceListing.getPricePerHour(),
                                                                         serviceListing.getStartDate(), serviceListing.getEndDate(), serviceListing.getStatus());
         if (isSuccessful) {
@@ -385,8 +379,8 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        ServiceListing listing = serviceListingC.ViewServiceListing(serviceId, uid);
-        ServiceCategory category = serviceCategoryC.ViewServiceCategory(listing.getCategoryId());
+        ServiceListing listing = serviceListingC.viewServiceListing(serviceId, uid);
+        ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
         model.addAttribute("serviceListingInfo", listing);
         model.addAttribute("serviceCategory", category);
         return "cleaner_view_service_listing";
@@ -401,7 +395,7 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        List<ServiceListing> servicelistings = serviceListingC.getAllListings(uid);
+        List<ServiceListing> servicelistings = serviceListingC.getAllListingsById(uid);
         model.addAttribute("serviceListings", servicelistings);
         return "cleaner_service_list";
     }
@@ -415,7 +409,7 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        ServiceListing listing = serviceListingC.ViewServiceListing(serviceId, uid);
+        ServiceListing listing = serviceListingC.viewServiceListing(serviceId, uid);
         model.addAttribute("serviceListingInfo", listing);
         model.addAttribute("serviceCategories", serviceCategoryC.getAllCategories());
         model.addAttribute("serviceStatuses", ServiceListing.Status.values()); 
@@ -424,14 +418,14 @@ public class Boundary {
 
     @PostMapping("/CleanerUpdateService")
     public String processUpdateListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
-        boolean isSuccessful = serviceListingC.UpdateServiceListing(serviceListing.getName(), serviceListing.getCleanerId(),
+        boolean isSuccessful = serviceListingC.updateServiceListing(serviceListing.getName(), serviceListing.getCleanerId(),
                                                                     serviceListing.getCategoryId(), serviceListing.getDescription(),
                                                                     serviceListing.getPricePerHour(), serviceListing.getStartDate(),
                                                                     serviceListing.getEndDate(), serviceListing.getStatus(),
                                                                     serviceListing.getServiceId());
 
         if (isSuccessful) {
-            ServiceCategory category = serviceCategoryC.ViewServiceCategory(serviceListing.getCategoryId());
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(serviceListing.getCategoryId());
             model.addAttribute("serviceListingInfo", serviceListing);
             model.addAttribute("serviceCategory", category);
             model.addAttribute("message", "Successfully updated");
@@ -444,7 +438,7 @@ public class Boundary {
 
     @PostMapping("CleanerDeleteService")
     public String processDeleteListing(@ModelAttribute ServiceListing listing, Model model, HttpSession session) {
-        boolean isSuccessful = serviceListingC.DeleteServiceListing(listing.getServiceId());
+        boolean isSuccessful = serviceListingC.deleteServiceListing(listing.getServiceId());
 
         if (isSuccessful) {
             model.addAttribute("message", "Profile creation failed! Please try again.");
@@ -470,10 +464,10 @@ public class Boundary {
 
     @PostMapping("/CreateServiceCategory")
     public String processServiceCategoryCreation(@ModelAttribute ServiceCategory serviceCategory, Model model) {
-        boolean isSuccessful = serviceCategoryC.CreateServiceCategory(serviceCategory.getType(), serviceCategory.getName(), serviceCategory.getDescription());
+        boolean isSuccessful = serviceCategoryC.createServiceCategory(serviceCategory.getType(), serviceCategory.getName(), serviceCategory.getDescription());
 
         if (isSuccessful) {
-            ServiceCategory category = serviceCategoryC.ViewServiceCategory(serviceCategory.getName());
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(serviceCategory.getName());
             return "redirect:/ServiceCategory?categoryId=" + category.getCategoryId();
         } else {
             model.addAttribute("error", "Service Category creation failed! Please try again.");
@@ -484,7 +478,7 @@ public class Boundary {
     // View Service Category
     @GetMapping("/ServiceCategory")
     public String showServiceCategory(@RequestParam int categoryId, Model model) { 
-        ServiceCategory serviceCategory = serviceCategoryC.ViewServiceCategory(categoryId); 
+        ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId); 
         model.addAttribute("serviceCategoryInfo", serviceCategory);
         return "pm_service_category_info";
     }
@@ -508,14 +502,14 @@ public class Boundary {
     // Update Service Category
     @GetMapping("/UpdateServiceCategory")
     public String updateServiceCategory(@RequestParam int categoryId, Model model) {
-        ServiceCategory serviceCategory = serviceCategoryC.ViewServiceCategory(categoryId); 
+        ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId); 
         model.addAttribute("updateServiceCategoryForm", serviceCategory);
         return "pm_update_service_category";
     }
 
     @PostMapping("/UpdateServiceCategory")
     public String processUpdateServiceCategory(@ModelAttribute ServiceCategory category, Model model) {
-        boolean isSuccessful = serviceCategoryC.UpdateServiceCategory(category.getType(), category.getName(), category.getDescription());
+        boolean isSuccessful = serviceCategoryC.updateServiceCategory(category.getType(), category.getName(), category.getDescription(), category.getCategoryId());
 
         if (isSuccessful) {
             model.addAttribute("serviceCategoryInfo", category);
@@ -529,7 +523,7 @@ public class Boundary {
     // Delete Service Category
     @PostMapping("/DeleteServiceCategory")
     public String processDeleteServiceCategory(@RequestParam int categoryId, Model model) {
-        boolean isSuccessful = serviceCategoryC.DeleteServiceCategory(categoryId);
+        boolean isSuccessful = serviceCategoryC.deleteServiceCategory(categoryId);
 
         if (isSuccessful) {
             model.addAttribute("message", "Service category deleted successfully");
@@ -543,7 +537,7 @@ public class Boundary {
     //Search Service Category
     @GetMapping("/searchServiceCategory")
     public String searchServiceCategory(@RequestParam String query, Model model) {
-        List<ServiceCategory> serviceCategories = serviceCategoryC.SearchServiceCategory(query);
+        List<ServiceCategory> serviceCategories = serviceCategoryC.searchServiceCategory(query);
         List<Integer> serviceListingsCount = new ArrayList<>();
         for(ServiceCategory category : serviceCategories) {  
             List<ServiceListing> serviceListings = serviceListingC.getServiceListingsByCategory(category.getCategoryId());
@@ -554,5 +548,74 @@ public class Boundary {
         model.addAttribute("serviceListingsCount", serviceListingsCount);
         return "pm_search_service_category";
     }
+
+    // HomeOwnerrrr
+    @GetMapping("/HomeOwnerHome")
+    public String showHomeOwnerHome(HttpSession session, Model model) {
+        model.addAttribute("username", session.getAttribute("username"));
+        return "homeowner_home_page";
+    }
+
+    // View All Services by Home Owner
+    @GetMapping("/ViewAllServices")
+    public String viewServices(Model model) {
+        List<ServiceListing> serviceListings = serviceListingC.getAllListings();
+        List<String> cleanersName = new ArrayList<>();
+        List<String> categoriesName = new ArrayList<>();
+        
+        for (ServiceListing listing : serviceListings) {
+            UserAccount user = userAccountC.viewUserAccount(listing.getCleanerId());
+            String cleanerName = user.getName();
+            cleanersName.add(cleanerName);
+
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
+            String categoryType = category.getType();
+            String categoryName = category.getName();
+            String categoryTypeandName = categoryType + "-" + categoryName;
+            categoriesName.add(categoryTypeandName);
+        }
+
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("cleanersName", cleanersName);
+        model.addAttribute("categoriesName", categoriesName);
+        return "homeowner_search_services";
+    }
+     
+    // Search Services by Home Owner
+    @GetMapping("/searchServices")
+    public String searchServices(@RequestParam String query, Model model) {
+        
+        List<ServiceListing> serviceListings = serviceListingC.searchListingsByService(query);
+
+        if (serviceListings == null || serviceListings.isEmpty()) {
+            serviceListings = serviceListingC.searchListingsByCleaner(query);
+        }
+
+        if (serviceListings == null || serviceListings.isEmpty()) {
+            return "redirect:/ViewAllServices";
+        }
+        
+        List<String> cleanersName = new ArrayList<>();
+        List<String> categoriesName = new ArrayList<>();
+        
+        for (ServiceListing listing : serviceListings) {
+            UserAccount user = userAccountC.viewUserAccount(listing.getCleanerId());
+            String cleanerName = user.getName();
+            cleanersName.add(cleanerName);
+
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
+            String categoryType = category.getType();
+            String categoryName = category.getName();
+            String categoryTypeandName = categoryType + "-" + categoryName;
+            categoriesName.add(categoryTypeandName);
+        }
+
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("cleanersName", cleanersName);
+        model.addAttribute("categoriesName", categoriesName);
+        return "homeowner_search_services";
+    }
+        
+
 }
 //testing
