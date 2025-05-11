@@ -1,0 +1,391 @@
+:root {
+    --primary: #007C91;
+    --accent: #FFB703;
+    --white: #FFFFFF;
+    --black: #1C1C1C;
+    --gray: #FAFAFA;
+}
+
+
+/* ========== Global Styles ========== */
+
+body {
+    background-color: var(--gray);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ========== Hero Section ========== */
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.label-tag {
+    background-color: #FFFFFF;
+    display: inline-block;
+    font-size: 16px;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.form-title {
+    font-size: 26px;
+    font-weight: 600;
+    text-decoration: underline;
+    color: var(--black);
+}
+
+
+/* ========== Main Wrapper ========== */
+
+.main-wrapper {
+    max-width: 120vh;
+    margin: 40px auto;
+    background-color: var(--white);
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+}
+
+
+/* ========== Search Bar ========== */
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 30px;
+}
+
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-input-wrapper input[type="text"] {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 12px 40px 12px 16px;
+    font-size: 16px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #555;
+    cursor: pointer;
+}
+
+
+/* ========== Service Cards ========== */
+
+.service-card {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 20px 30px;
+    margin: 0 auto 20px;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.service-info {
+    flex: 1;
+}
+
+.service-card p {
+    margin: 6px 0;
+}
+
+.service-engage {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.card-stats {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.card-stats span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.thin-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid var(--black);
+    border-top: 2px solid var(--black);
+    transform: rotate(45deg);
+}
+
+
+/* ========== Show More Link ========== */
+
+.showMore {
+    text-align: center;
+}
+
+.show-more-btn {
+    color: #adadad;
+    text-decoration: none;
+}
+
+.show-more-btn:hover {
+    text-decoration: underline;
+}
+
+
+/* ========= Service Listing Detail ========== */
+
+.back-btn {
+    display: inline-block;
+    margin: 20px 0;
+    font-size: 16px;
+    text-decoration: none;
+    color: var(--black);
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+}
+
+.service-detail-box {
+    background-color: #fafafa;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    max-width: 900px;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.left-details,
+.right-details {
+    flex: 1;
+    min-width: 250px;
+}
+
+.right-details {
+    text-align: start;
+}
+
+.description {
+    line-height: 1.5;
+}
+
+.detail-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.action-btn {
+    background-color: #FFB703;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #1C1C1C;
+}
+
+.action-btn:hover {
+    background-color: #e2aa05;
+}
+
+
+/* ========= Cleaner Profile =========== */
+
+.profile-box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 900px;
+    margin: 40px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.profile-label {
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-description {
+    font-size: 15px;
+    text-align: justify;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.view-more-link {
+    font-size: 14px;
+    color: var(--black);
+    font-weight: 500;
+    margin-left: 8px;
+    text-decoration: underline;
+}
+
+.profile-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.profile-actions .action-btn {
+    background-color: var(--accent);
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--black);
+}
+
+.profile-actions .action-btn:hover {
+    background-color: #e2aa05;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup-overlay.show {
+    display: flex;
+}
+
+.popup-box {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    min-width: 280px;
+}
+
+.popup-icon {
+    background-color: var(--black);
+    padding: 10px 20px;
+    font-size: 25px;
+    color: #fff;
+    margin-bottom: 12px;
+    border-radius: 6px;
+}
+
+
+/*======== Booking History =============*/
+
+
+/* Reuse service-card for booking */
+
+.booking-card {
+    position: relative;
+    padding: 20px 30px;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    margin: 0 auto 20px;
+    max-width: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+
+/* Arrow on right */
+
+.toggle-arrow {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.toggle-arrow.rotate {
+    transform: rotate(-135deg);
+}
+
+.booking-details {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    width: 100%;
+}
+
+.booking-details.show {
+    display: block;
+}
+
+.action_link {
+    text-decoration: none;
+    color: black;
+}
+  
+.action_link:hover {
+    color: black; /* Optional: keep color on hover */
+}

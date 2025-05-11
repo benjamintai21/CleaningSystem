@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import com.cleaningsystem.model.Booking;
-import com.cleaningsystem.model.ServiceCategory;
 
 import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;

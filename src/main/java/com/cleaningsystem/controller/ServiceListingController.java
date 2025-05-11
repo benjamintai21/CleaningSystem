@@ -41,7 +41,7 @@ public class ServiceListingController {
     }
 
     public List<ServiceListing> getAllListingsById (int cleanerId) {
-        return serviceListingDAO.getAllListings(cleanerId);
+        return serviceListingDAO.getAllListingsById(cleanerId);
     }
 
     public ServiceListing getListingById (int serviceId, int cleanerId) {
@@ -54,5 +54,17 @@ public class ServiceListingController {
 
     public List<ServiceListing> getServiceListingsByCategory(int categoryId) {
         return serviceListingDAO.getServiceListingsByCategory(categoryId);
+    }
+
+    public List<ServiceListing> getAllListings() {
+        return serviceListingDAO.getAllListings();
+    }
+
+    public List<ServiceListing> searchListingsByService(String keyword) {
+        return serviceListingDAO.searchListingsByService(keyword);
+    }
+
+    public List<ServiceListing> searchListingsByCleaner(String keyword) {
+        return serviceListingDAO.searchListingsByCleaner(keyword);
     }
 }
