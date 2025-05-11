@@ -27,6 +27,9 @@ public class ServiceListingDAO {
         listing.setEndDate(rs.getDate("endDate").toLocalDate().toString());
         
         listing.setStatus(rs.getString("status"));
+        listing.setViews(rs.getInt("views"));
+        listing.setShortlists(rs.getInt("shortlists"));
+
         return listing;
     };
 
@@ -55,6 +58,10 @@ public class ServiceListingDAO {
         return jdbcTemplate.update(DELETE_SERVICE_LISTING, listingId) > 0;
     }
 
+    public boolean deleteListingByCategory(int categoryId) {
+        return jdbcTemplate.update(DELETE_SERVICE_LISTING, categoryId) > 0;
+    }
+
     public List<ServiceListing> searchMyListings(int cleanerId, String keyword){
         String pattern = "%" + keyword + "$";
         return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING, listingRowMapper, cleanerId, pattern);
@@ -62,6 +69,11 @@ public class ServiceListingDAO {
 
     public List<ServiceListing> getAllListings(int cleanerId){
         return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper, cleanerId);
+    }
+
+    public ServiceListing getLastListing() {
+        List<ServiceListing> listings = jdbcTemplate.query(GET_MAX_SERVICELISTING, listingRowMapper);
+        return listings.isEmpty() ? null : listings.get(0);
     }
 
     //HomeOwner-----------------------------------------------------

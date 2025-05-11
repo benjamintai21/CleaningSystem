@@ -192,7 +192,7 @@ public class BoundaryTest {
         mockProfile.setProfileId(4);
     
         // Stubbing the controller calls
-        when(userAccountC.ViewUserAccount(mockUId)).thenReturn(mockuser);
+        when(userAccountC.viewUserAccount(mockUId)).thenReturn(mockuser);
         when(userProfileC.getProfileById(4)).thenReturn(mockProfile);
     
         // Call the method under test
@@ -241,7 +241,7 @@ public class BoundaryTest {
         UserAccount mockUser = new UserAccount();
         mockUser.setUsername(username);
 
-        when(userAccountC.ViewUserAccount(username)).thenReturn(mockUser);
+        when(userAccountC.viewUserAccount(username)).thenReturn(mockUser);
 
         String viewName = boundary.showUpdateUserAccount(username, model);
 
@@ -259,7 +259,7 @@ public void testProcessUpdateUserAccount_Success() {
     UserProfile mockProfile = new UserProfile();
     mockProfile.setProfileName("Admin");
 
-    when(userAccountC.UpdateUserAccount(any(), anyInt(), any(), any(), any(), any(), any(), any(), anyInt(), anyInt())).thenReturn(true);
+    when(userAccountC.updateUserAccount(any(), anyInt(), any(), any(), any(), any(), any(), any(), anyInt(), anyInt())).thenReturn(true);
     when(userProfileC.getProfileById(1)).thenReturn(mockProfile);
 
     String viewName = boundary.processUpdateUserAccount(user, model);
@@ -275,7 +275,7 @@ public void testProcessUpdateUserAccount_Success() {
 
         UserAccount user = new UserAccount();
 
-        when(userAccountC.UpdateUserAccount(any(), anyInt(), any(), any(), any(), any(), any(), any(), anyInt(), anyInt())).thenReturn(false);
+        when(userAccountC.updateUserAccount(any(), anyInt(), any(), any(), any(), any(), any(), any(), anyInt(), anyInt())).thenReturn(false);
 
         String viewName = boundary.processUpdateUserAccount(user, model);
 
@@ -296,7 +296,7 @@ public void testProcessUpdateUserAccount_Success() {
         profile.setProfileName("Cleaner");
     
         when(userAccountC.setSuspensionStatus(5, true)).thenReturn(true);
-        when(userAccountC.ViewUserAccount(5)).thenReturn(updatedUser);
+        when(userAccountC.viewUserAccount(5)).thenReturn(updatedUser);
         when(userProfileC.getProfileById(2)).thenReturn(profile);
     
         String viewName = boundary.processAccountSuspensionStatus(true, user, model);
@@ -314,7 +314,7 @@ public void testProcessUpdateUserAccount_Success() {
 
         UserProfile profile = new UserProfile(); profile.setProfileName("HomeOwner");
 
-        when(userAccountC.SearchUser(query)).thenReturn(mockAccounts);
+        when(userAccountC.searchUser(query)).thenReturn(mockAccounts);
         when(userProfileC.getProfileById(3)).thenReturn(profile);
 
         String viewName = boundary.searchUserAccounts(query, model);

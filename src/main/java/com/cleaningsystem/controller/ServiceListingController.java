@@ -14,31 +14,39 @@ public class ServiceListingController {
     @Autowired
 	private ServiceListingDAO serviceListingDAO;
 
-    public boolean CreateServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
+    public boolean createServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
                                         String startDate, String endDate, String status) {
         return serviceListingDAO.insertListing(name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status);
     }
 
-    public ServiceListing ViewServiceListing(int serviceId, int cleanerId) {
+    public ServiceListing viewServiceListing(int serviceId, int cleanerId) {
         return serviceListingDAO.getListingById(serviceId, cleanerId);
     }
 
-    public boolean UpdateServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
+    public boolean updateServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
                                         String status, String startDate, String endDate, int serviceId) {
         return serviceListingDAO.updateListing(name, cleanerId, categoryId, description, price_per_hour, status, startDate, endDate, serviceId);
     }
 
-    public boolean DeleteServiceListing(int serviceId) {
+    public boolean deleteServiceListing(int serviceId) {
         return serviceListingDAO.deleteListing(serviceId);
     }
 
-    public List<ServiceListing> SearchServiceListing(int cleanerId, String keyword) {
+    public boolean deleteListingByCategory(int categoryId) {
+        return serviceListingDAO.deleteListingByCategory(categoryId);
+    }
+
+    public List<ServiceListing> searchServiceListing(int cleanerId, String keyword) {
         return serviceListingDAO.searchMyListings(cleanerId, keyword);
     }
 
     public List<ServiceListing> getAllListings(int cleanerId) {
         return serviceListingDAO.getAllListings(cleanerId);
-    }    
+    }
+
+    public ServiceListing getLastListing() {
+        return serviceListingDAO.getLastListing();
+    }
 
     public List<ServiceListing> getServiceListingsByCategory(int categoryId) {
         return serviceListingDAO.getServiceListingsByCategory(categoryId);

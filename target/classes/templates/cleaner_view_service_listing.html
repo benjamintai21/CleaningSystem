@@ -54,15 +54,21 @@
             <div>
               <p><strong>Service Name: </strong><span th:text="*{name}"></span></p>
               <p><strong>Cleaner Name: </strong><span th:text="*{cleanerId}"></span></p>
-              <p><strong>Service Category: </strong><span th:text="${serviceCategory.name} + ' - ' + ${serviceCategory.type}"></span></p>
-              <p><strong>Price per hour: $</strong><span th:text="*{#numbers.formatDecimal(pricePerHour, 2, 2)}"></span></p>
+              <p><strong>Service Category: </strong><span th:text="${serviceCategory.type} + ' - ' + ${serviceCategory.name}"></span></p>
+              <p><strong>Price per hour: $</strong><span th:text="*{#numbers.formatDecimal(pricePerHour, 1, 2)}"></span></p>
             </div>
             <div>
               <p><strong>Service-ID: </strong><span th:text="*{serviceId}"></span></p>
-              <!-- <div class="stat_container">
-                <div class="icons viewimg"></div><div class="icons text">123</div>
-                <div class="icons shortlistimg"></div><div class="icons text">123</div>
-             </div> -->
+
+            <div>
+              <p><strong>Status: </strong><span th:text="*{status}"></span></p>
+              <div class="emptyspace"></div>
+              <div class="stat_containerList">
+                <div class="icons viewimg"></div><div class="icons text" th:text="*{views}"></div>
+                <div class="icons shortlistimg"></div><div class="icons text" th:text="*{shortlists}"></div>
+              </div>
+            </div>
+
             </div>
           </div>
 

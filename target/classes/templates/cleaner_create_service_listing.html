@@ -54,7 +54,7 @@
             <label for="S_Description">Service Price*</label>
             <div class="input-group">
               <span class="input-group-text">$</span>
-              <input type="text" id="S_Price" th:field="*{pricePerHour}" required />
+              <input type="text" id="S_Price" name="pricePerHour" th:value="*{#numbers.formatDecimal(pricePerHour, 1, 2)}" required />
           </div>
           </div>
         </div>

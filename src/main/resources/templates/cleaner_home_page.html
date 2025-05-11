@@ -33,6 +33,7 @@
       <!-- User Account Section -->
       <h3 class="section-title">Manage Services</h3>
       <div class="action-card-row">
+
         <a th:href="@{/CleanerCreateService}" class="action_link">
         <div class="action-card">
           <div class="icon"><i class="fa-solid fa-user-plus"></i></div>
@@ -40,6 +41,7 @@
           <p>Offer New Services to Employers</p>
         </div>
         </a>
+
         <a th:href="@{/ViewAllServiceListings}" class="action_link">
         <div class="action-card">
           <div class="icon"><i class="fa-solid fa-pen"></i></div>
@@ -47,6 +49,7 @@
           <p>Modify an existing service</p>
         </div>
         </a>
+
         <a th:href="@{/ViewAllServiceListings}" class="action_link">
         <div class="action-card">
           <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
@@ -54,12 +57,15 @@
           <p>View and Search my services.</p>
         </div>
         </a>
-        
+
+        <a th:href="@{/CleanerViewRecords}" class="action_link">
         <div class="action-card">
           <div class="icon"><i class="fa-solid record"></i></div>
             <h4>My Service Records</h4>
-            <p>View all records from service taken.</p>
-          </div>
+            <p>View my past services.</p>
+        </div>
+        </a>
+
       </div>
     </div>
   </div>

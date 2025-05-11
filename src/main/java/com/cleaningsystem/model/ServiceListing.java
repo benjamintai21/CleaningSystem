@@ -51,7 +51,7 @@ public class ServiceListing {
     public String getStatus() { return status; }
 
     public int getViews() { return views; }
-    public int getShortlist() { return shortlist; }
+    public int getShortlists() { return shortlist; }
 
 
     //Setters
@@ -66,5 +66,5 @@ public class ServiceListing {
     public void setStatus(String new_status) { this.status = new_status; }
 
     public void setViews(int new_views) { this.views = new_views; }
-    public void setShortlist(int new_shortlist) { this.shortlist = new_shortlist; }
+    public void setShortlists(int new_shortlist) { this.shortlist = new_shortlist; }
 }

@@ -26,31 +26,33 @@
 
     <!-- Back + Search -->
     <div class="register-container">
-      <a href="#" class="back-btn">← Back</a>
+      <a th:href="@{/CleanerHome}" class="back-btn">← Back</a>
 
       <!-- Search -->
-      <form class="search-bar" th:action="@{/searchUserAccount(query=${query})}" method="GET">
-        <input type="text" placeholder="Search users..." name="query" />
-        <button type="submit" class="search-btn">&#x1F50D;</button>
+      <form class="search-bar" th:action="@{/CleanerSearchRecords(query=${query})}" method="GET">
+        <input type="text" placeholder="Search records..." name="query" />
+        <button type="submit" class="search-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </form>    
 
       <!-- User Cards -->
-      <a th:each="userAccount, iterStat : ${userAccounts}" 
-      th:href="@{/UserAccount(uid=${userAccount.uid})}" 
+      <a th:each="match, iterStat : ${matches}" 
+      th:href="@{/CleanerRecord(bookingId=${match.bookingId})}" 
       style="text-decoration: none; color: #1C1C1C; display: flex;">
 
       <div class="user-card cleanercard edit_flex" >
           <div class="flex_row fullsize">
         <div>
-          <p><strong>Service Name: </strong><span th:text="${userAccount.name}"></span></p>
+          <p><strong>Service Name: </strong><span th:text="${match.bookingId}"></span></p>
             <div class="emptyspace"></div>
-          <p><strong>Service Type: </strong><span th:text="${userAccount.email}"></span></p>
+          <p><strong>Service Type: </strong><span th:text="${match.bookingId}"></span></p>
         </div>
           <br>
         <div>
-            <p><strong>Home Owner: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
+            <p><strong>Home Owner: </strong><span th:text="${match.bookingId}"></span></p>
             <div class="emptyspace"></div>
-           <p><strong>Status: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
+           <p><strong>Status: </strong><span th:text="${match.bookingId}"></span></p>
 
         </div>
           <!--              auto increment of data tab number pls-->
@@ -62,7 +64,7 @@
           <!--          id = card+ datatab value-->
         <div class="extendedtext edit_flex none" id ="card1">
             <div class="emptyspace"></div>
-            <p class="S_desc_alignment"><strong>Service Description: </strong><span th:text="${profileNames[iterStat.index]}"></span></p>
+            <p class="S_desc_alignment"><strong>Service Description: </strong><span th:text="${bookingId}"></span></p>
             <div class="account-box S_description">
 
               <span th:text="*{ServiceName}"></span>

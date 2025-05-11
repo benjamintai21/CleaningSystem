@@ -47,6 +47,8 @@ public class Queries {
     
     public static final String DELETE_SERVICE_LISTING = "DELETE FROM SERVICELISTINGS WHERE serviceId = ?";
 
+    public static final String DELETE_ALL_SERVICE_LISTING_BY_CATEGORY = "DELETE FROM SERVICELISTINGS WHERE categoryId = ?";
+    
     public static final String SEARCH_MY_SERVICE_LISTING = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ? and name LIKE ?";
 
     public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ?";
@@ -57,7 +59,8 @@ public class Queries {
 
     public static final String GET_SERVICE_LISTING_BY_CATEGORY = "SELECT * FROM SERVICELISTINGS WHERE categoryId = ?";
 
-    //Service Categories
+    public static final String GET_MAX_SERVICELISTING = "SELECT * FROM SERVICELISTINGS WHERE serviceId = (SELECT MAX(serviceId) FROM SERVICELISTINGS)";
+
     public static final String CREATE_SERVICE_CATEGORIES = "INSERT INTO SERVICECATEGORIES (type, name, description) VALUES (?, ?, ?)";
 
     public static final String GET_SERVICE_CATEGORY_BY_ID = "SELECT * FROM SERVICECATEGORIES WHERE categoryId = ?";

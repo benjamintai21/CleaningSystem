@@ -1,5 +1,5 @@
 .icons{
-    width: 23%;
+    width: 10%;
     height: 2vh;
     text-align: center;
     padding-right: 1%;
@@ -9,11 +9,11 @@
     margin: auto;
 }
 .shortlistimg{
-    background-image: url(../images/shortlist.png);
+    background-image: url(../pmimages/shortlist.png);
 
 }
 .viewimg{
-    background-image: url(../images/view.png);
+    background-image: url(../pmimages/view.png);
 }
 .edit_flex{
     flex-direction: column;
@@ -45,6 +45,7 @@ select,textarea{
     .text{
         padding-right: 5%;
         margin-left: -3%;
+        margin-top: -1%;
     }
 }
 .cleanercard{
