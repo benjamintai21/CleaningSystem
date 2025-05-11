@@ -20,6 +20,9 @@ INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,pro
 VALUES ('Bennett Siew',	49,	'2001-10-10', 'Female',	'123 ABC',	'b@gmail.com',	'bennett_cleaner', 'clean',	4, CURRENT_DATE);
 
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
+VALUES ('Ren',	69,	'2002-03-10', 'Male',	'179 ABC',	'renaway@gmail.com',	'ren_cleaner', 'ren',	4, CURRENT_DATE);
+
+INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
 VALUES ('Benjamin',	24,	'2001-12-12', 'Male', '123 ABC', 'ben@gmail.com', 'benjamin_owner', 'owner', 3, CURRENT_DATE);
 
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
@@ -58,8 +61,29 @@ VALUES ('Maintenance', 'Electrical', 'Electrical installations and repairs');
 INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status)
 VALUES ('Listing 1', 2 , 1 , 'Ironing your clothes for cheap', 50, '2025-10-10', '2025-12-12', 'AVAILABLE');
 
+INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status)
+VALUES ('Listing 2', 2 , 1 , 'Ironing your clothes for expensive', 50, '2025-10-11', '2025-12-12', 'AVAILABLE');
+
+INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status)
+VALUES ('Listing 3', 2 , 2 , 'Vacuuming the floor', 50, '2025-10-11', '2025-12-12', 'AVAILABLE');
+
+INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status)
+VALUES ('Listing 4', 2 , 2 , 'Vacuuming the rug', 50, '2025-10-11', '2025-12-12', 'AVAILABLE');
+
+INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status)
+VALUES ('Listing 5', 3 , 5 , 'Dancing your clothes', 103, '2025-10-11', '2025-12-12', 'AVAILABLE');
+
 INSERT INTO BOOKING (serviceId, homeownerId, status)
 VALUES (1, 3, 'completed');
+
+INSERT INTO BOOKING (serviceId, homeownerId, status)
+VALUES (2, 3, 'confirmed');
+
+INSERT INTO BOOKING (serviceId, homeownerId, status)
+VALUES (3, 3, 'completed');
+
+INSERT INTO BOOKING (serviceId, homeownerId, status)
+VALUES (4, 3, 'completed');
 
 DELIMITER //
 CREATE TRIGGER after_status_update
@@ -72,4 +96,3 @@ BEGIN
 END;
 //
 DELIMITER ;
-

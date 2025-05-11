@@ -1,5 +1,5 @@
 .icons{
-    width: 10%;
+    width: 100%;
     height: 2vh;
     text-align: center;
     padding-right: 1%;
@@ -41,7 +41,9 @@ select,textarea{
     margin-top: 1.75vh;
 }
 .stat_containerList{
-    width: 172%;
+    display: flex;
+    flex-direction: row;
+    width: 100px;
     .text{
         padding-right: 5%;
         margin-left: -3%;
@@ -50,7 +52,6 @@ select,textarea{
 }
 .cleanercard{
     height: auto;
-    align-items: flex-start;
 }
 .emptyspace{
     height: 1vh;

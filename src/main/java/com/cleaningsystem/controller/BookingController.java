@@ -15,12 +15,12 @@ public class BookingController {
     private BookingDAO bookingDAO;
 
     // HomeOwner
-    public List<Booking> getPastBookings(int homeownerUId) {
-        return bookingDAO.getPastBookings(homeownerUId);
+    public List<Booking> getPastBookings(int homeownerId) {
+        return bookingDAO.getPastBookings(homeownerId);
     }
 
-    public List<Booking> searchPastBookings(int homeownerUId, String keyword) {
-        return bookingDAO.searchPastBookings(homeownerUId, keyword);
+    public List<Booking> searchPastBookings(int homeownerId, String keyword) {
+        return bookingDAO.searchPastBookings(homeownerId, keyword);
     }
 
     // CLeaner
@@ -30,5 +30,9 @@ public class BookingController {
 
     public List<Booking> searchConfirmedMatches(int cleanerId, String keyword) {
         return bookingDAO.searchConfirmedMatches(cleanerId, keyword);
+    }
+
+    public Booking getBookingById(int bookingId){
+        return bookingDAO.getBookingById(bookingId);
     }
 }

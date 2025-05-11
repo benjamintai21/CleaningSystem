@@ -13,7 +13,9 @@ import com.cleaningsystem.model.Booking;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -386,7 +388,7 @@ public class Boundary {
 
     //View User Account
     @GetMapping("/ServiceListing")
-    public String showServiceListing(@RequestParam int serviceId, Model model, HttpSession session) {
+    public String showServiceListing(@RequestParam int serviceId, HttpSession session, Model model) {
         Object uidObj = session.getAttribute("uid");
         if (uidObj == null) {
             // Redirect to login or error page if user not logged in
@@ -410,7 +412,7 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        List<ServiceListing> servicelistings = serviceListingC.getAllListings(uid);
+        List<ServiceListing> servicelistings = serviceListingC.getAllListingsById(uid);
         model.addAttribute("serviceListings", servicelistings);
         return "cleaner_service_list";
     }
@@ -463,6 +465,21 @@ public class Boundary {
         return "redirect:/ViewAllServiceListings";
     }
 
+    //Search ServiceListing
+    @GetMapping("/searchServiceListing")
+    public String searchServiceListing(@RequestParam String query, HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            // Redirect to login or error page if user not logged in
+            return "redirect:/Login";
+        }
+        int uid = (int) uidObj;
+
+        List<ServiceListing> servicelistings = serviceListingC.searchServiceListing(uid, query);
+        model.addAttribute("serviceListings", servicelistings);
+        return "cleaner_service_list";
+    }
+
     @GetMapping("CleanerViewRecords")
     public String showPastRecords(HttpSession session, Model model){
         Object uidObj = session.getAttribute("uid");
@@ -473,14 +490,39 @@ public class Boundary {
         int uid = (int) uidObj;
 
         List<Booking> matches = bookingC.getConfirmedMatches(uid);
+        Map<Integer, ServiceListing> serviceListings = new HashMap<>();
+        for (Booking booking : matches) {
+            int serviceId = booking.getServiceId();
+            ServiceListing listing = serviceListingC. viewServiceListing(serviceId, uid);
+            serviceListings.put(serviceId, listing);
+        }
         model.addAttribute("matches", matches);
-        return "cleaner_view_records";
+        model.addAttribute("serviceListings", serviceListings);
+        return "cleaner_record_list";
+    }
+    
+    //Search ServiceListing
+    @GetMapping("/searchCleanerRecord")
+    public String searchPastRecords(@RequestParam String query, HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            // Redirect to login or error page if user not logged in
+            return "redirect:/Login";
+        }
+        int uid = (int) uidObj;
+
+        List<Booking> matches = bookingC.searchConfirmedMatches(uid, query);
+        Map<Integer, ServiceListing> serviceListings = new HashMap<>();
+        for (Booking booking : matches) {
+            int serviceId = booking.getServiceId();
+            ServiceListing listing = serviceListingC. viewServiceListing(serviceId, uid);
+            serviceListings.put(serviceId, listing);
+        }
+        model.addAttribute("matches", matches);
+        model.addAttribute("serviceListings", serviceListings);
+        return "cleaner_record_list";
     }
 
-    @GetMapping("CleanerRecord")
-    public String processPastRecords(Model model){
-        return "cleaner_view_records";
-    }
 
  //--Platform Managerrrr
     @GetMapping("/PlatformManagerHome")

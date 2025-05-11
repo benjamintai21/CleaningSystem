@@ -6,8 +6,8 @@
   <title>User List</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
     <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
-    <!-- <link href="style/shared.css" rel="stylesheet" type="text/css"/> -->
-    <link href="style/cleaner.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/cleaner.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}">
 <body>
 
   <div class="main-wrapper">
@@ -29,47 +29,47 @@
       <a th:href="@{/CleanerHome}" class="back-btn">← Back</a>
 
       <!-- Search -->
-      <form class="search-bar" th:action="@{/CleanerSearchRecords(query=${query})}" method="GET">
+      <form class="search-bar" th:action="@{/searchCleanerRecord(query=${query})}" method="GET">
         <input type="text" placeholder="Search records..." name="query" />
         <button type="submit" class="search-btn">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
-      </form>    
-
-      <!-- User Cards -->
+      </form>
+      
+      <!--User Cards -->
       <a th:each="match, iterStat : ${matches}" 
-      th:href="@{/CleanerRecord(bookingId=${match.bookingId})}" 
       style="text-decoration: none; color: #1C1C1C; display: flex;">
 
       <div class="user-card cleanercard edit_flex" >
           <div class="flex_row fullsize">
         <div>
-          <p><strong>Service Name: </strong><span th:text="${match.bookingId}"></span></p>
+          <p><strong>Booking ID: </strong><span th:text="${match.bookingId}"></span></p>
             <div class="emptyspace"></div>
-          <p><strong>Service Type: </strong><span th:text="${match.bookingId}"></span></p>
+          <p><strong>Service ID: </strong><span th:text="${match.serviceId}"></span></p>
+          <p><strong>Service Name: </strong><span th:text="${serviceListings[match.serviceId].name}"></span></p>
         </div>
           <br>
         <div>
-            <p><strong>Home Owner: </strong><span th:text="${match.bookingId}"></span></p>
+            <p><strong>Home Owner ID: </strong><span th:text="${match.homeownerId}"></span></p>
             <div class="emptyspace"></div>
-           <p><strong>Status: </strong><span th:text="${match.bookingId}"></span></p>
+           <p><strong>Status: </strong><span th:text="${match.status}"></span></p>
 
         </div>
           <!--              auto increment of data tab number pls-->
-            <a data-tab="1" onclick="activate(this)">
-<!--                make the id auto increase with tab value eg id = arrow+ tab value-->
-                <div class="thin-arrow cleaner_arrow unactivated" id="arrow1"></div>
-            </a>    
+            <a th:attr="data-tab=${iterStat.index}" onclick="activate(this)">
+              <div class="thin-arrow cleaner_arrow unactivated" th:attr="id='arrow' + ${iterStat.index}"></div>
+            </a>  
         </div>
           <!--          id = card+ datatab value-->
-        <div class="extendedtext edit_flex none" id ="card1">
+        
+        <div class="extendedtext edit_flex none" th:attr="id='card' + ${iterStat.index}">
             <div class="emptyspace"></div>
+            <p class="S_desc_alignment">Start Date: <span th:text="${serviceListings[match.serviceId].startDate}"></span></p>
+            <p class="S_desc_alignment">End Date:<span th:text="${serviceListings[match.serviceId].endDate}"></span></p>
             <p class="S_desc_alignment"><strong>Service Description: </strong><span th:text="${bookingId}"></span></p>
             <div class="account-box S_description">
-
-              <span th:text="*{ServiceName}"></span>
+              <span th:text="${serviceListings[match.serviceId].description}"></span>
     <!--            insert description data here    -->
-
             </div>
           
           
@@ -79,6 +79,6 @@
       </a>
     </div>
   </div>
-<script src="cleaner.js"></script>
+<script th:src="cleaner.js"></script>
 </body>
 </html>

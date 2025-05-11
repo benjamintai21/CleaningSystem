@@ -28,4 +28,5 @@ com\cleaningsystem\model\Shortlist.class
 com\cleaningsystem\model\ServiceCategory.class
 com\cleaningsystem\config\WebConfig.class
 com\cleaningsystem\model\ServiceListing.class
+com\cleaningsystem\controller\BookingController.class
 com\cleaningsystem\model\UserAccount.class

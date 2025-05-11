@@ -40,8 +40,12 @@ public class ServiceListingController {
         return serviceListingDAO.searchMyListings(cleanerId, keyword);
     }
 
-    public List<ServiceListing> getAllListings(int cleanerId) {
+    public List<ServiceListing> getAllListingsById (int cleanerId) {
         return serviceListingDAO.getAllListings(cleanerId);
+    }
+
+    public ServiceListing getListingById (int serviceId, int cleanerId) {
+        return serviceListingDAO.getListingById(serviceId, cleanerId);
     }
 
     public ServiceListing getLastListing() {

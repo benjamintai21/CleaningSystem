@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import com.cleaningsystem.model.Booking;
+import com.cleaningsystem.model.ServiceCategory;
 
 import static com.cleaningsystem.dao.Queries.*;
 import java.sql.ResultSet;
@@ -26,18 +27,23 @@ public class BookingDAO {
     };
 
     // HomeOwner
-    public List<Booking> getPastBookings(int homeownerUId) {
-        return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerUId);
+    public List<Booking> getPastBookings(int homeownerId) {
+        return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerId);
     }
 
-    public List<Booking> searchPastBookings(int homeownerUId, String keyword) {
+    public List<Booking> searchPastBookings(int homeownerId, String keyword) {
         String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_PAST_BOOKINGS, listingRowMapper, homeownerUId, pattern);
+        return jdbcTemplate.query(SEARCH_PAST_BOOKINGS, listingRowMapper, homeownerId, pattern);
     }
 
     // CLeaner
     public List<Booking> getConfirmedMatches(int cleanerId) {
         return jdbcTemplate.query(GET_CONFIRMED_MATCHES, listingRowMapper, cleanerId);
+    }
+
+    public Booking getBookingById(int bookingId){
+        List<Booking> bookings = jdbcTemplate.query(GET_BOOKING_BY_ID, listingRowMapper, bookingId);
+        return bookings.isEmpty() ? null : bookings.get(0);
     }
 
     public List<Booking> searchConfirmedMatches(int cleanerId, String keyword) {

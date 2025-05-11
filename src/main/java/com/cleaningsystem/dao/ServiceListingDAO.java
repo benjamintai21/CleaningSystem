@@ -63,8 +63,8 @@ public class ServiceListingDAO {
     }
 
     public List<ServiceListing> searchMyListings(int cleanerId, String keyword){
-        String pattern = "%" + keyword + "$";
-        return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING, listingRowMapper, cleanerId, pattern);
+        String pattern = "%" + keyword + "%";
+        return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING_BY_ID, listingRowMapper, cleanerId, pattern);
     }
 
     public List<ServiceListing> getAllListings(int cleanerId){

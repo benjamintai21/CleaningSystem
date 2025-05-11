@@ -13,10 +13,11 @@ public class Booking {
     //No-args constructor for Spring
     public Booking() {}
     
-    public Booking(int bookingId, int homeownerId, int serviceId) {
+    public Booking(int bookingId, int homeownerId, int serviceId, String status) {
         this.bookingId = bookingId;
         this.homeownerId = homeownerId;
         this.serviceId = serviceId;
+        this.status = status;
     }
 
     public enum Status {

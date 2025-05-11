@@ -49,7 +49,7 @@ public class Queries {
 
     public static final String DELETE_ALL_SERVICE_LISTING_BY_CATEGORY = "DELETE FROM SERVICELISTINGS WHERE categoryId = ?";
     
-    public static final String SEARCH_MY_SERVICE_LISTING = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ? and name LIKE ?";
+    public static final String SEARCH_MY_SERVICE_LISTING_BY_ID = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ? and name LIKE ?";
 
     public static final String GET_ALL_SERVICE_LISTINGS = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ?";
 
@@ -97,6 +97,8 @@ public class Queries {
 
     public static final String GET_CONFIRMED_MATCHES = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ?";
 
-    public static final String SEARCH_CONFIRMED_MATCHES = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ? AND sl.name LIKE ?";
+    public static final String SEARCH_CONFIRMED_MATCHES = "SELECT bh.* FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ? AND sl.name LIKE ?";
+
+    public static final String GET_BOOKING_BY_ID = "SELECT * FROM BOOKING WHERE bookingId = ?";
 }         
 
