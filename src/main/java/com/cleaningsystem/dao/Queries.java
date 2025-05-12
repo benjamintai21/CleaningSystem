@@ -7,34 +7,34 @@ public class Queries {
     //User Admin
     public static final String CREATE_USER_ACCOUNT = "INSERT INTO USERACCOUNT (name, age, dob, gender, address, email, username, password, profileId, accountCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
     
-    public static final String GET_USER_ACCOUNT_BY_ID = "SELECT * FROM USERACCOUNT WHERE UID = ?";
+    public static final String GET_USER_ACCOUNT_BY_ID = "SELECT * FROM USERACCOUNT WHERE UId = ?";
 
     public static final String GET_USER_ACCOUNT_BY_USERNAME = "SELECT * FROM USERACCOUNT WHERE username = ?";
 
-    public static final String UPDATE_USER_ACCOUNT = "UPDATE USERACCOUNT SET name = ?, age = ?, dob = ?, gender = ?, address = ?, email = ?, username = ?, password = ?, profileID = ? WHERE UID = ?";
+    public static final String UPDATE_USER_ACCOUNT = "UPDATE USERACCOUNT SET name = ?, age = ?, dob = ?, gender = ?, address = ?, email = ?, username = ?, password = ?, profileId = ? WHERE UId = ?";
     
     public static final String SET_ACCOUNT_SUSPENSION_STATUS = "UPDATE USERACCOUNT SET suspended = ? WHERE UId = ?";
 
     public static final String SEARCH_USER_ACCOUNT_BY_USERNAME = "SELECT * FROM USERACCOUNT WHERE username LIKE ?";
 
-    public static final String SEARCH_USER_ACCOUNT_BY_PROFILEID = "SELECT * FROM USERACCOUNT WHERE profileID = ?";
+    public static final String SEARCH_USER_ACCOUNT_BY_PROFILEID = "SELECT * FROM USERACCOUNT WHERE profileId = ?";
 
     public static final String GET_ALL_USER_ACCOUNT = "SELECT * FROM USERACCOUNT";
 
-    public static final String CHECK_USER_ACCOUNT = "SELECT up.profilename FROM USERPROFILE up JOIN USERACCOUNT ua ON up.profileId = ua.profileID WHERE ua.UId = ?";
+    public static final String CHECK_USER_ACCOUNT = "SELECT up.profilename FROM USERPROFILE up JOIN USERACCOUNT ua ON up.profileId = ua.profileId WHERE ua.UId = ?";
 
     //User Profile
     public static final String CREATE_USER_PROFILE = "INSERT INTO USERPROFILE (profilename, description, suspension) VALUES (?, ?, ?)";
 
-    public static final String GET_USER_PROFILE_BY_ID = "SELECT * FROM USERPROFILE WHERE profileID = ?";
+    public static final String GET_USER_PROFILE_BY_ID = "SELECT * FROM USERPROFILE WHERE profileId = ?";
 
-    public static final String GET_PROFILE_ID_BY_NAME = "SELECT profileID FROM USERPROFILE WHERE profilename = ?";
+    public static final String GET_PROFILE_ID_BY_NAME = "SELECT profileId FROM USERPROFILE WHERE profilename = ?";
 
-    public static final String GET_PROFILE_NAMES = "SELECT profilename FROM db_cleaningsystem.userprofile ORDER BY profileID";
+    public static final String GET_PROFILE_NAMES = "SELECT profilename FROM db_cleaningsystem.userprofile ORDER BY profileId";
 
-    public static final String UPDATE_USER_PROFILE = "UPDATE USERPROFILE SET profilename = ?, description = ?, suspension = ? WHERE profileID = ?"; 
+    public static final String UPDATE_USER_PROFILE = "UPDATE USERPROFILE SET profilename = ?, description = ?, suspension = ? WHERE profileId = ?"; 
 
-    public static final String SET_PROFILE_SUSPENSION_STATUS = "UPDATE USERPROFILE SET suspension = ? WHERE profileID = ?";
+    public static final String SET_PROFILE_SUSPENSION_STATUS = "UPDATE USERPROFILE SET suspension = ? WHERE profileId = ?";
 
     public static final String SEARCH_PROFILE_BY_NAME = "SELECT * FROM USERPROFILE WHERE profilename LIKE ?";
 
@@ -118,11 +118,32 @@ public class Queries {
 
     public static final String GET_BOOKING_BY_ID = "SELECT * FROM BOOKING WHERE bookingId = ?";
     
-    //Report
-    public static final String GET_DAILY_REPORT = "";
 
-    public static final String GET_WEEKLY_REPORT = "";
+    //New Account Created
+    public static final String GET_DAILY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND DATE(accountCreated) = CURRENT_DATE";
 
-    public static final String GET_MONTHLY_REPORT = "";
+    public static final String GET_WEEKLY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND accountCreated) >= CURRENT_DATE - INTERVAL 7 DAY";
+
+    public static final String GET_MONTHLY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND MONTH(accountCreated) = MONTH(CURRENT_DATE) AND YEAR(accountCreated) = YEAR(CURRENT_DATE)";
+    
+    //Total Account Created
+    public static final String GET_TOTAL_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ?";
+
+    //New Shortlists Created
+    public static final String GET_DAILY_SHORTLISTS = "SELECT COUNT(*) FROM (SELECT * FROM SHORTLISTEDCLEANERS WHERE DATE(dateAdded) = CURRENT_DATE UNION ALL SELECT * FROM SHORTLISTEDSERVICES WHERE DATE(dateAdded) = CURRENT_DATE) AS combined";
+
+    public static final String GET_WEEKLY_SHORTLISTS = "SELECT COUNT(*) FROM (SELECT * FROM SHORTLISTEDCLEANERS WHERE dateAdded >= CURRENT_DATE - INTERVAL 7 DAY UNION ALL SELECT * FROM SHORTLISTEDSERVICES WHERE dateAdded >= CURRENT_DATE - INTERVAL 7 DAY) AS combined";
+
+    public static final String GET_MONTHLY_SHORTLISTS = "SELECT COUNT(*) FROM (SELECT * FROM SHORTLISTEDCLEANERS WHERE MONTH(dateAdded) = MONTH(CURRENT_DATE) AND YEAR(dateAdded) = YEAR(CURRENT_DATE) UNION ALL SELECT * FROM SHORTLISTEDSERVICES WHERE MONTH(dateAdded) = MONTH(CURRENT_DATE) AND YEAR(dateAdded) = YEAR(CURRENT_DATE)) AS combined";
+
+    public static final String CREATE_REPORT = "INSERT INTO REPORT (type,date,new_homeOwners,total_homeOwners,new_cleaners,total_cleaners,total_shortlists,total_bookings) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    //New Booking Created
+    public static final String GET_DAILY_BOOKINGS = "SELECT COUNT(*) FROM BOOKING WHERE DATE(dateAdded) = CURRENT_DATE";
+
+    public static final String GET_WEEKLY_BOOKINGS = "SELECT COUNT(*) FROM BOOKING WHERE dateAdded >= CURRENT_DATE - INTERVAL 7 DAY";
+
+    public static final String GET_MONTHLY_BOOKINGS = "SELECT COUNT(*) FROM BOOKING WHERE MONTH(dateAdded) = MONTH(CURRENT_DATE) AND YEAR(dateAdded) = YEAR(CURRENT_DATE)";
+
 }         
 

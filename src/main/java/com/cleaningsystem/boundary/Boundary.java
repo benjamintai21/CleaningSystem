@@ -6,12 +6,15 @@ import com.cleaningsystem.controller.ServiceListingController;
 import com.cleaningsystem.controller.ShortlistController;
 import com.cleaningsystem.controller.ServiceCategoryController;
 import com.cleaningsystem.controller.BookingController;
+import com.cleaningsystem.controller.ReportController;
+
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
 import com.cleaningsystem.model.ServiceListing;
 import com.cleaningsystem.model.ServiceShortlist;
 import com.cleaningsystem.model.ServiceCategory;
 import com.cleaningsystem.model.Booking;
+import com.cleaningsystem.model.Report;
 import com.cleaningsystem.model.CleanerShortlist;
 
 import java.util.ArrayList;
@@ -49,6 +52,11 @@ public class Boundary {
 
     @Autowired
     private ShortlistController shortlistC;
+
+    @Autowired
+    private ReportController reportC;
+
+
 
     @GetMapping("/")
     public String showHomePage(Model model){
@@ -668,6 +676,19 @@ public class Boundary {
         model.addAttribute("serviceCategories", serviceCategories);
         model.addAttribute("serviceListingsCount", serviceListingsCount);
         return "pm_search_service_category";
+    }
+
+    //Generate Report
+    @GetMapping("/GenerateReport")
+    public String showReportPage(HttpSession session, Model model) {
+        String redirect = checkAccess(session, "Platform Manager");
+        if (redirect != null) return redirect;
+
+        Report dailyReport = reportC.generateDailyReport();
+
+        model.addAttribute("dailyReport", dailyReport);
+
+        return "pm_generate_report";
     }
 
     // HomeOwnerrrr

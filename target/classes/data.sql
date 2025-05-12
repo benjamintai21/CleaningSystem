@@ -14,22 +14,22 @@ INSERT INTO USERPROFILE (profileName, description, suspension)
 VALUES ('Cleaner', 'Responsible for cleaning jobs', 0);
 
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
-values ('Admin', 25, '2001-01-01', 'Male', '123 Clementi', 'admin@gmail.com', 'admin', 'password', 2, '2025-04-19');
+values ('Admin', 25, '2001-01-01', 'Male', '123 Clementi', 'admin@gmail.com', 'admin', 'password', 2, "1999-12-12");
 
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
-VALUES ('Bennett Siew',	49,	'2001-10-10', 'Female',	'123 ABC',	'b@gmail.com',	'bennett_cleaner', 'clean',	4, CURRENT_DATE);
+VALUES ('Bennett Siew',	49,	'2001-10-10', 'Female',	'123 ABC',	'b@gmail.com',	'bennett_cleaner', 'clean',	4, "1999-12-12");
 
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
-VALUES ('Ren',	69,	'2002-03-10', 'Male',	'179 ABC',	'renaway@gmail.com',	'ren_cleaner', 'ren',	4, CURRENT_DATE);
+VALUES ('Ren',	69,	'2002-03-10', 'Male',	'179 ABC',	'renaway@gmail.com',	'ren_cleaner', 'ren',	4, "1999-12-12");
 
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
-VALUES ('Benjamin',	24,	'2001-12-12', 'Male', '123 ABC', 'ben@gmail.com', 'benjamin_owner', 'owner', 3, CURRENT_DATE);
+VALUES ('Benjamin',	24,	'2001-12-12', 'Male', '123 ABC', 'ben@gmail.com', 'benjamin_owner', 'owner', 3, "1999-12-12");
 
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
-VALUES ('Andy',	26,	'1999-03-03', 'Male', '123 ABC', 'andy@gmail.com', 'andy_owner', 'owner', 3, CURRENT_DATE);
+VALUES ('Andy',	26,	'1999-03-03', 'Male', '123 ABC', 'andy@gmail.com', 'andy_owner', 'owner', 3, "1999-12-12");
 
 INSERT INTO USERACCOUNT (name,age,dob,gender,address,email,username,password,profileID,accountCreated)
-VALUES ('Hubert',	35,	'1989-04-11', 'Male', '123 ASDF', 'hurt@gmail.com', 'hubert_pm', 'pm', 1, CURRENT_DATE);
+VALUES ('Hubert',	35,	'1989-04-11', 'Male', '123 ASDF', 'hurt@gmail.com', 'hubert_pm', 'pm', 1, "1999-12-12");
 
 INSERT INTO SERVICECATEGORIES (type, name, description)
 VALUES ('Cleaning', 'Ironing', 'Ironing of clothes');

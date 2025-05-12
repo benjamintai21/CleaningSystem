@@ -1,14 +1,16 @@
 package com.cleaningsystem.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 
 @Entity
 public class Report {
 	private int reportId;
 	private String type;
-    private String date;
-    private int new_homeowners;
-    private int total_homeowners;
+    private LocalDate date;
+    private int new_homeOwners;
+    private int total_homeOwners;
     private int new_cleaners;
     private int total_cleaners;
     private int no_shortlists;
@@ -16,18 +18,24 @@ public class Report {
 
 	public Report() {}
 
-	public Report(String type, String date) {
+	public Report(String type, LocalDate date, int new_homeOwners, int total_homeOwners, int new_cleaners, int total_cleaners, int no_shortlists, int no_bookings) {
 		this.type = type;
-        this.date= date;
+        this.date = date;
+        this.new_homeOwners = new_homeOwners;
+        this.total_homeOwners = total_homeOwners;
+        this.new_cleaners = new_cleaners;
+        this.total_cleaners = total_cleaners;
+        this.no_shortlists = no_shortlists;
+        this.no_bookings = no_bookings;
 	}
 
 	// Getters
 	public int getReportId() { return reportId;}
 	public String getType() {return type;}
-    public String getDate() {return date;}
+    public LocalDate getDate() {return date;}
     
-    public int getNewHomeOwners() {return new_homeowners;}
-    public int getTotalHomeOwners() {return total_homeowners;}
+    public int getNewHomeOwners() {return new_homeOwners;}
+    public int getTotalHomeOwners() {return total_homeOwners;}
     public int getNewCleaners() {return new_cleaners;}
     public int getTotalCleaners() {return total_cleaners;}
     public int getNoOfShortlists() {return no_shortlists;}
@@ -36,10 +44,10 @@ public class Report {
 	//Setters
 	public void setReportId(int new_reportId) { new_reportId = reportId;}
 	public void setType(String new_type) {new_type = type;}
-    public void setDate(String new_date) {new_date = date;}
+    public void setDate(LocalDate new_date) {new_date = date;}
 
-    public void setNewOwners(int new_new_homeowners) {new_new_homeowners = new_homeowners;}
-    public void setTotalOwners(int new_total_homeowners) {new_total_homeowners = total_homeowners;} 
+    public void setNewHomeOwners(int new_new_homeOwners) {new_new_homeOwners = new_homeOwners;}
+    public void setTotalHomeOwners(int new_total_homeOwners) {new_total_homeOwners = total_homeOwners;} 
     public void setNewCleaner(int new_new_cleaners) {new_new_cleaners = new_cleaners;} 
     public void setTotalCleaner(int new_total_cleaners) {new_total_cleaners = total_cleaners;} 
     public void setNoOfShortlists(int new_total_shortlists) {new_total_shortlists = no_shortlists;} 

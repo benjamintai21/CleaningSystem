@@ -27,20 +27,6 @@
             <div id="content">
                 <!-- Default page content (first image) -->
                 <div id="home-page" class="page active">
-                    <div class="stats-container">
-                        <div class="stat-box">
-                            <div class="stat-number">50</div>
-                            <div class="stat-label">Cleaners</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-number">150</div>
-                            <div class="stat-label">Home Owner</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-number">20</div>
-                            <div class="stat-label">Service Listing</div>
-                        </div>
-                    </div>
 
                     <div class="report-buttons">
                         <button class="report-btn" id="daily-btn">Generate Daily Report</button>
@@ -49,122 +35,128 @@
                     </div>
                 </div>
 
-                <!-- Daily Report page content (second image) -->
-                <div id="daily-page" class="page">
-                    <h2>Daily Report</h2>
-                    <div class="date-selector">
-                        <label>Select day*</label>
-                        <div class="date-input-container">
-                            <input type="text" class="date-input" value="1/04/2025">
-                            <button class="generate-btn">Generate</button>
+                <form id="generateDaily" action="@{/GenerateDaily}" th:object="${dailyReport}">
+                    <!-- Daily Report page content (second image) -->
+                    <div id="daily-page" class="page">
+                        <h2>Daily Report</h2>
+                        <div class="date-selector">
+                            <label>Select day*</label>
+                            <div class="date-input-container">
+                                <input type="text" class="date-input" value="1/04/2025">
+                                <button class="generate-btn">Generate</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="stats-container">
-                        <div class="stat-box">
-                            <div class="stat-label">Total Booking</div>
-                            <div class="stat-number">50</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Shortlisted</div>
-                            <div class="stat-number">100</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Home Active</div>
-                            <div class="stat-number">45</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Sign-up</div>
-                            <div class="stat-number">20</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Suspend</div>
-                            <div class="stat-number">2</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Revenue</div>
-                            <div class="stat-number">230.25 $</div>
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <div class="stat-label">New Home Owners</div>
+                                <div class="stat-number"><span th:text="*{newHomeOwners}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">New Cleaners</div>
+                                <div class="stat-number"><span th:text="*{newCleaners}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">No. Of Shortlists</div>
+                                <div class="stat-number"><span th:text="*{NoOfShortlists}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Home Owners</div>
+                                <div class="stat-number"><span th:text="*{totalHomeOwners}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Cleaners</div>
+                                <div class="stat-number"><span th:text="*{totalCleaners}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">No. Of Bookings</div>
+                                <div class="stat-number"><span th:text="*{NoOfBookings}"></span></div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
-                <!-- Weekly Report page content (third image) -->
-                <div id="weekly-page" class="page">
-                    <h2>Weekly Report</h2>
-                    <div class="date-selector">
-                        <label>Select day*</label>
-                        <div class="date-input-container">
-                            <input type="text" class="date-input" value="8/04/2025">
-                            <button class="generate-btn">Generate</button>
+                <form id="generateWeekly" action="@{/GenerateWeekly}">
+                    <!-- Weekly Report page content (third image) -->
+                    <div id="weekly-page" class="page">
+                        <h2>Weekly Report</h2>
+                        <div class="date-selector">
+                            <label>Select day*</label>
+                            <div class="date-input-container">
+                                <input type="text" class="date-input" value="8/04/2025">
+                                <button class="generate-btn">Generate</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="stats-container">
-                        <div class="stat-box">
-                            <div class="stat-label">Total Booking</div>
-                            <div class="stat-number">50</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Shortlisted</div>
-                            <div class="stat-number">100</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Home Active</div>
-                            <div class="stat-number">45</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Sign-up</div>
-                            <div class="stat-number">20</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Suspend</div>
-                            <div class="stat-number">2</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Revenue</div>
-                            <div class="stat-number">230.25 $</div>
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <div class="stat-label">Total Booking</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Shortlisted</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Home Active</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Sign-up</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Suspend</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Revenue</div>
+                                <div class="stat-number">0</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
-                <!-- Monthly Report page content (fourth image) -->
-                <div id="monthly-page" class="page">
-                    <h2>Monthly Report</h2>
-                    <div class="date-selector">
-                        <label>Select month*</label>
-                        <div class="date-input-container">
-                            <input type="text" class="date-input" value="04/2025">
-                            <button class="generate-btn">Generate</button>
+                <form id="generateMonthly" action="@{/GenerateMonthly}">
+                    <!-- Monthly Report page content (fourth image) -->
+                    <div id="monthly-page" class="page">
+                        <h2>Monthly Report</h2>
+                        <div class="date-selector">
+                            <label>Select month*</label>
+                            <div class="date-input-container">
+                                <input type="text" class="date-input" value="04/2025">
+                                <button class="generate-btn">Generate</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="stats-container">
-                        <div class="stat-box">
-                            <div class="stat-label">Total Booking</div>
-                            <div class="stat-number">50</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Shortlisted</div>
-                            <div class="stat-number">100</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Home Active</div>
-                            <div class="stat-number">45</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Sign-up</div>
-                            <div class="stat-number">20</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Suspend</div>
-                            <div class="stat-number">2</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Total Revenue</div>
-                            <div class="stat-number">1000.25 $</div>
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <div class="stat-label">Total Booking</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Shortlisted</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Home Active</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Sign-up</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Suspend</div>
+                                <div class="stat-number">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Revenue</div>
+                                <div class="stat-number">0</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </main>
     </div>

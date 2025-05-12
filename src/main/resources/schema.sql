@@ -66,20 +66,20 @@ CREATE TABLE REPORT (
 	reportId int(10) not null auto_increment,
 	type varchar(15) not null,
 	date date not null,
-    views int(50) not null,
-    shortlists int(50) not null,
-    no_homeowners int (50) not null,
-    no_cleaners int(50) not null,
-    bookingId int not null,
+    new_homeOwners int(50) not null,
+    total_homeOwners int(50) not null,
+    new_cleaners int (50) not null,
+    total_cleaners int(50) not null,
+    total_shortlists int (50) not null,
+    total_bookings int (50) not null,
     
 	PRIMARY KEY (reportId)
-
-    FOREIGN KEY (bookingId) REFERENCES BOOKING(bookingId)
 );
 
 CREATE TABLE SHORTLISTEDSERVICES (
     homeownerId int,
     serviceId int,
+    dateAdded date,
 
     PRIMARY KEY (homeownerId, serviceId),
 
@@ -90,6 +90,7 @@ CREATE TABLE SHORTLISTEDSERVICES (
 CREATE TABLE SHORTLISTEDCLEANERS (
     homeownerId int,
     cleanerId int,
+    dateAdded date,
 
     PRIMARY KEY (homeownerId, cleanerId),
 
@@ -102,6 +103,7 @@ CREATE TABLE BOOKING (
     serviceId int,
     homeownerId int,
     status ENUM('CONFIRMED', 'CANCELED', 'COMPLETED') NOT NULL,
+    dateAdded date,
     
     PRIMARY KEY (bookingId),
     
