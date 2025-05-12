@@ -19,19 +19,19 @@ public class ShortlistDAO {
     private JdbcTemplate jdbcTemplate;
 
     private final RowMapper<ServiceShortlist> listingRowMapper = (ResultSet rs, int rowNum) -> {
-        ServiceShortlist shortlist = new ServiceShortlist();
+        ServiceShortlist serviceShortlists = new ServiceShortlist();
         // shortlist.setShortlistId(rs.getInt("shortlistId"));
-        shortlist.setHomeownerId(rs.getInt("homeownerId"));
-        shortlist.setServiceId(rs.getInt("serviceId"));
-        return shortlist;
+        serviceShortlists.setHomeownerId(rs.getInt("homeownerId"));
+        serviceShortlists.setServiceId(rs.getInt("serviceId"));
+        return serviceShortlists;
     };
 
     private final RowMapper<CleanerShortlist> listingRowMapper2 = (ResultSet rs, int rowNum) -> {
-        CleanerShortlist shortlist = new CleanerShortlist();
+        CleanerShortlist cleanerShortlist = new CleanerShortlist();
         // shortlist.setShortlistId(rs.getInt("shortlistId"));
-        shortlist.setHomeownerId(rs.getInt("homeownerId"));
-        shortlist.setCleanerId(rs.getInt("cleanerId"));
-        return shortlist;
+        cleanerShortlist.setHomeownerId(rs.getInt("homeownerId"));
+        cleanerShortlist.setCleanerId(rs.getInt("cleanerId"));
+        return cleanerShortlist;
     };
     
     public boolean saveToServiceShortlist(int homeownerId, int serviceId) {

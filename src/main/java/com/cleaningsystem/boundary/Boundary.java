@@ -673,9 +673,19 @@ public class Boundary {
     // HomeOwnerrrr
     @GetMapping("/HomeOwnerHome")
     public String showHomeOwnerHome(HttpSession session, Model model) {
-        // String redirect = checkAccess(session, "Home Owner");
-        // if (redirect != null) return redirect;
+        // Cleaners
+        List<UserAccount> cleaners = userAccountC.searchUser(4);
+        List<Integer> servicesCountList = new ArrayList<>();
+        for (UserAccount cleaner : cleaners) {
+        List<ServiceListing> serviceListings = serviceListingC.getAllListingsById(cleaner.getUid());
+            int servicesCount = serviceListings.size();
+            servicesCountList.add(servicesCount);
+        }
+        List<ServiceListing> serviceListings = serviceListingC.getAllListings();
 
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("servicesCountList", servicesCountList);
+        model.addAttribute("cleaners", cleaners);
         model.addAttribute("username", session.getAttribute("username"));
         return "homeowner_home_page";
     }
@@ -709,7 +719,7 @@ public class Boundary {
     @GetMapping("/ViewServiceListing")
     public String showServiceListing(@RequestParam int serviceId, Model model) {
         // this function will auto +1 to view
-        ServiceListing listing = serviceListingC.viewServiceListingByServiceId(serviceId);
+        ServiceListing listing = serviceListingC.viewSLandUpdateViewsByServiceId(serviceId);
 
         UserAccount user = userAccountC.viewUserAccount(listing.getCleanerId());
         String cleanerName = user.getName();
@@ -805,7 +815,7 @@ public class Boundary {
         List<String> categoriesName = new ArrayList<>();
 
         for (ServiceShortlist shortlist : shortlists) {
-            ServiceListing service = serviceListingC.getShortlistedServiceListing(shortlist.getServiceId());
+            ServiceListing service = serviceListingC.viewServiceListingByServiceId(shortlist.getServiceId());
             serviceShortList.add(service);
 
             UserAccount user = userAccountC.viewUserAccount(service.getCleanerId());
@@ -833,13 +843,14 @@ public class Boundary {
             return "redirect:/Login"; 
         }
         int uid = (int) uidObj;
+        System.out.println(uid);
         List<ServiceShortlist> shortlists = shortlistC.searchShortlistedServices(uid, query);
         List<ServiceListing> serviceShortList = new ArrayList<>();
         List<String> cleanersName = new ArrayList<>();
         List<String> categoriesName = new ArrayList<>();
 
         for (ServiceShortlist shortlist : shortlists) {
-            ServiceListing service = serviceListingC.getShortlistedServiceListing(shortlist.getServiceId());
+            ServiceListing service = serviceListingC.viewServiceListingByServiceId(shortlist.getServiceId());
             serviceShortList.add(service);
 
             UserAccount user = userAccountC.viewUserAccount(service.getCleanerId());
@@ -872,7 +883,7 @@ public class Boundary {
         return "redirect:/CleanerShortlist";
     }
 
-    // Service Shortlist
+    // Cleaner Shortlist
     @GetMapping("/CleanerShortlist")
     public String showCleanerShortlist(HttpSession session, Model model) {
         Object uidObj = session.getAttribute("uid");
@@ -924,5 +935,69 @@ public class Boundary {
         return "homeowner_cleaner_shortlist";
     }
 
+    // My Booking
+    @PostMapping("/AddToMyBooking")
+    public String showMyBooking(@RequestParam int serviceId, HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            return "redirect:/Login"; 
+        }
+        int uid = (int) uidObj;
+        boolean isSuccessful = bookingC.addBooking(serviceId, uid, "confirmed");
+        if (isSuccessful) {
+            return "redirect:/MyBooking";
+        } else {
+            return "redirect:/ViewServiceListing?serviceId=" + serviceId;
+        }
+    }
+
+    @GetMapping("/MyBooking")
+    public String showMyBooking(HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            return "redirect:/Login"; 
+        }
+        int uid = (int) uidObj;
+        List<Booking> bookings = bookingC.getAllBookingsByHomeOwner(uid);
+        List<ServiceListing> serviceListings = new ArrayList<>();
+        List<UserAccount> cleaners = new ArrayList<>();
+        
+        for (Booking booking : bookings) {
+            ServiceListing service = serviceListingC.viewServiceListingByServiceId(booking.getServiceId());
+            serviceListings.add(service);
+            UserAccount cleaner = userAccountC.viewUserAccount(service.getCleanerId());
+            cleaners.add(cleaner);
+        }
+        
+        model.addAttribute("bookings", bookings);
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("cleaners", cleaners);
+        return "homeowner_my_booking";
+    }
+
+    // Search My Booking
+    @GetMapping("/searchMyBooking")
+    public String searchMyBooking(@RequestParam String query, HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            return "redirect:/Login"; 
+        }
+        int uid = (int) uidObj;
+        List<Booking> bookings = bookingC.searchHomeOwnerBookings(uid, query);
+        List<ServiceListing> serviceListings = new ArrayList<>();
+        List<UserAccount> cleaners = new ArrayList<>();
+        
+        for (Booking booking : bookings) {
+            ServiceListing service = serviceListingC.viewServiceListingByServiceId(booking.getServiceId());
+            serviceListings.add(service);
+            UserAccount cleaner = userAccountC.viewUserAccount(service.getCleanerId());
+            cleaners.add(cleaner);
+        }
+        
+        model.addAttribute("bookings", bookings);
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("cleaners", cleaners);
+        return "homeowner_my_booking";
+    }
 }
 //testing

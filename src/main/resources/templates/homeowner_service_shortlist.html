@@ -20,7 +20,7 @@
             <div class="navbar-links">
                 <a th:href="@{HomeOwnerHome}" class="navbar-link">Home</a>
                 <a th:href="@{HomeOwnerHome#AboutUs}" class="navbar-link">About Us</a>
-                <a th:href="@{ViewAllServices}" class="navbar-link active">Services</a>
+                <a th:href="@{ViewAllServices}" class="navbar-link">Services</a>
                 <a th:href="@{CleanerShortlist}" class="navbar-link">Cleaner Shortlist</a>
                 <a th:href="@{ServiceShortlist}" class="navbar-link">Service Shortlist</a>
                 <a th:href="@{MyBooking}" class="navbar-link">My Booking</a>
@@ -44,7 +44,7 @@
         <!-- Search Bar -->
         <form class="search-bar" th:action="@{/searchShortlistedServices(query=${query})}" method="GET">
             <div class="search-input-wrapper">
-                <input type="text" placeholder="Search services" name="query" />
+                <input type="text" placeholder="Search services by service's name only" name="query" />
                 <button type="submit" class="search-icon">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -77,7 +77,7 @@
             </div>
         </a>
     </div>
-    <script src="script.js"></script>
+    <script th:src="@{/homeowner.js}"></script>
 </body>
 
 </html>

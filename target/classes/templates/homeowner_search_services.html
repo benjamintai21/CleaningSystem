@@ -48,7 +48,7 @@
         <!-- Search Bar -->
         <form class="search-bar" th:action="@{/searchServices(query=${query})}" method="GET">
             <div class="search-input-wrapper">
-                <input type="text" placeholder="Search services" name="query" />
+                <input type="text" placeholder="Search services by service's name or cleaner's name" name="query" />
                 <button type="submit" class="search-icon">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -81,10 +81,7 @@
             </div>
         </a>
     </div>
-
-    <script src="script.js">
-    </script>
-
+    <script th:src="@{/homeowner.js}"></script>
 </body>
 
 </html>

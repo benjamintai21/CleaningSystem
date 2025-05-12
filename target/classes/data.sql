@@ -74,16 +74,16 @@ INSERT INTO SERVICELISTINGS (name, cleanerId, categoryId, description, price_per
 VALUES ('Listing 5', 3 , 5 , 'Dancing your clothes', 103, '2025-10-11', '2025-12-12', 'AVAILABLE');
 
 INSERT INTO BOOKING (serviceId, homeownerId, status)
-VALUES (1, 3, 'completed');
+VALUES (1, 4, 'completed');
 
 INSERT INTO BOOKING (serviceId, homeownerId, status)
-VALUES (2, 3, 'confirmed');
+VALUES (2, 4, 'confirmed');
 
 INSERT INTO BOOKING (serviceId, homeownerId, status)
-VALUES (3, 3, 'completed');
+VALUES (3, 4, 'completed');
 
 INSERT INTO BOOKING (serviceId, homeownerId, status)
-VALUES (4, 3, 'completed');
+VALUES (4, 4, 'completed');
 
 DELIMITER //
 CREATE TRIGGER after_status_update

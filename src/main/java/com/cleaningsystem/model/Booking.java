@@ -8,7 +8,7 @@ public class Booking {
     private int bookingId;
     private int homeownerId;
     private int serviceId;
-    private String status;
+    private String status = "CONFIRMED";
 
     //No-args constructor for Spring
     public Booking() {}
