@@ -6,7 +6,6 @@
     <title>Home</title>
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}" />
     <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap}" rel="stylesheet" />
-
     <link rel="stylesheet" th:href="@{HMstyle/Homepage.css}" type="text/css">
     <link rel="stylesheet" th:href="@{HMstyle/Nav_Footer.css}" type="text/css">
     <style>
@@ -132,33 +131,15 @@
 
             <div class="carousel-track" id="carouselTrack">
                 <!-- Repeat this block for each card -->
-                <div class="service-card">
-                    <h3>Window Cleaning</h3>
-                    <p>Crystal-clear results for homes and offices.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Office Cleaning</h3>
-                    <p>Professional workspace sanitization and tidying.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Kitchen Cleaning</h3>
-                    <p>Spotless counters and appliances guaranteed.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Sofa Cleaning</h3>
-                    <p>Deep cleaning for upholstered furniture clean and clear.</p>
-                </div>
-
-                <div class="service-card">
-                    <h3>Air-Condi Cleaning</h3>
-                    <p>Cooler air with our expert aircon cleaning. Remove dust, modle etc</p>
-                </div>
-
-                <div class="service-card">
-                    <h3>Floor Cleaning</h3>
-                    <p>Remove dust, bateria keep your living space clean and refresh.</p>
-                </div>
-                <!-- Add more cards as needed -->
+                <a th:each="listing, iterStat : ${serviceListings}" 
+                th:href="@{/ViewServiceListing(serviceId=${listing.serviceId})}" 
+                th:if="${iterStat.index} < 8"
+                class="action_link">
+                    <div class="service-card">
+                        <h3><span th:text="${listing.name}"></span></h3>
+                        <p><span th:text="*{listing.description}"></span></p>
+                    </div>
+                </a>
             </div>
 
             <button class="carousel-btn right" onclick="scrollCards(1)">❯</button>
@@ -299,35 +280,10 @@
 
         <!-- Cleaner Card Grid -->
         <div class="card-grid">
-            <!-- Featured Card -->
-            <div class="cleaner-card featured">
-                <h3>James R.</h3>
-                <span class="badge badge--accent">Window Cleaning</span>
-                <p class="cleaner-desc">Detail-oriented and reliable cleaner</p>
-                <button class="btn btn--dark">View Profile</button>
-            </div>
-
-            <!-- Cleaner Cards -->
-            <div class="cleaner-card">
-                <h3>Alice W.</h3>
-                <span class="badge badge--accent">Deep Cleaning</span>
-                <p class="cleaner-desc">5 years of residential cleaning experience</p>
-                <button class="btn btn--dark">View Profile</button>
-            </div>
-
-            <div class="cleaner-card">
-                <h3>Rachel M.</h3>
-                <span class="badge badge--accent">Deep Cleaning</span>
-                <p class="cleaner-desc">Passionate about making homes shine</p>
-                <button class="btn btn--dark">View Profile</button>
-            </div>
-
-            <div class="cleaner-card">
-                <img src="image/cleaner4.png" alt="Ethan" class="cleaner-avatar" />
-                <h3>Ethan G.</h3>
-                <span class="badge badge--accent">Kitchen Cleaning</span>
-                <p class="cleaner-desc">5 years of residential cleaning experience</p>
-                <a class="btn btn--dark">View Profile</a>
+            <div class="cleaner-card" th:each="cleaner, iterStat : ${cleaners}" th:if="${iterStat.index} < 4">
+                <h3>@<span th:text="*{cleaner.username}"></span></h3>
+                <span class="badge badge--accent">Total Services (<span th:text="${servicesCountList[iterStat.index]}"></span>)</span>
+                <a th:href="@{/CleanerProfile(cleanerId=${cleaner.uid})}" class="btn btn--dark">View Profile</a>
             </div>
         </div>
 
@@ -480,8 +436,6 @@
             <span><a href="#">User Term & Condition</a> | <a href="#">Privacy Policy</a></span>
         </div>
     </footer>
-
-    <script src="script.js"></script>
-
+    <script th:src="@{/homeowner.js}"></script>
 </body>
 </html>

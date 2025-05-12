@@ -20,7 +20,7 @@
             <div class="navbar-links">
                 <a th:href="@{HomeOwnerHome}" class="navbar-link">Home</a>
                 <a th:href="@{HomeOwnerHome#AboutUs}" class="navbar-link">About Us</a>
-                <a th:href="@{ViewAllServices}" class="navbar-link active">Services</a>
+                <a th:href="@{ViewAllServices}" class="navbar-link">Services</a>
                 <a th:href="@{CleanerShortlist}" class="navbar-link">Cleaner Shortlist</a>
                 <a th:href="@{ServiceShortlist}" class="navbar-link">Service Shortlist</a>
                 <a th:href="@{MyBooking}" class="navbar-link">My Booking</a>
@@ -46,7 +46,7 @@
 
         <div class="profile-box" th:object="${cleanerInfo}">
             
-            <p class="profile-label">Cleaner Username: <span th:text="*{username}"></span></p>
+            <p class="profile-label">Cleaner Username: @<span th:text="*{username}"></span></p>
             <p class="profile-label">Cleaner name: <span th:text="*{name}"></span></p>
             <p class="profile-label">Age: <span th:text="*{age}"></span></p>
             <p class="profile-label">Gender: <span th:text="*{gender}"></span></p>
@@ -90,7 +90,7 @@
 
 
     </div>
-    <script src="script.js"></script>
+    <script th:src="@{/homeowner.js}"></script>
 </body>
 
 </html>

@@ -83,7 +83,7 @@ public class Queries {
     //HomeOwner
     public static final String SEARCH_SERVICE_LISTING_BY_SERVICE = "SELECT * FROM SERVICELISTINGS WHERE name LIKE ?";
     
-    public static final String SEARCH_SERVICE_LISTING_BY_CLEANER = "SELECT s.* FROM SERVICELISTINGS s JOIN USERACCOUNT u ON s.cleanerId = u.UID WHERE u.profileID = 4 AND u.name LIKE ?";
+    public static final String SEARCH_SERVICE_LISTING_BY_CLEANER = "SELECT s.* FROM SERVICELISTINGS s JOIN USERACCOUNT u ON s.cleanerId = u.UId WHERE u.name LIKE ?";
 
     public static final String VIEW_SERVICE_LISTING_BY_SERVICE_ID = "SELECT * FROM SERVICELISTINGS WHERE serviceId = ?";
     
@@ -97,18 +97,20 @@ public class Queries {
 
     public static final String GET_ALL_SHORTLISTED_CLEANERS = "SELECT * FROM SHORTLISTEDCLEANERS WHERE homeownerId = ?";
 
-    public static final String SEARCH_SHORTLISTED_CLEANER_BY_USERNAME = "SELECT ua.* FROM USERACCOUNT ua JOIN SHORTLISTEDCLEANERS sc ON ua.UId = sc.cleanerId WHERE sc.homeownerId = ? ua.username LIKE ?";
+    public static final String SEARCH_SHORTLISTED_CLEANER_BY_USERNAME = "SELECT sc.* FROM SHORTLISTEDCLEANERS sc JOIN USERACCOUNT ua ON ua.UId = sc.cleanerId WHERE sc.homeownerId = ? AND ua.username LIKE ?";
 
     public  static final String DELETE_SHORTLISTED_SERVICE = "DELETE FROM SHORTLISTEDSERVICES WHERE homeownerId = ? AND serviceId = ?";
 
-    public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT sl.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerId = ? AND sl.name LIKE ?";
+    public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT ss.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerId = ? AND sl.name LIKE ?";
 
     public static final String UPDATE_VIEWS = "UPDATE SERVICELISTINGS SET views = views + 1 WHERE serviceId = ?";
 
     //Booking
-    public static final String GET_COMPLETED_SERVICES = "SELECT * FROM BOOKING WHERE status = 'completed' AND homeownerId = ?";
+    public static final String CREATE_BOOKING = "INSERT INTO BOOKING (serviceId, homeownerId, status) VALUES (?, ?, ?)";
+
+    public static final String GET_ALL_BOOKINGS_BY_HOMEOWNER = "SELECT * FROM BOOKING WHERE homeownerId = ?";
     
-    public static final String SEARCH_PAST_BOOKINGS = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND bh.homeownerId = ? AND sl.name LIKE ?";
+    public static final String SEARCH_HOMEOWNER_BOOKINGS = "SELECT b.* FROM BOOKING b JOIN SERVICELISTINGS sl ON b.serviceId = sl.serviceId WHERE b.homeownerId = ? AND sl.name LIKE ?";
 
     public static final String GET_CONFIRMED_MATCHES = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ?";
 

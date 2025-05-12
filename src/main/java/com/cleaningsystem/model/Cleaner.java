@@ -1,11 +1,9 @@
 package com.cleaningsystem.model;
 
-import java.util.*;
 import jakarta.persistence.Entity;
 
 @Entity
 public class Cleaner {
-	private ArrayList<ServiceListing> serviceListings;
 	private int uid;
 	private String username;
 	
