@@ -80,4 +80,23 @@ public class ShortlistDAO {
         return jdbcTemplate.query(GET_NO_OF_SHORTLISTS, listingRowMapper, serviceId);
         //eg SELECT COUNT(*) FROM SHORTLISTEDSERVICES WHERE cleanerId = ? GROUP BY cleanerId;
     }
+
+    public boolean checkShortlistedServices(int serviceId) {
+        List<ServiceShortlist> shortlists = jdbcTemplate.query(CHECK_SHORTLISTED_SERVICES, listingRowMapper, serviceId);
+        return !shortlists.isEmpty();
+    }
+
+    public boolean checkShortlistedCleaners(int cleanerId) {
+        List<CleanerShortlist> shortlists = jdbcTemplate.query(CHECK_SHORTLISTED_CLEANERS, listingRowMapper2, cleanerId);
+        return !shortlists.isEmpty();
+    }
+
+    public boolean deleteShortlistedServices(int homeownerId, int serviceId) {
+        return jdbcTemplate.update(DELETE_SHORTLISTED_SERVICES, homeownerId, serviceId) > 0;
+    }
+
+    public boolean deleteShortlistedCleaners(int homeownerId, int cleanerId) {
+        return jdbcTemplate.update(DELETE_SHORTLISTED_CLEANERS, homeownerId, cleanerId) > 0;
+    }
+
 } 

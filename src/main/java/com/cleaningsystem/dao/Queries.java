@@ -99,11 +99,19 @@ public class Queries {
 
     public static final String SEARCH_SHORTLISTED_CLEANER_BY_USERNAME = "SELECT sc.* FROM SHORTLISTEDCLEANERS sc JOIN USERACCOUNT ua ON ua.UId = sc.cleanerId WHERE sc.homeownerId = ? AND ua.username LIKE ?";
 
-    public  static final String DELETE_SHORTLISTED_SERVICE = "DELETE FROM SHORTLISTEDSERVICES WHERE homeownerId = ? AND serviceId = ?";
+    public static final String CHECK_SHORTLISTED_SERVICES = "SELECT * FROM SHORTLISTEDSERVICES WHERE serviceId = ?";
+
+    public static final String CHECK_SHORTLISTED_CLEANERS = "SELECT * FROM SHORTLISTEDCLEANERS WHERE cleanerId = ?";
+
+    public  static final String DELETE_SHORTLISTED_SERVICES = "DELETE FROM SHORTLISTEDSERVICES WHERE homeownerId = ? AND serviceId = ?";
+    
+    public  static final String DELETE_SHORTLISTED_CLEANERS = "DELETE FROM SHORTLISTEDCLEANERS WHERE homeownerId = ? AND cleanerId = ?";
 
     public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT ss.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerId = ? AND sl.name LIKE ?";
 
     public static final String UPDATE_VIEWS = "UPDATE SERVICELISTINGS SET views = views + 1 WHERE serviceId = ?";
+
+    public static final String UPDATE_SHORTLISTING = "UPDATE SERVICELISTINGS SET shortlists = shortlists + 1 WHERE serviceId = ?";
 
     //Booking
     public static final String CREATE_BOOKING = "INSERT INTO BOOKING (serviceId, homeownerId, status) VALUES (?, ?, ?)";

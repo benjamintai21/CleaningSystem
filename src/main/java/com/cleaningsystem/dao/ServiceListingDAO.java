@@ -101,4 +101,8 @@ public class ServiceListingDAO {
     public boolean updateViews(int serviceId) {
         return jdbcTemplate.update(UPDATE_VIEWS, serviceId) > 0;
     }
+
+    public boolean updateShortlisting(int serviceId) {
+        return jdbcTemplate.update(UPDATE_SHORTLISTING, serviceId) > 0;
+    }
 }
