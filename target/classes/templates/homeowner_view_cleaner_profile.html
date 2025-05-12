@@ -75,10 +75,14 @@
 
             <!-- Bottom button -->
             <div class="profile-actions">
-                <form th:action="@{/AddToCleanerShortlist(cleanerId=${cleanerInfo.uid})}" method="post">
-                    <input type="hidden" th:name="serviceId" th:value="${cleanerInfo.uid}" />
+                <form th:action="@{/AddToCleanerShortlist(cleanerId=${cleanerInfo.uid})}" method="post" th:if="${!isInCleanerShortlist}">
+                    <input type="hidden" th:name="cleanerId" th:value="${cleanerInfo.uid}" />
                     <button type="submit" class="action-btn">Shortlist Profile</button>
                 </form>
+                <form th:action="@{/RemoveFromCleanerShortlist(cleanerId=${cleanerInfo.uid})}" method="post" th:if="${isInCleanerShortlist}">
+                    <input type="hidden" th:name="cleanerId" th:value="${cleanerInfo.uid}" />
+                <button type="submit" class="action-btn">Remove profile from shortlist</button>
+            </form>
             </div>
         </div>
         <div id="popupCleaner" class="popup-overlay">

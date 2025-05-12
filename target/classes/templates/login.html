@@ -19,8 +19,10 @@
 <body>
     <div class="container">
         <div class="left-section">
-            <div class="logo">Logo</div>
-            <img th:src="@{/images/login-img.png}" alt="Staff member in greeting pose" class="staff-image">
+            <div class="image-wrapper">
+                <img th:src="@{/images/logo.png}" class="logo-overlay">
+                <img th:src="@{/images/login-img.png}" alt="Staff member in greeting pose" class="staff-image">
+            </div>
             <div class="welcome-text">
                 <h1>Welcome Back</h1>
                 <p>Access a wide range of professional cleaning services that fit your needs</p>
@@ -28,7 +30,10 @@
         </div>
         <div class="right-section">
             <div class="login-form">
-                <h2>Join Name</h2>
+                <div style="display: inline-flex; align-items: center; gap: 8px;">
+                    <a th:href="@{/}" class="back-btn">&larr;</a>
+                    <h2>Login</h2>
+                </div>
                 <form id="loginForm" th:action="@{/RedirectToPage}" method="post" th:object="${loginForm}">
                     <div class="form-group">
                         <label for="role">Login as</label>
