@@ -67,11 +67,14 @@ CREATE TABLE REPORT (
 	type varchar(15) not null,
 	date date not null,
     views int(50) not null,
-    shortlist int(50) not null,
+    shortlists int(50) not null,
     no_homeowners int (50) not null,
     no_cleaners int(50) not null,
+    bookingId int not null,
     
 	PRIMARY KEY (reportId)
+
+    FOREIGN KEY (bookingId) REFERENCES BOOKING(bookingId)
 );
 
 CREATE TABLE SHORTLISTEDSERVICES (

@@ -7,10 +7,12 @@ public class Report {
 	private int reportId;
 	private String type;
     private String date;
-    private int views;
-    private int shortlist;
-    private int no_homeowner;
-    private int no_cleaner;
+    private int new_homeowners;
+    private int total_homeowners;
+    private int new_cleaners;
+    private int total_cleaners;
+    private int no_shortlists;
+    private int no_bookings;
 
 	public Report() {}
 
@@ -20,20 +22,26 @@ public class Report {
 	}
 
 	// Getters
-	public int getUid() { return reportId;}
+	public int getReportId() { return reportId;}
 	public String getType() {return type;}
     public String getDate() {return date;}
-    public int getViews() {return views;}
-    public int getShortlist() {return shortlist;}
-    public int getNoOfHomeOwner() {return no_homeowner;}
-    public int getNoOfCleaner() {return no_cleaner;}
+    
+    public int getNewHomeOwners() {return new_homeowners;}
+    public int getTotalHomeOwners() {return total_homeowners;}
+    public int getNewCleaners() {return new_cleaners;}
+    public int getTotalCleaners() {return total_cleaners;}
+    public int getNoOfShortlists() {return no_shortlists;}
+    public int getNoOfBookings() {return no_bookings;}
 
 	//Setters
-	public void getUid(int new_reportId) { new_reportId = reportId;}
-	public void getType(String new_type) {new_type = type;}
-    public void getDate(String new_date) {new_date = date;}
-    public void getViews(int new_views) {new_views = views;}
-    public void getShortlist(int new_shortlist) {new_shortlist = shortlist;}
-    public void getNoOfHomeOwner(int new_noHO) {new_noHO = no_homeowner;}
-    public void getNoOfCleaner(int new_noC) {new_noC = no_cleaner;}
+	public void setReportId(int new_reportId) { new_reportId = reportId;}
+	public void setType(String new_type) {new_type = type;}
+    public void setDate(String new_date) {new_date = date;}
+
+    public void setNewOwners(int new_new_homeowners) {new_new_homeowners = new_homeowners;}
+    public void setTotalOwners(int new_total_homeowners) {new_total_homeowners = total_homeowners;} 
+    public void setNewCleaner(int new_new_cleaners) {new_new_cleaners = new_cleaners;} 
+    public void setTotalCleaner(int new_total_cleaners) {new_total_cleaners = total_cleaners;} 
+    public void setNoOfShortlists(int new_total_shortlists) {new_total_shortlists = no_shortlists;} 
+    public void setNoOfBookings(int new_total_bookings) {new_total_bookings = no_bookings;}
 }
