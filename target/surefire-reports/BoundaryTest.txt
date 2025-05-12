@@ -1,0 +1,44 @@
+-------------------------------------------------------------------------------
+Test set: BoundaryTest
+-------------------------------------------------------------------------------
+Tests run: 17, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 1.373 s <<< FAILURE! - in BoundaryTest
+BoundaryTest.testprocessCleanerSignUp  Time elapsed: 1.193 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <user_cleaner_info> but was: <cleaner_user_creation>
+	at BoundaryTest.testprocessCleanerSignUp(BoundaryTest.java:137)
+
+BoundaryTest.testShowCleanerSignUpForm  Time elapsed: 0.05 s  <<< FAILURE!
+org.mockito.exceptions.verification.opentest4j.ArgumentsAreDifferent: 
+
+Argument(s) are different! Wanted:
+model.addAttribute(
+    "UserAccount",
+    <any>
+);
+-> at BoundaryTest.testShowCleanerSignUpForm(BoundaryTest.java:117)
+Actual invocations have different arguments at position [0]:
+model.addAttribute(
+    "CleanerUserCreationForm",
+    UserAccount{uid=0, name='null', age=0, dob='null', gender='null', address='null', email='null', username='null', profileId=0}
+);
+-> at com.cleaningsystem.boundary.Boundary.showCleanerSignUpForm(Boundary.java:122)
+
+	at BoundaryTest.testShowCleanerSignUpForm(BoundaryTest.java:117)
+
+BoundaryTest.testShowPlatformManagerHome  Time elapsed: 0.011 s  <<< FAILURE!
+org.mockito.exceptions.verification.WantedButNotInvoked: 
+
+Wanted but not invoked:
+model.addAttribute("username", "PM");
+-> at BoundaryTest.testShowPlatformManagerHome(BoundaryTest.java:95)
+Actually, there were zero interactions with this mock.
+
+	at BoundaryTest.testShowPlatformManagerHome(BoundaryTest.java:95)
+
+BoundaryTest.testProcessUpdateUserAccount_Success  Time elapsed: 0.01 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <user_account_info> but was: <redirect:/UserAccount?uid=4>
+	at BoundaryTest.testProcessUpdateUserAccount_Success(BoundaryTest.java:269)
+
+BoundaryTest.testProcessSuspendUserAccount_Success  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <redirect:/ViewUserAccount?uid=5> but was: <redirect:/UserAccount?uid=5>
+	at BoundaryTest.testProcessSuspendUserAccount_Success(BoundaryTest.java:304)
+

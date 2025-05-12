@@ -30,13 +30,13 @@ public class BookingDAO {
         return jdbcTemplate.update(CREATE_BOOKING, serviceId, homeownerId, status) > 0;
     }
 
-    public List<Booking> getPastBookings(int homeownerId) {
-        return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerId);
+    public List<Booking> getAllBookingsByHomeOwner(int homeownerId) {
+        return jdbcTemplate.query(GET_ALL_BOOKINGS_BY_HOMEOWNER, listingRowMapper, homeownerId);
     }
 
-    public List<Booking> searchPastBookings(int homeownerId, String keyword) {
+    public List<Booking> searchHomeOwnerBookings(int homeownerId, String keyword) {
         String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_PAST_BOOKINGS, listingRowMapper, homeownerId, pattern);
+        return jdbcTemplate.query(SEARCH_HOMEOWNER_BOOKINGS, listingRowMapper, homeownerId, pattern);
     }
 
     // CLeaner

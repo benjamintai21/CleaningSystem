@@ -108,9 +108,9 @@ public class Queries {
     //Booking
     public static final String CREATE_BOOKING = "INSERT INTO BOOKING (serviceId, homeownerId, status) VALUES (?, ?, ?)";
 
-    public static final String GET_COMPLETED_SERVICES = "SELECT * FROM BOOKING WHERE status = 'completed' AND homeownerId = ?";
+    public static final String GET_ALL_BOOKINGS_BY_HOMEOWNER = "SELECT * FROM BOOKING WHERE homeownerId = ?";
     
-    public static final String SEARCH_PAST_BOOKINGS = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND bh.homeownerId = ? AND sl.name LIKE ?";
+    public static final String SEARCH_HOMEOWNER_BOOKINGS = "SELECT b.* FROM BOOKING b JOIN SERVICELISTINGS sl ON b.serviceId = sl.serviceId WHERE b.homeownerId = ? AND sl.name LIKE ?";
 
     public static final String GET_CONFIRMED_MATCHES = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ?";
 

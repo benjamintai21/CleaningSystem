@@ -41,12 +41,12 @@
     <div class="main-wrapper">
 
         <!-- Search Bar -->
-        <form class="search-bar" method="GET">
+        <form class="search-bar" th:action="@{/searchMyBooking(query=${query})}" method="GET">
             <div class="search-input-wrapper">
-                <input type="text" placeholder="Search Booking" />
+                <input type="text" placeholder="Search services by service name only" name="query" />
                 <button type="submit" class="search-icon">
-                  <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
             </div>
         </form>
 

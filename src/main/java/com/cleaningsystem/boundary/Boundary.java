@@ -673,9 +673,19 @@ public class Boundary {
     // HomeOwnerrrr
     @GetMapping("/HomeOwnerHome")
     public String showHomeOwnerHome(HttpSession session, Model model) {
-        // String redirect = checkAccess(session, "Home Owner");
-        // if (redirect != null) return redirect;
+        // Cleaners
+        List<UserAccount> cleaners = userAccountC.searchUser(4);
+        List<Integer> servicesCountList = new ArrayList<>();
+        for (UserAccount cleaner : cleaners) {
+        List<ServiceListing> serviceListings = serviceListingC.getAllListingsById(cleaner.getUid());
+            int servicesCount = serviceListings.size();
+            servicesCountList.add(servicesCount);
+        }
+        List<ServiceListing> serviceListings = serviceListingC.getAllListings();
 
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("servicesCountList", servicesCountList);
+        model.addAttribute("cleaners", cleaners);
         model.addAttribute("username", session.getAttribute("username"));
         return "homeowner_home_page";
     }
@@ -948,7 +958,7 @@ public class Boundary {
             return "redirect:/Login"; 
         }
         int uid = (int) uidObj;
-        List<Booking> bookings = bookingC.getPastBookings(uid);
+        List<Booking> bookings = bookingC.getAllBookingsByHomeOwner(uid);
         List<ServiceListing> serviceListings = new ArrayList<>();
         List<UserAccount> cleaners = new ArrayList<>();
         
@@ -973,22 +983,21 @@ public class Boundary {
             return "redirect:/Login"; 
         }
         int uid = (int) uidObj;
-        List<CleanerShortlist> shortlists = shortlistC.searchShortlistedCleaners(uid, query);
-        List<UserAccount> cleanersShortlist = new ArrayList<>();
-        List<Integer> servicesCountList = new ArrayList<>();
+        List<Booking> bookings = bookingC.searchHomeOwnerBookings(uid, query);
+        List<ServiceListing> serviceListings = new ArrayList<>();
+        List<UserAccount> cleaners = new ArrayList<>();
         
-
-        for (CleanerShortlist shortlist : shortlists) {
-            UserAccount cleaner = userAccountC.viewUserAccount(shortlist.getCleanerId());
-            cleanersShortlist.add(cleaner);
-            List<ServiceListing> serviceListings = serviceListingC.getAllListingsById(shortlist.getCleanerId());
-            int servicesCount = serviceListings.size();
-            servicesCountList.add(servicesCount);
+        for (Booking booking : bookings) {
+            ServiceListing service = serviceListingC.viewServiceListingByServiceId(booking.getServiceId());
+            serviceListings.add(service);
+            UserAccount cleaner = userAccountC.viewUserAccount(service.getCleanerId());
+            cleaners.add(cleaner);
         }
-
-        model.addAttribute("servicesCountList", servicesCountList);
-        model.addAttribute("cleanersShortlist", cleanersShortlist);
-        return "homeowner_cleaner_shortlist";
+        
+        model.addAttribute("bookings", bookings);
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("cleaners", cleaners);
+        return "homeowner_my_booking";
     }
 }
 //testing
