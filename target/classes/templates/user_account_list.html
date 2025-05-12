@@ -35,10 +35,15 @@
         </button>
       </form>    
 
+      <div class="user-card" th:if="${#lists.isEmpty(userAccounts)}">
+        <p>No result found</p>
+      </div>
+
       <!-- User Cards -->
       <a th:each="userAccount, iterStat : ${userAccounts}" 
       th:href="@{/UserAccount(uid=${userAccount.uid})}" 
-      class="action_link">
+      class="action_link"
+      th:if="${!#lists.isEmpty(userAccounts)}">
       <div class="user-card">
         <div>
           <p><strong>Name: </strong><span th:text="${userAccount.name}"></span></p>

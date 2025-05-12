@@ -33,20 +33,16 @@
 
     <!-- Hero Section Start-->
     <section class="hero-section" th:style="'background: url(' + @{/images/service%20banner.png} + ');'">
-        <div class="hero-overlay">
-            <div class="hero-content">
-                <span class="label-tag">Service</span>
-                <h1 class="form-title">Search for service</h1>
-            </div>
+        <div class="hero-content">
+            <span class="label-tag">My Shortlist</span>
+            <h1 class="form-title">Shortlisted Services</h1>
         </div>
     </section>
     <!-- Hero Section End-->
-
-    <!-- Main Wrapper -->
     <div class="main-wrapper">
 
         <!-- Search Bar -->
-        <form class="search-bar" th:action="@{/searchServices(query=${query})}" method="GET">
+        <form class="search-bar" th:action="@{/searchShortlistedServices(query=${query})}" method="GET">
             <div class="search-input-wrapper">
                 <input type="text" placeholder="Search services" name="query" />
                 <button type="submit" class="search-icon">
@@ -54,15 +50,15 @@
                 </button>
             </div>
         </form>
-
         <!-- Cards -->
-         <div class="service-card" th:if="${#lists.isEmpty(serviceListings)}">
-            <p>No result found</p>
+        <div class="service-card" th:if="${#lists.isEmpty(serviceShortList)}">
+            <p>Service Shortlist is Empty</p>
         </div>
-
-        <a th:href="@{/ViewServiceListing(serviceId=${listing.serviceId})}" class="action_link"
-        th:each="listing, iterStat : ${serviceListings}"
-        th:if="${!#lists.isEmpty(serviceListings)}">
+        
+        <a th:each="listing, iterStat : ${serviceShortList}" 
+        th:href="@{/ViewServiceListing(serviceId=${listing.serviceId})}" 
+        th:if="${!#lists.isEmpty(serviceShortList)}"
+        class="action_link">
             <div class="service-card">
                 <div class="service-info">
                     <p><strong>Service Name: </strong><span th:text="${listing.name}"></span></p>
@@ -81,10 +77,7 @@
             </div>
         </a>
     </div>
-
-    <script src="script.js">
-    </script>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

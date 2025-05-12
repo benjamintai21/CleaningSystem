@@ -49,4 +49,8 @@ public class UserAccountController {
     public List<UserAccount> getAllUsers() {
         return userAccountDAO.getAllUsers();
     }
+
+    public String getProfileNameByUid(int uid) {
+        return userAccountDAO.getProfileNameByUid(uid);
+    }
 }

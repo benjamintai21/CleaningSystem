@@ -3,14 +3,16 @@ package com.cleaningsystem.boundary;
 import com.cleaningsystem.controller.UserAccountController;
 import com.cleaningsystem.controller.UserProfileController;
 import com.cleaningsystem.controller.ServiceListingController;
+import com.cleaningsystem.controller.ShortlistController;
 import com.cleaningsystem.controller.ServiceCategoryController;
 import com.cleaningsystem.controller.BookingController;
 import com.cleaningsystem.model.UserAccount;
 import com.cleaningsystem.model.UserProfile;
 import com.cleaningsystem.model.ServiceListing;
+import com.cleaningsystem.model.ServiceShortlist;
 import com.cleaningsystem.model.ServiceCategory;
 import com.cleaningsystem.model.Booking;
-
+import com.cleaningsystem.model.CleanerShortlist;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +46,9 @@ public class Boundary {
 
     @Autowired
     private BookingController bookingC;
+
+    @Autowired
+    private ShortlistController shortlistC;
 
     @GetMapping("/")
     public String showHomePage(Model model){
@@ -516,23 +521,56 @@ public class Boundary {
     }
 
 
- //--Platform Managerrrr
+    //--Platform Managerrrr
+    public String checkAccess(HttpSession session, String userProfileName) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            // Redirect to login or error page if user not logged in
+            return "redirect:/Login";
+        }
+        int uid = (int) uidObj;
+        String profileName = userAccountC.getProfileNameByUid(uid);
+        if (!profileName.equals(userProfileName)){
+            return "redirect:/Login";
+        }
+
+        return null;
+    }
+
     @GetMapping("/PlatformManagerHome")
     public String showPlatformManagerHome(HttpSession session, Model model) {
+        String redirect = checkAccess(session, "Platform Manager");
+        if (redirect != null) return redirect;
         model.addAttribute("username", session.getAttribute("username"));
         return "platformmanager_home_page";
     }
 
     // Create Service Catetory
     @GetMapping("/ServiceCategoryCreation")
-    public String showServiceCategoryCreation(Model model) {
+    public String showServiceCategoryCreation(HttpSession session, Model model) {
+        String redirect = checkAccess(session, "Platform Manager");
+        if (redirect != null) return redirect;
         model.addAttribute("serviceCategory", new ServiceCategory());
         return "pm_create_service_category";
     }
 
     @PostMapping("/CreateServiceCategory")
-    public String processServiceCategoryCreation(@ModelAttribute ServiceCategory serviceCategory, Model model) {
+    public String processServiceCategoryCreation(@ModelAttribute ServiceCategory serviceCategory, HttpSession session, Model model) {
+        String redirect = checkAccess(session, "Platform Manager");
+        if (redirect != null) return redirect;
+
         boolean isSuccessful = serviceCategoryC.createServiceCategory(serviceCategory.getType(), serviceCategory.getName(), serviceCategory.getDescription());
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            // Redirect to login or error page if user not logged in
+            return "redirect:/Login";
+        }
+        int uid = (int) uidObj;
+        String profileName = userAccountC.getProfileNameByUid(uid);
+        System.out.println(profileName);
+        if (!profileName.equals("Platform Manager")){
+            return "redirect:/Login";
+        }
 
         if (isSuccessful) {
             ServiceCategory category = serviceCategoryC.viewServiceCategory(serviceCategory.getName());
@@ -545,14 +583,20 @@ public class Boundary {
 
     // View Service Category
     @GetMapping("/ServiceCategory")
-    public String showServiceCategory(@RequestParam int categoryId, Model model) { 
+    public String showServiceCategory(@RequestParam int categoryId, HttpSession session, Model model) {
+        String redirect = checkAccess(session, "Platform Manager");
+        if (redirect != null) return redirect;
+
         ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId); 
         model.addAttribute("serviceCategoryInfo", serviceCategory);
         return "pm_service_category_info";
     }
 
     @GetMapping("/ViewAllServiceCategories")
-    public String showServiceCategoryList(Model model) {
+    public String showServiceCategoryList(HttpSession session, Model model) {
+        String redirect = checkAccess(session, "Platform Manager");
+        if (redirect != null) return redirect;
+
         List<ServiceCategory> serviceCategories = serviceCategoryC.getAllCategories();
         List<Integer> serviceListingsCount = new ArrayList<>();
         
@@ -569,7 +613,10 @@ public class Boundary {
 
     // Update Service Category
     @GetMapping("/UpdateServiceCategory")
-    public String updateServiceCategory(@RequestParam int categoryId, Model model) {
+    public String updateServiceCategory(@RequestParam int categoryId, HttpSession session, Model model) {
+        String redirect = checkAccess(session, "Platform Manager");
+        if (redirect != null) return redirect;
+
         ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId); 
         model.addAttribute("updateServiceCategoryForm", serviceCategory);
         return "pm_update_service_category";
@@ -590,7 +637,10 @@ public class Boundary {
 
     // Delete Service Category
     @PostMapping("/DeleteServiceCategory")
-    public String processDeleteServiceCategory(@RequestParam int categoryId, Model model) {
+    public String processDeleteServiceCategory(@RequestParam int categoryId, HttpSession session, Model model) {
+        String redirect = checkAccess(session, "Platform Manager");
+        if (redirect != null) return redirect;
+
         boolean isSuccessful = serviceCategoryC.deleteServiceCategory(categoryId);
 
         if (isSuccessful) {
@@ -604,7 +654,10 @@ public class Boundary {
 
     //Search Service Category
     @GetMapping("/searchServiceCategory")
-    public String searchServiceCategory(@RequestParam String query, Model model) {
+    public String searchServiceCategory(@RequestParam String query, HttpSession session, Model model) {
+        String redirect = checkAccess(session, "Platform Manager");
+        if (redirect != null) return redirect;
+
         List<ServiceCategory> serviceCategories = serviceCategoryC.searchServiceCategory(query);
         List<Integer> serviceListingsCount = new ArrayList<>();
         for(ServiceCategory category : serviceCategories) {  
@@ -620,6 +673,9 @@ public class Boundary {
     // HomeOwnerrrr
     @GetMapping("/HomeOwnerHome")
     public String showHomeOwnerHome(HttpSession session, Model model) {
+        // String redirect = checkAccess(session, "Home Owner");
+        // if (redirect != null) return redirect;
+
         model.addAttribute("username", session.getAttribute("username"));
         return "homeowner_home_page";
     }
@@ -648,7 +704,49 @@ public class Boundary {
         model.addAttribute("categoriesName", categoriesName);
         return "homeowner_search_services";
     }
-     
+    
+    // View Services and Cleaners
+    @GetMapping("/ViewServiceListing")
+    public String showServiceListing(@RequestParam int serviceId, Model model) {
+        // this function will auto +1 to view
+        ServiceListing listing = serviceListingC.viewServiceListingByServiceId(serviceId);
+
+        UserAccount user = userAccountC.viewUserAccount(listing.getCleanerId());
+        String cleanerName = user.getName();
+
+        ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
+        String categoryType = category.getType();
+        String categoryName = category.getName();
+        String categoryTypeandName = categoryType + "-" + categoryName;
+
+        model.addAttribute("cleanerName", cleanerName);
+        model.addAttribute("categoryTypeandName", categoryTypeandName);
+        model.addAttribute("serviceListingInfo", listing);
+        return "homeowner_view_service_listing";
+    }
+
+    @GetMapping("CleanerProfile")
+    public String showCleanerProfile(@RequestParam int cleanerId, Model model) {
+        UserAccount cleaner = userAccountC.viewUserAccount(cleanerId);
+        List<ServiceListing> serviceListings = serviceListingC.getAllListingsById(cleanerId);
+        List<String> categoriesName = new ArrayList<>();
+        
+        for (ServiceListing listing : serviceListings) {
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
+            String categoryType = category.getType();
+            String categoryName = category.getName();
+            String categoryTypeandName = categoryType + "-" + categoryName;
+            categoriesName.add(categoryTypeandName);
+        }
+        int servicesCount = serviceListings.size();
+
+        model.addAttribute("servicesCount", servicesCount);
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("categoriesName", categoriesName);
+        model.addAttribute("cleanerInfo", cleaner);
+        return "homeowner_view_cleaner_profile";
+    }
+
     // Search Services by Home Owner
     @GetMapping("/searchServices")
     public String searchServices(@RequestParam String query, Model model) {
@@ -657,10 +755,6 @@ public class Boundary {
 
         if (serviceListings == null || serviceListings.isEmpty()) {
             serviceListings = serviceListingC.searchListingsByCleaner(query);
-        }
-
-        if (serviceListings == null || serviceListings.isEmpty()) {
-            return "redirect:/ViewAllServices";
         }
         
         List<String> cleanersName = new ArrayList<>();
@@ -683,7 +777,152 @@ public class Boundary {
         model.addAttribute("categoriesName", categoriesName);
         return "homeowner_search_services";
     }
+
+    // Add to Service Shortlist
+    @PostMapping("/AddToServiceShortlist")
+    public String addToServiceShortlist(@RequestParam int serviceId, HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            return "redirect:/Login"; 
+        }
+        int uid = (int) uidObj;
+        shortlistC.shortlistService(uid, serviceId);
+
+        return "redirect:/ServiceShortlist";
+    }
+
+    // Service Shortlist
+    @GetMapping("/ServiceShortlist")
+    public String showServiceShortlist(HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            return "redirect:/Login"; 
+        }
+        int uid = (int) uidObj;
+        List<ServiceShortlist> shortlists = shortlistC.getAllShortlistedServices(uid);
+        List<ServiceListing> serviceShortList = new ArrayList<>();
+        List<String> cleanersName = new ArrayList<>();
+        List<String> categoriesName = new ArrayList<>();
+
+        for (ServiceShortlist shortlist : shortlists) {
+            ServiceListing service = serviceListingC.getShortlistedServiceListing(shortlist.getServiceId());
+            serviceShortList.add(service);
+
+            UserAccount user = userAccountC.viewUserAccount(service.getCleanerId());
+            String cleanerName = user.getName();
+            cleanersName.add(cleanerName);
+
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(service.getCategoryId());
+            String categoryType = category.getType();
+            String categoryName = category.getName();
+            String categoryTypeandName = categoryType + "-" + categoryName;
+            categoriesName.add(categoryTypeandName);
+        }
+
+        model.addAttribute("cleanersName", cleanersName);
+        model.addAttribute("categoriesName", categoriesName);
+        model.addAttribute("serviceShortList", serviceShortList);
+        return "homeowner_service_shortlist";
+    }
+
+    // Search Service Shortlist
+    @GetMapping("/searchShortlistedServices")
+    public String searchShortlistedServices(@RequestParam String query, HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            return "redirect:/Login"; 
+        }
+        int uid = (int) uidObj;
+        List<ServiceShortlist> shortlists = shortlistC.searchShortlistedServices(uid, query);
+        List<ServiceListing> serviceShortList = new ArrayList<>();
+        List<String> cleanersName = new ArrayList<>();
+        List<String> categoriesName = new ArrayList<>();
+
+        for (ServiceShortlist shortlist : shortlists) {
+            ServiceListing service = serviceListingC.getShortlistedServiceListing(shortlist.getServiceId());
+            serviceShortList.add(service);
+
+            UserAccount user = userAccountC.viewUserAccount(service.getCleanerId());
+            String cleanerName = user.getName();
+            cleanersName.add(cleanerName);
+
+            ServiceCategory category = serviceCategoryC.viewServiceCategory(service.getCategoryId());
+            String categoryType = category.getType();
+            String categoryName = category.getName();
+            String categoryTypeandName = categoryType + "-" + categoryName;
+            categoriesName.add(categoryTypeandName);
+        }
+
+        model.addAttribute("cleanersName", cleanersName);
+        model.addAttribute("categoriesName", categoriesName);
+        model.addAttribute("serviceShortList", serviceShortList);
+        return "homeowner_service_shortlist";
+    }
+
+    // Add to Cleaner Shortlist
+    @PostMapping("/AddToCleanerShortlist")
+    public String addToCleanerShortlist(@RequestParam int cleanerId, HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            return "redirect:/Login"; 
+        }
+        int uid = (int) uidObj;
+        shortlistC.shortlistCleaner(uid, cleanerId);
+
+        return "redirect:/CleanerShortlist";
+    }
+
+    // Service Shortlist
+    @GetMapping("/CleanerShortlist")
+    public String showCleanerShortlist(HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            return "redirect:/Login"; 
+        }
+        int uid = (int) uidObj;
+        List<CleanerShortlist> shortlists = shortlistC.getAllShortlistedCleaners(uid);
+        List<UserAccount> cleanersShortlist = new ArrayList<>();
+        List<Integer> servicesCountList = new ArrayList<>();
         
+
+        for (CleanerShortlist shortlist : shortlists) {
+            UserAccount cleaner = userAccountC.viewUserAccount(shortlist.getCleanerId());
+            cleanersShortlist.add(cleaner);
+            List<ServiceListing> serviceListings = serviceListingC.getAllListingsById(shortlist.getCleanerId());
+            int servicesCount = serviceListings.size();
+            servicesCountList.add(servicesCount);
+        }
+
+        model.addAttribute("servicesCountList", servicesCountList);
+        model.addAttribute("cleanersShortlist", cleanersShortlist);
+        return "homeowner_cleaner_shortlist";
+    }
+
+    // Search Cleaner Shortlist
+    @GetMapping("/searchShortlistedCleaners")
+    public String searchShortlistedCleaners(@RequestParam String query, HttpSession session, Model model) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            return "redirect:/Login"; 
+        }
+        int uid = (int) uidObj;
+        List<CleanerShortlist> shortlists = shortlistC.searchShortlistedCleaners(uid, query);
+        List<UserAccount> cleanersShortlist = new ArrayList<>();
+        List<Integer> servicesCountList = new ArrayList<>();
+        
+
+        for (CleanerShortlist shortlist : shortlists) {
+            UserAccount cleaner = userAccountC.viewUserAccount(shortlist.getCleanerId());
+            cleanersShortlist.add(cleaner);
+            List<ServiceListing> serviceListings = serviceListingC.getAllListingsById(shortlist.getCleanerId());
+            int servicesCount = serviceListings.size();
+            servicesCountList.add(servicesCount);
+        }
+
+        model.addAttribute("servicesCountList", servicesCountList);
+        model.addAttribute("cleanersShortlist", cleanersShortlist);
+        return "homeowner_cleaner_shortlist";
+    }
 
 }
 //testing

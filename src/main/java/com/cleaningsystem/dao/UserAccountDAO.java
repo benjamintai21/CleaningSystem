@@ -73,6 +73,10 @@ public class UserAccountDAO {
     public List<UserAccount> getAllUsers() {
         return jdbcTemplate.query(GET_ALL_USER_ACCOUNT, userRowMapper);
     }
+
+    public String getProfileNameByUid(int uid) {
+        return jdbcTemplate.queryForObject(CHECK_USER_ACCOUNT, String.class, uid);
+    }
 } 
 
 

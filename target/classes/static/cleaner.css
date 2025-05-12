@@ -9,11 +9,11 @@
     margin: auto;
 }
 .shortlistimg{
-    background-image: url(../pmimages/shortlist.png);
+    background-image: url(../images/shortlist.png);
 
 }
 .viewimg{
-    background-image: url(../pmimages/view.png);
+    background-image: url(../images/view.png);
 }
 .edit_flex{
     flex-direction: column;

@@ -11,7 +11,6 @@ com\cleaningsystem\controller\ServiceListingController.class
 com\cleaningsystem\dao\ServiceListingDAO.class
 com\cleaningsystem\db\DatabaseConnection.class
 com\cleaningsystem\config\DatabaseConfig.class
-com\cleaningsystem\model\Shortlist.class
 com\cleaningsystem\model\ServiceCategory.class
 com\cleaningsystem\config\WebConfig.class
 com\cleaningsystem\model\UserAccount.class
