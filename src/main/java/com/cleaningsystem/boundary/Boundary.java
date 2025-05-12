@@ -714,8 +714,11 @@ public class Boundary {
     //Generate Report
     @GetMapping("/GenerateReport")
     public String showReportPage(HttpSession session, Model model) {
-        String redirect = checkAccess(session, "Platform Manager");
-        if (redirect != null) return redirect;
+        Optional<Integer> result = checkAccess(session, "Platform Manager");
+        if (result.isPresent()) {
+        } else {
+            return "redirect:/Login";
+        }
 
         Report dailyReport = reportC.generateDailyReport();
 
