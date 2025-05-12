@@ -21,9 +21,9 @@
                 <a th:href="@{HomeOwnerHome}" class="navbar-link">Home</a>
                 <a th:href="@{HomeOwnerHome#AboutUs}" class="navbar-link">About Us</a>
                 <a th:href="@{ViewAllServices}" class="navbar-link active">Services</a>
-                <a th:href="@{ViewCleanerShortlist}" class="navbar-link">Cleaner Shortlist</a>
-                <a th:href="@{ViewServiceShortlist}" class="navbar-link">Service Shortlist</a>
-                <a th:href="@{ViewMyBooking}" class="navbar-link">My Booking</a>
+                <a th:href="@{CleanerShortlist}" class="navbar-link">Cleaner Shortlist</a>
+                <a th:href="@{ServiceShortlist}" class="navbar-link">Service Shortlist</a>
+                <a th:href="@{MyBooking}" class="navbar-link">My Booking</a>
                 <a th:href="@{HomeOwnerHome#ContactUs}" class="navbar-link">Contact Us</a>
             </div>
             <a th:href="@{Login}" class="navbar-login">Logout</a>
@@ -56,16 +56,21 @@
         </form>
 
         <!-- Cards -->
-         
-        <div class="service-card" th:each="listing, iterStat : ${serviceListings}" >
-            <a th:href="@{/ServiceListing(serviceId=${listing.serviceId})}" class="action_link">
+         <div class="service-card" th:if="${#lists.isEmpty(serviceListings)}">
+            <p>No result found</p>
+        </div>
+
+        <a th:href="@{/ViewServiceListing(serviceId=${listing.serviceId})}" class="action_link"
+        th:each="listing, iterStat : ${serviceListings}"
+        th:if="${!#lists.isEmpty(serviceListings)}">
+            <div class="service-card">
                 <div class="service-info">
-                    <p><strong>Service name: </strong><span th:text="${listing.name}"></span></p>
+                    <p><strong>Service Name: </strong><span th:text="${listing.name}"></span></p>
                     <p><strong>Service Type: </strong><span th:text="${categoriesName[iterStat.index]}"></span></p>
                     <p><strong>Price: </strong>$<span th:text="${#numbers.formatDecimal(listing.pricePerHour, 1, 2)}"></span>/h</p>
-                    <p><strong>Cleaner name: </strong><span th:text="${cleanersName[iterStat.index]}"></span></p>
+                    <p><strong>Cleaner Name: </strong><span th:text="${cleanersName[iterStat.index]}"></span></p>
                 </div>
-            </a>
+            
                 <div class="service-engage">
                     <div class="card-stats">
                         <img th:src="@{images/view.png}" class="icon" alt="views"><span th:text="${listing.views}"></span>
@@ -73,12 +78,8 @@
                     </div>
                     <div class="thin-arrow"></div>
                 </div>
-        </div>
-
-        <!-- Show More -->
-        <div class="showMore">
-            <a href="#" class="show-more-btn">Show more</a>
-        </div>
+            </div>
+        </a>
     </div>
 
     <script src="script.js">
