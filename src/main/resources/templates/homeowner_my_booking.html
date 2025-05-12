@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <title>Search Services</title>
@@ -21,9 +20,9 @@
                 <a th:href="@{HomeOwnerHome}" class="navbar-link">Home</a>
                 <a th:href="@{HomeOwnerHome#AboutUs}" class="navbar-link">About Us</a>
                 <a th:href="@{ViewAllServices}" class="navbar-link">Services</a>
-                <a th:href="@{CleanerShortlist}" class="navbar-link active">Cleaner Shortlist</a>
+                <a th:href="@{CleanerShortlist}" class="navbar-link">Cleaner Shortlist</a>
                 <a th:href="@{ServiceShortlist}" class="navbar-link">Service Shortlist</a>
-                <a th:href="@{MyBooking}" class="navbar-link">My Booking</a>
+                <a th:href="@{MyBooking}" class="navbar-link active">My Booking</a>
                 <a th:href="@{HomeOwnerHome#ContactUs}" class="navbar-link">Contact Us</a>
             </div>
             <a th:href="@{Login}" class="navbar-login">Logout</a>
@@ -34,43 +33,48 @@
     <!-- Hero Section Start-->
     <section class="hero-section" th:style="'background: url(' + @{/images/service%20banner.png} + ');'">
         <div class="hero-content">
-            <span class="label-tag">My Shortlist</span>
-            <h1 class="form-title">Shortlisted Cleaners</h1>
+            <span class="label-tag">My Booking</span>
+            <h1 class="form-title">Booking History</h1>
         </div>
     </section>
     <!-- Hero Section End-->
     <div class="main-wrapper">
 
         <!-- Search Bar -->
-        <form class="search-bar" th:action="@{/searchShortlistedCleaners(query=${query})}" method="GET">
+        <form class="search-bar" method="GET">
             <div class="search-input-wrapper">
-                <input type="text" placeholder="Search services by cleaner's username only" name="query" />
+                <input type="text" placeholder="Search Booking" />
                 <button type="submit" class="search-icon">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
+                  <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
             </div>
         </form>
 
-        <!-- Cards -->
-        <div class="service-card" th:if="${#lists.isEmpty(cleanersShortlist)}">
-            <p>Cleaner Shortlist is Empty</p>
+        <div class="service-card" th:if="${#lists.isEmpty(serviceListings)}">
+            <p>Your Booking List is Empty</p>
         </div>
 
         <!-- Cards -->
-        <a th:each="cleaner, iterStat : ${cleanersShortlist}" 
-        th:href="@{/CleanerProfile(cleanerId=${cleaner.uid})}" class="action_link"
-        th:if="${!#lists.isEmpty(cleanersShortlist)}">
-        <div class="service-card">
-            <div class="service-info">
-                <p><strong>Cleaner Username: </strong>@<span th:text="*{cleaner.username}"></span></p>
-                <p><strong>Total Services </strong>(<span th:text="${servicesCountList[iterStat.index]}"></span>)</p>
+        <div class="service-card booking-card" th:if="${!#lists.isEmpty(serviceListings)}"
+        th:each="servicelisting, iterStat : ${serviceListings}">
+            <div>
+                <p><strong>Service name: </strong><span th:text="${servicelisting.name}"></span></p>
+                <p><strong>Cleaner name: </strong><span th:text="${cleaners[iterStat.index].name}"></span></p>
             </div>
+            <div>
+                <p><strong>Service Date: </strong><span th:text="${servicelisting.startDate}"></p>
+                <p><strong>Service Status: </strong><span th:text="${bookings[iterStat.index].status}"></p>
+            </div>
+            <div class="toggle-arrow"></div>
 
-            <div class="service-engage">
-                <div class="thin-arrow"></div>
+
+            <!-- hidden detail -->
+            <div class="booking-details">
+                <p><strong>Price: </strong>$<span th:text="${#numbers.formatDecimal(servicelisting.pricePerHour, 1, 2)}"></span>/h</p>
+                <p><strong>Expected Service End Date: </strong><span th:text="${servicelisting.endDate}"></p>
             </div>
         </div>
-        </a>
+
     </div>
     <script th:src="@{/homeowner.js}"></script>
 </body>

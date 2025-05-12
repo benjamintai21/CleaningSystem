@@ -15,6 +15,10 @@ public class BookingController {
     private BookingDAO bookingDAO;
 
     // HomeOwner
+    public boolean addBooking(int serviceId, int homeownerId, String status) {
+        return bookingDAO.addBooking(serviceId, homeownerId, status);
+    }
+
     public List<Booking> getPastBookings(int homeownerId) {
         return bookingDAO.getPastBookings(homeownerId);
     }

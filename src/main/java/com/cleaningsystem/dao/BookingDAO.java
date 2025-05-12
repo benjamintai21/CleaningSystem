@@ -26,6 +26,10 @@ public class BookingDAO {
     };
 
     // HomeOwner
+    public boolean addBooking(int serviceId, int homeownerId, String status) {
+        return jdbcTemplate.update(CREATE_BOOKING, serviceId, homeownerId, status) > 0;
+    }
+
     public List<Booking> getPastBookings(int homeownerId) {
         return jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper, homeownerId);
     }

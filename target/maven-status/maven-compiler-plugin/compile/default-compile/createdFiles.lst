@@ -7,6 +7,7 @@ com\cleaningsystem\controller\UserAccountController.class
 com\cleaningsystem\model\PlatformManager.class
 com\cleaningsystem\dao\BookingDAO.class
 com\cleaningsystem\model\UserAdmin.class
+com\cleaningsystem\model\Report.class
 com\cleaningsystem\controller\ServiceListingController.class
 com\cleaningsystem\dao\ServiceListingDAO.class
 com\cleaningsystem\db\DatabaseConnection.class
@@ -24,8 +25,10 @@ com\cleaningsystem\model\HomeOwner.class
 com\cleaningsystem\model\Booking$Status.class
 com\cleaningsystem\boundary\Boundary.class
 com\cleaningsystem\controller\ServiceCategoryController.class
+com\cleaningsystem\model\CleanerShortlist.class
 com\cleaningsystem\dao\ShortlistDAO.class
 com\cleaningsystem\dao\UserProfileDAO.class
 com\cleaningsystem\dao\Queries.class
 com\cleaningsystem\model\ServiceListing.class
+com\cleaningsystem\model\ServiceShortlist.class
 com\cleaningsystem\controller\BookingController.class
