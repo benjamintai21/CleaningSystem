@@ -32,17 +32,17 @@ public class ReportDAO {
     };
 
     public int generateDailyReport() {
-        jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper);
+        jdbcTemplate.query(GET_DAILY_REPORT, listingRowMapper);
         return 0;
     }
     
     public int generateWeeklyReport() {
-        jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper);
+        jdbcTemplate.query(GET_WEEKLY_REPORT, listingRowMapper);
         return 0;
     }
 
     public int generateMonthlyReport() {
-        jdbcTemplate.query(GET_COMPLETED_SERVICES, listingRowMapper);
+        jdbcTemplate.query(GET_MONTHLY_REPORT, listingRowMapper);
         return 0;
     }
 }

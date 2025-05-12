@@ -117,5 +117,12 @@ public class Queries {
     public static final String SEARCH_CONFIRMED_MATCHES = "SELECT bh.* FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ? AND sl.name LIKE ?";
 
     public static final String GET_BOOKING_BY_ID = "SELECT * FROM BOOKING WHERE bookingId = ?";
+    
+    //Report
+    public static final String GET_DAILY_REPORT = "";
+
+    public static final String GET_WEEKLY_REPORT = "";
+
+    public static final String GET_MONTHLY_REPORT = "";
 }         
 
