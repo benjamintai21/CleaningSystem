@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cleaningsystem.dao.ServiceListingDAO;
 import com.cleaningsystem.dao.ShortlistDAO;
 import com.cleaningsystem.model.CleanerShortlist;
 import com.cleaningsystem.model.ServiceShortlist;
@@ -15,8 +16,15 @@ public class ShortlistController {
     @Autowired
 	private ShortlistDAO shortlistDAO;
 
+    @Autowired
+    private ServiceListingDAO serviceListingDAO;
+
     public boolean shortlistService(int homeownerId, int serviceId){
-        return shortlistDAO.saveToServiceShortlist(homeownerId, serviceId);
+        if(serviceListingDAO.updateShortlisting(serviceId)){
+            return shortlistDAO.saveToServiceShortlist(homeownerId, serviceId);
+        } else {
+            return false;
+        }
     }
 
     public boolean shortlistCleaner(int homeownerId, int cleanerId){
@@ -51,5 +59,22 @@ public class ShortlistController {
 
     public List<ServiceShortlist> getNumberOfShortlists(int serviceId){
         return shortlistDAO.getNumberOfShortlists(serviceId);
-    }   
+    }
+    
+    public boolean isInServiceShortlist(int serviceId) {
+        return shortlistDAO.checkShortlistedServices(serviceId);
+    }
+
+    public boolean isInCleanerShortlist(int cleanerId) {
+        return shortlistDAO.checkShortlistedCleaners(cleanerId);
+    }
+
+    public boolean deleteShortlistedServices(int homeownerId, int serviceId) {
+        return shortlistDAO.deleteShortlistedServices(homeownerId, serviceId);
+    }
+
+    public boolean deleteShortlistedCleaners(int homeownerId, int cleanerId) {
+        return shortlistDAO.deleteShortlistedCleaners(homeownerId, cleanerId);
+    }
+
 }

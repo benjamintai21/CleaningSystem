@@ -68,9 +68,13 @@
         <!-- All Buttons-->
         <div class="detail-actions">
             <a th:href="@{/CleanerProfile(cleanerId=${serviceListingInfo.cleanerId})}" class="action-btn">View Profile</a>
-            <form th:action="@{/AddToServiceShortlist(serviceId=${serviceListingInfo.serviceId})}" method="post">
+            <form th:action="@{/AddToServiceShortlist(serviceId=${serviceListingInfo.serviceId})}" method="post" th:if="${!isInServiceShortlist}">
                 <input type="hidden" th:name="serviceId" th:value="${serviceListingInfo.serviceId}" />
                 <button type="submit" class="action-btn">Shortlist</button>
+            </form>
+            <form th:action="@{/RemoveFromServiceShortlist(serviceId=${serviceListingInfo.serviceId})}" method="post" th:if="${isInServiceShortlist}">
+                <input type="hidden" th:name="serviceId" th:value="${serviceListingInfo.serviceId}" />
+                <button type="submit" class="action-btn">Remove from shortlist</button>
             </form>
             <form th:action="@{/AddToMyBooking(serviceId=${serviceListingInfo.serviceId})}" method="post">
                 <input type="hidden" th:name="serviceId" th:value="${serviceListingInfo.serviceId}" />
