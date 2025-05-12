@@ -53,8 +53,8 @@
             <div>
               <p><strong>Service Name: </strong><span th:text="*{name}"></span></p>
               <p><strong>Cleaner Name: </strong><span th:text="*{cleanerId}"></span></p>
-              <p><strong>Service Category: </strong><span th:text="${serviceCategory.type} + ' - ' + ${serviceCategory.name}"></span></p>
-              <p><strong>Price per hour: $</strong><span th:text="*{#numbers.formatDecimal(pricePerHour, 1, 2)}"></span></p>
+              <p><strong>Service Category: </strong><span th:text="${serviceCategory.type} + '-' + ${serviceCategory.name}"></span></p>
+              <p><strong>Price per hour: </strong>$<span th:text="*{#numbers.formatDecimal(pricePerHour, 1, 2)}"></span>/h</p>
             </div>
             <div>
               <p><strong>Service-ID: </strong><span th:text="*{serviceId}"></span></p>

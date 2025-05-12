@@ -34,9 +34,14 @@
         <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
       </form>      
 
+      <div class="user-card" th:if="${#lists.isEmpty(serviceCategories)}">
+        <p>No result found</p>
+      </div>
+  
       <!-- User Cards -->
       <a th:each="category, iterStat : ${serviceCategories}" 
       th:href="@{/ServiceCategory(categoryId=${category.categoryId})}" 
+      th:if="${!#lists.isEmpty(serviceCategories)}"
       class="action_link">
       <div class="user-card">
         <div>

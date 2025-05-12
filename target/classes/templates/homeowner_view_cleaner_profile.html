@@ -33,58 +33,64 @@
 
     <!-- Hero Section Start-->
     <section class="hero-section" th:style="'background: url(' + @{/images/service%20banner.png} + ');'">
-        <div class="hero-overlay">
-            <div class="hero-content">
-                <span class="label-tag">Service</span>
-                <h1 class="form-title">Search for service</h1>
-            </div>
+        <div class="hero-content">
+            <span class="label-tag">Service</span>
+            <h1 class="form-title">Cleaner Profile</h1>
         </div>
     </section>
     <!-- Hero Section End-->
-
-    <!-- Main Wrapper -->
     <div class="main-wrapper">
 
-        <!-- Search Bar -->
-        <form class="search-bar" th:action="@{/searchServices(query=${query})}" method="GET">
-            <div class="search-input-wrapper">
-                <input type="text" placeholder="Search services" name="query" />
-                <button type="submit" class="search-icon">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </div>
-        </form>
+        <!-- Back Button -->
+        <a href="javascript:history.back()" class="back-btn">&larr; Back</a>
 
-        <!-- Cards -->
-         <div class="service-card" th:if="${#lists.isEmpty(serviceListings)}">
-            <p>No result found</p>
-        </div>
+        <div class="profile-box" th:object="${cleanerInfo}">
+            
+            <p class="profile-label">Cleaner Username: <span th:text="*{username}"></span></p>
+            <p class="profile-label">Cleaner name: <span th:text="*{name}"></span></p>
+            <p class="profile-label">Age: <span th:text="*{age}"></span></p>
+            <p class="profile-label">Gender: <span th:text="*{gender}"></span></p>
+            <p class="profile-label">Email: <span th:text="*{email}"></span></p>
 
+
+            <p class="profile-label">Services (<span th:text="${servicesCount}"></span>)</p>
+
+            <!-- Reuse service card layout -->
         <a th:href="@{/ViewServiceListing(serviceId=${listing.serviceId})}" class="action_link"
         th:each="listing, iterStat : ${serviceListings}"
         th:if="${!#lists.isEmpty(serviceListings)}">
             <div class="service-card">
                 <div class="service-info">
-                    <p><strong>Service Name: </strong><span th:text="${listing.name}"></span></p>
+                    <p><strong>Service name: </strong><span th:text="${listing.name}"></span></p>
                     <p><strong>Service Type: </strong><span th:text="${categoriesName[iterStat.index]}"></span></p>
                     <p><strong>Price: </strong>$<span th:text="${#numbers.formatDecimal(listing.pricePerHour, 1, 2)}"></span>/h</p>
-                    <p><strong>Cleaner Name: </strong><span th:text="${cleanersName[iterStat.index]}"></span></p>
                 </div>
-            
-                <div class="service-engage">
-                    <div class="card-stats">
-                        <img th:src="@{images/view.png}" class="icon" alt="views"><span th:text="${listing.views}"></span>
-                        <img th:src="@{images/shortlist.png}" class="icon" alt="bookmarks"><span th:text="${listing.shortlists}"></span>
-                    </div>
-                    <div class="thin-arrow"></div>
+                <div class="card-stats">
+                    <img th:src="@{images/view.png}" class="icon" alt="views"><span th:text="${listing.views}"></span>
+                    <img th:src="@{images/shortlist.png}" class="icon" alt="bookmarks"><span th:text="${listing.shortlists}"></span>
                 </div>
+                <div class="thin-arrow"></div>
             </div>
         </a>
+
+            <!-- Bottom button -->
+            <div class="profile-actions">
+                <form th:action="@{/AddToCleanerShortlist(cleanerId=${cleanerInfo.uid})}" method="post">
+                    <input type="hidden" th:name="serviceId" th:value="${cleanerInfo.uid}" />
+                    <button type="submit" class="action-btn">Shortlist Profile</button>
+                </form>
+            </div>
+        </div>
+        <div id="popupCleaner" class="popup-overlay">
+            <div class="popup-box">
+                <i class="fas fa-check popup-icon"></i>
+                <p>Cleaner added to shortlist</p>
+            </div>
+        </div>
+
+
     </div>
-
-    <script src="script.js">
-    </script>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

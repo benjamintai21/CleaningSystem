@@ -87,6 +87,16 @@ CREATE TABLE SHORTLISTEDSERVICES (
     FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId)
 );
 
+CREATE TABLE SHORTLISTEDCLEANERS (
+    homeownerId int,
+    cleanerId int,
+
+    PRIMARY KEY (homeownerId, cleanerId),
+
+    FOREIGN KEY (homeownerId) REFERENCES USERACCOUNT(UId),
+    FOREIGN KEY (cleanerId) REFERENCES USERACCOUNT(UId)
+);
+
 CREATE TABLE BOOKING (
 	bookingId int not null auto_increment,
     serviceId int,

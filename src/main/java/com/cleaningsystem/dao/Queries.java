@@ -21,6 +21,8 @@ public class Queries {
 
     public static final String GET_ALL_USER_ACCOUNT = "SELECT * FROM USERACCOUNT";
 
+    public static final String CHECK_USER_ACCOUNT = "SELECT up.profilename FROM USERPROFILE up JOIN USERACCOUNT ua ON up.profileId = ua.profileID WHERE ua.UId = ?";
+
     //User Profile
     public static final String CREATE_USER_PROFILE = "INSERT INTO USERPROFILE (profilename, description, suspension) VALUES (?, ?, ?)";
 
@@ -83,15 +85,25 @@ public class Queries {
     
     public static final String SEARCH_SERVICE_LISTING_BY_CLEANER = "SELECT s.* FROM SERVICELISTINGS s JOIN USERACCOUNT u ON s.cleanerId = u.UID WHERE u.profileID = 4 AND u.name LIKE ?";
 
+    public static final String VIEW_SERVICE_LISTING_BY_SERVICE_ID = "SELECT * FROM SERVICELISTINGS WHERE serviceId = ?";
+    
     public static final String SAVE_SHORTLISTED_SERVICE = "INSERT INTO SHORTLISTEDSERVICES (homeownerId, serviceId) VALUES (?, ?)";
+
+    public static final String SAVE_SHORTLISTED_CLEANER = "INSERT INTO SHORTLISTEDCLEANERS (homeownerId, cleanerId) VALUES (?, ?)";
 
     public static final String GET_SHORTLIST_BY_ID = "SELECT * FROM SHORTLISTEDSERVICES WHERE serviceId = ? AND homeownerId = ?";
 
-    public static final String GET_ALL_SHORTLISTS = "SELECT * FROM SHORTLISTEDSERVICES WHERE homeownerId = ?";
+    public static final String GET_ALL_SHORTLISTED_SERVICES = "SELECT * FROM SHORTLISTEDSERVICES WHERE homeownerId = ?";
+
+    public static final String GET_ALL_SHORTLISTED_CLEANERS = "SELECT * FROM SHORTLISTEDCLEANERS WHERE homeownerId = ?";
+
+    public static final String SEARCH_SHORTLISTED_CLEANER_BY_USERNAME = "SELECT ua.* FROM USERACCOUNT ua JOIN SHORTLISTEDCLEANERS sc ON ua.UId = sc.cleanerId WHERE sc.homeownerId = ? ua.username LIKE ?";
 
     public  static final String DELETE_SHORTLISTED_SERVICE = "DELETE FROM SHORTLISTEDSERVICES WHERE homeownerId = ? AND serviceId = ?";
 
     public static final String SEARCH_SHORTLISTED_SERVICE_BY_NAME = "SELECT sl.* FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS sl ON ss.serviceId = sl.serviceId WHERE ss.homeownerId = ? AND sl.name LIKE ?";
+
+    public static final String UPDATE_VIEWS = "UPDATE SERVICELISTINGS SET views = views + 1 WHERE serviceId = ?";
 
     //Booking
     public static final String GET_COMPLETED_SERVICES = "SELECT * FROM BOOKING WHERE status = 'completed' AND homeownerId = ?";

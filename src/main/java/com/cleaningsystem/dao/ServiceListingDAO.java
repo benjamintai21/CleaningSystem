@@ -40,6 +40,11 @@ public class ServiceListingDAO {
         name, cleanerId, categoryId, description, priceperhour, startDate, endDate, status) > 0;
     }
 
+        public ServiceListing viewServiceListingByServiceId(int serviceId) {
+        List<ServiceListing> listings = jdbcTemplate.query(VIEW_SERVICE_LISTING_BY_SERVICE_ID, listingRowMapper, serviceId);
+        return listings.isEmpty() ? null : listings.get(0);
+    }
+
     public ServiceListing getListingById(int serviceId , int cleanerId) {
         List<ServiceListing> listings = jdbcTemplate.query(GET_SERVICE_LISTING_BY_ID, listingRowMapper, serviceId, cleanerId);
         return listings.isEmpty() ? null : listings.get(0);
@@ -91,5 +96,9 @@ public class ServiceListingDAO {
 
     public List<ServiceListing> getAllListings(){
         return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
+    }
+
+    public boolean updateViews(int serviceId) {
+        return jdbcTemplate.update(UPDATE_VIEWS, serviceId) > 0;
     }
 }

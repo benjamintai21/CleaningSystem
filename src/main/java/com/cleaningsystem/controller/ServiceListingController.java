@@ -19,6 +19,15 @@ public class ServiceListingController {
         return serviceListingDAO.insertListing(name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status);
     }
 
+    public ServiceListing viewServiceListingByServiceId(int serviceId) {
+        ServiceListing listing = serviceListingDAO.viewServiceListingByServiceId(serviceId);
+        if(serviceListingDAO.updateViews(serviceId)){
+            return listing;
+        } else {
+            return null;
+        }
+    }
+
     public ServiceListing viewServiceListing(int serviceId, int cleanerId) {
         return serviceListingDAO.getListingById(serviceId, cleanerId);
     }
@@ -67,4 +76,9 @@ public class ServiceListingController {
     public List<ServiceListing> searchListingsByCleaner(String keyword) {
         return serviceListingDAO.searchListingsByCleaner(keyword);
     }
+
+    public ServiceListing getShortlistedServiceListing(int serviceId) {
+        return serviceListingDAO.viewServiceListingByServiceId(serviceId);
+    }
+
 }
