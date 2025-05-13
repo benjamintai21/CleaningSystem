@@ -17,11 +17,11 @@ public class ReportController {
     }
     //
     public Report generateWeeklyReport(){
-        return reportDAO.generateWeeklyReport();
+        return report.generateWeeklyReport();
     }
 
     public Report generateMonthlyReport(){
-        return reportDAO.generateMonthlyReport();
+        return report.generateMonthlyReport();
     }
 
     public Report generateWeeklyReport(LocalDate date){
