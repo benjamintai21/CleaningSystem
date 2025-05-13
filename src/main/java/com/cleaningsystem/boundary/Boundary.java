@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -637,7 +638,7 @@ public class Boundary {
             int count = (serviceListings != null) ? serviceListings.size() : 0;
             serviceListingsCount.add(count);
         }
-            
+        
         model.addAttribute("serviceCategories", serviceCategories);
         model.addAttribute("serviceListingsCount", serviceListingsCount);
         return "pm_search_service_category";
@@ -726,6 +727,55 @@ public class Boundary {
 
         return "pm_generate_report";
     }
+
+    //Generate Daily Report
+    @GetMapping("/GenerateDaily")
+    public String showReportDaily(@RequestParam LocalDate date, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "Platform Manager");
+        if (result.isPresent()) {
+        } else {
+            return "redirect:/Login";
+        }
+
+        Report dailyReport = reportC.generateMonthlyReport(date);
+
+        model.addAttribute("dailyReport", dailyReport);
+
+        return "pm_generate_report";
+    }
+
+    //Generate Daily Report
+    @GetMapping("/GenerateWeekly")
+    public String showReportWeekly(@RequestParam LocalDate date, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "Platform Manager");
+        if (result.isPresent()) {
+        } else {
+            return "redirect:/Login";
+        }
+
+        Report dailyReport = reportC.generateMonthlyReport(date);
+
+        model.addAttribute("dailyReport", dailyReport);
+
+        return "pm_generate_report";
+    }
+
+    //Generate Daily Report
+    @GetMapping("/GenerateMonthly")
+    public String showReportMonthly(HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "Platform Manager");
+        if (result.isPresent()) {
+        } else {
+            return "redirect:/Login";
+        }
+
+        Report dailyReport = reportC.generateDailyReport();
+
+        model.addAttribute("dailyReport", dailyReport);
+
+        return "pm_generate_report";
+    }
+
 
     // HomeOwnerrrr
     @GetMapping("/HomeOwnerHome")
