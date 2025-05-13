@@ -35,14 +35,14 @@
                     </div>
                 </div>
 
-                <form id="generateDaily" action="@{/GenerateDaily}" th:object="${dailyReport}">
+                <form id="generateDaily" action="@{/GenerateDaily}" th:object="${dailyReport}" method="get">
                     <!-- Daily Report page content (second image) -->
                     <div id="daily-page" class="page">
                         <h2>Daily Report</h2>
                         <div class="date-selector">
                             <label>Select day*</label>
                             <div class="date-input-container">
-                                <input type="text" class="date-input" value="1/04/2025">
+                                <input type="date" class="date-input" id="reportDate">
                                 <button class="generate-btn">Generate</button>
                             </div>
                         </div>
@@ -76,83 +76,83 @@
                     </div>
                 </form>
 
-                <form id="generateWeekly" action="@{/GenerateWeekly}">
+                <form id="generateWeekly" action="@{/GenerateWeekly}" th:object="${weeklyReport}" method="get">
                     <!-- Weekly Report page content (third image) -->
                     <div id="weekly-page" class="page">
                         <h2>Weekly Report</h2>
                         <div class="date-selector">
                             <label>Select day*</label>
                             <div class="date-input-container">
-                                <input type="text" class="date-input" value="8/04/2025">
+                                <input type="date" class="date-input" id="reportDate">
                                 <button class="generate-btn">Generate</button>
                             </div>
                         </div>
 
                         <div class="stats-container">
                             <div class="stat-box">
-                                <div class="stat-label">Total Booking</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">New Home Owners</div>
+                                <div class="stat-number"><span th:text="*{newHomeOwners}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Shortlisted</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">New Cleaners</div>
+                                <div class="stat-number"><span th:text="*{newCleaners}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Home Active</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">No. Of Shortlists</div>
+                                <div class="stat-number"><span th:text="*{NoOfShortlists}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Sign-up</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">Total Home Owners</div>
+                                <div class="stat-number"><span th:text="*{totalHomeOwners}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Suspend</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">Total Cleaners</div>
+                                <div class="stat-number"><span th:text="*{totalCleaners}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Revenue</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">No. Of Bookings</div>
+                                <div class="stat-number"><span th:text="*{NoOfBookings}"></span></div>
                             </div>
                         </div>
                     </div>
                 </form>
 
-                <form id="generateMonthly" action="@{/GenerateMonthly}">
+                <form id="generateMonthly" action="@{/GenerateMonthly}" th:object="${monthlyReport}" method="get">
                     <!-- Monthly Report page content (fourth image) -->
                     <div id="monthly-page" class="page">
                         <h2>Monthly Report</h2>
                         <div class="date-selector">
                             <label>Select month*</label>
                             <div class="date-input-container">
-                                <input type="text" class="date-input" value="04/2025">
+                                <input type="date" class="date-input" id="reportDate">
                                 <button class="generate-btn">Generate</button>
                             </div>
                         </div>
 
                         <div class="stats-container">
                             <div class="stat-box">
-                                <div class="stat-label">Total Booking</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">New Home Owners</div>
+                                <div class="stat-number"><span th:text="*{newHomeOwners}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Shortlisted</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">New Cleaners</div>
+                                <div class="stat-number"><span th:text="*{newCleaners}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Home Active</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">No. Of Shortlists</div>
+                                <div class="stat-number"><span th:text="*{NoOfShortlists}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Sign-up</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">Total Home Owners</div>
+                                <div class="stat-number"><span th:text="*{totalHomeOwners}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Suspend</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">Total Cleaners</div>
+                                <div class="stat-number"><span th:text="*{totalCleaners}"></span></div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Total Revenue</div>
-                                <div class="stat-number">0</div>
+                                <div class="stat-label">No. Of Bookings</div>
+                                <div class="stat-number"><span th:text="*{NoOfBookings}"></span></div>
                             </div>
                         </div>
                     </div>
@@ -162,6 +162,12 @@
     </div>
 
     <script>
+
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
+    // Set it as the value of the input
+    document.getElementById('reportDate').value = today;
+
     document.addEventListener('DOMContentLoaded', function() {
         // Get page elements
         const homePageElement = document.getElementById('home-page');
