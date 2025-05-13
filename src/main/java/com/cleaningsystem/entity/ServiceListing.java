@@ -81,6 +81,9 @@ public class ServiceListing {
     @Autowired
     private UserAccount userAccount;
 
+    @Autowired
+    private Booking booking;
+
     public List<Integer> getServicesCountList(){
     List<Integer> servicesCountList = new ArrayList<>();
         List<UserAccount> cleaners = userAccount.searchUsersByProfileId(4);
@@ -91,6 +94,71 @@ public class ServiceListing {
         }
         return servicesCountList;
     }
+
+    public List<ServiceListing> getServiceListingsByBookings(int uid) {
+        List<Booking> matches = booking.getConfirmedMatches(uid);
+        List<ServiceListing> serviceListings = new ArrayList<>();
+        for (Booking booking : matches) {
+            int serviceId = booking.getServiceId();
+            ServiceListing listing = getListingById(serviceId, uid);
+            serviceListings.add(listing);
+        }
+        return serviceListings;
+    }
+
+    public List<Integer> getServiceListingsCount(List<ServiceCategory> serviceCategories) {
+        List<Integer> serviceListingsCount = new ArrayList<>();
+        
+        for(ServiceCategory category : serviceCategories) {  
+            List<ServiceListing> serviceListings = getServiceListingsByCategory(category.getCategoryId());
+            int count = (serviceListings != null) ? serviceListings.size() : 0;
+            serviceListingsCount.add(count);
+        }
+        return serviceListingsCount;
+    }
+
+    public List<ServiceListing> getAllServiceListingsFromShortlist(List<ServiceShortlist> shortlists) {
+        List<ServiceListing> serviceShortList = new ArrayList<>();
+
+        for (ServiceShortlist shortlist : shortlists) {
+            ServiceListing service = viewServiceListingByServiceId(shortlist.getServiceId());
+            serviceShortList.add(service);
+        }
+        return serviceShortList;
+    }
+
+    public List<Integer> getServiceListingsCountFromShortlist(List<CleanerShortlist> shortlists) {
+       List<Integer> servicesCountList = new ArrayList<>();
+        
+        for (CleanerShortlist shortlist : shortlists) {
+            List<ServiceListing> serviceListings = getAllListingsById(shortlist.getCleanerId());
+            int servicesCount = serviceListings.size();
+            servicesCountList.add(servicesCount);
+        }
+        return servicesCountList;
+    }
+
+    public List<ServiceListing> getServiceListingsFromBookings(List<Booking> bookings) {
+        List<ServiceListing> serviceListings = new ArrayList<>();
+        
+        for (Booking booking : bookings) {
+            ServiceListing service = viewServiceListingByServiceId(booking.getServiceId());
+            serviceListings.add(service);
+        }
+
+        return serviceListings;
+    }
+
+    public List<UserAccount> getCleanerAccountsFromBookings(List<Booking> bookings) {
+		List<UserAccount> cleaners = new ArrayList<>();
+        
+        for (Booking booking : bookings) {
+            ServiceListing service = viewServiceListingByServiceId(booking.getServiceId());
+            UserAccount cleaner = userAccount.getUserById(service.getCleanerId());
+            cleaners.add(cleaner);
+        }
+        return cleaners;
+	}
     // Databases Stuff
     @Autowired
     private JdbcTemplate jdbcTemplate;

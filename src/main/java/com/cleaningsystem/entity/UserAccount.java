@@ -4,6 +4,7 @@ import static com.cleaningsystem.db.Queries.*;
 
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,38 @@ public class UserAccount {
 	public void setPassword(String new_password) {this.password = new_password;}
 	public void setProfileId(int new_profileId) {this.profileId = new_profileId;}
 	public void setSuspended(boolean new_suspended) {this.suspended = new_suspended;}
+
+	// Micellanous
+	public List<Integer> getUsersPerProfileCount(List<UserProfile> userProfiles){
+		List<Integer> usersPerProfileCount = new ArrayList<>();
+
+        for (UserProfile userProfile : userProfiles) {
+            List<UserAccount> userAccounts = searchUsersByProfileId(userProfile.getProfileId());
+            usersPerProfileCount.add(userAccounts.size());
+        }
+		return usersPerProfileCount;
+	}
+
+	public List<String> getAllCleanerNamesByServiceListings(List<ServiceListing> serviceListings) {
+		List<String> cleanersName = new ArrayList<>();
+        
+        for (ServiceListing listing : serviceListings) {
+            UserAccount user = getUserById(listing.getCleanerId());
+            String cleanerName = user.getName();
+            cleanersName.add(cleanerName);
+		}
+		return cleanersName;
+	}
+
+	public List<UserAccount> getCleanerAccountsFromShortlist(List<CleanerShortlist> shortlists) {
+        List<UserAccount> cleanersShortlist = new ArrayList<>();
+        
+        for (CleanerShortlist shortlist : shortlists) {
+            UserAccount cleaner = getUserById(shortlist.getCleanerId());
+            cleanersShortlist.add(cleaner);
+        }
+        return cleanersShortlist;
+	}
 
 	// Database Stuff
 	@Autowired

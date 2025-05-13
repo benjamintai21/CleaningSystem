@@ -11,6 +11,7 @@ import com.cleaningsystem.entity.UserProfile;
 import static com.cleaningsystem.db.Queries.*;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,6 +57,19 @@ public class UserProfile {
 	public void setDescription(String description) {this.description = description;}
 	public void setSuspended(boolean suspended) {this.suspended = suspended;}
 	
+	// Micellanous
+	public List<String> getAllProfileNamesForUserAccounts(List<UserAccount> userAccounts) {
+		List<String> profileNames = new ArrayList<>();
+
+        for (UserAccount user : userAccounts) {
+        UserProfile userProfile = getProfileById(user.getProfileId());
+        String profileName = userProfile.getProfileName();
+        profileNames.add(profileName);
+        }
+		return profileNames;
+	}
+
+	// Database Stuff
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 

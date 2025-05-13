@@ -11,6 +11,7 @@ import com.cleaningsystem.entity.ServiceCategory;
 import static com.cleaningsystem.db.Queries.*;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -48,6 +49,35 @@ public class ServiceCategory {
     public void setType(String new_type){this.type = new_type;}
     public void setName(String new_name){this.name = new_name;}
     public void setDescription(String new_description){this.description = new_description;}
+
+    // Miscellanous
+    public List<String> getAllCategoryNamesByServiceListings(List<ServiceListing> serviceListings) {
+        List<String> categoriesName = new ArrayList<>();
+        
+        for (ServiceListing listing : serviceListings) {
+            ServiceCategory category = getCategoryById(listing.getCategoryId());
+            String categoryType = category.getType();
+            String categoryName = category.getName();
+            String categoryTypeandName = categoryType + "-" + categoryName;
+            categoriesName.add(categoryTypeandName);
+        }
+
+        return categoriesName;
+	}
+
+    public List<String> getCategoriesName(List<ServiceListing> serviceListings){
+        List<String> categoriesName = new ArrayList<>();
+        
+        for (ServiceListing listing : serviceListings) {
+            ServiceCategory category = getCategoryById(listing.getCategoryId());
+            String categoryType = category.getType();
+            String categoryName = category.getName();
+            String categoryTypeandName = categoryType + "-" + categoryName;
+            categoriesName.add(categoryTypeandName);
+        }
+
+        return categoriesName;
+    }
 
     // Databases Stuff
     @Autowired

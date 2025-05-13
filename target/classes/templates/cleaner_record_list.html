@@ -48,7 +48,7 @@
           <p><strong>Booking ID: </strong><span th:text="${match.bookingId}"></span></p>
             <div class="emptyspace"></div>
           <p><strong>Service ID: </strong><span th:text="${match.serviceId}"></span></p>
-          <p><strong>Service Name: </strong><span th:text="${serviceListings[match.serviceId].name}"></span></p>
+          <p><strong>Service Name: </strong><span th:text="${serviceListings[iterStat.index].name}"></span></p>
         </div>
           <br>
         <div>
@@ -66,11 +66,11 @@
         
         <div class="extendedtext edit_flex none" th:attr="id='card' + ${iterStat.index}">
             <div class="emptyspace"></div>
-            <p class="S_desc_alignment">Start Date: <span th:text="${serviceListings[match.serviceId].startDate}"></span></p>
-            <p class="S_desc_alignment">End Date:<span th:text="${serviceListings[match.serviceId].endDate}"></span></p>
+            <p class="S_desc_alignment">Start Date: <span th:text="${serviceListings[iterStat.index].startDate}"></span></p>
+            <p class="S_desc_alignment">End Date: <span th:text="${serviceListings[iterStat.index].endDate}"></span></p>
             <p class="S_desc_alignment"><strong>Service Description: </strong><span th:text="${bookingId}"></span></p>
             <div class="account-box S_description">
-              <span th:text="${serviceListings[match.serviceId].description}"></span>
+              <span th:text="${serviceListings[iterStat.index].description}"></span>
     <!--            insert description data here    -->
             </div>
           
