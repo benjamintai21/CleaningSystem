@@ -7,29 +7,17 @@ import org.springframework.stereotype.Service;
 import com.cleaningsystem.entity.Report;
 
 @Service
-public class ReportController {
+public class GenerateMonthlyReportC {
 
     @Autowired
     private Report report;
-
-    public Report generateDailyReport(){
-        return report.generateDailyReport();
-    }
-    //
-    public Report generateWeeklyReport(){
-        return report.generateWeeklyReport();
-    }
 
     public Report generateMonthlyReport(){
         return report.generateMonthlyReport();
     }
 
-    public Report generateWeeklyReport(LocalDate date){
-        return report.generateWeeklyReport(date);
-    }
-
-    public Report generateMonthlyReport(LocalDate date){
+    public Report generateMonthlyReport(String dateString){
+        LocalDate date = LocalDate.parse(dateString);
         return report.generateMonthlyReport(date);
     }
-    
 }

@@ -10,11 +10,17 @@ import com.cleaningsystem.entity.ServiceListing;
 import com.cleaningsystem.entity.ServiceShortlist;
 import com.cleaningsystem.entity.UserAccount;
 import com.cleaningsystem.entity.UserProfile;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.cleaningsystem.controller.ServiceListingController;
 import com.cleaningsystem.controller.ShortlistController;
 import com.cleaningsystem.controller.ServiceCategoryController;
 import com.cleaningsystem.controller.BookingController;
-import com.cleaningsystem.controller.ReportController;
+
+import com.cleaningsystem.controller.GenerateDailyReportC;
+import com.cleaningsystem.controller.GenerateWeeklyReportC;
+import com.cleaningsystem.controller.GenerateMonthlyReportC;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +35,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -55,7 +62,14 @@ public class Boundary {
     private ShortlistController shortlistC;
 
     @Autowired
-    private ReportController reportC;
+    private GenerateDailyReportC generateDailyReportC;
+
+    @Autowired
+    private GenerateWeeklyReportC generateWeeklyReportC;
+
+    @Autowired
+    private GenerateMonthlyReportC generateMonthlyReportC;
+
 
     @GetMapping("/")
     public String showHomePage(Model model){
@@ -704,80 +718,102 @@ public class Boundary {
         return "pm_search_service_category";
     }
 
-    //Generate Report
     @GetMapping("/GenerateReport")
-    public String showReportPage(HttpSession session, Model model) {
+    public String showGeneratedReport(@RequestParam(required = false) String type,
+                                    @RequestParam(required = false) String date,
+                                    HttpSession session,
+                                    Model model) {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
-        if (result.isPresent()) {
-        } else {
-            return "redirect:/Login";
+        if (result.isEmpty()) return "redirect:/Login";
+
+        if (type != null && date != null) {
+            model.addAttribute("type", type);
+            model.addAttribute("date", date); // <--- Add this line
+
+            switch (type) {
+                case "daily":
+                    model.addAttribute("dailyReport", generateDailyReportC.generateDailyReport(date));
+                    break;
+                case "weekly":
+                    model.addAttribute("weeklyReport", generateWeeklyReportC.generateWeeklyReport(date));
+                    break;
+                case "monthly":
+                    model.addAttribute("monthlyReport", generateMonthlyReportC.generateMonthlyReport(date));
+                    break;
+            }
         }
 
-        Report dailyReport = reportC.generateDailyReport();
-        Report weeklyReport = reportC.generateWeeklyReport();
-        Report monthlyReport = reportC.generateMonthlyReport();
-
-        model.addAttribute("monthlyReport", monthlyReport);
-        model.addAttribute("weeklyReport", weeklyReport);
-        model.addAttribute("dailyReport", dailyReport);
-
-        return "pm_generate_report";
+        return "pm_generate_report"; // always return the same view
     }
 
-    //Generate Daily Report
-    @GetMapping("/GenerateDaily")
-    public String showReportDaily(@RequestParam LocalDate date, HttpSession session, Model model) {
-        Optional<Integer> result = checkAccess(session, "Platform Manager");
-        if (result.isPresent()) {
-        } else {
-            return "redirect:/Login";
-        }
-
-        Report dailyReport = reportC.generateDailyReport();
-
-        model.addAttribute("dailyReport", dailyReport);
-
-        return "pm_generate_report";
+    @GetMapping("/DownloadDailyReport")
+    public void downloadDailyReport(@RequestParam String date, HttpServletResponse response) throws Exception {
+        Report report = generateDailyReportC.generateDailyReport(date);
+    
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=daily_report_" + date + ".pdf");
+    
+        Document document = new Document();
+        PdfWriter.getInstance(document, response.getOutputStream());
+    
+        document.open();
+        document.add(new Paragraph("Daily Report for " + date));
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("New Home Owners: " + report.getNewHomeOwners()));
+        document.add(new Paragraph("New Cleaners: " + report.getNewCleaners()));
+        document.add(new Paragraph("Shortlists: " + report.getNoOfShortlists()));
+        document.add(new Paragraph("Total Home Owners: " + report.getTotalHomeOwners()));
+        document.add(new Paragraph("Total Cleaners: " + report.getTotalCleaners()));
+        document.add(new Paragraph("Bookings: " + report.getNoOfBookings()));
+        document.add(new Paragraph("Generated on: " + LocalDate.now()));
+        document.close();
+    }
+    
+    @GetMapping("/DownloadWeeklyReport")
+    public void downloadWeeklyReport(@RequestParam String date, HttpServletResponse response) throws Exception {
+        Report report = generateWeeklyReportC.generateWeeklyReport(date);
+    
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=weekly_report_" + date + ".pdf");
+    
+        Document document = new Document();
+        PdfWriter.getInstance(document, response.getOutputStream());
+    
+        document.open();
+        document.add(new Paragraph("Weekly Report for " + date));
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("New Home Owners: " + report.getNewHomeOwners()));
+        document.add(new Paragraph("New Cleaners: " + report.getNewCleaners()));
+        document.add(new Paragraph("Shortlists: " + report.getNoOfShortlists()));
+        document.add(new Paragraph("Total Home Owners: " + report.getTotalHomeOwners()));
+        document.add(new Paragraph("Total Cleaners: " + report.getTotalCleaners()));
+        document.add(new Paragraph("Bookings: " + report.getNoOfBookings()));
+        document.add(new Paragraph("Generated on: " + LocalDate.now()));
+        document.close();
     }
 
-    //Generate Daily Report
-    @GetMapping("/GenerateWeekly")
-    public String showReportWeekly(@RequestParam LocalDate date, HttpSession session, Model model) {
-        Optional<Integer> result = checkAccess(session, "Platform Manager");
-        if (result.isPresent()) {
-        } else {
-            return "redirect:/Login";
-        }
-
-        Report weeklyReport = reportC.generateWeeklyReport();
-
-        model.addAttribute("weeklyReport", weeklyReport);
-
-        if (weeklyReport != null){
-            return "pm_generate_report";
-        }
-        else{
-            return "";
-        }
-        
+    @GetMapping("/DownloadMonthlyReport")
+    public void downloadMonthlyReport(@RequestParam String date, HttpServletResponse response) throws Exception {
+        Report report = generateMonthlyReportC.generateMonthlyReport(date);
+    
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=monthly_report_" + date + ".pdf");
+    
+        Document document = new Document();
+        PdfWriter.getInstance(document, response.getOutputStream());
+    
+        document.open();
+        document.add(new Paragraph("Monthly Report for " + date));
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("New Home Owners: " + report.getNewHomeOwners()));
+        document.add(new Paragraph("New Cleaners: " + report.getNewCleaners()));
+        document.add(new Paragraph("Shortlists: " + report.getNoOfShortlists()));
+        document.add(new Paragraph("Total Home Owners: " + report.getTotalHomeOwners()));
+        document.add(new Paragraph("Total Cleaners: " + report.getTotalCleaners()));
+        document.add(new Paragraph("Bookings: " + report.getNoOfBookings()));
+        document.add(new Paragraph("Generated on: " + LocalDate.now()));
+        document.close();
     }
-
-    //Generate Daily Report
-    @GetMapping("/GenerateMonthly")
-    public String showReportMonthly(@RequestParam LocalDate date, HttpSession session, Model model) {
-        Optional<Integer> result = checkAccess(session, "Platform Manager");
-        if (result.isPresent()) {
-        } else {
-            return "redirect:/Login";
-        }
-
-        Report monthlyReport = reportC.generateMonthlyReport();
-
-        model.addAttribute("monthlyReport", monthlyReport);
-
-        return "pm_generate_report";
-    }
-
 
     // HomeOwnerrrr
     @GetMapping("/HomeOwnerHome")

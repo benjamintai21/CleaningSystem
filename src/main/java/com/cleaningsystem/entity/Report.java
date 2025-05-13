@@ -86,21 +86,37 @@ public class Report {
     
     public int getNewAccounts (String role, String range) {
         int profileId = userProfile.getProfileIdByName(role);
-        switch (range) {
-            case "daily":
-                return jdbcTemplate.queryForObject(GET_DAILY_CREATED, Integer.class, profileId);
-            case "weekly":
-                return jdbcTemplate.queryForObject(GET_WEEKLY_CREATED, Integer.class, profileId);
-            case "monthly":
-                return jdbcTemplate.queryForObject(GET_MONTHLY_CREATED, Integer.class, profileId);                                                                                 
-        }
-        return -1;  
-        // Execute query with JDBC
+        Integer result = switch (range) {
+            case "daily" -> jdbcTemplate.queryForObject(GET_DAILY_CREATED, Integer.class, profileId);
+            case "weekly" -> jdbcTemplate.queryForObject(GET_WEEKLY_CREATED, Integer.class, profileId);
+            case "monthly" -> jdbcTemplate.queryForObject(GET_MONTHLY_CREATED, Integer.class, profileId);
+            default -> null;                                                                              
+        };
+
+        return result != null ? result : 0;
     }
 
     public int getAccountsUpToPoint(String role){
         int profileId = userProfile.getProfileIdByName(role);   
         return jdbcTemplate.queryForObject(GET_TOTAL_CREATED, Integer.class, profileId);
+    }
+
+    public int getAccountsUpToPoint(LocalDate date, String role){
+        int profileId = userProfile.getProfileIdByName(role);
+        String sql = "SELECT COUNT(*) FROM UserAccount " +
+                    "WHERE profileId = ? AND DATE(accountCreated) BETWEEN ? AND ?";
+
+        LocalDate startDate = LocalDate.of(1999, 12, 12);
+
+        Integer count = jdbcTemplate.queryForObject(
+            sql,
+            Integer.class,
+            profileId,
+            Date.valueOf(startDate),
+            Date.valueOf(date)
+        );
+
+        return count != null ? count : 0;
     }
 
     public int getWeeklyAccountsUpToPoint(LocalDate pointDate, String role) {
@@ -141,65 +157,78 @@ public class Report {
         return count != null ? count : 0;
     }
 
-
     public int getNewShortlists (String range) {
-        Integer result;
-        switch (range) {
-            case "daily":
-                result =  jdbcTemplate.queryForObject(GET_DAILY_SHORTLISTS, Integer.class);
-            case "weekly":
-                result = jdbcTemplate.queryForObject(GET_WEEKLY_SHORTLISTS, Integer.class);
-            case "monthly":
-                result = jdbcTemplate.queryForObject(GET_MONTHLY_SHORTLISTS, Integer.class);
+        Integer result = switch (range) {
+            case "daily" ->  jdbcTemplate.queryForObject(GET_DAILY_SHORTLISTS, Integer.class);
+            case "weekly" -> jdbcTemplate.queryForObject(GET_WEEKLY_SHORTLISTS, Integer.class);
+            case "monthly" -> jdbcTemplate.queryForObject(GET_MONTHLY_SHORTLISTS, Integer.class);
+            default -> null;
+        };
 
-            return result != null ? result : 0;                                                                          
-        }
-        return -1;  
-        // Execute query with JDBC
+        return result != null ? result : 0;                                                                          
     }
 
-    public int getNewBookings (String range) {
-        Integer result;
-        switch (range) {
-            case "daily":
-                result = jdbcTemplate.queryForObject(GET_DAILY_BOOKINGS, Integer.class);
-            case "weekly":
-                result = jdbcTemplate.queryForObject(GET_WEEKLY_BOOKINGS, Integer.class);
-            case "monthly":
-                result = jdbcTemplate.queryForObject(GET_MONTHLY_BOOKINGS, Integer.class);   
-                
-            return result != null ? result : 0;
-        }
-        return -1;  
-        // Execute query with JDBC
+    public int getNewBookings(String range) {
+        Integer result = switch (range) {
+            case "daily" -> jdbcTemplate.queryForObject(GET_DAILY_BOOKINGS, Integer.class);
+            case "weekly" -> jdbcTemplate.queryForObject(GET_WEEKLY_BOOKINGS, Integer.class);
+            case "monthly" -> jdbcTemplate.queryForObject(GET_MONTHLY_BOOKINGS, Integer.class);
+            default -> null;
+        };
+    
+        return result != null ? result : 0;
     }
+    
 
 //Generate Here
     public Report generateDailyReport() {
-        int new_homeowners = getNewAccounts("Home Owner", "daily");
-        int new_cleaners = getNewAccounts("Cleaner", "daily");
+        int n_homeowners = getNewAccounts("Home Owner", "daily");
+        int n_cleaners = getNewAccounts("Cleaner", "daily");
 
-        int total_home_owners = getAccountsUpToPoint("Home Owner");
-        int total_cleaners = getAccountsUpToPoint("Cleaner");
+        int t_home_owners = getAccountsUpToPoint("Home Owner");
+        int t_cleaners = getAccountsUpToPoint("Cleaner");
 
-        int new_shortlists = getNewShortlists("daily");
-        int new_bookings = getNewBookings("daily");
+        int n_shortlists = getNewShortlists("daily");
+        int n_bookings = getNewBookings("daily");
+            
+        Date generatedDate = new Date(System.currentTimeMillis());
+
+        return new Report(
+            "DAILY",
+            generatedDate.toLocalDate(),
+            n_homeowners,
+            t_home_owners,
+            n_cleaners,
+            t_cleaners,
+            n_shortlists,
+            n_bookings);
+    }
+
+    public Report generateDailyReport(LocalDate date) {
+        int n_homeowners = getNewAccounts("Home Owner", "daily");
+        int n_cleaners = getNewAccounts("Cleaner", "daily");
+
+        int t_home_owners = getAccountsUpToPoint(date, "Home Owner");
+        int t_cleaners = getAccountsUpToPoint(date, "Cleaner");
+
+        int n_shortlists = getNewShortlists("daily");
+        int n_bookings = getNewBookings("daily");
             
         Date generatedDate = new Date(System.currentTimeMillis());
 
         int rows = jdbcTemplate.update(CREATE_REPORT, "DAILY", generatedDate, 
-                new_homeowners, total_home_owners, new_cleaners, total_cleaners, new_shortlists, new_bookings);
+                n_homeowners, t_home_owners, n_cleaners, t_cleaners, n_shortlists, n_bookings);
         
         if (rows > 0) {
             return new Report(
                 "DAILY",
                 generatedDate.toLocalDate(),
-                new_homeowners,
-                total_home_owners,
-                new_cleaners,
-                total_cleaners,
-                new_shortlists,
-                new_bookings
+                n_homeowners,
+                t_home_owners,
+                n_cleaners,
+                t_cleaners,
+                n_shortlists,
+                n_bookings
             );
         } else {
             return null;
@@ -207,61 +236,53 @@ public class Report {
     }
 
     public Report generateWeeklyReport() {
-        int new_homeowners = getNewAccounts("Home Owner", "weekly");
-        int new_cleaners = getNewAccounts("Cleaner", "weekly");
+        int n_homeowners = getNewAccounts("Home Owner", "weekly");
+        int n_cleaners = getNewAccounts("Cleaner", "weekly");
 
-        int total_home_owners = getWeeklyAccountsUpToPoint(LocalDate.now(), "Home Owner");
-        int total_cleaners = getWeeklyAccountsUpToPoint(LocalDate.now(), "Cleaner");
+        int t_home_owners = getWeeklyAccountsUpToPoint(LocalDate.now(), "Home Owner");
+        int t_cleaners = getWeeklyAccountsUpToPoint(LocalDate.now(), "Cleaner");
 
-        int new_shortlists = getNewShortlists("weekly");
-        int new_bookings = getNewBookings("weekly");
+        int n_shortlists = getNewShortlists("weekly");
+        int n_bookings = getNewBookings("weekly");
 
         Date generatedDate = new Date(System.currentTimeMillis());
 
-        int rows = jdbcTemplate.update(CREATE_REPORT, "WEEKLY", generatedDate, 
-                new_homeowners, total_home_owners, new_cleaners, total_cleaners, new_shortlists, new_bookings);
-
-        if (rows > 0) {
-            return new Report(
-                "WEEKLY",
-                generatedDate.toLocalDate(),
-                new_homeowners,
-                total_home_owners,
-                new_cleaners,
-                total_cleaners,
-                new_shortlists,
-                new_bookings
-            );
-        } else {
-            return null;
-        }    
+        return new Report(
+            "DAILY",
+            generatedDate.toLocalDate(),
+            n_homeowners,
+            t_home_owners,
+            n_cleaners,
+            t_cleaners,
+            n_shortlists,
+            n_bookings);
     }
     
     public Report generateWeeklyReport(LocalDate date) {
-        int new_homeowners = getNewAccounts("Home Owner", "weekly");
-        int new_cleaners = getNewAccounts("Cleaner", "weekly");
+        int n_homeowners = getNewAccounts("Home Owner", "weekly");
+        int n_cleaners = getNewAccounts("Cleaner", "weekly");
 
-        int total_home_owners = getWeeklyAccountsUpToPoint(date, "Home Owner");
-        int total_cleaners = getWeeklyAccountsUpToPoint(date, "Cleaner");
+        int t_home_owners = getWeeklyAccountsUpToPoint(date, "Home Owner");
+        int t_cleaners = getWeeklyAccountsUpToPoint(date, "Cleaner");
 
-        int new_shortlists = getNewShortlists("weekly");
-        int new_bookings = getNewBookings("weekly");
+        int n_shortlists = getNewShortlists("weekly");
+        int n_bookings = getNewBookings("weekly");
 
         Date generatedDate = new Date(System.currentTimeMillis());
 
         int rows = jdbcTemplate.update(CREATE_REPORT, "WEEKLY", generatedDate, 
-                new_homeowners, total_home_owners, new_cleaners, total_cleaners, new_shortlists, new_bookings);
+                n_homeowners, t_home_owners, n_cleaners, t_cleaners, n_shortlists, n_bookings);
 
         if (rows > 0) {
             return new Report(
                 "WEEKLY",
                 generatedDate.toLocalDate(),
-                new_homeowners,
-                total_home_owners,
-                new_cleaners,
-                total_cleaners,
-                new_shortlists,
-                new_bookings
+                n_homeowners,
+                t_home_owners,
+                n_cleaners,
+                t_cleaners,
+                n_shortlists,
+                n_bookings
             );
         } else {
             return null;
@@ -269,61 +290,53 @@ public class Report {
     }
 
     public Report generateMonthlyReport() {
-        int new_homeowners = getNewAccounts("Home Owner", "monthly");
-        int new_cleaners = getNewAccounts("Cleaner", "monthly");
+        int n_homeowners = getNewAccounts("Home Owner", "monthly");
+        int n_cleaners = getNewAccounts("Cleaner", "monthly");
 
-        int total_home_owners = getMonthlyAccountsUpToPoint(LocalDate.now(),"Home Owner");
-        int total_cleaners = getMonthlyAccountsUpToPoint(LocalDate.now(), "Cleaner");
+        int t_home_owners = getMonthlyAccountsUpToPoint(LocalDate.now(),"Home Owner");
+        int t_cleaners = getMonthlyAccountsUpToPoint(LocalDate.now(), "Cleaner");
 
-        int new_shortlists = getNewShortlists("monthly");
-        int new_bookings = getNewBookings("monthly");
+        int n_shortlists = getNewShortlists("monthly");
+        int n_bookings = getNewBookings("monthly");
 
         Date generatedDate = new Date(System.currentTimeMillis());
 
-        int rows = jdbcTemplate.update(CREATE_REPORT, "MONTHLY", generatedDate, 
-                new_homeowners, total_home_owners, new_cleaners, total_cleaners, new_shortlists, new_bookings);
-
-        if (rows > 0) {
-            return new Report(
-                "MONTHLY",
-                generatedDate.toLocalDate(),
-                new_homeowners,
-                total_home_owners,
-                new_cleaners,
-                total_cleaners,
-                new_shortlists,
-                new_bookings
-            );
-        } else {
-            return null;
-        }    
+        return new Report(
+            "DAILY",
+            generatedDate.toLocalDate(),
+            n_homeowners,
+            t_home_owners,
+            n_cleaners,
+            t_cleaners,
+            n_shortlists,
+            n_bookings);
     }
 
     public Report generateMonthlyReport(LocalDate date) {
-        int new_homeowners = getNewAccounts("Home Owner", "monthly");
-        int new_cleaners = getNewAccounts("Cleaner", "monthly");
+        int n_homeowners = getNewAccounts("Home Owner", "monthly");
+        int n_cleaners = getNewAccounts("Cleaner", "monthly");
 
-        int total_home_owners = getMonthlyAccountsUpToPoint(date,"Home Owner");
-        int total_cleaners = getMonthlyAccountsUpToPoint(date, "Cleaner");
+        int t_home_owners = getMonthlyAccountsUpToPoint(date,"Home Owner");
+        int t_cleaners = getMonthlyAccountsUpToPoint(date, "Cleaner");
 
-        int new_shortlists = getNewShortlists("monthly");
-        int new_bookings = getNewBookings("monthly");
+        int n_shortlists = getNewShortlists("monthly");
+        int n_bookings = getNewBookings("monthly");
 
         Date generatedDate = new Date(System.currentTimeMillis());
 
         int rows = jdbcTemplate.update(CREATE_REPORT, "MONTHLY", generatedDate, 
-                new_homeowners, total_home_owners, new_cleaners, total_cleaners, new_shortlists, new_bookings);
+                n_homeowners, t_home_owners, n_cleaners, t_cleaners, n_shortlists, n_bookings);
 
         if (rows > 0) {
             return new Report(
                 "MONTHLY",
                 generatedDate.toLocalDate(),
-                new_homeowners,
-                total_home_owners,
-                new_cleaners,
-                total_cleaners,
-                new_shortlists,
-                new_bookings
+                n_homeowners,
+                t_home_owners,
+                n_cleaners,
+                t_cleaners,
+                n_shortlists,
+                n_bookings
             );
         } else {
             return null;

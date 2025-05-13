@@ -27,107 +27,105 @@
             <div id="content">
                 <!-- Default page content (first image) -->
                 <div id="home-page" class="page active">
+                    <form th:action="@{/GenerateReport}" method="get">
 
-                    <div class="report-buttons">
-                        <button class="report-btn" id="daily-btn">Generate Daily Report</button>
-                        <button class="report-btn" id="weekly-btn">Generate Weekly Report</button>
-                        <button class="report-btn" id="monthly-btn">Generate Monthly Report</button>
+                        <div class="report-buttons">
+                            <label>Select Date*</label>
+                            <input type="date" class="date-input" id="reportDate" name="date" required>
+                            <button class="report-btn" type="submit" name="type" value="daily">Generate Daily</button>
+                            <button class="report-btn" type="submit" name="type" value="weekly">Generate Weekly</button>
+                            <button class="report-btn" type="submit" name="type" value="monthly">Generate Monthly</button>
+                        </div>
+                    </form>
+                </div>
+               
+                <div th:if="${type == 'daily'}">
+                <form id="generateDaily" th:action="@{/DownloadDailyReport(date=${date})}" th:object="${dailyReport}" method="get">
+                    <div>
+                        <h2>Daily Report</h2>
+
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <div class="stat-label">New Home Owners</div>
+                                <div class="stat-number"><span th:text="*{newHomeOwners}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">New Cleaners</div>
+                                <div class="stat-number"><span th:text="*{newCleaners}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">No. Of Shortlists</div>
+                                <div class="stat-number"><span th:text="*{NoOfShortlists}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Home Owners</div>
+                                <div class="stat-number"><span th:text="*{totalHomeOwners}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Total Cleaners</div>
+                                <div class="stat-number"><span th:text="*{totalCleaners}"></span></div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">No. Of Bookings</div>
+                                <div class="stat-number"><span th:text="*{NoOfBookings}"></span></div>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="date-selector">
+                        <input type="hidden" name="date" th:value="*{date}">
+                        <button type="submit" class="generate-btn">Save Report to PDF</button>
+                    </div>
+
+                </form>
                 </div>
 
-                <form id="generateDaily" action="@{/GenerateDaily}" th:object="${dailyReport}" method="get">
-                    <!-- Daily Report page content (second image) -->
-                    <div id="daily-page" class="page">
-                        <h2>Daily Report</h2>
-                        <div class="date-selector">
-                            <label>Select day*</label>
-                            <div class="date-input-container">
-                                <input type="date" class="date-input" id="reportDate">
-                                <button class="generate-btn">Generate</button>
-                            </div>
-                        </div>
-
-                        <div class="stats-container">
-                            <div class="stat-box">
-                                <div class="stat-label">New Home Owners</div>
-                                <div class="stat-number"><span th:text="*{newHomeOwners}"></span></div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-label">New Cleaners</div>
-                                <div class="stat-number"><span th:text="*{newCleaners}"></span></div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-label">No. Of Shortlists</div>
-                                <div class="stat-number"><span th:text="*{NoOfShortlists}"></span></div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-label">Total Home Owners</div>
-                                <div class="stat-number"><span th:text="*{totalHomeOwners}"></span></div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-label">Total Cleaners</div>
-                                <div class="stat-number"><span th:text="*{totalCleaners}"></span></div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-label">No. Of Bookings</div>
-                                <div class="stat-number"><span th:text="*{NoOfBookings}"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <form id="generateWeekly" action="@{/GenerateWeekly}" th:object="${weeklyReport}" method="get">
-                    <!-- Weekly Report page content (third image) -->
-                    <div id="weekly-page" class="page">
+                <div th:if="${type == 'weekly'}">
+                <form id="generateWeekly" th:action="@{/DownloadWeeklyReport(date=${date})}" th:object="${weeklyReport}" method="get">
+                    <div>
                         <h2>Weekly Report</h2>
-                        <div class="date-selector">
-                            <label>Select day*</label>
-                            <div class="date-input-container">
-                                <input type="date" class="date-input" id="reportDate">
-                                <button class="generate-btn">Generate</button>
-                            </div>
-                        </div>
 
                         <div class="stats-container">
                             <div class="stat-box">
                                 <div class="stat-label">New Home Owners</div>
-                                <div class="stat-number"><span th:text="*{newHomeOwners}"></span></div>
+                                <div class="stat-number"><span th:text="${weeklyReport.newHomeOwners}"></span></div>
                             </div>
                             <div class="stat-box">
                                 <div class="stat-label">New Cleaners</div>
-                                <div class="stat-number"><span th:text="*{newCleaners}"></span></div>
+                                <div class="stat-number"><span th:text="${weeklyReport.newCleaners}"></span></div>
                             </div>
                             <div class="stat-box">
                                 <div class="stat-label">No. Of Shortlists</div>
-                                <div class="stat-number"><span th:text="*{NoOfShortlists}"></span></div>
+                                <div class="stat-number"><span th:text="${weeklyReport.NoOfShortlists}"></span></div>
                             </div>
                             <div class="stat-box">
                                 <div class="stat-label">Total Home Owners</div>
-                                <div class="stat-number"><span th:text="*{totalHomeOwners}"></span></div>
+                                <div class="stat-number"><span th:text="${weeklyReport.totalHomeOwners}"></span></div>
                             </div>
                             <div class="stat-box">
                                 <div class="stat-label">Total Cleaners</div>
-                                <div class="stat-number"><span th:text="*{totalCleaners}"></span></div>
+                                <div class="stat-number"><span th:text="${weeklyReport.totalCleaners}"></span></div>
                             </div>
                             <div class="stat-box">
                                 <div class="stat-label">No. Of Bookings</div>
-                                <div class="stat-number"><span th:text="*{NoOfBookings}"></span></div>
+                                <div class="stat-number"><span th:text="${weeklyReport.NoOfBookings}"></span></div>
                             </div>
                         </div>
                     </div>
-                </form>
 
-                <form id="generateDaily" action="@{/GenerateDaily}" th:object="${dailyReport}" method="get">
+                    <div class="date-selector">
+                        <input type="hidden" name="date" th:value="*{date}">
+                        <button type="submit" class="generate-btn">Save Report to PDF</button>
+                    </div>
+
+                </form>
+                </div>
+
+                <div th:if="${type == 'monthly'}">
+                <form id="generateMonthly" th:action="@{/DownloadMonthlyReport(date=${date})}" th:object="${monthlyReport}" method="get">
                     <!-- Monthly Report page content (fourth image) -->
-                    <div id="monthly-page" class="page">
+                    <div>
                         <h2>Monthly Report</h2>
-                        <div class="date-selector">
-                            <label>Select month*</label>
-                            <div class="date-input-container">
-                                <input type="date" class="date-input" id="reportDate">
-                                <button class="generate-btn">Generate</button>
-                            </div>
-                        </div>
 
                         <div class="stats-container">
                             <div class="stat-box">
@@ -156,74 +154,18 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="date-selector">
+                        <input type="hidden" name="date" th:value="*{date}">
+                        <button type="submit" class="generate-btn">Save Report to PDF</button>
+                    </div>
+
                 </form>
+                </div>
+                
             </div>
         </main>
     </div>
 
-    <script>
-
-    // Get today's date in YYYY-MM-DD format
-    const today = new Date().toISOString().split('T')[0];
-    // Set it as the value of the input
-    document.getElementById('reportDate').value = today;
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get page elements
-        const homePageElement = document.getElementById('home-page');
-        const dailyPageElement = document.getElementById('daily-page');
-        const weeklyPageElement = document.getElementById('weekly-page');
-        const monthlyPageElement = document.getElementById('monthly-page');
-        
-        // Get button elements
-        const dailyButton = document.getElementById('daily-btn');
-        const weeklyButton = document.getElementById('weekly-btn');
-        const monthlyButton = document.getElementById('monthly-btn');
-        const backButtons = document.querySelectorAll('.back-btn');
-        
-        // Function to show a specific page and hide others
-        function showPage(pageElement) {
-            // Hide all pages
-            homePageElement.classList.remove('active');
-            dailyPageElement.classList.remove('active');
-            weeklyPageElement.classList.remove('active');
-            monthlyPageElement.classList.remove('active');
-            
-            // Show the selected page
-            pageElement.classList.add('active');
-        }
-        
-        // Daily report button click handler
-        dailyButton.addEventListener('click', function() {
-            showPage(dailyPageElement);
-        });
-        
-        // Weekly report button click handler
-        weeklyButton.addEventListener('click', function() {
-            showPage(weeklyPageElement);
-        });
-        
-        // Monthly report button click handler
-        monthlyButton.addEventListener('click', function() {
-            showPage(monthlyPageElement);
-        });
-        
-        // Back button click handlers
-        backButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                showPage(homePageElement);
-            });
-        });
-        
-        // Generate button handlers
-        const generateButtons = document.querySelectorAll('.generate-btn');
-        generateButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // In a real app, this would trigger the report generation
-                alert('Generating report...');
-            });
-        });
-    });
-    </script>
 </body>
 </html>
