@@ -2,20 +2,19 @@ package com.cleaningsystem.boundary;
 
 import com.cleaningsystem.controller.UserAccountController;
 import com.cleaningsystem.controller.UserProfileController;
+import com.cleaningsystem.entity.Booking;
+import com.cleaningsystem.entity.CleanerShortlist;
+import com.cleaningsystem.entity.Report;
+import com.cleaningsystem.entity.ServiceCategory;
+import com.cleaningsystem.entity.ServiceListing;
+import com.cleaningsystem.entity.ServiceShortlist;
+import com.cleaningsystem.entity.UserAccount;
+import com.cleaningsystem.entity.UserProfile;
 import com.cleaningsystem.controller.ServiceListingController;
 import com.cleaningsystem.controller.ShortlistController;
 import com.cleaningsystem.controller.ServiceCategoryController;
 import com.cleaningsystem.controller.BookingController;
 import com.cleaningsystem.controller.ReportController;
-
-import com.cleaningsystem.model.UserAccount;
-import com.cleaningsystem.model.UserProfile;
-import com.cleaningsystem.model.ServiceListing;
-import com.cleaningsystem.model.ServiceShortlist;
-import com.cleaningsystem.model.ServiceCategory;
-import com.cleaningsystem.model.Booking;
-import com.cleaningsystem.model.Report;
-import com.cleaningsystem.model.CleanerShortlist;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,18 +57,11 @@ public class Boundary {
     @Autowired
     private ReportController reportC;
 
-
-
     @GetMapping("/")
     public String showHomePage(Model model){
         // Cleaners
         List<UserAccount> cleaners = userAccountC.searchUser(4);
-        List<Integer> servicesCountList = new ArrayList<>();
-        for (UserAccount cleaner : cleaners) {
-        List<ServiceListing> serviceListings = serviceListingC.getAllListingsById(cleaner.getUid());
-            int servicesCount = serviceListings.size();
-            servicesCountList.add(servicesCount);
-        }
+        List<Integer> servicesCountList = serviceListingC.getServicesCountList();
         List<ServiceListing> serviceListings = serviceListingC.getAllListings();
 
         model.addAttribute("serviceListings", serviceListings);

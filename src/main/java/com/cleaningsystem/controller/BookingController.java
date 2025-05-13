@@ -5,38 +5,37 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cleaningsystem.dao.BookingDAO;
-import com.cleaningsystem.model.Booking;
+import com.cleaningsystem.entity.Booking;
 
 @Service
 public class BookingController {
 
     @Autowired
-    private BookingDAO bookingDAO;
+    private Booking booking;
 
     // HomeOwner
     public boolean addBooking(int serviceId, int homeownerId, String status) {
-        return bookingDAO.addBooking(serviceId, homeownerId, status);
+        return booking.addBooking(serviceId, homeownerId, status);
     }
 
     public List<Booking> getAllBookingsByHomeOwner(int homeownerId) {
-        return bookingDAO.getAllBookingsByHomeOwner(homeownerId);
+        return booking.getAllBookingsByHomeOwner(homeownerId);
     }
 
     public List<Booking> searchHomeOwnerBookings(int homeownerId, String keyword) {
-        return bookingDAO.searchHomeOwnerBookings(homeownerId, keyword);
+        return booking.searchHomeOwnerBookings(homeownerId, keyword);
     }
 
     // CLeaner
     public List<Booking> getConfirmedMatches(int cleanerId) {
-        return bookingDAO.getConfirmedMatches(cleanerId);
+        return booking.getConfirmedMatches(cleanerId);
     }
 
     public List<Booking> searchConfirmedMatches(int cleanerId, String keyword) {
-        return bookingDAO.searchConfirmedMatches(cleanerId, keyword);
+        return booking.searchConfirmedMatches(cleanerId, keyword);
     }
 
     public Booking getBookingById(int bookingId){
-        return bookingDAO.getBookingById(bookingId);
+        return booking.getBookingById(bookingId);
     }
 }

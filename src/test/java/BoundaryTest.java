@@ -2,8 +2,9 @@
 
 import com.cleaningsystem.controller.UserAccountController;
 import com.cleaningsystem.controller.UserProfileController;
-import com.cleaningsystem.model.UserAccount;
-import com.cleaningsystem.model.UserProfile;
+import com.cleaningsystem.entity.UserAccount;
+import com.cleaningsystem.entity.UserProfile;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
