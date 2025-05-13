@@ -5,40 +5,39 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cleaningsystem.dao.ServiceCategoryDAO;
-import com.cleaningsystem.model.ServiceCategory;
+import com.cleaningsystem.entity.ServiceCategory;
 
 @Service
 public class ServiceCategoryController {
 
     @Autowired
-    private ServiceCategoryDAO serviceCategoryDAO;
+    private ServiceCategory serviceCategory;
 
     public boolean createServiceCategory(String type, String name, String description){
-        return serviceCategoryDAO.insertServiceCategory(type, name, description);
+        return serviceCategory.insertServiceCategory(type, name, description);
     }
 
     public ServiceCategory viewServiceCategory(int categoryId) {
-        return serviceCategoryDAO.getCategoryById(categoryId);
+        return serviceCategory.getCategoryById(categoryId);
     }
 
     public ServiceCategory viewServiceCategory(String name) {
-        return serviceCategoryDAO.getCategoryByName(name);
+        return serviceCategory.getCategoryByName(name);
     }
 
     public boolean updateServiceCategory(String type, String name, String description, int categoryId){
-        return serviceCategoryDAO.updateCategory(type, name, description, categoryId);
+        return serviceCategory.updateCategory(type, name, description, categoryId);
     }
 
     public boolean deleteServiceCategory(int serviceId) {
-        return serviceCategoryDAO.deleteCategory(serviceId);
+        return serviceCategory.deleteCategory(serviceId);
     }
 
     public List<ServiceCategory> searchServiceCategory(String keyword) {
-        return serviceCategoryDAO.searchCategoriesByName(keyword);
+        return serviceCategory.searchCategoriesByName(keyword);
     }
 
     public List<ServiceCategory> getAllCategories() {
-        return serviceCategoryDAO.getAllCategories();
+        return serviceCategory.getAllCategories();
     }
 }

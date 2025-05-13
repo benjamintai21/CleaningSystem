@@ -5,23 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cleaningsystem.dao.ServiceListingDAO;
-import com.cleaningsystem.model.ServiceListing;
+import com.cleaningsystem.entity.ServiceListing;
 
 @Service
 public class ServiceListingController {
 
     @Autowired
-	private ServiceListingDAO serviceListingDAO;
+	private ServiceListing serviceListing;
 
     public boolean createServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
                                         String startDate, String endDate, String status) {
-        return serviceListingDAO.insertListing(name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status);
+        return serviceListing.insertListing(name, cleanerId, categoryId, description, price_per_hour, startDate, endDate, status);
     }
 
     public ServiceListing viewSLandUpdateViewsByServiceId(int serviceId) {
-        ServiceListing listing = serviceListingDAO.viewServiceListingByServiceId(serviceId);
-        if(serviceListingDAO.updateViews(serviceId)){
+        ServiceListing listing = serviceListing.viewServiceListingByServiceId(serviceId);
+        if(serviceListing.updateViews(serviceId)){
             return listing;
         } else {
             return null;
@@ -29,56 +28,59 @@ public class ServiceListingController {
     }
 
     public ServiceListing viewServiceListing(int serviceId, int cleanerId) {
-        return serviceListingDAO.getListingById(serviceId, cleanerId);
+        return serviceListing.getListingById(serviceId, cleanerId);
     }
 
     public boolean updateServiceListing(String name, int cleanerId, int categoryId, String description, double price_per_hour, 
                                         String status, String startDate, String endDate, int serviceId) {
-        return serviceListingDAO.updateListing(name, cleanerId, categoryId, description, price_per_hour, status, startDate, endDate, serviceId);
+        return serviceListing.updateListing(name, cleanerId, categoryId, description, price_per_hour, status, startDate, endDate, serviceId);
     }
 
     public boolean deleteServiceListing(int serviceId) {
-        return serviceListingDAO.deleteListing(serviceId);
+        return serviceListing.deleteListing(serviceId);
     }
 
     public boolean deleteListingByCategory(int categoryId) {
-        return serviceListingDAO.deleteListingByCategory(categoryId);
+        return serviceListing.deleteListingByCategory(categoryId);
     }
 
     public List<ServiceListing> searchServiceListing(int cleanerId, String keyword) {
-        return serviceListingDAO.searchMyListings(cleanerId, keyword);
+        return serviceListing.searchMyListings(cleanerId, keyword);
     }
 
     public List<ServiceListing> getAllListingsById (int cleanerId) {
-        return serviceListingDAO.getAllListingsById(cleanerId);
+        return serviceListing.getAllListingsById(cleanerId);
     }
 
     public ServiceListing getListingById (int serviceId, int cleanerId) {
-        return serviceListingDAO.getListingById(serviceId, cleanerId);
+        return serviceListing.getListingById(serviceId, cleanerId);
     }
 
     public ServiceListing getLastListing() {
-        return serviceListingDAO.getLastListing();
+        return serviceListing.getLastListing();
     }
 
     public List<ServiceListing> getServiceListingsByCategory(int categoryId) {
-        return serviceListingDAO.getServiceListingsByCategory(categoryId);
+        return serviceListing.getServiceListingsByCategory(categoryId);
     }
 
     public List<ServiceListing> getAllListings() {
-        return serviceListingDAO.getAllListings();
+        return serviceListing.getAllListings();
     }
 
     public List<ServiceListing> searchListingsByService(String keyword) {
-        return serviceListingDAO.searchListingsByService(keyword);
+        return serviceListing.searchListingsByService(keyword);
     }
 
     public List<ServiceListing> searchListingsByCleaner(String keyword) {
-        return serviceListingDAO.searchListingsByCleaner(keyword);
+        return serviceListing.searchListingsByCleaner(keyword);
     }
 
     public ServiceListing viewServiceListingByServiceId(int serviceId) {
-        return serviceListingDAO.viewServiceListingByServiceId(serviceId);
+        return serviceListing.viewServiceListingByServiceId(serviceId);
     }
 
+    public List<Integer> getServicesCountList(){
+        return serviceListing.getServicesCountList();
+    }
 }
