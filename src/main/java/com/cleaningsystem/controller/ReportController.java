@@ -19,6 +19,14 @@ public class ReportController {
     public Report generateDailyReport(){
         return reportDAO.generateDailyReport();
     }
+    //
+    public Report generateWeeklyReport(){
+        return reportDAO.generateWeeklyReport();
+    }
+
+    public Report generateMonthlyReport(){
+        return reportDAO.generateMonthlyReport();
+    }
 
     public Report generateWeeklyReport(LocalDate date){
         return reportDAO.generateWeeklyReport(date);

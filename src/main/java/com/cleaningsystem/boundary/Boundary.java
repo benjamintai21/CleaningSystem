@@ -25,6 +25,7 @@ import java.util.Optional;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -722,7 +723,11 @@ public class Boundary {
         }
 
         Report dailyReport = reportC.generateDailyReport();
+        Report weeklyReport = reportC.generateWeeklyReport();
+        Report monthlyReport = reportC.generateMonthlyReport();
 
+        model.addAttribute("monthlyReport", monthlyReport);
+        model.addAttribute("weeklyReport", weeklyReport);
         model.addAttribute("dailyReport", dailyReport);
 
         return "pm_generate_report";
@@ -737,7 +742,7 @@ public class Boundary {
             return "redirect:/Login";
         }
 
-        Report dailyReport = reportC.generateMonthlyReport(date);
+        Report dailyReport = reportC.generateDailyReport();
 
         model.addAttribute("dailyReport", dailyReport);
 
@@ -753,25 +758,31 @@ public class Boundary {
             return "redirect:/Login";
         }
 
-        Report dailyReport = reportC.generateMonthlyReport(date);
+        Report weeklyReport = reportC.generateWeeklyReport();
 
-        model.addAttribute("dailyReport", dailyReport);
+        model.addAttribute("weeklyReport", weeklyReport);
 
-        return "pm_generate_report";
+        if (weeklyReport != null){
+            return "pm_generate_report";
+        }
+        else{
+            return "";
+        }
+        
     }
 
     //Generate Daily Report
     @GetMapping("/GenerateMonthly")
-    public String showReportMonthly(HttpSession session, Model model) {
+    public String showReportMonthly(@RequestParam LocalDate date, HttpSession session, Model model) {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
         if (result.isPresent()) {
         } else {
             return "redirect:/Login";
         }
 
-        Report dailyReport = reportC.generateDailyReport();
+        Report monthlyReport = reportC.generateMonthlyReport();
 
-        model.addAttribute("dailyReport", dailyReport);
+        model.addAttribute("monthlyReport", monthlyReport);
 
         return "pm_generate_report";
     }

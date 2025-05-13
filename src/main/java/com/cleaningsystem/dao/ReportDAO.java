@@ -161,6 +161,37 @@ public class ReportDAO {
             return null;
         }    
     }
+
+    public Report generateWeeklyReport() {
+        int new_homeowners = getNewAccounts("Home Owner", "weekly");
+        int new_cleaners = getNewAccounts("Cleaner", "weekly");
+
+        int total_home_owners = getWeeklyAccountsUpToPoint(LocalDate.now(), "Home Owner");
+        int total_cleaners = getWeeklyAccountsUpToPoint(LocalDate.now(), "Cleaner");
+
+        int new_shortlists = getNewShortlists("weekly");
+        int new_bookings = getNewBookings("weekly");
+
+        Date generatedDate = new Date(System.currentTimeMillis());
+
+        int rows = jdbcTemplate.update(CREATE_REPORT, "WEEKLY", generatedDate, 
+                new_homeowners, total_home_owners, new_cleaners, total_cleaners, new_shortlists, new_bookings);
+
+        if (rows > 0) {
+            return new Report(
+                "WEEKLY",
+                generatedDate.toLocalDate(),
+                new_homeowners,
+                total_home_owners,
+                new_cleaners,
+                total_cleaners,
+                new_shortlists,
+                new_bookings
+            );
+        } else {
+            return null;
+        }    
+    }
     
     public Report generateWeeklyReport(LocalDate date) {
         int new_homeowners = getNewAccounts("Home Owner", "weekly");
@@ -180,6 +211,37 @@ public class ReportDAO {
         if (rows > 0) {
             return new Report(
                 "WEEKLY",
+                generatedDate.toLocalDate(),
+                new_homeowners,
+                total_home_owners,
+                new_cleaners,
+                total_cleaners,
+                new_shortlists,
+                new_bookings
+            );
+        } else {
+            return null;
+        }    
+    }
+
+    public Report generateMonthlyReport() {
+        int new_homeowners = getNewAccounts("Home Owner", "monthly");
+        int new_cleaners = getNewAccounts("Cleaner", "monthly");
+
+        int total_home_owners = getMonthlyAccountsUpToPoint(LocalDate.now(),"Home Owner");
+        int total_cleaners = getMonthlyAccountsUpToPoint(LocalDate.now(), "Cleaner");
+
+        int new_shortlists = getNewShortlists("monthly");
+        int new_bookings = getNewBookings("monthly");
+
+        Date generatedDate = new Date(System.currentTimeMillis());
+
+        int rows = jdbcTemplate.update(CREATE_REPORT, "MONTHLY", generatedDate, 
+                new_homeowners, total_home_owners, new_cleaners, total_cleaners, new_shortlists, new_bookings);
+
+        if (rows > 0) {
+            return new Report(
+                "MONTHLY",
                 generatedDate.toLocalDate(),
                 new_homeowners,
                 total_home_owners,

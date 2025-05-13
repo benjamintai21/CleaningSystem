@@ -130,7 +130,7 @@ public class Queries {
     //New Account Created
     public static final String GET_DAILY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND DATE(accountCreated) = CURRENT_DATE";
 
-    public static final String GET_WEEKLY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND accountCreated) >= CURRENT_DATE - INTERVAL 7 DAY";
+    public static final String GET_WEEKLY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND accountCreated >= CURRENT_DATE - INTERVAL 7 DAY";
 
     public static final String GET_MONTHLY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND MONTH(accountCreated) = MONTH(CURRENT_DATE) AND YEAR(accountCreated) = YEAR(CURRENT_DATE)";
     
