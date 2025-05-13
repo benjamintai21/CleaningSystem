@@ -1,23 +1,19 @@
 package com.cleaningsystem.controller;
 
 import java.time.LocalDate;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cleaningsystem.model.Report;
-import com.cleaningsystem.dao.ReportDAO;
-
+import com.cleaningsystem.entity.Report;
 
 @Service
 public class ReportController {
 
     @Autowired
-    private ReportDAO reportDAO;
+    private Report report;
 
     public Report generateDailyReport(){
-        return reportDAO.generateDailyReport();
+        return report.generateDailyReport();
     }
     //
     public Report generateWeeklyReport(){
@@ -29,11 +25,11 @@ public class ReportController {
     }
 
     public Report generateWeeklyReport(LocalDate date){
-        return reportDAO.generateWeeklyReport(date);
+        return report.generateWeeklyReport(date);
     }
 
     public Report generateMonthlyReport(LocalDate date){
-        return reportDAO.generateMonthlyReport(date);
+        return report.generateMonthlyReport(date);
     }
     
 }

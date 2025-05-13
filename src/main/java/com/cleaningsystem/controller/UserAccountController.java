@@ -5,52 +5,51 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cleaningsystem.dao.UserAccountDAO;
-import com.cleaningsystem.model.UserAccount;
+import com.cleaningsystem.entity.UserAccount;
 
 @Service
 public class UserAccountController {
     
     @Autowired
-	private UserAccountDAO userAccountDAO;
+	private UserAccount userAccount;
 
     public UserAccount login(String username, String password, int profileId) {
-        return userAccountDAO.login(username, password, profileId);	
+        return userAccount.login(username, password, profileId);	
     }
 
     public boolean createAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
-        return userAccountDAO.insertUserAccount(name, age, dob, gender, address, email, username, password, profileId);
+        return userAccount.insertUserAccount(name, age, dob, gender, address, email, username, password, profileId);
     }
 
     public UserAccount viewUserAccount(int uid) {
-        return userAccountDAO.getUserById(uid);
+        return userAccount.getUserById(uid);
     }
 
     public UserAccount viewUserAccount(String username) {
-        return userAccountDAO.getUserByUsername(username);
+        return userAccount.getUserByUsername(username);
     }
 
     public boolean updateUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId, int UId) {
-        return userAccountDAO.updateUserAccount(name, age, dob, gender, address, email, username, password, profileId, UId);
+        return userAccount.updateUserAccount(name, age, dob, gender, address, email, username, password, profileId, UId);
     }
 
     public boolean setSuspensionStatus(int uid, boolean suspended) {
-        return userAccountDAO.setSuspensionStatus(uid, suspended);
+        return userAccount.setSuspensionStatus(uid, suspended);
     }
 
     public List<UserAccount> searchUser(String keyword) {
-        return userAccountDAO.searchUsersByUsername(keyword);
+        return userAccount.searchUsersByUsername(keyword);
     }
 
     public List<UserAccount> searchUser(int profileId) {
-        return userAccountDAO.searchUsersByProfileId(profileId);
+        return userAccount.searchUsersByProfileId(profileId);
     }
 
     public List<UserAccount> getAllUsers() {
-        return userAccountDAO.getAllUsers();
+        return userAccount.getAllUsers();
     }
 
     public String getProfileNameByUid(int uid) {
-        return userAccountDAO.getProfileNameByUid(uid);
+        return userAccount.getProfileNameByUid(uid);
     }
 }
