@@ -86,9 +86,9 @@ public class ServiceListing {
 
     public List<Integer> getServicesCountList(){
     List<Integer> servicesCountList = new ArrayList<>();
-        List<UserAccount> cleaners = userAccount.searchUsersByProfileId(4);
+        List<UserAccount> cleaners = userAccount.searchUserAccount(4);
         for (UserAccount cleaner : cleaners) {
-        List<ServiceListing> serviceListings = getAllListingsById(cleaner.getUid());
+        List<ServiceListing> serviceListings = searchServiceListing(cleaner.getUid());
             int servicesCount = serviceListings.size();
             servicesCountList.add(servicesCount);
         }
@@ -96,11 +96,11 @@ public class ServiceListing {
     }
 
     public List<ServiceListing> getServiceListingsByBookings(int uid) {
-        List<Booking> matches = booking.getConfirmedMatches(uid);
+        List<Booking> matches = booking.viewCompletedBooking(uid);
         List<ServiceListing> serviceListings = new ArrayList<>();
         for (Booking booking : matches) {
             int serviceId = booking.getServiceId();
-            ServiceListing listing = getListingById(serviceId, uid);
+            ServiceListing listing = viewServiceListing(serviceId, uid);
             serviceListings.add(listing);
         }
         return serviceListings;
@@ -121,7 +121,7 @@ public class ServiceListing {
         List<ServiceListing> serviceShortList = new ArrayList<>();
 
         for (ServiceShortlist shortlist : shortlists) {
-            ServiceListing service = viewServiceListingByServiceId(shortlist.getServiceId());
+            ServiceListing service = viewServiceListingAsHomeOwner(shortlist.getServiceId());
             serviceShortList.add(service);
         }
         return serviceShortList;
@@ -131,7 +131,7 @@ public class ServiceListing {
        List<Integer> servicesCountList = new ArrayList<>();
         
         for (CleanerShortlist shortlist : shortlists) {
-            List<ServiceListing> serviceListings = getAllListingsById(shortlist.getCleanerId());
+            List<ServiceListing> serviceListings = searchServiceListing(shortlist.getCleanerId());
             int servicesCount = serviceListings.size();
             servicesCountList.add(servicesCount);
         }
@@ -142,7 +142,7 @@ public class ServiceListing {
         List<ServiceListing> serviceListings = new ArrayList<>();
         
         for (Booking booking : bookings) {
-            ServiceListing service = viewServiceListingByServiceId(booking.getServiceId());
+            ServiceListing service = viewServiceListingAsHomeOwner(booking.getServiceId());
             serviceListings.add(service);
         }
 
@@ -153,8 +153,8 @@ public class ServiceListing {
 		List<UserAccount> cleaners = new ArrayList<>();
         
         for (Booking booking : bookings) {
-            ServiceListing service = viewServiceListingByServiceId(booking.getServiceId());
-            UserAccount cleaner = userAccount.getUserById(service.getCleanerId());
+            ServiceListing service = viewServiceListingAsHomeOwner(booking.getServiceId());
+            UserAccount cleaner = userAccount.viewUserAccount(service.getCleanerId());
             cleaners.add(cleaner);
         }
         return cleaners;
@@ -180,7 +180,7 @@ public class ServiceListing {
     };
 
     //Cleaner
-    public boolean insertListing(String name, int cleanerId, int categoryId, String description, double priceperhour, 
+    public boolean createServiceListing(String name, int cleanerId, int categoryId, String description, double priceperhour, 
                                  String startDate, String endDate, String status) {
         // java.sql.Date sqlStart = java.sql.Date.valueOf(startDate);
         // java.sql.Date sqlEnd = java.sql.Date.valueOf(endDate);
@@ -188,24 +188,24 @@ public class ServiceListing {
         name, cleanerId, categoryId, description, priceperhour, startDate, endDate, status) > 0;
     }
 
-    public ServiceListing viewServiceListingByServiceId(int serviceId) {
+    public ServiceListing viewServiceListingAsHomeOwner(int serviceId) {
         List<ServiceListing> listings = jdbcTemplate.query(VIEW_SERVICE_LISTING_BY_SERVICE_ID, listingRowMapper, serviceId);
         return listings.isEmpty() ? null : listings.get(0);
     }
 
-    public ServiceListing getListingById(int serviceId , int cleanerId) {
+    public ServiceListing viewServiceListing(int serviceId , int cleanerId) {
         List<ServiceListing> listings = jdbcTemplate.query(GET_SERVICE_LISTING_BY_ID, listingRowMapper, serviceId, cleanerId);
         return listings.isEmpty() ? null : listings.get(0);
     }
 
-    public boolean updateListing(String name, int cleanerId, int categoryId, String description, double priceperhour, 
+    public boolean updateServiceListing(String name, int cleanerId, int categoryId, String description, double priceperhour, 
                                     String startDate, String endDate, String status, int serviceId) {
         return jdbcTemplate.update(UPDATE_SERVICE_LISTING, 
         name, cleanerId, categoryId, description, priceperhour, 
         startDate, endDate, status, serviceId) > 0;
     }
 
-    public boolean deleteListing(int listingId) {
+    public boolean deleteServiceListing(int listingId) {
         return jdbcTemplate.update(DELETE_SERVICE_LISTING, listingId) > 0;
     }
 
@@ -213,12 +213,12 @@ public class ServiceListing {
         return jdbcTemplate.update(DELETE_SERVICE_LISTING, categoryId) > 0;
     }
 
-    public List<ServiceListing> searchMyListings(int cleanerId, String keyword){
+    public List<ServiceListing> searchServiceListing(int cleanerId, String keyword){
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_MY_SERVICE_LISTING_BY_ID, listingRowMapper, cleanerId, pattern);
     }
 
-    public List<ServiceListing> getAllListingsById(int cleanerId){
+    public List<ServiceListing> searchServiceListing(int cleanerId){
         return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS_BY_ID, listingRowMapper, cleanerId);
     }
 
@@ -228,21 +228,22 @@ public class ServiceListing {
     }
 
     //HomeOwner-----------------------------------------------------
-    public List<ServiceListing> searchListingsByService(String keyword) {
+    public List<ServiceListing> searchServiceListing(String keyword) {
         String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_SERVICE, listingRowMapper, pattern);
-    }
+        List<ServiceListing> listings = jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_SERVICE, listingRowMapper, pattern);
 
-    public List<ServiceListing> searchListingsByCleaner(String keyword) {
-        String pattern = "%" + keyword + "%";
-        return jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_CLEANER, listingRowMapper, pattern);
+        if(listings == null || listings.isEmpty()) {
+            listings = jdbcTemplate.query(SEARCH_SERVICE_LISTING_BY_CLEANER, listingRowMapper, pattern); 
+        }
+
+        return listings;
     }
 
     public List<ServiceListing> getServiceListingsByCategory(int categoryId) {
         return jdbcTemplate.query(GET_SERVICE_LISTING_BY_CATEGORY, listingRowMapper, categoryId);
     }
 
-    public List<ServiceListing> getAllListings(){
+    public List<ServiceListing> searchServiceListing(){
         return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS, listingRowMapper);
     }
 

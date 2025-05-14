@@ -62,7 +62,7 @@ public class UserProfile {
 		List<String> profileNames = new ArrayList<>();
 
         for (UserAccount user : userAccounts) {
-        UserProfile userProfile = getProfileById(user.getProfileId());
+        UserProfile userProfile = viewUserProfile(user.getProfileId());
         String profileName = userProfile.getProfileName();
         profileNames.add(profileName);
         }
@@ -85,14 +85,14 @@ public class UserProfile {
 		return profile;
 	};
 
-	public boolean insertUserProfile(UserProfile profile) {
+	public boolean createUserProfile(String name, String description, boolean suspended) {
 		int rows_affected = jdbcTemplate.update(CREATE_USER_PROFILE, 
-			profile.getProfileName(), profile.getDescription(), profile.isSuspended());
+			name, description, suspended);
 			
 		return rows_affected > 0;
 	}
 
-	public UserProfile getProfileById(int profileId) {
+	public UserProfile viewUserProfile(int profileId) {
 		List<UserProfile> profiles = jdbcTemplate.query(GET_USER_PROFILE_BY_ID, profileRowMapper, profileId);
 		return profiles.isEmpty() ? null : profiles.get(0);
 	}
@@ -107,19 +107,18 @@ public class UserProfile {
 		return jdbcTemplate.query(GET_PROFILE_NAMES, (rs, rowNum) -> rs.getString("profilename"));
 	}
 
-	public boolean updateUserProfile(UserProfile profile) {
+	public boolean updateUserProfile(String name, String description, boolean suspended, int profileId) {
 		return jdbcTemplate.update(UPDATE_USER_PROFILE, 
-			profile.getProfileName(), profile.getDescription(), profile.isSuspended(), 
-			profile.getProfileId()) > 0;
+			name, description, suspended, profileId) > 0;
 	}
 
 	@Transactional
-	public boolean setSuspensionStatusForAllAccounts(int profileId, boolean suspension) {
-		List<UserAccount> userAccounts = userAccount.searchUsersByProfileId(profileId);
+	public boolean suspendUserProfile(int profileId, boolean suspension) {
+		List<UserAccount> userAccounts = userAccount.searchUserAccount(profileId);
 	
 		try {
 			for (UserAccount user : userAccounts) {
-				boolean userSuspensionUpdated = userAccount.setSuspensionStatus(user.getUid(), suspension);
+				boolean userSuspensionUpdated = userAccount.suspendUserAccount(user.getUid(), suspension);
 				
 				if (!userSuspensionUpdated) {
 					throw new RuntimeException("Failed to update user suspension for user ID: " + user.getUid());
@@ -139,11 +138,11 @@ public class UserProfile {
 		}
 	}
 
-	public List<UserProfile> searchProfilesByName(String keyword) {
+	public List<UserProfile> searchUserProfile(String keyword) {
 		return jdbcTemplate.query(SEARCH_PROFILE_BY_NAME, profileRowMapper, "%" + keyword + "%");
 	}
 
-	public List<UserProfile> getAllProfiles() {
+	public List<UserProfile> searchUserProfile() {
 		return jdbcTemplate.query(GET_ALL_PROFILES, profileRowMapper);
 	}
 } 

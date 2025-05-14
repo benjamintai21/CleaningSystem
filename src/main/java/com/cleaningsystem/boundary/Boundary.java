@@ -2,6 +2,32 @@ package com.cleaningsystem.boundary;
 
 import com.cleaningsystem.controller.UserAccountController;
 import com.cleaningsystem.controller.UserProfileController;
+import com.cleaningsystem.controller.Booking.SearchBookingHistoryController;
+import com.cleaningsystem.controller.Booking.SearchCompletedBookingController;
+import com.cleaningsystem.controller.Booking.ViewBookingHistoryController;
+import com.cleaningsystem.controller.Booking.ViewCompletedBookingController;
+import com.cleaningsystem.controller.Report.GenerateDailyReportC;
+import com.cleaningsystem.controller.Report.GenerateMonthlyReportC;
+import com.cleaningsystem.controller.Report.GenerateWeeklyReportC;
+import com.cleaningsystem.controller.ServiceListing.CreateServiceListingController;
+import com.cleaningsystem.controller.ServiceListing.DeleteServiceListingController;
+import com.cleaningsystem.controller.ServiceListing.SearchServiceListingController;
+import com.cleaningsystem.controller.ServiceListing.UpdateServiceListingController;
+import com.cleaningsystem.controller.ServiceListing.ViewServiceListingController;
+import com.cleaningsystem.controller.Shortlist.ViewShortlistedCleanerController;
+import com.cleaningsystem.controller.Shortlist.ViewShortlistedServiceController;
+import com.cleaningsystem.controller.Shortlist.SearchShortlistedCleanerController;
+import com.cleaningsystem.controller.Shortlist.SearchShortlistedServiceController;
+import com.cleaningsystem.controller.UserAdmin.UserAccount.CreateUserAccountController;
+import com.cleaningsystem.controller.UserAdmin.UserAccount.SearchUserAccountController;
+import com.cleaningsystem.controller.UserAdmin.UserAccount.SuspendUserAccountController;
+import com.cleaningsystem.controller.UserAdmin.UserAccount.UpdateUserAccountController;
+import com.cleaningsystem.controller.UserAdmin.UserAccount.ViewUserAccountController;
+import com.cleaningsystem.controller.UserAdmin.UserProfile.CreateUserProfileController;
+import com.cleaningsystem.controller.UserAdmin.UserProfile.SearchUserProfileController;
+import com.cleaningsystem.controller.UserAdmin.UserProfile.SuspendUserProfileController;
+import com.cleaningsystem.controller.UserAdmin.UserProfile.UpdateUserProfileController;
+import com.cleaningsystem.controller.UserAdmin.UserProfile.ViewUserProfileController;
 import com.cleaningsystem.entity.Booking;
 import com.cleaningsystem.entity.CleanerShortlist;
 import com.cleaningsystem.entity.Report;
@@ -17,10 +43,7 @@ import com.cleaningsystem.controller.ServiceListingController;
 import com.cleaningsystem.controller.ShortlistController;
 import com.cleaningsystem.controller.ServiceCategoryController;
 import com.cleaningsystem.controller.BookingController;
-
-import com.cleaningsystem.controller.GenerateDailyReportC;
-import com.cleaningsystem.controller.GenerateWeeklyReportC;
-import com.cleaningsystem.controller.GenerateMonthlyReportC;
+import com.cleaningsystem.controller.LoginController;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +64,95 @@ import jakarta.servlet.http.HttpSession;
 public class Boundary {
 
     @Autowired
+    private LoginController LoginC;
+
+    // User Admin
+    // User Account --------------------------------------------
+    @Autowired
+    private CreateUserAccountController createUserAccountC;
+
+    @Autowired
+    private ViewUserAccountController viewUserAccountC;
+
+    @Autowired
+    private UpdateUserAccountController updateUserAccountC;
+
+    @Autowired
+    private SuspendUserAccountController suspendUserAccountC;
+
+    @Autowired
+    private SearchUserAccountController searchUserAccountC;
+
+    // User Profile --------------------------------------------
+    @Autowired
+    private CreateUserProfileController createUserProfileC;
+
+    @Autowired
+    private ViewUserProfileController viewUserProfileC;
+
+    @Autowired
+    private UpdateUserProfileController updateUserProfileC;
+
+    @Autowired
+    private SuspendUserProfileController suspendUserProfileC;
+
+    @Autowired
+    private SearchUserProfileController searchUserProfileC;
+
+    // Service Listing ------------------------------------------
+    @Autowired
+    private CreateServiceListingController createServiceListingC;
+
+    @Autowired
+    private ViewServiceListingController viewServiceListingC;
+
+    @Autowired
+    private UpdateServiceListingController updateServiceListingC;
+
+    @Autowired
+    private DeleteServiceListingController deleteServiceListingC;
+
+    @Autowired
+    private SearchServiceListingController searchServiceListingC;
+
+    // Booking ----------------------------------------------------------
+    @Autowired
+    private ViewCompletedBookingController viewCompletedBookingC;
+
+    @Autowired
+    private SearchCompletedBookingController searchCompletedBookingC;
+
+    @Autowired
+    private ViewBookingHistoryController viewBookingHistoryC;
+
+    @Autowired
+    private SearchBookingHistoryController searchBookingHistoryC;
+
+    // Shortlist ---------------------------------------------------------
+    @Autowired
+    private ViewShortlistedCleanerController viewShortlistedCleanerC;
+
+    @Autowired
+    private SearchShortlistedCleanerController searchShortlistedCleanerC;
+
+    @Autowired
+    private ViewShortlistedServiceController viewShortlistedServiceC;
+
+    @Autowired
+    private SearchShortlistedServiceController searchShortlistedServiceC;
+
+    // Report --------------------------------------------------------------
+    @Autowired
+    private GenerateDailyReportC generateDailyReportC;
+
+    @Autowired
+    private GenerateWeeklyReportC generateWeeklyReportC;
+
+    @Autowired
+    private GenerateMonthlyReportC generateMonthlyReportC;
+
+    // ---------------------------------------------------------------------
+    @Autowired
     private UserAccountController userAccountC;
 
     @Autowired
@@ -58,22 +170,12 @@ public class Boundary {
     @Autowired
     private ShortlistController shortlistC;
 
-    @Autowired
-    private GenerateDailyReportC generateDailyReportC;
-
-    @Autowired
-    private GenerateWeeklyReportC generateWeeklyReportC;
-
-    @Autowired
-    private GenerateMonthlyReportC generateMonthlyReportC;
-
-
     @GetMapping("/")
     public String showHomePage(Model model){
         // Cleaners
-        List<UserAccount> cleaners = userAccountC.searchUser(4);
+        List<UserAccount> cleaners = searchUserAccountC.searchUserAccount(4);
         List<Integer> servicesCountList = serviceListingC.getServicesCountList();
-        List<ServiceListing> serviceListings = serviceListingC.getAllListings();
+        List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing();
 
         model.addAttribute("serviceListings", serviceListings);
         model.addAttribute("servicesCountList", servicesCountList);
@@ -98,7 +200,7 @@ public class Boundary {
     @PostMapping("/RedirectToPage")
     public String processLogin(@ModelAttribute("loginForm") UserAccount user, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         try {
-            UserAccount loggedInUser = userAccountC.login(user.getUsername(), user.getPassword(), user.getProfileId());
+            UserAccount loggedInUser = LoginC.login(user.getUsername(), user.getPassword(), user.getProfileId());
 
             if (loggedInUser == null) {
                 redirectAttributes.addFlashAttribute("toastMessage", "Invalid username or password");
@@ -108,7 +210,7 @@ public class Boundary {
                 redirectAttributes.addFlashAttribute("toastMessage", "Your account has been suspended");
                 return "redirect:/Login";
             }
-            UserProfile userProfile = userProfileC.getProfileById(loggedInUser.getProfileId());
+            UserProfile userProfile = viewUserProfileC.viewUserProfile(loggedInUser.getProfileId());
             String profileName = userProfile.getProfileName();
 
             session.setAttribute("uid", loggedInUser.getUid());
@@ -147,6 +249,9 @@ public class Boundary {
     //--AdminPage
     @GetMapping("/UserAdminHome")
     public String showUserAdminHome(HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         model.addAttribute("username", session.getAttribute("username"));
         return "useradmin_home_page";
     }
@@ -167,10 +272,10 @@ public class Boundary {
     @PostMapping("/CleanerUserCreation")
     public String processCleanerSignUp(@ModelAttribute UserAccount user, Model model) {
         user.setProfileId(4);
-        boolean isSuccessful = userAccountC.createAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId()); 
+        boolean isSuccessful = createUserAccountC.createAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId()); 
 
         if (isSuccessful) {
-            UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
+            UserProfile userProfile = viewUserProfileC.viewUserProfile(user.getProfileId());
             String profileName = userProfile.getProfileName();
             
             model.addAttribute("userAccountInfo", user);
@@ -184,9 +289,12 @@ public class Boundary {
 
     //View User Account
     @GetMapping("/UserAccount")
-    public String showUserAccount(@RequestParam int uid, Model model) {
-        UserAccount user = userAccountC.viewUserAccount(uid);
-        UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
+    public String showUserAccount(@RequestParam int uid, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
+        UserAccount user = viewUserAccountC.viewUserAccount(uid);
+        UserProfile userProfile = viewUserProfileC.viewUserProfile(user.getProfileId());
         String profileName = userProfile.getProfileName();
 
         model.addAttribute("userAccountInfo", user);
@@ -195,8 +303,11 @@ public class Boundary {
     }
 
     @GetMapping("/ViewAllUserAccounts")
-    public String showUserAccountList(Model model) {
-        List<UserAccount> userAccounts = userAccountC.getAllUsers();
+    public String showUserAccountList(HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
+        List<UserAccount> userAccounts = searchUserAccountC.searchUserAccount();
         List<String> profileNames = userProfileC.getAllProfileNamesForUserAccounts(userAccounts);
 
         model.addAttribute("userAccounts", userAccounts);
@@ -206,18 +317,24 @@ public class Boundary {
 
     //Update User Account
     @GetMapping("/UpdateUserAccount")
-    public String showUpdateUserAccount(@RequestParam String username, Model model) {
-        UserAccount user = userAccountC.viewUserAccount(username);
+    public String showUpdateUserAccount(@RequestParam int uid, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
+        UserAccount user = viewUserAccountC.viewUserAccount(uid);
         model.addAttribute("userAccountInfo", user);
         return "user_account_update";
     }
 
     @PostMapping("/UpdateUserAccount")
-    public String processUpdateUserAccount(@ModelAttribute UserAccount user, Model model) {
-        boolean isSuccessful = userAccountC.updateUserAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId(), user.getUid()); 
+    public String processUpdateUserAccount(@ModelAttribute UserAccount user, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
+        boolean isSuccessful = updateUserAccountC.updateUserAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId(), user.getUid()); 
 
         if (isSuccessful) {
-            UserProfile userProfile = userProfileC.getProfileById(user.getProfileId());
+            UserProfile userProfile = viewUserProfileC.viewUserProfile(user.getProfileId());
             String profileName = userProfile.getProfileName();
 
             model.addAttribute("userAccountInfo", user);
@@ -231,37 +348,42 @@ public class Boundary {
 
     // Suspend User Account
     @PostMapping("/SetAccountSuspensionStatus")
-    public String processAccountSuspensionStatus(@RequestParam boolean suspended, @ModelAttribute UserAccount user, Model model) {
-    boolean isSuccessful = userAccountC.setSuspensionStatus(user.getUid(), suspended); 
+    public String processAccountSuspensionStatus(@RequestParam boolean suspended, @ModelAttribute UserAccount user, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-    if (isSuccessful) {
-        UserAccount updatedUser = userAccountC.viewUserAccount(user.getUid());
-        UserProfile userProfile = userProfileC.getProfileById(updatedUser.getProfileId());
-        String profileName = userProfile.getProfileName();
+        boolean isSuccessful = suspendUserAccountC.suspendUserAccount(user.getUid(), suspended); 
+        if (isSuccessful) {
+            UserAccount updatedUser = viewUserAccountC.viewUserAccount(user.getUid());
+            UserProfile userProfile = viewUserProfileC.viewUserProfile(updatedUser.getProfileId());
+            String profileName = userProfile.getProfileName();
 
-        model.addAttribute("userAccountInfo", updatedUser); // Use the updated user
-        model.addAttribute("profileName", profileName);
+            model.addAttribute("userAccountInfo", updatedUser); // Use the updated user
+            model.addAttribute("profileName", profileName);
 
-        if (updatedUser.isSuspended()) {
-        model.addAttribute("message", "User suspended successfully");
+            if (updatedUser.isSuspended()) {
+            model.addAttribute("message", "User suspended successfully");
+            } else {
+            model.addAttribute("message", "User unsuspended successfully");
+            }
         } else {
-        model.addAttribute("message", "User unsuspended successfully");
+            if(suspended){
+            model.addAttribute("error", "Failed to suspend user");
+            } else {
+            model.addAttribute("error", "Failed to unsuspend user");
+            }
         }
-    } else {
-        if(suspended){
-        model.addAttribute("error", "Failed to suspend user");
-        } else {
-        model.addAttribute("error", "Failed to unsuspend user");
-        }
-    }
 
-    return "redirect:/UserAccount?uid=" + user.getUid();
+        return "redirect:/UserAccount?uid=" + user.getUid();
     }
 
     //Search User Account
     @GetMapping("/searchUserAccount")
-    public String searchUserAccounts(@RequestParam String query, Model model) {
-        List<UserAccount> userAccounts = userAccountC.searchUser(query);
+    public String searchUserAccounts(@RequestParam String query, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
+        List<UserAccount> userAccounts = searchUserAccountC.searchUserAccount(query);
         List<String> profileNames = userProfileC.getAllProfileNamesForUserAccounts(userAccounts);
 
         model.addAttribute("userAccounts", userAccounts);
@@ -278,7 +400,7 @@ public class Boundary {
 
     @PostMapping("/CreateUserProfile")
     public String processUserProfile(@ModelAttribute UserProfile userProfile, Model model) {
-        boolean isSuccessful = userProfileC.createUserProfile(userProfile);
+        boolean isSuccessful = createUserProfileC.createUserProfile(userProfile.getProfileName(), userProfile.getDescription(), userProfile.isSuspended());
 
         if (isSuccessful) {
             model.addAttribute("userProfileInfo", userProfile);
@@ -292,8 +414,8 @@ public class Boundary {
     //View User Profile
     @GetMapping("/UserProfile")
     public String showUserProfile(@RequestParam int profileId, Model model) {
-        UserProfile userProfile = userProfileC.getProfileById(profileId);
-        List<UserAccount> userAccounts = userAccountC.searchUser(userProfile.getProfileId());
+        UserProfile userProfile = viewUserProfileC.viewUserProfile(profileId);
+        List<UserAccount> userAccounts = searchUserAccountC.searchUserAccount(userProfile.getProfileId());
         int usersCount = userAccounts.size();
     
         model.addAttribute("userProfileInfo", userProfile);
@@ -304,7 +426,7 @@ public class Boundary {
 
     @GetMapping("/ViewAllUserProfiles")
     public String showUserProfileList(Model model) {
-        List<UserProfile> userProfiles = userProfileC.getAllProfiles();
+        List<UserProfile> userProfiles = searchUserProfileC.searchUserProfile();
         List<Integer> usersPerProfileCount = userAccountC.getUsersPerProfileCount(userProfiles);
 
         model.addAttribute("userProfiles", userProfiles);
@@ -316,14 +438,14 @@ public class Boundary {
     @GetMapping("/UpdateUserProfile")
     public String updateUserProfile(@RequestParam String profileName, Model model) {
         int profileId= userProfileC.getProfileIdByName(profileName);
-        UserProfile userProfile = userProfileC.getProfileById(profileId);
+        UserProfile userProfile = viewUserProfileC.viewUserProfile(profileId);
         model.addAttribute("updateUserProfileForm", userProfile);
         return "user_profile_update";
     }
 
     @PostMapping("/UpdateUserProfile")
     public String processUpdateUserProfile(@ModelAttribute UserProfile userProfile, Model model) {
-        boolean isSuccessful = userProfileC.updateUserProfile(userProfile);
+        boolean isSuccessful = updateUserProfileC.updateUserProfile(userProfile.getProfileName(), userProfile.getDescription(), userProfile.isSuspended(), userProfile.getProfileId());
 
         if (isSuccessful) {
             model.addAttribute("userProfileInfo", userProfile);
@@ -337,7 +459,7 @@ public class Boundary {
     // Suspend User Profile
     @PostMapping("/SetProfileSuspensionStatus")
     public String processProfileSuspensionStatus(@RequestParam boolean suspended, @ModelAttribute UserProfile profile, Model model) {
-    boolean isSuccessful = userProfileC.setSuspensionStatus(profile.getProfileId(), suspended); 
+    boolean isSuccessful = suspendUserProfileC.suspendUserProfile(profile.getProfileId(), suspended); 
     
     if (isSuccessful) {
 
@@ -360,7 +482,7 @@ public class Boundary {
     //Search User Profile
     @GetMapping("/searchUserProfile")
     public String searchUserProfile(@RequestParam String query, Model model) {
-        List<UserProfile> userProfiles = userProfileC.searchProfilesByName(query);
+        List<UserProfile> userProfiles = searchUserProfileC.searchUserProfile(query);
         List<Integer> usersPerProfileCount = userAccountC.getUsersPerProfileCount(userProfiles);
 
         model.addAttribute("userProfiles", userProfiles);
@@ -388,7 +510,7 @@ public class Boundary {
         }
         int uid = (int) uidObj;
         
-        boolean isSuccessful = serviceListingC.createServiceListing(serviceListing.getName(), uid , serviceListing.getCategoryId(),
+        boolean isSuccessful = createServiceListingC.createServiceListing(serviceListing.getName(), uid , serviceListing.getCategoryId(),
                                                                         serviceListing.getDescription(), serviceListing.getPricePerHour(),
                                                                         serviceListing.getStartDate(), serviceListing.getEndDate(), serviceListing.getStatus());
         if (isSuccessful) {
@@ -412,7 +534,7 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        ServiceListing listing = serviceListingC.viewServiceListing(serviceId, uid);
+        ServiceListing listing = viewServiceListingC.viewServiceListing(serviceId, uid);
         ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
         model.addAttribute("serviceListingInfo", listing);
         model.addAttribute("serviceCategory", category);
@@ -428,7 +550,8 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        List<ServiceListing> servicelistings = serviceListingC.getAllListingsById(uid);
+        String query = "";
+        List<ServiceListing> servicelistings = searchServiceListingC.searchServiceListing(uid, query);
         model.addAttribute("serviceListings", servicelistings);
         return "cleaner_service_list";
     }
@@ -442,7 +565,7 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        ServiceListing listing = serviceListingC.viewServiceListing(serviceId, uid);
+        ServiceListing listing = viewServiceListingC.viewServiceListing(serviceId, uid);
         model.addAttribute("serviceListingInfo", listing);
         model.addAttribute("serviceCategories", serviceCategoryC.getAllCategories());
         model.addAttribute("serviceStatuses", ServiceListing.Status.values()); 
@@ -451,7 +574,7 @@ public class Boundary {
 
     @PostMapping("/CleanerUpdateService")
     public String processUpdateListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
-        boolean isSuccessful = serviceListingC.updateServiceListing(serviceListing.getName(), serviceListing.getCleanerId(),
+        boolean isSuccessful = updateServiceListingC.updateServiceListing(serviceListing.getName(), serviceListing.getCleanerId(),
                                                                     serviceListing.getCategoryId(), serviceListing.getDescription(),
                                                                     serviceListing.getPricePerHour(), serviceListing.getStartDate(),
                                                                     serviceListing.getEndDate(), serviceListing.getStatus(),
@@ -470,7 +593,7 @@ public class Boundary {
 
     @PostMapping("CleanerDeleteService")
     public String processDeleteListing(@ModelAttribute ServiceListing listing, Model model, HttpSession session) {
-        boolean isSuccessful = serviceListingC.deleteServiceListing(listing.getServiceId());
+        boolean isSuccessful = deleteServiceListingC.deleteServiceListing(listing.getServiceId());
 
         if (isSuccessful) {
             
@@ -491,7 +614,7 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        List<ServiceListing> servicelistings = serviceListingC.searchServiceListing(uid, query);
+        List<ServiceListing> servicelistings = searchServiceListingC.searchServiceListing(uid, query);
         model.addAttribute("serviceListings", servicelistings);
         return "cleaner_service_list";
     }
@@ -505,7 +628,7 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        List<Booking> matches = bookingC.getConfirmedMatches(uid);
+        List<Booking> matches = viewCompletedBookingC.viewCompletedBooking(uid);
         List<ServiceListing> serviceListings = serviceListingC.getServiceListingsByBookings(uid);
 
         model.addAttribute("matches", matches);
@@ -523,7 +646,7 @@ public class Boundary {
         }
         int uid = (int) uidObj;
 
-        List<Booking> matches = bookingC.getConfirmedMatches(uid);
+        List<Booking> matches = searchCompletedBookingC.searchCompletedBooking(uid, query);
         List<ServiceListing> serviceListings = serviceListingC.getServiceListingsByBookings(uid);
         
         model.addAttribute("matches", matches);
@@ -745,6 +868,21 @@ public class Boundary {
         document.close();
     }
 
+    // Home Owner
+    @GetMapping("/HomeOwnerHome")
+    public String showHomeOwnerHome(HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "Home Owner");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
+        List<UserAccount> cleaners = searchUserAccountC.searchUserAccount(4);
+        List<Integer> servicesCountList = serviceListingC.getServicesCountList();
+        List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing();
+
+        model.addAttribute("serviceListings", serviceListings);
+        model.addAttribute("servicesCountList", servicesCountList);
+        model.addAttribute("cleaners", cleaners);
+        return "homeowner_home_page";
+    }
 
     // View All Services by Home Owner
     @GetMapping("/ViewAllServices")
@@ -752,7 +890,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
          
-        List<ServiceListing> serviceListings = serviceListingC.getAllListings();
+        List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing();
         List<String> cleanersName = userAccountC.getAllCleanerNamesByServiceListings(serviceListings);
         List<String> categoriesName = serviceCategoryC.getAllCategoryNamesByServiceListings(serviceListings);
 
@@ -769,10 +907,10 @@ public class Boundary {
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
         // this function will auto +1 to view
-        ServiceListing listing = serviceListingC.viewSLandUpdateViewsByServiceId(serviceId);
+        ServiceListing listing = viewServiceListingC.viewServiceListingAsHomeOwner(serviceId);
         boolean isInServiceShortlist = shortlistC.isInServiceShortlist(serviceId);
 
-        UserAccount user = userAccountC.viewUserAccount(listing.getCleanerId());
+        UserAccount user = viewUserAccountC.viewUserAccount(listing.getCleanerId());
         String cleanerName = user.getName();
 
         ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
@@ -792,8 +930,10 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        UserAccount cleaner = userAccountC.viewUserAccount(cleanerId);
-        List<ServiceListing> serviceListings = serviceListingC.getAllListingsById(cleanerId);
+        UserAccount cleaner = viewUserAccountC.viewUserAccount(cleanerId);
+
+        String query = "";
+        List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing(cleanerId, query);
         boolean isInCleanerShortlist = shortlistC.isInCleanerShortlist(cleanerId);
         List<String> categoriesName = serviceCategoryC.getCategoriesName(serviceListings);
         int servicesCount = serviceListings.size();
@@ -812,11 +952,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        List<ServiceListing> serviceListings = serviceListingC.searchListingsByService(query);
-
-        if (serviceListings == null || serviceListings.isEmpty()) {
-            serviceListings = serviceListingC.searchListingsByCleaner(query);
-        }
+        List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing(query);
         
         List<String> cleanersName = userAccountC.getAllCleanerNamesByServiceListings(serviceListings);
         List<String> categoriesName = serviceCategoryC.getAllCategoryNamesByServiceListings(serviceListings);
@@ -858,7 +994,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        List<ServiceShortlist> shortlists = shortlistC.getAllShortlistedServices(uid);
+        List<ServiceShortlist> shortlists = viewShortlistedServiceC.viewShortlistedService(uid);
         List<ServiceListing> serviceShortList = serviceListingC.getAllServiceListingsFromShortlist(shortlists);
         List<String> cleanersName = userAccountC.getAllCleanerNamesByServiceListings(serviceShortList);
         List<String> categoriesName = serviceCategoryC.getAllCategoryNamesByServiceListings(serviceShortList);
@@ -876,7 +1012,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        List<ServiceShortlist> shortlists = shortlistC.searchShortlistedServices(uid, query);
+        List<ServiceShortlist> shortlists = searchShortlistedServiceC.searchShortlistedService(uid, query);
         List<ServiceListing> serviceShortList = serviceListingC.getAllServiceListingsFromShortlist(shortlists);
         List<String> cleanersName = userAccountC.getAllCleanerNamesByServiceListings(serviceShortList);
         List<String> categoriesName = serviceCategoryC.getAllCategoryNamesByServiceListings(serviceShortList);
@@ -918,7 +1054,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        List<CleanerShortlist> shortlists = shortlistC.getAllShortlistedCleaners(uid);
+        List<CleanerShortlist> shortlists = viewShortlistedCleanerC.viewShortlistedCleaner(uid);
         List<UserAccount> cleanersShortlist = userAccountC.getCleanerAccountsFromShortlist(shortlists);
         List<Integer> servicesCountList = serviceListingC.getServiceListingsCountFromShortlist(shortlists);
         
@@ -934,7 +1070,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        List<CleanerShortlist> shortlists = shortlistC.searchShortlistedCleaners(uid, query);
+        List<CleanerShortlist> shortlists = searchShortlistedCleanerC.searchShortlistedCleaner(uid, query);
         List<UserAccount> cleanersShortlist = userAccountC.getCleanerAccountsFromShortlist(shortlists);
         List<Integer> servicesCountList = serviceListingC.getServiceListingsCountFromShortlist(shortlists);
         
@@ -964,7 +1100,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        List<Booking> bookings = bookingC.getAllBookingsByHomeOwner(uid);
+        List<Booking> bookings = viewBookingHistoryC.viewBookingHistory(uid);
         List<ServiceListing> serviceListings = serviceListingC.getServiceListingsFromBookings(bookings);
         List<UserAccount> cleaners = serviceListingC.getCleanerAccountsFromBookings(bookings);
         
@@ -981,7 +1117,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        List<Booking> bookings = bookingC.searchHomeOwnerBookings(uid, query);
+        List<Booking> bookings = searchBookingHistoryC.searchBookingHistory(uid, query);
         List<ServiceListing> serviceListings = serviceListingC.getServiceListingsFromBookings(bookings);
         List<UserAccount> cleaners = serviceListingC.getCleanerAccountsFromBookings(bookings);
         

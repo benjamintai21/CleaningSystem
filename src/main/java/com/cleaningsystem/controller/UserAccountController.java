@@ -11,45 +11,8 @@ import com.cleaningsystem.entity.UserProfile;
 
 @Service
 public class UserAccountController {
-    
     @Autowired
 	private UserAccount userAccount;
-
-    public UserAccount login(String username, String password, int profileId) {
-        return userAccount.login(username, password, profileId);	
-    }
-
-    public boolean createAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
-        return userAccount.insertUserAccount(name, age, dob, gender, address, email, username, password, profileId);
-    }
-
-    public UserAccount viewUserAccount(int uid) {
-        return userAccount.getUserById(uid);
-    }
-
-    public UserAccount viewUserAccount(String username) {
-        return userAccount.getUserByUsername(username);
-    }
-
-    public boolean updateUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId, int UId) {
-        return userAccount.updateUserAccount(name, age, dob, gender, address, email, username, password, profileId, UId);
-    }
-
-    public boolean setSuspensionStatus(int uid, boolean suspended) {
-        return userAccount.setSuspensionStatus(uid, suspended);
-    }
-
-    public List<UserAccount> searchUser(String keyword) {
-        return userAccount.searchUsersByUsername(keyword);
-    }
-
-    public List<UserAccount> searchUser(int profileId) {
-        return userAccount.searchUsersByProfileId(profileId);
-    }
-
-    public List<UserAccount> getAllUsers() {
-        return userAccount.getAllUsers();
-    }
 
     public String getProfileNameByUid(int uid) {
         return userAccount.getProfileNameByUid(uid);

@@ -85,7 +85,7 @@ public class UserAccount {
 		List<Integer> usersPerProfileCount = new ArrayList<>();
 
         for (UserProfile userProfile : userProfiles) {
-            List<UserAccount> userAccounts = searchUsersByProfileId(userProfile.getProfileId());
+            List<UserAccount> userAccounts = searchUserAccount(userProfile.getProfileId());
             usersPerProfileCount.add(userAccounts.size());
         }
 		return usersPerProfileCount;
@@ -95,7 +95,7 @@ public class UserAccount {
 		List<String> cleanersName = new ArrayList<>();
         
         for (ServiceListing listing : serviceListings) {
-            UserAccount user = getUserById(listing.getCleanerId());
+            UserAccount user = viewUserAccount(listing.getCleanerId());
             String cleanerName = user.getName();
             cleanersName.add(cleanerName);
 		}
@@ -106,7 +106,7 @@ public class UserAccount {
         List<UserAccount> cleanersShortlist = new ArrayList<>();
         
         for (CleanerShortlist shortlist : shortlists) {
-            UserAccount cleaner = getUserById(shortlist.getCleanerId());
+            UserAccount cleaner = viewUserAccount(shortlist.getCleanerId());
             cleanersShortlist.add(cleaner);
         }
         return cleanersShortlist;
@@ -136,14 +136,14 @@ public class UserAccount {
         return users.isEmpty() ? null : users.get(0);
     }
 
-    public boolean insertUserAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
+    public boolean createAccount(String name, int age, String dob, String gender, String address, String email, String username, String password, int profileId) {
         java.sql.Date sqlDob = java.sql.Date.valueOf(dob);
         return jdbcTemplate.update(CREATE_USER_ACCOUNT, 
             name,age,sqlDob,gender,address,email,username,password,profileId,
             new Date(System.currentTimeMillis())) > 0;
     }
 
-    public UserAccount getUserById(int uid) {
+    public UserAccount viewUserAccount(int uid) {
         List<UserAccount> users = jdbcTemplate.query(GET_USER_ACCOUNT_BY_ID, userRowMapper, uid);
         return users.isEmpty() ? null : users.get(0);
     }
@@ -159,19 +159,19 @@ public class UserAccount {
             name,age,sqlDob,gender,address,email,username,password,profileId, Uid) > 0;
     }
 
-    public boolean setSuspensionStatus(int uid, boolean suspended) {
+    public boolean suspendUserAccount(int uid, boolean suspended) {
         return jdbcTemplate.update(SET_ACCOUNT_SUSPENSION_STATUS, suspended, uid) > 0;
     }
 
-    public List<UserAccount> searchUsersByUsername(String keyword) {
+    public List<UserAccount> searchUserAccount(String keyword) {
         return jdbcTemplate.query(SEARCH_USER_ACCOUNT_BY_USERNAME, userRowMapper, "%" + keyword + "%");
     }
 
-    public List<UserAccount> searchUsersByProfileId(int profileId) {
+    public List<UserAccount> searchUserAccount(int profileId) {
         return jdbcTemplate.query(SEARCH_USER_ACCOUNT_BY_PROFILEID, userRowMapper, profileId);
     }
 
-    public List<UserAccount> getAllUsers() {
+    public List<UserAccount> searchUserAccount() {
         return jdbcTemplate.query(GET_ALL_USER_ACCOUNT, userRowMapper);
     }
 

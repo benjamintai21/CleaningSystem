@@ -2,7 +2,7 @@ package com.cleaningsystem.entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+// import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.cleaningsystem.entity.Report;
@@ -10,7 +10,7 @@ import com.cleaningsystem.entity.Report;
 import static com.cleaningsystem.db.Queries.*;
 
 import java.sql.Date;
-import java.sql.ResultSet;
+// import java.sql.ResultSet;
 import java.time.LocalDate;
 
 @Component
@@ -69,20 +69,20 @@ public class Report {
     @Autowired
     private UserProfile userProfile;
 
-    private final RowMapper<Report> listingRowMapper = (ResultSet rs, int rowNum) -> {
-        Report report = new Report();
-        report.setReportId(rs.getInt("reportId")); 
-	    report.setType(rs.getString("type")); 
-        report.setDate(rs.getDate("date").toLocalDate()); 
-        report.setNewHomeOwners(rs.getInt("new_homeOwners"));
-        report.setTotalHomeOwners(rs.getInt("total_homeOwners")); 
-        report.setNewCleaner(rs.getInt("new_cleaners"));
-        report.setTotalCleaner(rs.getInt("total_cleaners"));
-        report.setNoOfShortlists(rs.getInt("total_shortlists"));
-        report.setNoOfBookings(rs.getInt("total_bookings"));
+    // private final RowMapper<Report> listingRowMapper = (ResultSet rs, int rowNum) -> {
+    //     Report report = new Report();
+    //     report.setReportId(rs.getInt("reportId")); 
+	//     report.setType(rs.getString("type")); 
+    //     report.setDate(rs.getDate("date").toLocalDate()); 
+    //     report.setNewHomeOwners(rs.getInt("new_homeOwners"));
+    //     report.setTotalHomeOwners(rs.getInt("total_homeOwners")); 
+    //     report.setNewCleaner(rs.getInt("new_cleaners"));
+    //     report.setTotalCleaner(rs.getInt("total_cleaners"));
+    //     report.setNoOfShortlists(rs.getInt("total_shortlists"));
+    //     report.setNoOfBookings(rs.getInt("total_bookings"));
 
-        return report;
-    };
+    //     return report;
+    // };
     
     public int getNewAccounts (String role, String range) {
         int profileId = userProfile.getProfileIdByName(role);

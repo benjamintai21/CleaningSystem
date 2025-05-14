@@ -59,12 +59,12 @@ public class ServiceShortlist {
         return shortlists.isEmpty() ? null : shortlists.get(0);
     }
 
-    public List<ServiceShortlist> searchShortlistedServices(int homeownerId, String keyword) {
+    public List<ServiceShortlist> searchShortlistedService(int homeownerId, String keyword) {
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_SHORTLISTED_SERVICE_BY_NAME, listingRowMapper, homeownerId, pattern);
     }
 
-    public List<ServiceShortlist> getAllShortlistedServices(int homeownerId) {
+    public List<ServiceShortlist> viewShortlistedService(int homeownerId) {
         return jdbcTemplate.query(GET_ALL_SHORTLISTED_SERVICES, listingRowMapper, homeownerId);
     }
 

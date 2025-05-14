@@ -51,11 +51,11 @@ public class CleanerShortlist {
         return rows_affected > 0;
     }
 
-    public List<CleanerShortlist> getAllShortlistedCleaners(int homeownerId) {
+    public List<CleanerShortlist> viewShortlistedCleaner(int homeownerId) {
         return jdbcTemplate.query(GET_ALL_SHORTLISTED_CLEANERS, listingRowMapper2, homeownerId);
     }
 
-    public List<CleanerShortlist> searchShortlistedCleaners(int homeownerId, String keyword) {
+    public List<CleanerShortlist> searchShortlistedCleaner(int homeownerId, String keyword) {
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_SHORTLISTED_CLEANER_BY_USERNAME, listingRowMapper2, homeownerId, pattern);
     }

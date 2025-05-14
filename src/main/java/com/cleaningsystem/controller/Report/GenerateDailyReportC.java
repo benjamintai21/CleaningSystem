@@ -1,4 +1,4 @@
-package com.cleaningsystem.controller;
+package com.cleaningsystem.controller.Report;
 
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;

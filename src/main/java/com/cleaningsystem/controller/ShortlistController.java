@@ -36,28 +36,10 @@ public class ShortlistController {
         return serviceShortlist.getShortlistById(shortlistId, homeownerId);
     }
 
-    public List<ServiceShortlist> searchShortlistedServices(int homeownerId, String keyword) {
-        return serviceShortlist.searchShortlistedServices(homeownerId, keyword);
-    }
-
-    
-
     // public boolean DeleteShortlist(int serviceId) {
     //     return shortlistDAO.deleteListing(serviceId);
     // }
-
-    public List<ServiceShortlist> getAllShortlistedServices(int homeownerId) {
-        return serviceShortlist.getAllShortlistedServices(homeownerId);
-    } 
-
-    public List<CleanerShortlist> getAllShortlistedCleaners(int homeownerId) {
-        return cleanerShortlist.getAllShortlistedCleaners(homeownerId);
-    } 
     
-    public List<CleanerShortlist> searchShortlistedCleaners(int homeownerId, String keyword) {
-        return cleanerShortlist.searchShortlistedCleaners(homeownerId, keyword);
-    }
-
     public List<ServiceShortlist> getNumberOfShortlists(int serviceId){
         return serviceShortlist.getNumberOfShortlists(serviceId);
     }
