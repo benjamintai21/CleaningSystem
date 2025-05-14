@@ -43,7 +43,7 @@
 
     <!-- Back Button -->
     <div class="register-container">
-      <<a th:href="@{/UserAdminHome}" class="back-btn">← Back</a>
+      <a th:href="@{/UserAdminHome}" class="back-btn">← Back</a>
 
       <!-- Account Info Box -->
       <div class="account-box" th:object="${userAccountInfo}">
@@ -66,7 +66,7 @@
 
       <!-- Buttons -->
         <div class="form-actions">
-          <a th:href="@{/UpdateUserAccount(username=${userAccountInfo.username})}" class="link-btn">Update Info</a>
+          <a th:href="@{/UpdateUserAccount(uid=${userAccountInfo.uid})}" class="link-btn">Update Info</a>
           <button th:if="${userAccountInfo.suspended}" type="button" class="submit-btn" onclick="showModal2()">Unsuspend</button>
           <button th:if="!${userAccountInfo.suspended}" type="button" class="submit-btn" onclick="showModal()">Suspend</button>
         </div>

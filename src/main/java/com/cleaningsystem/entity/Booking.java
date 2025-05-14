@@ -63,17 +63,17 @@ public class Booking {
         return jdbcTemplate.update(CREATE_BOOKING, serviceId, homeownerId, status) > 0;
     }
 
-    public List<Booking> getAllBookingsByHomeOwner(int homeownerId) {
+    public List<Booking> viewBookingHistory(int homeownerId) {
         return jdbcTemplate.query(GET_ALL_BOOKINGS_BY_HOMEOWNER, listingRowMapper, homeownerId);
     }
 
-    public List<Booking> searchHomeOwnerBookings(int homeownerId, String keyword) {
+    public List<Booking> searchBookingHistory(int homeownerId, String keyword) {
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_HOMEOWNER_BOOKINGS, listingRowMapper, homeownerId, pattern);
     }
 
     // CLeaner
-    public List<Booking> getConfirmedMatches(int cleanerId) {
+    public List<Booking> viewCompletedBooking(int cleanerId) {
         return jdbcTemplate.query(GET_CONFIRMED_MATCHES, listingRowMapper, cleanerId);
     }
 
@@ -82,7 +82,7 @@ public class Booking {
         return bookings.isEmpty() ? null : bookings.get(0);
     }
 
-    public List<Booking> searchConfirmedMatches(int cleanerId, String keyword) {
+    public List<Booking> searchCompletedBooking(int cleanerId, String keyword) {
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_CONFIRMED_MATCHES, listingRowMapper, cleanerId, pattern);
     }
