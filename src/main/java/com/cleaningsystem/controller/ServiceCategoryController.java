@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cleaningsystem.entity.ServiceCategory;
+import com.cleaningsystem.entity.ServiceListing;
 
 @Service
 public class ServiceCategoryController {
@@ -40,4 +41,13 @@ public class ServiceCategoryController {
     public List<ServiceCategory> getAllCategories() {
         return serviceCategory.getAllCategories();
     }
+
+    public List<String> getAllCategoryNamesByServiceListings(List<ServiceListing> serviceListings) {
+        return serviceCategory.getAllCategoryNamesByServiceListings(serviceListings);
+	}
+
+    public List<String> getCategoriesName(List<ServiceListing> serviceListings){
+        return serviceCategory.getCategoriesName(serviceListings);
+    }
+
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\entity\ServiceListing.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\ServiceListingController.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\entity\UserAccount.java
@@ -21,3 +22,26 @@ E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\User
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\ServiceCategoryController.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\entity\CleanerShortlist.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\GenerateMonthlyReportC.java
+=======
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\CleaningSystemApplication.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\entity\CleanerShortlist.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\entity\UserProfile.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\entity\UserAccount.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserProfileController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\BookingController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\entity\ServiceShortlist.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\boundary\Boundary.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\ServiceListingController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\entity\ServiceListing.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\ReportController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\db\DatabaseConnection.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\ServiceCategoryController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\entity\Report.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\db\Queries.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\ShortlistController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\entity\ServiceCategory.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserAccountController.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\config\DatabaseConfig.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\config\WebConfig.java
+C:\Users\andyn\Desktop\CleaningSystem\src\main\java\com\cleaningsystem\entity\Booking.java
+>>>>>>> 905251bc618a1a62bc4f38d7504cd38d8da89312

@@ -1,10 +1,35 @@
+<<<<<<< HEAD
 com\cleaningsystem\controller\ShortlistController.class
 com\cleaningsystem\controller\UserProfileController.class
 com\cleaningsystem\CleaningSystemApplication.class
 com\cleaningsystem\controller\UserAccountController.class
 com\cleaningsystem\controller\ServiceCategoryController.class
 com\cleaningsystem\controller\ServiceListingController.class
+=======
+com\cleaningsystem\entity\Booking.class
+com\cleaningsystem\controller\ShortlistController.class
+com\cleaningsystem\controller\UserProfileController.class
+com\cleaningsystem\controller\ReportController.class
+com\cleaningsystem\entity\Report.class
+com\cleaningsystem\entity\ServiceCategory.class
+com\cleaningsystem\entity\UserAccount.class
+com\cleaningsystem\CleaningSystemApplication.class
+com\cleaningsystem\entity\ServiceListing$Status.class
+com\cleaningsystem\controller\UserAccountController.class
+com\cleaningsystem\boundary\Boundary.class
+com\cleaningsystem\entity\Booking$Status.class
+com\cleaningsystem\controller\ServiceCategoryController.class
+com\cleaningsystem\controller\ServiceListingController.class
+com\cleaningsystem\entity\UserProfile.class
+com\cleaningsystem\db\Queries.class
+>>>>>>> 905251bc618a1a62bc4f38d7504cd38d8da89312
 com\cleaningsystem\db\DatabaseConnection.class
+com\cleaningsystem\entity\ServiceShortlist.class
+com\cleaningsystem\entity\ServiceListing.class
 com\cleaningsystem\config\DatabaseConfig.class
 com\cleaningsystem\config\WebConfig.class
+<<<<<<< HEAD
+=======
+com\cleaningsystem\entity\CleanerShortlist.class
+>>>>>>> 905251bc618a1a62bc4f38d7504cd38d8da89312
 com\cleaningsystem\controller\BookingController.class
