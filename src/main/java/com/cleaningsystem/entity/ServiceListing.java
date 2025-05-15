@@ -222,7 +222,7 @@ public class ServiceListing {
         return jdbcTemplate.query(GET_ALL_SERVICE_LISTINGS_BY_ID, listingRowMapper, cleanerId);
     }
 
-    public ServiceListing getLastListing() {
+    public ServiceListing viewServiceListing() {
         List<ServiceListing> listings = jdbcTemplate.query(GET_MAX_SERVICELISTING, listingRowMapper);
         return listings.isEmpty() ? null : listings.get(0);
     }

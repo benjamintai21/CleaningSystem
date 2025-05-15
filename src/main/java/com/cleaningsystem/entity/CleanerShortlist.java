@@ -44,7 +44,7 @@ public class CleanerShortlist {
         return cleanerShortlist;
     };
 
-    public boolean saveToCleanerShortlist(int homeownerId, int cleanerId) {
+    public boolean shortlistCleaner(int homeownerId, int cleanerId) {
         int rows_affected = jdbcTemplate.update(SAVE_SHORTLISTED_CLEANER, homeownerId, 
             cleanerId);
 

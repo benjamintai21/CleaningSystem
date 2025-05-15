@@ -42,7 +42,9 @@
 
     <!-- Top section with logo and nav -->
     <div class="header-box">
-      <div class="logo">Logo</div>
+      <div class="navbar-logo">
+        <img th:src="@{images/logo.png}" alt="" style="width: 70px; height: 70px;">
+      </div>
       <div class="nav-actions">
         <a th:href="@{/UserAdminHome}" class="nav-home">Home</a>
         <a th:href="@{/Logout}" class="logout-btn">Logout</a>
@@ -95,7 +97,7 @@
       <!-- Action Buttons -->
       <div class="form-actions-wrapper">
         <div class="form-actions">
-          <a th:href="@{/UpdateUserProfile(profileName=${userProfileInfo.profileName})}" class="link-btn">Update Info</a>
+          <a th:href="@{/UpdateUserProfile(profileId=${userProfileInfo.profileId})}" class="link-btn">Update Info</a>
           <button th:if="${userProfileInfo.suspended}" type="button" class="submit-btn" onclick="showModal2()">Unsuspend</button>
           <button th:if="!${userProfileInfo.suspended}" type="button" class="submit-btn" onclick="showModal()">Suspend</button>
         </div>

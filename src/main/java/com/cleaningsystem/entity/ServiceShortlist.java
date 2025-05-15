@@ -47,16 +47,11 @@ public class ServiceShortlist {
         return serviceShortlists;
     };
 
-    public boolean saveToServiceShortlist(int homeownerId, int serviceId) {
+    public boolean shortlistService(int homeownerId, int serviceId) {
         int rows_affected = jdbcTemplate.update(SAVE_SHORTLISTED_SERVICE, 
             homeownerId, serviceId);
 
         return rows_affected > 0;
-    }
-
-    public ServiceShortlist getShortlistById(int shortlistId, int homeownerId) {
-        List<ServiceShortlist> shortlists = jdbcTemplate.query(GET_SHORTLIST_BY_ID, listingRowMapper, shortlistId, homeownerId);
-        return shortlists.isEmpty() ? null : shortlists.get(0);
     }
 
     public List<ServiceShortlist> searchShortlistedService(int homeownerId, String keyword) {
@@ -70,11 +65,6 @@ public class ServiceShortlist {
 
     public List<ServiceShortlist> getNumberofViews(int cleanerId){
         return jdbcTemplate.query(GET_NO_OF_VIEWS, listingRowMapper, cleanerId);
-    }
-
-    public List<ServiceShortlist> getNumberOfShortlists(int serviceId){
-        return jdbcTemplate.query(GET_NO_OF_SHORTLISTS, listingRowMapper, serviceId);
-        //eg SELECT COUNT(*) FROM SHORTLISTEDSERVICES WHERE cleanerId = ? GROUP BY cleanerId;
     }
 
     public boolean checkShortlistedServices(int serviceId) {

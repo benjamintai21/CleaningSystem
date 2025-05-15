@@ -30,8 +30,6 @@ public class Queries {
 
     public static final String GET_PROFILE_ID_BY_NAME = "SELECT profileId FROM USERPROFILE WHERE profilename = ?";
 
-    public static final String GET_PROFILE_NAMES = "SELECT profilename FROM db_cleaningsystem.userprofile ORDER BY profileId";
-
     public static final String UPDATE_USER_PROFILE = "UPDATE USERPROFILE SET profilename = ?, description = ?, suspension = ? WHERE profileId = ?"; 
 
     public static final String SET_PROFILE_SUSPENSION_STATUS = "UPDATE USERPROFILE SET suspension = ? WHERE profileId = ?";
@@ -54,8 +52,6 @@ public class Queries {
     public static final String SEARCH_MY_SERVICE_LISTING_BY_ID = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ? and name LIKE ?";
 
     public static final String GET_ALL_SERVICE_LISTINGS_BY_ID = "SELECT * FROM SERVICELISTINGS WHERE cleanerId = ?";
-
-    public static final String GET_NO_OF_SHORTLISTS = "SELECT shortlists FROM SERVICELISTINGS WHERE cleanerId = ?";
    
     public static final String GET_NO_OF_VIEWS = "SELECT views FROM SERVICELISTINGS where cleanerId = ?";
 
@@ -91,8 +87,6 @@ public class Queries {
 
     public static final String SAVE_SHORTLISTED_CLEANER = "INSERT INTO SHORTLISTEDCLEANERS (homeownerId, cleanerId) VALUES (?, ?)";
 
-    public static final String GET_SHORTLIST_BY_ID = "SELECT * FROM SHORTLISTEDSERVICES WHERE serviceId = ? AND homeownerId = ?";
-
     public static final String GET_ALL_SHORTLISTED_SERVICES = "SELECT * FROM SHORTLISTEDSERVICES WHERE homeownerId = ?";
 
     public static final String GET_ALL_SHORTLISTED_CLEANERS = "SELECT * FROM SHORTLISTEDCLEANERS WHERE homeownerId = ?";
@@ -123,9 +117,6 @@ public class Queries {
     public static final String GET_CONFIRMED_MATCHES = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ?";
 
     public static final String SEARCH_CONFIRMED_MATCHES = "SELECT bh.* FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ? AND sl.name LIKE ?";
-
-    public static final String GET_BOOKING_BY_ID = "SELECT * FROM BOOKING WHERE bookingId = ?";
-    
 
     //New Account Created
     public static final String GET_DAILY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND DATE(accountCreated) = CURRENT_DATE";

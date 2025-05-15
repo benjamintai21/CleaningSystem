@@ -51,11 +51,11 @@ public class ServiceCategory {
     public void setDescription(String new_description){this.description = new_description;}
 
     // Miscellanous
-    public List<String> getAllCategoryNamesByServiceListings(List<ServiceListing> serviceListings) {
+    public List<String> searchServiceCategoryNamesByServiceListings(List<ServiceListing> serviceListings) {
         List<String> categoriesName = new ArrayList<>();
         
         for (ServiceListing listing : serviceListings) {
-            ServiceCategory category = getCategoryById(listing.getCategoryId());
+            ServiceCategory category = viewServiceCategory(listing.getCategoryId());
             String categoryType = category.getType();
             String categoryName = category.getName();
             String categoryTypeandName = categoryType + "-" + categoryName;
@@ -65,11 +65,11 @@ public class ServiceCategory {
         return categoriesName;
 	}
 
-    public List<String> getCategoriesName(List<ServiceListing> serviceListings){
+    public List<String> searchAllServiceCategoryNames(List<ServiceListing> serviceListings){
         List<String> categoriesName = new ArrayList<>();
         
         for (ServiceListing listing : serviceListings) {
-            ServiceCategory category = getCategoryById(listing.getCategoryId());
+            ServiceCategory category = viewServiceCategory(listing.getCategoryId());
             String categoryType = category.getType();
             String categoryName = category.getName();
             String categoryTypeandName = categoryType + "-" + categoryName;
@@ -95,29 +95,29 @@ public class ServiceCategory {
         return category;
     };
 
-    public boolean insertServiceCategory(String type,String name, String description){
+    public boolean createServiceCategory(String type,String name, String description){
         int rows_affected = jdbcTemplate.update(CREATE_SERVICE_CATEGORIES, 
                                                 type, name, description);
 
         return rows_affected > 0;
     }
 
-    public ServiceCategory getCategoryById(int categoryId){
+    public ServiceCategory viewServiceCategory(int categoryId){
         List<ServiceCategory> categories = jdbcTemplate.query(GET_SERVICE_CATEGORY_BY_ID, categoryRowMapper, categoryId);
         return categories.isEmpty() ? null : categories.get(0);
     }
 
-    public ServiceCategory getCategoryByName(String name){
+    public ServiceCategory viewServiceCategory(String name){
         List<ServiceCategory> categories = jdbcTemplate.query(GET_SERVICE_CATEGORY_BY_NAME, categoryRowMapper, name);
         return categories.isEmpty() ? null : categories.get(0);
     }
 
-    public boolean updateCategory(String type, String name, String description, int categoryId){
+    public boolean updateServiceCategory(String type, String name, String description, int categoryId){
         return jdbcTemplate.update(UPDATE_SERVICE_CATEGORY, type, name, description, categoryId) > 0;
     }
 
     @Transactional
-    public boolean deleteCategory(int categoryId){
+    public boolean deleteServiceCategory(int categoryId){
         try {
             boolean deleteRelatedListings = serviceListing.deleteListingByCategory(categoryId);
             if(!deleteRelatedListings){
@@ -136,11 +136,11 @@ public class ServiceCategory {
         }
     }
 
-    public List<ServiceCategory> searchCategoriesByName(String keyword){
+    public List<ServiceCategory> searchServiceCategory(String keyword){
         return jdbcTemplate.query(SEARCH_SERVICE_CATEGORY_BY_NAME, categoryRowMapper, "%" + keyword + "%");
     }
 
-    public List<ServiceCategory> getAllCategories(){
+    public List<ServiceCategory> searchServiceCategory(){
         return jdbcTemplate.query(GET_ALL_SERVICE_CATEGORIES, categoryRowMapper);
     } 
 }

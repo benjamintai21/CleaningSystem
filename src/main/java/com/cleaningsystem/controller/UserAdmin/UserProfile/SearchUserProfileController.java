@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cleaningsystem.entity.UserAccount;
 import com.cleaningsystem.entity.UserProfile;
 
 @Service
@@ -19,6 +20,10 @@ public class SearchUserProfileController {
     
 	public List<UserProfile> searchUserProfile(String keyword) {
 		return userProfile.searchUserProfile(keyword);
+	}
+
+	public List<String> searchUserProfileNamesForUserAccounts(List<UserAccount> userAccounts) {
+		return userProfile.searchUserProfileNamesForUserAccounts(userAccounts);
 	}
 
 }
