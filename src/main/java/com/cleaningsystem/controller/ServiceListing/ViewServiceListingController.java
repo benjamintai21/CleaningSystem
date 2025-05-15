@@ -23,4 +23,8 @@ public class ViewServiceListingController {
     public ServiceListing viewServiceListing(int serviceId, int cleanerId) {
         return serviceListing.viewServiceListing(serviceId, cleanerId);
     }
+
+    public ServiceListing viewServiceListing() {
+        return serviceListing.viewServiceListing();
+    }
 }

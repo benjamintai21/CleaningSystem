@@ -77,11 +77,6 @@ public class Booking {
         return jdbcTemplate.query(GET_CONFIRMED_MATCHES, listingRowMapper, cleanerId);
     }
 
-    public Booking getBookingById(int bookingId){
-        List<Booking> bookings = jdbcTemplate.query(GET_BOOKING_BY_ID, listingRowMapper, bookingId);
-        return bookings.isEmpty() ? null : bookings.get(0);
-    }
-
     public List<Booking> searchCompletedBooking(int cleanerId, String keyword) {
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_CONFIRMED_MATCHES, listingRowMapper, cleanerId, pattern);

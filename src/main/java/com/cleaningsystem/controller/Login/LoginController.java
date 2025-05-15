@@ -1,4 +1,4 @@
-package com.cleaningsystem.controller;
+package com.cleaningsystem.controller.Login;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

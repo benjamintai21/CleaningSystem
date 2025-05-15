@@ -1,21 +1,31 @@
 package com.cleaningsystem.boundary;
 
-import com.cleaningsystem.controller.UserAccountController;
-import com.cleaningsystem.controller.UserProfileController;
+import com.cleaningsystem.controller.Booking.AddtoBookingController;
 import com.cleaningsystem.controller.Booking.SearchBookingHistoryController;
 import com.cleaningsystem.controller.Booking.SearchCompletedBookingController;
 import com.cleaningsystem.controller.Booking.ViewBookingHistoryController;
 import com.cleaningsystem.controller.Booking.ViewCompletedBookingController;
+import com.cleaningsystem.controller.Login.LoginController;
 import com.cleaningsystem.controller.Report.GenerateDailyReportC;
 import com.cleaningsystem.controller.Report.GenerateMonthlyReportC;
 import com.cleaningsystem.controller.Report.GenerateWeeklyReportC;
+import com.cleaningsystem.controller.ServiceCategory.CreateServiceCategoryController;
+import com.cleaningsystem.controller.ServiceCategory.DeleteServiceCategoryController;
+import com.cleaningsystem.controller.ServiceCategory.SearchServiceCategoryController;
+import com.cleaningsystem.controller.ServiceCategory.SearchServiceCategoryNamesController;
+import com.cleaningsystem.controller.ServiceCategory.UpdateServiceCategoryController;
+import com.cleaningsystem.controller.ServiceCategory.ViewServiceCategoryController;
 import com.cleaningsystem.controller.ServiceListing.CreateServiceListingController;
 import com.cleaningsystem.controller.ServiceListing.DeleteServiceListingController;
+import com.cleaningsystem.controller.ServiceListing.OthersServiceListingController;
 import com.cleaningsystem.controller.ServiceListing.SearchServiceListingController;
 import com.cleaningsystem.controller.ServiceListing.UpdateServiceListingController;
 import com.cleaningsystem.controller.ServiceListing.ViewServiceListingController;
 import com.cleaningsystem.controller.Shortlist.ViewShortlistedCleanerController;
 import com.cleaningsystem.controller.Shortlist.ViewShortlistedServiceController;
+import com.cleaningsystem.controller.Shortlist.AddToShortlistController;
+import com.cleaningsystem.controller.Shortlist.DeleteFromShortlistController;
+import com.cleaningsystem.controller.Shortlist.InShortlistController;
 import com.cleaningsystem.controller.Shortlist.SearchShortlistedCleanerController;
 import com.cleaningsystem.controller.Shortlist.SearchShortlistedServiceController;
 import com.cleaningsystem.controller.UserAdmin.UserAccount.CreateUserAccountController;
@@ -39,11 +49,6 @@ import com.cleaningsystem.entity.UserProfile;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.cleaningsystem.controller.ServiceListingController;
-import com.cleaningsystem.controller.ShortlistController;
-import com.cleaningsystem.controller.ServiceCategoryController;
-import com.cleaningsystem.controller.BookingController;
-import com.cleaningsystem.controller.LoginController;
 
 import java.util.List;
 import java.util.Optional;
@@ -115,7 +120,13 @@ public class Boundary {
     @Autowired
     private SearchServiceListingController searchServiceListingC;
 
+    @Autowired 
+    private OthersServiceListingController othersServiceListingC;
+
     // Booking ----------------------------------------------------------
+    @Autowired
+    private AddtoBookingController addtoBookingC;
+
     @Autowired
     private ViewCompletedBookingController viewCompletedBookingC;
 
@@ -129,6 +140,15 @@ public class Boundary {
     private SearchBookingHistoryController searchBookingHistoryC;
 
     // Shortlist ---------------------------------------------------------
+    @Autowired
+    private AddToShortlistController addToShortlistC;
+
+    @Autowired
+    private DeleteFromShortlistController deleteFromShortlistC;
+
+    @Autowired
+    private InShortlistController inShortlistC;  
+
     @Autowired
     private ViewShortlistedCleanerController viewShortlistedCleanerC;
 
@@ -151,30 +171,49 @@ public class Boundary {
     @Autowired
     private GenerateMonthlyReportC generateMonthlyReportC;
 
-    // ---------------------------------------------------------------------
+    // Service Category ------------------------------------------------------
     @Autowired
-    private UserAccountController userAccountC;
+    private CreateServiceCategoryController createServiceCategoryC;
 
     @Autowired
-    private UserProfileController userProfileC;
-
-    @Autowired 
-    private ServiceListingController serviceListingC;
+    private ViewServiceCategoryController viewServiceCategoryC;
 
     @Autowired
-    private ServiceCategoryController serviceCategoryC;
+    private UpdateServiceCategoryController updateServiceCategoryC;
 
     @Autowired
-    private BookingController bookingC;
+    private DeleteServiceCategoryController deleteServiceCategoryC;
 
     @Autowired
-    private ShortlistController shortlistC;
+    private SearchServiceCategoryController searchServiceCategoryC;
+
+    @Autowired
+    private SearchServiceCategoryNamesController searchServiceCategoryNamesC;
+
+    // CHECK ACCESSSSSSSSSSSSSSSSSSSS--------------------------------------------------
+    public Optional<Integer> checkAccess(HttpSession session, String userProfileName) {
+        Object uidObj = session.getAttribute("uid");
+        if (uidObj == null) {
+            // Redirect to login or error page if user not logged in
+            return Optional.empty();
+        }
+        int uid = (int) uidObj;
+        UserAccount userAccount = viewUserAccountC.viewUserAccount(uid);
+        UserProfile userProfile = viewUserProfileC.viewUserProfile(userAccount.getProfileId());
+        String profileName = userProfile.getProfileName();
+        
+        if (!profileName.equals(userProfileName)){
+            return Optional.empty();
+        }
+
+        return Optional.of(uid);
+    }
 
     @GetMapping("/")
     public String showHomePage(Model model){
         // Cleaners
         List<UserAccount> cleaners = searchUserAccountC.searchUserAccount(4);
-        List<Integer> servicesCountList = serviceListingC.getServicesCountList();
+        List<Integer> servicesCountList = othersServiceListingC.getServicesCountList();
         List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing();
 
         model.addAttribute("serviceListings", serviceListings);
@@ -185,9 +224,9 @@ public class Boundary {
 
     @GetMapping("/Login")
     public String showLoginForm(Model model) {
-        List<String> userProfileNames = userProfileC.getProfileNames();
+        List<UserProfile> userProfiles = searchUserProfileC.searchUserProfile();
         model.addAttribute("loginForm", new UserAccount());
-        model.addAttribute("userProfileNames", userProfileNames);
+        model.addAttribute("userProfiles", userProfiles);
         return "login";
     }
 
@@ -230,22 +269,6 @@ public class Boundary {
         }
     }
 
-    // CHECK ACCESSSSSSSSSSSSSSSSSSSS--------------------------------------------------
-    public Optional<Integer> checkAccess(HttpSession session, String userProfileName) {
-        Object uidObj = session.getAttribute("uid");
-        if (uidObj == null) {
-            // Redirect to login or error page if user not logged in
-            return Optional.empty();
-        }
-        int uid = (int) uidObj;
-        String profileName = userAccountC.getProfileNameByUid(uid);
-        if (!profileName.equals(userProfileName)){
-            return Optional.empty();
-        }
-
-        return Optional.of(uid);
-    }
-
     //--AdminPage
     @GetMapping("/UserAdminHome")
     public String showUserAdminHome(HttpSession session, Model model) {
@@ -258,19 +281,28 @@ public class Boundary {
 
     @GetMapping("/CleanerHome")
     public String showCleanerHome(HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         model.addAttribute("username", session.getAttribute("username"));
         return "cleaner_home_page";
     }
 
     //Create User Account
     @GetMapping("/CleanerUserCreation")
-    public String showCleanerSignUpForm(Model model) {
+    public String showCleanerSignUpForm(HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         model.addAttribute("CleanerUserCreationForm", new UserAccount()); // Make sure this matches the form data type
         return "cleaner_user_creation"; // Ensure this matches the signup.html template
     }
 
     @PostMapping("/CleanerUserCreation")
-    public String processCleanerSignUp(@ModelAttribute UserAccount user, Model model) {
+    public String processCleanerSignUp(@ModelAttribute UserAccount user, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         user.setProfileId(4);
         boolean isSuccessful = createUserAccountC.createAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId()); 
 
@@ -308,7 +340,7 @@ public class Boundary {
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
         List<UserAccount> userAccounts = searchUserAccountC.searchUserAccount();
-        List<String> profileNames = userProfileC.getAllProfileNamesForUserAccounts(userAccounts);
+        List<String> profileNames = searchUserProfileC.searchUserProfileNamesForUserAccounts(userAccounts);
 
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("profileNames", profileNames);
@@ -384,7 +416,7 @@ public class Boundary {
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
         List<UserAccount> userAccounts = searchUserAccountC.searchUserAccount(query);
-        List<String> profileNames = userProfileC.getAllProfileNamesForUserAccounts(userAccounts);
+        List<String> profileNames = searchUserProfileC.searchUserProfileNamesForUserAccounts(userAccounts);
 
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("profileNames", profileNames);
@@ -393,13 +425,19 @@ public class Boundary {
 
     //Create User Profile
     @GetMapping("/CreateUserProfile")
-    public String createUserProfile(Model model) {
+    public String createUserProfile(HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         model.addAttribute("userProfileForm", new UserProfile());
         return "user_profile_creation";
     }
 
     @PostMapping("/CreateUserProfile")
-    public String processUserProfile(@ModelAttribute UserProfile userProfile, Model model) {
+    public String processUserProfile(@ModelAttribute UserProfile userProfile, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         boolean isSuccessful = createUserProfileC.createUserProfile(userProfile.getProfileName(), userProfile.getDescription(), userProfile.isSuspended());
 
         if (isSuccessful) {
@@ -413,7 +451,10 @@ public class Boundary {
 
     //View User Profile
     @GetMapping("/UserProfile")
-    public String showUserProfile(@RequestParam int profileId, Model model) {
+    public String showUserProfile(@RequestParam int profileId, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         UserProfile userProfile = viewUserProfileC.viewUserProfile(profileId);
         List<UserAccount> userAccounts = searchUserAccountC.searchUserAccount(userProfile.getProfileId());
         int usersCount = userAccounts.size();
@@ -425,9 +466,12 @@ public class Boundary {
     }
 
     @GetMapping("/ViewAllUserProfiles")
-    public String showUserProfileList(Model model) {
+    public String showUserProfileList(HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         List<UserProfile> userProfiles = searchUserProfileC.searchUserProfile();
-        List<Integer> usersPerProfileCount = userAccountC.getUsersPerProfileCount(userProfiles);
+        List<Integer> usersPerProfileCount = searchUserAccountC.searchUserAccountPerProfileCount(userProfiles);
 
         model.addAttribute("userProfiles", userProfiles);
         model.addAttribute("profilesUserCounter", usersPerProfileCount);
@@ -436,15 +480,20 @@ public class Boundary {
     
     //Update User Profile
     @GetMapping("/UpdateUserProfile")
-    public String updateUserProfile(@RequestParam String profileName, Model model) {
-        int profileId= userProfileC.getProfileIdByName(profileName);
+    public String updateUserProfile(@RequestParam int profileId, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         UserProfile userProfile = viewUserProfileC.viewUserProfile(profileId);
         model.addAttribute("updateUserProfileForm", userProfile);
         return "user_profile_update";
     }
 
     @PostMapping("/UpdateUserProfile")
-    public String processUpdateUserProfile(@ModelAttribute UserProfile userProfile, Model model) {
+    public String processUpdateUserProfile(@ModelAttribute UserProfile userProfile, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         boolean isSuccessful = updateUserProfileC.updateUserProfile(userProfile.getProfileName(), userProfile.getDescription(), userProfile.isSuspended(), userProfile.getProfileId());
 
         if (isSuccessful) {
@@ -458,32 +507,38 @@ public class Boundary {
 
     // Suspend User Profile
     @PostMapping("/SetProfileSuspensionStatus")
-    public String processProfileSuspensionStatus(@RequestParam boolean suspended, @ModelAttribute UserProfile profile, Model model) {
-    boolean isSuccessful = suspendUserProfileC.suspendUserProfile(profile.getProfileId(), suspended); 
+    public String processProfileSuspensionStatus(@RequestParam boolean suspended, @ModelAttribute UserProfile profile, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
+        boolean isSuccessful = suspendUserProfileC.suspendUserProfile(profile.getProfileId(), suspended); 
     
-    if (isSuccessful) {
+        if (isSuccessful) {
 
-        if (suspended) {
-        model.addAttribute("message", "User suspended successfully");
+            if (suspended) {
+            model.addAttribute("message", "User suspended successfully");
+            } else {
+            model.addAttribute("message", "User unsuspended successfully");
+            }
         } else {
-        model.addAttribute("message", "User unsuspended successfully");
+            if(suspended){
+            model.addAttribute("error", "Failed to suspend user");
+            } else {
+            model.addAttribute("error", "Failed to unsuspend user");
+            }
         }
-    } else {
-        if(suspended){
-        model.addAttribute("error", "Failed to suspend user");
-        } else {
-        model.addAttribute("error", "Failed to unsuspend user");
-        }
-    }
 
-    return "redirect:/UserProfile?profileId=" + profile.getProfileId();
+        return "redirect:/UserProfile?profileId=" + profile.getProfileId();
     }
 
     //Search User Profile
     @GetMapping("/searchUserProfile")
-    public String searchUserProfile(@RequestParam String query, Model model) {
+    public String searchUserProfile(@RequestParam String query, HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "User Admin");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
         List<UserProfile> userProfiles = searchUserProfileC.searchUserProfile(query);
-        List<Integer> usersPerProfileCount = userAccountC.getUsersPerProfileCount(userProfiles);
+        List<Integer> usersPerProfileCount = searchUserAccountC.searchUserAccountPerProfileCount(userProfiles);
 
         model.addAttribute("userProfiles", userProfiles);
         model.addAttribute("profilesUserCounter", usersPerProfileCount);
@@ -492,8 +547,11 @@ public class Boundary {
 
     //Cleaner
     @GetMapping("/CleanerCreateService")
-    public String showServiceListing(Model model) {
-        List<ServiceCategory> categories = serviceCategoryC.getAllCategories();
+    public String showServiceListing(HttpSession session, Model model) {
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
+
+        List<ServiceCategory> categories = searchServiceCategoryC.searchServiceCategory();
 
         model.addAttribute("serviceListing", new ServiceListing());
         model.addAttribute("serviceCategories", categories);
@@ -503,20 +561,17 @@ public class Boundary {
 
     @PostMapping("/CleanerCreateService")
     public String processServiceListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
-        Object uidObj = session.getAttribute("uid");
-        if (uidObj == null) {
-            // Redirect to login or error page if user not logged in
-            return "redirect:/Login";
-        }
-        int uid = (int) uidObj;
+        int uid;
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
         
         boolean isSuccessful = createServiceListingC.createServiceListing(serviceListing.getName(), uid , serviceListing.getCategoryId(),
                                                                         serviceListing.getDescription(), serviceListing.getPricePerHour(),
                                                                         serviceListing.getStartDate(), serviceListing.getEndDate(), serviceListing.getStatus());
         if (isSuccessful) {
-            ServiceListing latest = serviceListingC.getLastListing();
+            ServiceListing latest = viewServiceListingC.viewServiceListing();
             model.addAttribute("serviceListingInfo", latest);
-            model.addAttribute("serviceCategory", serviceCategoryC.viewServiceCategory(serviceListing.getCategoryId()));
+            model.addAttribute("serviceCategory", viewServiceCategoryC.viewServiceCategory(serviceListing.getCategoryId()));
             return "cleaner_view_service_listing";
         } else {
             model.addAttribute("error", "Service Listing creation failed! Please try again.");
@@ -527,15 +582,12 @@ public class Boundary {
     //View User Account
     @GetMapping("/ServiceListing")
     public String showServiceListing(@RequestParam int serviceId, HttpSession session, Model model) {
-        Object uidObj = session.getAttribute("uid");
-        if (uidObj == null) {
-            // Redirect to login or error page if user not logged in
-            return "redirect:/Login";
-        }
-        int uid = (int) uidObj;
+        int uid;
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         ServiceListing listing = viewServiceListingC.viewServiceListing(serviceId, uid);
-        ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
+        ServiceCategory category = viewServiceCategoryC.viewServiceCategory(listing.getCategoryId());
         model.addAttribute("serviceListingInfo", listing);
         model.addAttribute("serviceCategory", category);
         return "cleaner_view_service_listing";
@@ -543,12 +595,9 @@ public class Boundary {
 
     @GetMapping("/ViewAllServiceListings")
     public String showServiceListingList(HttpSession session, Model model) {
-        Object uidObj = session.getAttribute("uid");
-        if (uidObj == null) {
-            // Redirect to login or error page if user not logged in
-            return "redirect:/Login";
-        }
-        int uid = (int) uidObj;
+        int uid;
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         String query = "";
         List<ServiceListing> servicelistings = searchServiceListingC.searchServiceListing(uid, query);
@@ -567,20 +616,22 @@ public class Boundary {
 
         ServiceListing listing = viewServiceListingC.viewServiceListing(serviceId, uid);
         model.addAttribute("serviceListingInfo", listing);
-        model.addAttribute("serviceCategories", serviceCategoryC.getAllCategories());
+        model.addAttribute("serviceCategories", searchServiceCategoryC.searchServiceCategory());
         model.addAttribute("serviceStatuses", ServiceListing.Status.values()); 
         return "cleaner_update_service_listing";
     }
 
     @PostMapping("/CleanerUpdateService")
     public String processUpdateListing(@ModelAttribute ServiceListing serviceListing, Model model, HttpSession session) {
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
         boolean isSuccessful = updateServiceListingC.updateServiceListing(serviceListing.getName(), serviceListing.getCleanerId(),
                                                                     serviceListing.getCategoryId(), serviceListing.getDescription(),
                                                                     serviceListing.getPricePerHour(), serviceListing.getStartDate(),
                                                                     serviceListing.getEndDate(), serviceListing.getStatus(),
                                                                     serviceListing.getServiceId());
         if (isSuccessful) {
-            ServiceCategory category = serviceCategoryC.viewServiceCategory(serviceListing.getCategoryId());
+            ServiceCategory category = viewServiceCategoryC.viewServiceCategory(serviceListing.getCategoryId());
             model.addAttribute("serviceListingInfo", serviceListing);
             model.addAttribute("serviceCategory", category);
             model.addAttribute("message", "Successfully updated");
@@ -593,6 +644,8 @@ public class Boundary {
 
     @PostMapping("CleanerDeleteService")
     public String processDeleteListing(@ModelAttribute ServiceListing listing, Model model, HttpSession session) {
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { } else { return "redirect:/Login"; }
         boolean isSuccessful = deleteServiceListingC.deleteServiceListing(listing.getServiceId());
 
         if (isSuccessful) {
@@ -607,12 +660,9 @@ public class Boundary {
     //Search ServiceListing
     @GetMapping("/searchServiceListing")
     public String searchServiceListing(@RequestParam String query, HttpSession session, Model model) {
-        Object uidObj = session.getAttribute("uid");
-        if (uidObj == null) {
-            // Redirect to login or error page if user not logged in
-            return "redirect:/Login";
-        }
-        int uid = (int) uidObj;
+        int uid;
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         List<ServiceListing> servicelistings = searchServiceListingC.searchServiceListing(uid, query);
         model.addAttribute("serviceListings", servicelistings);
@@ -621,15 +671,12 @@ public class Boundary {
 
     @GetMapping("CleanerViewRecords")
     public String showPastRecords(HttpSession session, Model model){
-        Object uidObj = session.getAttribute("uid");
-        if (uidObj == null) {
-            // Redirect to login or error page if user not logged in
-            return "redirect:/Login";
-        }
-        int uid = (int) uidObj;
+        int uid;
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         List<Booking> matches = viewCompletedBookingC.viewCompletedBooking(uid);
-        List<ServiceListing> serviceListings = serviceListingC.getServiceListingsByBookings(uid);
+        List<ServiceListing> serviceListings = othersServiceListingC.getServiceListingsByBookings(uid);
 
         model.addAttribute("matches", matches);
         model.addAttribute("serviceListings", serviceListings);
@@ -639,15 +686,12 @@ public class Boundary {
     //Search ServiceListing
     @GetMapping("/searchCleanerRecord")
     public String searchPastRecords(@RequestParam String query, HttpSession session, Model model) {
-        Object uidObj = session.getAttribute("uid");
-        if (uidObj == null) {
-            // Redirect to login or error page if user not logged in
-            return "redirect:/Login";
-        }
-        int uid = (int) uidObj;
+        int uid;
+        Optional<Integer> result = checkAccess(session, "Cleaner");
+        if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         List<Booking> matches = searchCompletedBookingC.searchCompletedBooking(uid, query);
-        List<ServiceListing> serviceListings = serviceListingC.getServiceListingsByBookings(uid);
+        List<ServiceListing> serviceListings = othersServiceListingC.getServiceListingsByBookings(uid);
         
         model.addAttribute("matches", matches);
         model.addAttribute("serviceListings", serviceListings);
@@ -679,9 +723,9 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        boolean isSuccessful = serviceCategoryC.createServiceCategory(serviceCategory.getType(), serviceCategory.getName(), serviceCategory.getDescription());
+        boolean isSuccessful = createServiceCategoryC.createServiceCategory(serviceCategory.getType(), serviceCategory.getName(), serviceCategory.getDescription());
         if (isSuccessful) {
-            ServiceCategory category = serviceCategoryC.viewServiceCategory(serviceCategory.getName());
+            ServiceCategory category = viewServiceCategoryC.viewServiceCategory(serviceCategory.getName());
             return "redirect:/ServiceCategory?categoryId=" + category.getCategoryId();
         } else {
             model.addAttribute("error", "Service Category creation failed! Please try again.");
@@ -695,7 +739,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId); 
+        ServiceCategory serviceCategory = viewServiceCategoryC.viewServiceCategory(categoryId); 
 
         model.addAttribute("serviceCategoryInfo", serviceCategory);
         return "pm_service_category_info";
@@ -706,8 +750,8 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        List<ServiceCategory> serviceCategories = serviceCategoryC.getAllCategories();
-        List<Integer> serviceListingsCount = serviceListingC.getServiceListingsCount(serviceCategories);
+        List<ServiceCategory> serviceCategories = searchServiceCategoryC.searchServiceCategory();
+        List<Integer> serviceListingsCount = othersServiceListingC.getServiceListingsCount(serviceCategories);
         
         model.addAttribute("serviceCategories", serviceCategories);
         model.addAttribute("serviceListingsCount", serviceListingsCount);
@@ -720,7 +764,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        ServiceCategory serviceCategory = serviceCategoryC.viewServiceCategory(categoryId);
+        ServiceCategory serviceCategory = viewServiceCategoryC.viewServiceCategory(categoryId);
 
         model.addAttribute("updateServiceCategoryForm", serviceCategory);
         return "pm_update_service_category";
@@ -731,7 +775,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        boolean isSuccessful = serviceCategoryC.updateServiceCategory(category.getType(), category.getName(), category.getDescription(), category.getCategoryId());
+        boolean isSuccessful = updateServiceCategoryC.updateServiceCategory(category.getType(), category.getName(), category.getDescription(), category.getCategoryId());
 
         if (isSuccessful) {
             model.addAttribute("serviceCategoryInfo", category);
@@ -748,7 +792,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        boolean isSuccessful = serviceCategoryC.deleteServiceCategory(categoryId);
+        boolean isSuccessful = deleteServiceCategoryC.deleteServiceCategory(categoryId);
 
         if (isSuccessful) {
             model.addAttribute("message", "Service category deleted successfully");
@@ -764,8 +808,8 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        List<ServiceCategory> serviceCategories = serviceCategoryC.searchServiceCategory(query);
-        List<Integer> serviceListingsCount = serviceListingC.getServiceListingsCount(serviceCategories);
+        List<ServiceCategory> serviceCategories = searchServiceCategoryC.searchServiceCategory(query);
+        List<Integer> serviceListingsCount = othersServiceListingC.getServiceListingsCount(serviceCategories);
 
         model.addAttribute("serviceCategories", serviceCategories);
         model.addAttribute("serviceListingsCount", serviceListingsCount);
@@ -875,7 +919,7 @@ public class Boundary {
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
         List<UserAccount> cleaners = searchUserAccountC.searchUserAccount(4);
-        List<Integer> servicesCountList = serviceListingC.getServicesCountList();
+        List<Integer> servicesCountList = othersServiceListingC.getServicesCountList();
         List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing();
 
         model.addAttribute("serviceListings", serviceListings);
@@ -891,8 +935,8 @@ public class Boundary {
         if (result.isPresent()) { } else { return "redirect:/Login"; }
          
         List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing();
-        List<String> cleanersName = userAccountC.getAllCleanerNamesByServiceListings(serviceListings);
-        List<String> categoriesName = serviceCategoryC.getAllCategoryNamesByServiceListings(serviceListings);
+        List<String> cleanersName = searchUserAccountC.searchUserAccountNamesByServiceListings(serviceListings);
+        List<String> categoriesName = searchServiceCategoryNamesC.searchServiceCategoryNamesByServiceListings(serviceListings);
 
         model.addAttribute("serviceListings", serviceListings);
         model.addAttribute("cleanersName", cleanersName);
@@ -908,12 +952,12 @@ public class Boundary {
 
         // this function will auto +1 to view
         ServiceListing listing = viewServiceListingC.viewServiceListingAsHomeOwner(serviceId);
-        boolean isInServiceShortlist = shortlistC.isInServiceShortlist(serviceId);
+        boolean isInServiceShortlist = inShortlistC.isInServiceShortlist(serviceId);
 
         UserAccount user = viewUserAccountC.viewUserAccount(listing.getCleanerId());
         String cleanerName = user.getName();
 
-        ServiceCategory category = serviceCategoryC.viewServiceCategory(listing.getCategoryId());
+        ServiceCategory category = viewServiceCategoryC.viewServiceCategory(listing.getCategoryId());
         String categoryType = category.getType();
         String categoryName = category.getName();
         String categoryTypeandName = categoryType + "-" + categoryName;
@@ -934,8 +978,8 @@ public class Boundary {
 
         String query = "";
         List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing(cleanerId, query);
-        boolean isInCleanerShortlist = shortlistC.isInCleanerShortlist(cleanerId);
-        List<String> categoriesName = serviceCategoryC.getCategoriesName(serviceListings);
+        boolean isInCleanerShortlist = inShortlistC.isInCleanerShortlist(cleanerId);
+        List<String> categoriesName = searchServiceCategoryNamesC.searchAllServiceCategoryNames(serviceListings);
         int servicesCount = serviceListings.size();
 
         model.addAttribute("isInCleanerShortlist", isInCleanerShortlist);
@@ -954,8 +998,8 @@ public class Boundary {
 
         List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing(query);
         
-        List<String> cleanersName = userAccountC.getAllCleanerNamesByServiceListings(serviceListings);
-        List<String> categoriesName = serviceCategoryC.getAllCategoryNamesByServiceListings(serviceListings);
+        List<String> cleanersName = searchUserAccountC.searchUserAccountNamesByServiceListings(serviceListings);
+        List<String> categoriesName = searchServiceCategoryNamesC.searchServiceCategoryNamesByServiceListings(serviceListings);
 
         model.addAttribute("serviceListings", serviceListings);
         model.addAttribute("cleanersName", cleanersName);
@@ -970,7 +1014,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        shortlistC.shortlistService(uid, serviceId);
+        addToShortlistC.shortlistService(uid, serviceId);
 
         return "redirect:/ServiceShortlist";
     }
@@ -982,7 +1026,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        shortlistC.deleteShortlistedServices(uid, serviceId);
+        deleteFromShortlistC.deleteShortlistedServices(uid, serviceId);
 
         return "redirect:/ServiceShortlist";
     } 
@@ -995,9 +1039,9 @@ public class Boundary {
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         List<ServiceShortlist> shortlists = viewShortlistedServiceC.viewShortlistedService(uid);
-        List<ServiceListing> serviceShortList = serviceListingC.getAllServiceListingsFromShortlist(shortlists);
-        List<String> cleanersName = userAccountC.getAllCleanerNamesByServiceListings(serviceShortList);
-        List<String> categoriesName = serviceCategoryC.getAllCategoryNamesByServiceListings(serviceShortList);
+        List<ServiceListing> serviceShortList = othersServiceListingC.getAllServiceListingsFromShortlist(shortlists);
+        List<String> cleanersName = searchUserAccountC.searchUserAccountNamesByServiceListings(serviceShortList);
+        List<String> categoriesName = searchServiceCategoryNamesC.searchServiceCategoryNamesByServiceListings(serviceShortList);
 
         model.addAttribute("cleanersName", cleanersName);
         model.addAttribute("categoriesName", categoriesName);
@@ -1013,9 +1057,9 @@ public class Boundary {
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         List<ServiceShortlist> shortlists = searchShortlistedServiceC.searchShortlistedService(uid, query);
-        List<ServiceListing> serviceShortList = serviceListingC.getAllServiceListingsFromShortlist(shortlists);
-        List<String> cleanersName = userAccountC.getAllCleanerNamesByServiceListings(serviceShortList);
-        List<String> categoriesName = serviceCategoryC.getAllCategoryNamesByServiceListings(serviceShortList);
+        List<ServiceListing> serviceShortList = othersServiceListingC.getAllServiceListingsFromShortlist(shortlists);
+        List<String> cleanersName = searchUserAccountC.searchUserAccountNamesByServiceListings(serviceShortList);
+        List<String> categoriesName = searchServiceCategoryNamesC.searchServiceCategoryNamesByServiceListings(serviceShortList);
 
         model.addAttribute("cleanersName", cleanersName);
         model.addAttribute("categoriesName", categoriesName);
@@ -1030,7 +1074,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        shortlistC.shortlistCleaner(uid, cleanerId);
+        addToShortlistC.shortlistCleaner(uid, cleanerId);
 
         return "redirect:/CleanerShortlist";
     }
@@ -1042,7 +1086,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        shortlistC.deleteShortlistedCleaners(uid, cleanerId);
+        deleteFromShortlistC.deleteShortlistedCleaners(uid, cleanerId);
 
         return "redirect:/CleanerShortlist";
     }
@@ -1055,8 +1099,8 @@ public class Boundary {
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         List<CleanerShortlist> shortlists = viewShortlistedCleanerC.viewShortlistedCleaner(uid);
-        List<UserAccount> cleanersShortlist = userAccountC.getCleanerAccountsFromShortlist(shortlists);
-        List<Integer> servicesCountList = serviceListingC.getServiceListingsCountFromShortlist(shortlists);
+        List<UserAccount> cleanersShortlist = searchUserAccountC.searchUserAccountFromShortlist(shortlists);
+        List<Integer> servicesCountList = othersServiceListingC.getServiceListingsCountFromShortlist(shortlists);
         
         model.addAttribute("servicesCountList", servicesCountList);
         model.addAttribute("cleanersShortlist", cleanersShortlist);
@@ -1071,8 +1115,8 @@ public class Boundary {
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         List<CleanerShortlist> shortlists = searchShortlistedCleanerC.searchShortlistedCleaner(uid, query);
-        List<UserAccount> cleanersShortlist = userAccountC.getCleanerAccountsFromShortlist(shortlists);
-        List<Integer> servicesCountList = serviceListingC.getServiceListingsCountFromShortlist(shortlists);
+        List<UserAccount> cleanersShortlist = searchUserAccountC.searchUserAccountFromShortlist(shortlists);
+        List<Integer> servicesCountList = othersServiceListingC.getServiceListingsCountFromShortlist(shortlists);
         
         model.addAttribute("servicesCountList", servicesCountList);
         model.addAttribute("cleanersShortlist", cleanersShortlist);
@@ -1086,7 +1130,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
-        boolean isSuccessful = bookingC.addBooking(serviceId, uid, "confirmed");
+        boolean isSuccessful = addtoBookingC.addBooking(serviceId, uid, "confirmed");
         if (isSuccessful) {
             return "redirect:/MyBooking";
         } else {
@@ -1101,8 +1145,8 @@ public class Boundary {
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         List<Booking> bookings = viewBookingHistoryC.viewBookingHistory(uid);
-        List<ServiceListing> serviceListings = serviceListingC.getServiceListingsFromBookings(bookings);
-        List<UserAccount> cleaners = serviceListingC.getCleanerAccountsFromBookings(bookings);
+        List<ServiceListing> serviceListings = othersServiceListingC.getServiceListingsFromBookings(bookings);
+        List<UserAccount> cleaners = othersServiceListingC.getCleanerAccountsFromBookings(bookings);
         
         model.addAttribute("bookings", bookings);
         model.addAttribute("serviceListings", serviceListings);
@@ -1118,8 +1162,8 @@ public class Boundary {
         if (result.isPresent()) { uid = result.get(); } else { return "redirect:/Login"; }
 
         List<Booking> bookings = searchBookingHistoryC.searchBookingHistory(uid, query);
-        List<ServiceListing> serviceListings = serviceListingC.getServiceListingsFromBookings(bookings);
-        List<UserAccount> cleaners = serviceListingC.getCleanerAccountsFromBookings(bookings);
+        List<ServiceListing> serviceListings = othersServiceListingC.getServiceListingsFromBookings(bookings);
+        List<UserAccount> cleaners = othersServiceListingC.getCleanerAccountsFromBookings(bookings);
         
         model.addAttribute("bookings", bookings);
         model.addAttribute("serviceListings", serviceListings);

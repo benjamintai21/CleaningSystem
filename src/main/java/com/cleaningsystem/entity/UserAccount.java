@@ -81,7 +81,7 @@ public class UserAccount {
 	public void setSuspended(boolean new_suspended) {this.suspended = new_suspended;}
 
 	// Micellanous
-	public List<Integer> getUsersPerProfileCount(List<UserProfile> userProfiles){
+	public List<Integer> searchUserAccountPerProfileCount(List<UserProfile> userProfiles){
 		List<Integer> usersPerProfileCount = new ArrayList<>();
 
         for (UserProfile userProfile : userProfiles) {
@@ -91,7 +91,7 @@ public class UserAccount {
 		return usersPerProfileCount;
 	}
 
-	public List<String> getAllCleanerNamesByServiceListings(List<ServiceListing> serviceListings) {
+	public List<String> searchUserAccountNamesByServiceListings(List<ServiceListing> serviceListings) {
 		List<String> cleanersName = new ArrayList<>();
         
         for (ServiceListing listing : serviceListings) {
@@ -102,7 +102,7 @@ public class UserAccount {
 		return cleanersName;
 	}
 
-	public List<UserAccount> getCleanerAccountsFromShortlist(List<CleanerShortlist> shortlists) {
+	public List<UserAccount> searchUserAccountFromShortlist(List<CleanerShortlist> shortlists) {
         List<UserAccount> cleanersShortlist = new ArrayList<>();
         
         for (CleanerShortlist shortlist : shortlists) {

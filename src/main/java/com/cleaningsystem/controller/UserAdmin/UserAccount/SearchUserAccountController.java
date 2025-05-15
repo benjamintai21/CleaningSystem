@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cleaningsystem.entity.CleanerShortlist;
+import com.cleaningsystem.entity.ServiceListing;
 import com.cleaningsystem.entity.UserAccount;
+import com.cleaningsystem.entity.UserProfile;
 
 @Service
 public class SearchUserAccountController {
@@ -25,4 +28,15 @@ public class SearchUserAccountController {
         return userAccount.searchUserAccount(keyword);
     }
 
+    public List<Integer> searchUserAccountPerProfileCount(List<UserProfile> userProfiles){
+		return userAccount.searchUserAccountPerProfileCount(userProfiles);
+	}
+
+	public List<String> searchUserAccountNamesByServiceListings(List<ServiceListing> serviceListings) {
+		return userAccount.searchUserAccountNamesByServiceListings(serviceListings);
+	}
+
+	public List<UserAccount> searchUserAccountFromShortlist(List<CleanerShortlist> shortlists) {
+        return userAccount.searchUserAccountFromShortlist(shortlists);
+	}
 }

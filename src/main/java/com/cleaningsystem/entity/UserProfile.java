@@ -58,7 +58,7 @@ public class UserProfile {
 	public void setSuspended(boolean suspended) {this.suspended = suspended;}
 	
 	// Micellanous
-	public List<String> getAllProfileNamesForUserAccounts(List<UserAccount> userAccounts) {
+	public List<String> searchUserProfileNamesForUserAccounts(List<UserAccount> userAccounts) {
 		List<String> profileNames = new ArrayList<>();
 
         for (UserAccount user : userAccounts) {
@@ -101,10 +101,6 @@ public class UserProfile {
 		List<Integer> ids = jdbcTemplate.query(GET_PROFILE_ID_BY_NAME, 
 			(rs, rowNum) -> rs.getInt("profileId"), profileName);
 		return ids.isEmpty() ? null : ids.get(0);
-	}
-
-	public List<String> getProfileNames() {
-		return jdbcTemplate.query(GET_PROFILE_NAMES, (rs, rowNum) -> rs.getString("profilename"));
 	}
 
 	public boolean updateUserProfile(String name, String description, boolean suspended, int profileId) {

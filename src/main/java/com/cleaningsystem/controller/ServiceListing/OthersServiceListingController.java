@@ -1,4 +1,4 @@
-package com.cleaningsystem.controller;
+package com.cleaningsystem.controller.ServiceListing;
 
 import java.util.List;
 
@@ -13,26 +13,11 @@ import com.cleaningsystem.entity.ServiceShortlist;
 import com.cleaningsystem.entity.UserAccount;
 
 @Service
-public class ServiceListingController {
+public class OthersServiceListingController {
+
 
     @Autowired
 	private ServiceListing serviceListing;
-
-    public boolean deleteListingByCategory(int categoryId) {
-        return serviceListing.deleteListingByCategory(categoryId);
-    }
-
-    public ServiceListing getLastListing() {
-        return serviceListing.getLastListing();
-    }
-
-    public List<ServiceListing> getServiceListingsByCategory(int categoryId) {
-        return serviceListing.getServiceListingsByCategory(categoryId);
-    }
-
-    public ServiceListing viewServiceListingByServiceId(int serviceId) {
-        return serviceListing.viewServiceListingAsHomeOwner(serviceId);
-    }
 
     public List<Integer> getServicesCountList(){
         return serviceListing.getServicesCountList();

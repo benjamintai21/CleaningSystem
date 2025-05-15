@@ -1,6 +1,4 @@
 com\cleaningsystem\controller\Booking\ViewCompletedBookingController.class
-com\cleaningsystem\controller\ShortlistController.class
-com\cleaningsystem\controller\UserProfileController.class
 com\cleaningsystem\entity\UserAccount.class
 com\cleaningsystem\controller\Shortlist\ViewShortlistedServiceController.class
 com\cleaningsystem\controller\UserAdmin\UserProfile\ViewUserProfileController.class
@@ -9,7 +7,6 @@ com\cleaningsystem\entity\ServiceListing$Status.class
 com\cleaningsystem\controller\UserAdmin\UserProfile\CreateUserProfileController.class
 com\cleaningsystem\controller\Shortlist\SearchShortlistedServiceController.class
 com\cleaningsystem\controller\Shortlist\ViewShortlistedCleanerController.class
-com\cleaningsystem\controller\UserAccountController.class
 com\cleaningsystem\controller\ServiceListing\DeleteServiceListingController.class
 com\cleaningsystem\controller\UserAdmin\UserAccount\ViewUserAccountController.class
 com\cleaningsystem\controller\ServiceListing\UpdateServiceListingController.class
@@ -17,7 +14,6 @@ com\cleaningsystem\controller\ServiceListing\CreateServiceListingController.clas
 com\cleaningsystem\controller\ServiceListing\SearchServiceListingController.class
 com\cleaningsystem\entity\Booking$Status.class
 com\cleaningsystem\controller\Shortlist\SearchShortlistedCleanerController.class
-com\cleaningsystem\controller\ServiceListingController.class
 com\cleaningsystem\entity\UserProfile.class
 com\cleaningsystem\db\DatabaseConnection.class
 com\cleaningsystem\entity\ServiceListing.class
@@ -29,12 +25,10 @@ com\cleaningsystem\controller\UserAdmin\UserAccount\CreateUserAccountController.
 com\cleaningsystem\entity\Report.class
 com\cleaningsystem\entity\ServiceCategory.class
 com\cleaningsystem\controller\UserAdmin\UserAccount\SearchUserAccountController.class
-com\cleaningsystem\controller\LoginController.class
 com\cleaningsystem\controller\UserAdmin\UserAccount\UpdateUserAccountController.class
 com\cleaningsystem\controller\ServiceListing\ViewServiceListingController.class
 com\cleaningsystem\boundary\Boundary.class
 com\cleaningsystem\controller\UserAdmin\UserProfile\UpdateUserProfileController.class
-com\cleaningsystem\controller\ServiceCategoryController.class
 com\cleaningsystem\controller\UserAdmin\UserProfile\SuspendUserProfileController.class
 com\cleaningsystem\db\Queries.class
 com\cleaningsystem\controller\Booking\SearchBookingHistoryController.class
@@ -43,4 +37,3 @@ com\cleaningsystem\entity\ServiceShortlist.class
 com\cleaningsystem\controller\UserAdmin\UserProfile\SearchUserProfileController.class
 com\cleaningsystem\entity\CleanerShortlist.class
 com\cleaningsystem\controller\Booking\ViewBookingHistoryController.class
-com\cleaningsystem\controller\BookingController.class
