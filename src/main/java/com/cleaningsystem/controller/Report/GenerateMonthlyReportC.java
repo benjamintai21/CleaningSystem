@@ -12,10 +12,6 @@ public class GenerateMonthlyReportC {
     @Autowired
     private Report report;
 
-    public Report generateMonthlyReport(){
-        return report.generateMonthlyReport();
-    }
-
     public Report generateMonthlyReport(String dateString){
         LocalDate date = LocalDate.parse(dateString);
         return report.generateMonthlyReport(date);

@@ -12,10 +12,6 @@ public class GenerateDailyReportC {
     @Autowired
     private Report report;
 
-    public Report generateDailyReport(){
-        return report.generateDailyReport();
-    }
-
     public Report generateDailyReport(String dateString){
         LocalDate date = LocalDate.parse(dateString);
         return report.generateDailyReport(date);

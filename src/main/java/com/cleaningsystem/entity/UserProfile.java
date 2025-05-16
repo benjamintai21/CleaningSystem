@@ -57,7 +57,7 @@ public class UserProfile {
 	public void setDescription(String description) {this.description = description;}
 	public void setSuspended(boolean suspended) {this.suspended = suspended;}
 	
-	// Micellanous
+	// Miscellanous
 	public List<String> searchUserProfileNamesForUserAccounts(List<UserAccount> userAccounts) {
 		List<String> profileNames = new ArrayList<>();
 
@@ -133,6 +133,11 @@ public class UserProfile {
 			return false;
 		}
 	}
+
+	public List<String> getAllProfileNames() {
+		return jdbcTemplate.query(GET_ALL_PROFILE_NAMES, (rs, rowNum) -> rs.getString("profilename"));
+	}
+	
 
 	public List<UserProfile> searchUserProfile(String keyword) {
 		return jdbcTemplate.query(SEARCH_PROFILE_BY_NAME, profileRowMapper, "%" + keyword + "%");

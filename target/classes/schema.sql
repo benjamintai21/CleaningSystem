@@ -110,3 +110,15 @@ CREATE TABLE BOOKING (
     FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId),
 	FOREIGN KEY (homeownerId) REFERENCES USERACCOUNT(UID)
 );
+
+DELIMITER //
+CREATE TRIGGER after_status_update
+AFTER UPDATE ON SERVICELISTINGS
+FOR EACH ROW
+BEGIN
+    IF NEW.status = 'completed' THEN
+        UPDATE booking SET NEW.status = 'completed' WHERE serviceId = NEW.serviceId;
+    END IF;
+END;
+//
+DELIMITER ;

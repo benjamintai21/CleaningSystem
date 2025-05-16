@@ -12,10 +12,6 @@ public class GenerateWeeklyReportC {
     @Autowired
     private Report report;
 
-    public Report generateWeeklyReport(){
-        return report.generateWeeklyReport();
-    }
-
     public Report generateWeeklyReport(String dateString){
         LocalDate date = LocalDate.parse(dateString);
         return report.generateWeeklyReport(date);

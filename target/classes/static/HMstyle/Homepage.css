@@ -1,5 +1,3 @@
-/* ========== CSS Variables ========== */
-
 :root {
     --primary: #007C91;
     --accent: #FFB703;
@@ -283,9 +281,12 @@ a {
     overflow: hidden;
     scroll-behavior: smooth;
     width: 100%;
+    padding-bottom: 20px;
 }
 
 .service-card {
+    width: 200px;
+    height: 100px;
     flex: 0 0 300px;
     background: #fff;
     color: #000;
@@ -523,6 +524,14 @@ a {
     color: var(--black);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
     transition: background 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cleaner-card .badge {
+    display: block;
+    margin-bottom: 48px; 
 }
 
 .cleaner-card:hover {

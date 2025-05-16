@@ -33,7 +33,7 @@
 
                         <div class="report-buttons">
                             <label>Select Date*</label>
-                            <input type="date" class="date-input" id="reportDate" name="date" required>
+                            <input type="date" class="date-input" id="reportDate" name="date" th:value="${date}" required>
                             <button class="report-btn" type="submit" name="type" value="daily">Generate Daily</button>
                             <button class="report-btn" type="submit" name="type" value="weekly">Generate Weekly</button>
                             <button class="report-btn" type="submit" name="type" value="monthly">Generate Monthly</button>
@@ -45,7 +45,7 @@
                 <form id="generateDaily" th:action="@{/DownloadDailyReport(date=${date})}" th:object="${dailyReport}" method="get">
                     <div>
                         <h2>Daily Report</h2>
-
+                        <h2><p>Report for: <span th:text="${date}"></span></p></h2>
                         <div class="stats-container">
                             <div class="stat-box">
                                 <div class="stat-label">New Home Owners</div>
@@ -86,7 +86,7 @@
                 <form id="generateWeekly" th:action="@{/DownloadWeeklyReport(date=${date})}" th:object="${weeklyReport}" method="get">
                     <div>
                         <h2>Weekly Report</h2>
-
+                        <h2><p>Report for: <span th:text="${date}"></span></p></h2>
                         <div class="stats-container">
                             <div class="stat-box">
                                 <div class="stat-label">New Home Owners</div>
@@ -128,7 +128,7 @@
                     <!-- Monthly Report page content (fourth image) -->
                     <div>
                         <h2>Monthly Report</h2>
-
+                        <h2><p>Report for: <span th:text="${date}"></span></p></h2>
                         <div class="stats-container">
                             <div class="stat-box">
                                 <div class="stat-label">New Home Owners</div>

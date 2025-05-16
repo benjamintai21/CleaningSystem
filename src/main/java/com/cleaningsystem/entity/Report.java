@@ -13,6 +13,8 @@ import java.sql.Date;
 // import java.sql.ResultSet;
 import java.time.LocalDate;
 
+import org.springframework.cglib.core.Local;
+
 @Component
 public class Report {
 	private int reportId;
@@ -84,17 +86,36 @@ public class Report {
     //     return report;
     // };
     
-    public int getNewAccounts (String role, String range) {
+    public int getNewAccounts(LocalDate date, String role, String range) {
         int profileId = userProfile.getProfileIdByName(role);
         Integer result = switch (range) {
-            case "daily" -> jdbcTemplate.queryForObject(GET_DAILY_CREATED, Integer.class, profileId);
-            case "weekly" -> jdbcTemplate.queryForObject(GET_WEEKLY_CREATED, Integer.class, profileId);
-            case "monthly" -> jdbcTemplate.queryForObject(GET_MONTHLY_CREATED, Integer.class, profileId);
-            default -> null;                                                                              
+            case "daily" ->
+                jdbcTemplate.queryForObject(
+                    GET_DAILY_CREATED, Integer.class, 
+                    profileId, 
+                    Date.valueOf(date), 
+                    Date.valueOf(date)
+                );
+            case "weekly" -> 
+                jdbcTemplate.queryForObject(
+                    GET_WEEKLY_CREATED, Integer.class, 
+                    profileId, 
+                    Date.valueOf(date), 
+                    Date.valueOf(date)
+                );
+            case "monthly" ->
+                jdbcTemplate.queryForObject(
+                    GET_MONTHLY_CREATED, Integer.class, 
+                    profileId, 
+                    Date.valueOf(date), 
+                    Date.valueOf(date)
+                );
+            default -> null;
         };
-
+    
         return result != null ? result : 0;
     }
+    
 
     public int getAccountsUpToPoint(String role){
         int profileId = userProfile.getProfileIdByName(role);   
@@ -157,22 +178,22 @@ public class Report {
         return count != null ? count : 0;
     }
 
-    public int getNewShortlists (String range) {
-        Integer result = switch (range) {
-            case "daily" ->  jdbcTemplate.queryForObject(GET_DAILY_SHORTLISTS, Integer.class);
-            case "weekly" -> jdbcTemplate.queryForObject(GET_WEEKLY_SHORTLISTS, Integer.class);
-            case "monthly" -> jdbcTemplate.queryForObject(GET_MONTHLY_SHORTLISTS, Integer.class);
-            default -> null;
-        };
 
-        return result != null ? result : 0;                                                                          
+    public int getNewShortlists(LocalDate date, String range) {
+        Integer result = switch (range) {
+                case "daily" -> jdbcTemplate.queryForObject(GET_DAILY_SHORTLISTS, Integer.class, Date.valueOf(date), Date.valueOf(date));
+                case "weekly" -> jdbcTemplate.queryForObject(GET_WEEKLY_SHORTLISTS, Integer.class, Date.valueOf(date), Date.valueOf(date));
+                case "monthly" -> jdbcTemplate.queryForObject(GET_MONTHLY_SHORTLISTS, Integer.class, Date.valueOf(date), Date.valueOf(date));
+                default -> 0;
+            };
+        return result != null ? result : 0;
     }
 
-    public int getNewBookings(String range) {
+    public int getNewBookings(LocalDate date, String range) {
         Integer result = switch (range) {
-            case "daily" -> jdbcTemplate.queryForObject(GET_DAILY_BOOKINGS, Integer.class);
-            case "weekly" -> jdbcTemplate.queryForObject(GET_WEEKLY_BOOKINGS, Integer.class);
-            case "monthly" -> jdbcTemplate.queryForObject(GET_MONTHLY_BOOKINGS, Integer.class);
+            case "daily" -> jdbcTemplate.queryForObject(GET_DAILY_BOOKINGS, Integer.class, Date.valueOf(date), Date.valueOf(date));
+            case "weekly" -> jdbcTemplate.queryForObject(GET_WEEKLY_BOOKINGS, Integer.class, Date.valueOf(date), Date.valueOf(date));
+            case "monthly" -> jdbcTemplate.queryForObject(GET_MONTHLY_BOOKINGS, Integer.class, Date.valueOf(date), Date.valueOf(date));
             default -> null;
         };
     
@@ -180,39 +201,17 @@ public class Report {
     }
     
 
-//Generate Here
-    public Report generateDailyReport() {
-        int n_homeowners = getNewAccounts("Home Owner", "daily");
-        int n_cleaners = getNewAccounts("Cleaner", "daily");
-
-        int t_home_owners = getAccountsUpToPoint("Home Owner");
-        int t_cleaners = getAccountsUpToPoint("Cleaner");
-
-        int n_shortlists = getNewShortlists("daily");
-        int n_bookings = getNewBookings("daily");
-            
-        Date generatedDate = new Date(System.currentTimeMillis());
-
-        return new Report(
-            "DAILY",
-            generatedDate.toLocalDate(),
-            n_homeowners,
-            t_home_owners,
-            n_cleaners,
-            t_cleaners,
-            n_shortlists,
-            n_bookings);
-    }
+    //Generate Herde
 
     public Report generateDailyReport(LocalDate date) {
-        int n_homeowners = getNewAccounts("Home Owner", "daily");
-        int n_cleaners = getNewAccounts("Cleaner", "daily");
+        int n_homeowners = getNewAccounts(date, "Home Owner", "daily");
+        int n_cleaners = getNewAccounts(date, "Cleaner", "daily");
 
         int t_home_owners = getAccountsUpToPoint(date, "Home Owner");
         int t_cleaners = getAccountsUpToPoint(date, "Cleaner");
 
-        int n_shortlists = getNewShortlists("daily");
-        int n_bookings = getNewBookings("daily");
+        int n_shortlists = getNewShortlists(date, "daily");
+        int n_bookings = getNewBookings(date, "daily");
             
         Date generatedDate = new Date(System.currentTimeMillis());
 
@@ -235,38 +234,16 @@ public class Report {
         }    
     }
 
-    public Report generateWeeklyReport() {
-        int n_homeowners = getNewAccounts("Home Owner", "weekly");
-        int n_cleaners = getNewAccounts("Cleaner", "weekly");
-
-        int t_home_owners = getWeeklyAccountsUpToPoint(LocalDate.now(), "Home Owner");
-        int t_cleaners = getWeeklyAccountsUpToPoint(LocalDate.now(), "Cleaner");
-
-        int n_shortlists = getNewShortlists("weekly");
-        int n_bookings = getNewBookings("weekly");
-
-        Date generatedDate = new Date(System.currentTimeMillis());
-
-        return new Report(
-            "DAILY",
-            generatedDate.toLocalDate(),
-            n_homeowners,
-            t_home_owners,
-            n_cleaners,
-            t_cleaners,
-            n_shortlists,
-            n_bookings);
-    }
     
     public Report generateWeeklyReport(LocalDate date) {
-        int n_homeowners = getNewAccounts("Home Owner", "weekly");
-        int n_cleaners = getNewAccounts("Cleaner", "weekly");
+        int n_homeowners = getNewAccounts(date, "Home Owner", "weekly");
+        int n_cleaners = getNewAccounts(date, "Cleaner", "weekly");
 
         int t_home_owners = getWeeklyAccountsUpToPoint(date, "Home Owner");
         int t_cleaners = getWeeklyAccountsUpToPoint(date, "Cleaner");
 
-        int n_shortlists = getNewShortlists("weekly");
-        int n_bookings = getNewBookings("weekly");
+        int n_shortlists = getNewShortlists(date, "weekly");
+        int n_bookings = getNewBookings(date, "weekly");
 
         Date generatedDate = new Date(System.currentTimeMillis());
 
@@ -289,38 +266,15 @@ public class Report {
         }    
     }
 
-    public Report generateMonthlyReport() {
-        int n_homeowners = getNewAccounts("Home Owner", "monthly");
-        int n_cleaners = getNewAccounts("Cleaner", "monthly");
-
-        int t_home_owners = getMonthlyAccountsUpToPoint(LocalDate.now(),"Home Owner");
-        int t_cleaners = getMonthlyAccountsUpToPoint(LocalDate.now(), "Cleaner");
-
-        int n_shortlists = getNewShortlists("monthly");
-        int n_bookings = getNewBookings("monthly");
-
-        Date generatedDate = new Date(System.currentTimeMillis());
-
-        return new Report(
-            "DAILY",
-            generatedDate.toLocalDate(),
-            n_homeowners,
-            t_home_owners,
-            n_cleaners,
-            t_cleaners,
-            n_shortlists,
-            n_bookings);
-    }
-
     public Report generateMonthlyReport(LocalDate date) {
-        int n_homeowners = getNewAccounts("Home Owner", "monthly");
-        int n_cleaners = getNewAccounts("Cleaner", "monthly");
+        int n_homeowners = getNewAccounts(date, "Home Owner", "monthly");
+        int n_cleaners = getNewAccounts(date, "Cleaner", "monthly");
 
         int t_home_owners = getMonthlyAccountsUpToPoint(date,"Home Owner");
         int t_cleaners = getMonthlyAccountsUpToPoint(date, "Cleaner");
 
-        int n_shortlists = getNewShortlists("monthly");
-        int n_bookings = getNewBookings("monthly");
+        int n_shortlists = getNewShortlists(date, "monthly");
+        int n_bookings = getNewBookings(date, "monthly");
 
         Date generatedDate = new Date(System.currentTimeMillis());
 

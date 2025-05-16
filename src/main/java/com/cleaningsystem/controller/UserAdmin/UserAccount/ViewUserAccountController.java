@@ -14,4 +14,8 @@ public class ViewUserAccountController {
     public UserAccount viewUserAccount(int uid) {
         return userAccount.viewUserAccount(uid);
     }
+
+    public UserAccount viewUserAccount(String username) {
+        return userAccount.getUserByUsername(username);
+    }
 }

@@ -291,8 +291,6 @@ public class Boundary {
     //Create User Account
     @GetMapping("/CleanerUserCreation")
     public String showCleanerSignUpForm(HttpSession session, Model model) {
-        Optional<Integer> result = checkAccess(session, "Cleaner");
-        if (result.isPresent()) { } else { return "redirect:/Login"; }
 
         model.addAttribute("CleanerUserCreationForm", new UserAccount()); // Make sure this matches the form data type
         return "cleaner_user_creation"; // Ensure this matches the signup.html template
@@ -300,17 +298,18 @@ public class Boundary {
 
     @PostMapping("/CleanerUserCreation")
     public String processCleanerSignUp(@ModelAttribute UserAccount user, HttpSession session, Model model) {
-        Optional<Integer> result = checkAccess(session, "Cleaner");
-        if (result.isPresent()) { } else { return "redirect:/Login"; }
+        Optional<Integer> result = checkAccess(session, "User Admin");
 
         user.setProfileId(4);
         boolean isSuccessful = createUserAccountC.createAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId()); 
 
         if (isSuccessful) {
+            if (result.isPresent()) { } else { return "redirect:/Login"; }
+            UserAccount newUser = viewUserAccountC.viewUserAccount(user.getUsername());
             UserProfile userProfile = viewUserProfileC.viewUserProfile(user.getProfileId());
             String profileName = userProfile.getProfileName();
             
-            model.addAttribute("userAccountInfo", user);
+            model.addAttribute("userAccountInfo", newUser);
             model.addAttribute("profileName", profileName);
             return "user_account_info";
         } else {
@@ -829,15 +828,9 @@ public class Boundary {
             model.addAttribute("date", date); // <--- Add this line
 
             switch (type) {
-                case "daily":
-                    model.addAttribute("dailyReport", generateDailyReportC.generateDailyReport(date));
-                    break;
-                case "weekly":
-                    model.addAttribute("weeklyReport", generateWeeklyReportC.generateWeeklyReport(date));
-                    break;
-                case "monthly":
-                    model.addAttribute("monthlyReport", generateMonthlyReportC.generateMonthlyReport(date));
-                    break;
+                case "daily" -> model.addAttribute("dailyReport", generateDailyReportC.generateDailyReport(date));
+                case "weekly" -> model.addAttribute("weeklyReport", generateWeeklyReportC.generateWeeklyReport(date));
+                case "monthly" -> model.addAttribute("monthlyReport", generateMonthlyReportC.generateMonthlyReport(date));
             }
         }
 

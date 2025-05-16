@@ -15,7 +15,7 @@ public class Queries {
     
     public static final String SET_ACCOUNT_SUSPENSION_STATUS = "UPDATE USERACCOUNT SET suspended = ? WHERE UId = ?";
 
-    public static final String SEARCH_USER_ACCOUNT_BY_USERNAME = "SELECT * FROM USERACCOUNT WHERE username LIKE ?";
+    public static final String SEARCH_USER_ACCOUNT_BY_USERNAME_OR_ROLE = "SELECT ua.*, up.profilename FROM USERACCOUNT ua JOIN USERPROFILE up ON ua.profileID = up.profileID WHERE ua.username LIKE ? OR up.profilename LIKE ?";
 
     public static final String SEARCH_USER_ACCOUNT_BY_PROFILEID = "SELECT * FROM USERACCOUNT WHERE profileId = ?";
 
@@ -35,6 +35,8 @@ public class Queries {
     public static final String SET_PROFILE_SUSPENSION_STATUS = "UPDATE USERPROFILE SET suspension = ? WHERE profileId = ?";
 
     public static final String SEARCH_PROFILE_BY_NAME = "SELECT * FROM USERPROFILE WHERE profilename LIKE ?";
+
+    public static final String GET_ALL_PROFILE_NAMES = "SELECT profilename FROM USERPROFILE";
 
     public static final String GET_ALL_PROFILES = "SELECT * FROM USERPROFILE";
     
@@ -119,30 +121,30 @@ public class Queries {
     public static final String SEARCH_CONFIRMED_MATCHES = "SELECT bh.* FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ? AND sl.name LIKE ?";
 
     //New Account Created
-    public static final String GET_DAILY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND DATE(accountCreated) = CURRENT_DATE";
+    public static final String GET_DAILY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND accountCreated >= ? AND accountCreated < DATE_ADD(?, INTERVAL 1 DAY)";
 
-    public static final String GET_WEEKLY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND accountCreated >= CURRENT_DATE - INTERVAL 7 DAY";
+    public static final String GET_WEEKLY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND accountCreated >= DATE_SUB(?, INTERVAL 6 DAY) AND accountCreated < DATE_ADD(?, INTERVAL 1 DAY)";
 
-    public static final String GET_MONTHLY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND MONTH(accountCreated) = MONTH(CURRENT_DATE) AND YEAR(accountCreated) = YEAR(CURRENT_DATE)";
+    public static final String GET_MONTHLY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND MONTH(accountCreated) = MONTH(?) AND YEAR(accountCreated) = YEAR(?)";
     
     //Total Account Created
     public static final String GET_TOTAL_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ?";
 
     //New Shortlists Created
-    public static final String GET_DAILY_SHORTLISTS = "SELECT COUNT(*) FROM (SELECT * FROM SHORTLISTEDCLEANERS WHERE DATE(dateAdded) = CURRENT_DATE UNION ALL SELECT * FROM SHORTLISTEDSERVICES WHERE DATE(dateAdded) = CURRENT_DATE) AS combined";
+    public static final String GET_DAILY_SHORTLISTS = "SELECT COUNT(*) FROM SHORTLISTEDSERVICES WHERE dateAdded >= ? AND dateAdded < DATE_ADD(?, INTERVAL 1 DAY)";
 
-    public static final String GET_WEEKLY_SHORTLISTS = "SELECT COUNT(*) FROM (SELECT * FROM SHORTLISTEDCLEANERS WHERE dateAdded >= CURRENT_DATE - INTERVAL 7 DAY UNION ALL SELECT * FROM SHORTLISTEDSERVICES WHERE dateAdded >= CURRENT_DATE - INTERVAL 7 DAY) AS combined";
+    public static final String GET_WEEKLY_SHORTLISTS = "SELECT COUNT(*) FROM SHORTLISTEDSERVICES WHERE dateAdded >= DATE_SUB(?, INTERVAL 6 DAY) AND dateAdded < DATE_ADD(?, INTERVAL 1 DAY)";
 
-    public static final String GET_MONTHLY_SHORTLISTS = "SELECT COUNT(*) FROM (SELECT * FROM SHORTLISTEDCLEANERS WHERE MONTH(dateAdded) = MONTH(CURRENT_DATE) AND YEAR(dateAdded) = YEAR(CURRENT_DATE) UNION ALL SELECT * FROM SHORTLISTEDSERVICES WHERE MONTH(dateAdded) = MONTH(CURRENT_DATE) AND YEAR(dateAdded) = YEAR(CURRENT_DATE)) AS combined";
+    public static final String GET_MONTHLY_SHORTLISTS = "SELECT COUNT(*) FROM SHORTLISTEDSERVICES WHERE MONTH(dateAdded) = MONTH(?) AND YEAR(dateAdded) = YEAR(?)";
 
     public static final String CREATE_REPORT = "INSERT INTO REPORT (type,date,new_homeOwners,total_homeOwners,new_cleaners,total_cleaners,total_shortlists,total_bookings) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     //New Booking Created
-    public static final String GET_DAILY_BOOKINGS = "SELECT COUNT(*) FROM BOOKING WHERE DATE(dateAdded) = CURRENT_DATE";
+    public static final String GET_DAILY_BOOKINGS = "SELECT COUNT(*) FROM BOOKING WHERE dateAdded >= ? AND dateAdded < DATE_ADD(?, INTERVAL 1 DAY)";
 
-    public static final String GET_WEEKLY_BOOKINGS = "SELECT COUNT(*) FROM BOOKING WHERE dateAdded >= CURRENT_DATE - INTERVAL 7 DAY";
+    public static final String GET_WEEKLY_BOOKINGS = "SELECT COUNT(*) FROM BOOKING WHERE dateAdded >= DATE_SUB(?, INTERVAL 6 DAY) AND dateAdded < DATE_ADD(?, INTERVAL 1 DAY)";
 
-    public static final String GET_MONTHLY_BOOKINGS = "SELECT COUNT(*) FROM BOOKING WHERE MONTH(dateAdded) = MONTH(CURRENT_DATE) AND YEAR(dateAdded) = YEAR(CURRENT_DATE)";
+    public static final String GET_MONTHLY_BOOKINGS = "SELECT COUNT(*) FROM BOOKING WHERE MONTH(dateAdded) = MONTH(?) AND YEAR(dateAdded) = YEAR(?)";
 
 }         
 
