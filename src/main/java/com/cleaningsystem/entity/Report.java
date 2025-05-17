@@ -13,8 +13,6 @@ import java.sql.Date;
 // import java.sql.ResultSet;
 import java.time.LocalDate;
 
-import org.springframework.cglib.core.Local;
-
 @Component
 public class Report {
 	private int reportId;
