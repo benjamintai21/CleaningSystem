@@ -210,7 +210,7 @@ public class ServiceListing {
     }
 
     public boolean deleteListingByCategory(int categoryId) {
-        return jdbcTemplate.update(DELETE_SERVICE_LISTING, categoryId) > 0;
+        return jdbcTemplate.update(DELETE_SERVICE_LISTING_BY_CATEGORY, categoryId) > 0;
     }
 
     public List<ServiceListing> searchServiceListing(int cleanerId, String keyword){
