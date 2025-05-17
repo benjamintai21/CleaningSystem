@@ -86,6 +86,12 @@ public class ServiceCategory {
     @Autowired
     private ServiceListing serviceListing;
 
+    @Autowired
+    private Booking booking;
+
+    @Autowired
+    private ServiceShortlist serviceShortlist;
+
     private final RowMapper<ServiceCategory> categoryRowMapper = (ResultSet rs, int rowNum) -> {
         ServiceCategory category = new ServiceCategory();
         category.setCategoryId(rs.getInt("categoryId"));
@@ -119,6 +125,16 @@ public class ServiceCategory {
     @Transactional
     public boolean deleteServiceCategory(int categoryId){
         try {
+            boolean deleteRelatedBookings = booking.deleteBookingByCategory(categoryId);
+            if(!deleteRelatedBookings){
+                throw new RuntimeException("Failed to delete related bookings with category ID: " + categoryId + ".");
+            }
+
+            boolean deleteRelatedShortlists = serviceShortlist.deleteShortlistedServicesByCategory(categoryId);
+            if(!deleteRelatedShortlists){
+                throw new RuntimeException("Failed to delete related service shortlists with category ID: " + categoryId + ".");
+            }
+            
             boolean deleteRelatedListings = serviceListing.deleteListingByCategory(categoryId);
             if(!deleteRelatedListings){
                 throw new RuntimeException("Failed to delete related service listings with category ID: " + categoryId + ".");

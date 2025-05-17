@@ -74,4 +74,8 @@ public class ServiceShortlist {
     public boolean deleteShortlistedServices(int homeownerId, int serviceId) {
         return jdbcTemplate.update(DELETE_SHORTLISTED_SERVICES, homeownerId, serviceId) > 0;
     }
+
+    public boolean deleteShortlistedServicesByCategory(int categoryId) {
+        return jdbcTemplate.update(DELETE_SHORTLISTED_SERVICES_BY_CATEGORY, categoryId) > 0;
+    }
 }

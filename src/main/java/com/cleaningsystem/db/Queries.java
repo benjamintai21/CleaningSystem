@@ -79,6 +79,10 @@ public class Queries {
     public static final String GET_ALL_SERVICE_CATEGORIES = "SELECT * FROM SERVICECATEGORIES";
 
     public static final String DELETE_SERVICE_LISTING_BY_CATEGORY = "DELETE FROM SERVICELISTINGS WHERE categoryId = ?";
+
+    public static final String DELETE_SHORTLISTED_SERVICES_BY_CATEGORY = "DELETE ss FROM SHORTLISTEDSERVICES ss JOIN SERVICELISTINGS s ON ss.serviceId = s.serviceId WHERE s.categoryId = ?";
+
+    public static final String DELETE_BOOKING_BY_CATEGORY = "DELETE b FROM BOOKING b JOIN SERVICELISTINGS s ON b.serviceId = s.serviceId WHERE s.categoryId = ?";
     
     //HomeOwner
     public static final String SEARCH_SERVICE_LISTING_BY_SERVICE = "SELECT * FROM SERVICELISTINGS WHERE name LIKE ?";

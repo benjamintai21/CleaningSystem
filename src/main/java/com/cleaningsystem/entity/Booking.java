@@ -81,4 +81,8 @@ public class Booking {
         String pattern = "%" + keyword + "%";
         return jdbcTemplate.query(SEARCH_CONFIRMED_MATCHES, listingRowMapper, cleanerId, pattern);
     }
+
+    public boolean deleteBookingByCategory(int categoryId) {
+        return jdbcTemplate.update(DELETE_BOOKING_BY_CATEGORY, categoryId) > 0;
+    }
 }
