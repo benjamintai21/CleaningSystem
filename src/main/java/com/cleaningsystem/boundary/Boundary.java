@@ -1,5 +1,19 @@
 package com.cleaningsystem.boundary;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.cleaningsystem.controller.Booking.AddtoBookingController;
 import com.cleaningsystem.controller.Booking.SearchBookingHistoryController;
 import com.cleaningsystem.controller.Booking.SearchCompletedBookingController;
@@ -21,13 +35,13 @@ import com.cleaningsystem.controller.ServiceListing.OthersServiceListingControll
 import com.cleaningsystem.controller.ServiceListing.SearchServiceListingController;
 import com.cleaningsystem.controller.ServiceListing.UpdateServiceListingController;
 import com.cleaningsystem.controller.ServiceListing.ViewServiceListingController;
-import com.cleaningsystem.controller.Shortlist.ViewShortlistedCleanerController;
-import com.cleaningsystem.controller.Shortlist.ViewShortlistedServiceController;
 import com.cleaningsystem.controller.Shortlist.AddToShortlistController;
 import com.cleaningsystem.controller.Shortlist.DeleteFromShortlistController;
 import com.cleaningsystem.controller.Shortlist.InShortlistController;
 import com.cleaningsystem.controller.Shortlist.SearchShortlistedCleanerController;
 import com.cleaningsystem.controller.Shortlist.SearchShortlistedServiceController;
+import com.cleaningsystem.controller.Shortlist.ViewShortlistedCleanerController;
+import com.cleaningsystem.controller.Shortlist.ViewShortlistedServiceController;
 import com.cleaningsystem.controller.UserAdmin.UserAccount.CreateUserAccountController;
 import com.cleaningsystem.controller.UserAdmin.UserAccount.SearchUserAccountController;
 import com.cleaningsystem.controller.UserAdmin.UserAccount.SuspendUserAccountController;
@@ -49,16 +63,6 @@ import com.cleaningsystem.entity.UserProfile;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-
-import java.util.List;
-import java.util.Optional;
-import java.time.LocalDate;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -365,11 +369,6 @@ public class Boundary {
         boolean isSuccessful = updateUserAccountC.updateUserAccount(user.getName(), user.getAge(), user.getDob(), user.getGender(), user.getAddress(), user.getEmail(), user.getUsername(),user.getPassword(),user.getProfileId(), user.getUid()); 
 
         if (isSuccessful) {
-            UserProfile userProfile = viewUserProfileC.viewUserProfile(user.getProfileId());
-            String profileName = userProfile.getProfileName();
-
-            model.addAttribute("userAccountInfo", user);
-            model.addAttribute("profileName", profileName);
             return "redirect:/UserAccount?uid=" + user.getUid();
         } else {
             model.addAttribute("error", "Profile update failed! Please try again.");
@@ -702,7 +701,9 @@ public class Boundary {
     @GetMapping("/PlatformManagerHome")
     public String showPlatformManagerHome(HttpSession session, Model model) {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
-        if (result.isPresent()) { } else { return "redirect:/Login"; }
+        if (result.isPresent()) {
+            Integer id = result.get();
+         } else { return "redirect:/Login"; }
 
         model.addAttribute("username", session.getAttribute("username"));
         return "platformmanager_home_page";
@@ -910,7 +911,9 @@ public class Boundary {
     @GetMapping("/HomeOwnerHome")
     public String showHomeOwnerHome(HttpSession session, Model model) {
         Optional<Integer> result = checkAccess(session, "Home Owner");
-        if (result.isPresent()) { } else { return "redirect:/Login"; }
+        if (result.isPresent()) {
+            Integer id = result.get();
+         } else { return "redirect:/Login"; }
 
         List<UserAccount> cleaners = searchUserAccountC.searchUserAccount(4);
         List<Integer> servicesCountList = othersServiceListingC.getServicesCountList();
@@ -919,6 +922,8 @@ public class Boundary {
         model.addAttribute("serviceListings", serviceListings);
         model.addAttribute("servicesCountList", servicesCountList);
         model.addAttribute("cleaners", cleaners);
+
+        model.addAttribute("username", session.getAttribute("username"));
         return "homeowner_home_page";
     }
 
@@ -970,8 +975,10 @@ public class Boundary {
 
     @GetMapping("CleanerProfile")
     public String showCleanerProfile(@RequestParam int cleanerId, HttpSession session, Model model) {
-        Optional<Integer> result = checkAccess(session, "Home Owner");
-        if (result.isPresent()) { } else { return "redirect:/Login"; }
+        Optional<Integer> result = checkAccess(session, "Platform Manager");
+        if (result.isPresent()) {
+            Integer id = result.get();
+         } else { return "redirect:/Login"; }
 
         UserAccount cleaner = viewUserAccountC.viewUserAccount(cleanerId);
         Object uidObj = session.getAttribute("uid");

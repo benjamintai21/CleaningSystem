@@ -164,7 +164,7 @@ public class UserAccount {
     }
 
     public List<UserAccount> searchUserAccount(String keyword) {
-        return jdbcTemplate.query(SEARCH_USER_ACCOUNT_BY_USERNAME_OR_ROLE, userRowMapper, "%" + keyword + "%", "%" + keyword + "%");
+        return jdbcTemplate.query(SEARCH_USER_ACCOUNT_BY_USERNAME_OR_NAME_OR_ROLE, userRowMapper, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
     }
 
     public List<UserAccount> searchUserAccount(int profileId) {

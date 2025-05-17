@@ -15,7 +15,7 @@ public class Queries {
     
     public static final String SET_ACCOUNT_SUSPENSION_STATUS = "UPDATE USERACCOUNT SET suspended = ? WHERE UId = ?";
 
-    public static final String SEARCH_USER_ACCOUNT_BY_USERNAME_OR_ROLE = "SELECT ua.*, up.profilename FROM USERACCOUNT ua JOIN USERPROFILE up ON ua.profileID = up.profileID WHERE ua.username LIKE ? OR up.profilename LIKE ?";
+    public static final String SEARCH_USER_ACCOUNT_BY_USERNAME_OR_NAME_OR_ROLE = "SELECT ua.*, up.profilename FROM USERACCOUNT ua JOIN USERPROFILE up ON ua.profileID = up.profileID WHERE ua.username LIKE ? OR ua.name LIKE ? OR up.profilename LIKE ?";
 
     public static final String SEARCH_USER_ACCOUNT_BY_PROFILEID = "SELECT * FROM USERACCOUNT WHERE profileId = ?";
 

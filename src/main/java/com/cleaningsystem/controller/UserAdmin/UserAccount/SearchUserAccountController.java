@@ -16,7 +16,7 @@ public class SearchUserAccountController {
     @Autowired
 	private UserAccount userAccount;
 
-        public List<UserAccount> searchUserAccount() {
+    public List<UserAccount> searchUserAccount() {
         return userAccount.searchUserAccount();
     }
 
