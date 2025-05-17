@@ -28,7 +28,7 @@
 
     <!-- Back + Search -->
     <div class="register-container">
-      <a href="javascript:history.back()" class="back-btn">← Back</a>
+      <a th:href="@{/PlatformManagerHome}" class="back-btn">← Back</a>
 
       <!-- Search -->
       <form class="search-bar" th:action="@{/searchServiceCategory(query=${query})}" method="GET">

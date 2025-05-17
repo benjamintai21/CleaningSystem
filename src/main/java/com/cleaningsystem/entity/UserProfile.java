@@ -97,6 +97,11 @@ public class UserProfile {
 		return profiles.isEmpty() ? null : profiles.get(0);
 	}
 
+	public UserProfile viewUserProfile() {
+		List<UserProfile> profiles = jdbcTemplate.query(GET_NEXT_PROFILE, profileRowMapper);
+		return profiles.isEmpty() ? null : profiles.get(0);
+	}
+
 	public Integer getProfileIdByName(String profileName) {
 		List<Integer> ids = jdbcTemplate.query(GET_PROFILE_ID_BY_NAME, 
 			(rs, rowNum) -> rs.getInt("profileId"), profileName);

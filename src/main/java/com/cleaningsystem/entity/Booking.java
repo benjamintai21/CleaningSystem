@@ -83,6 +83,6 @@ public class Booking {
     }
 
     public boolean deleteBookingByCategory(int categoryId) {
-        return jdbcTemplate.update(DELETE_BOOKING_BY_CATEGORY, categoryId) > 0;
+        return jdbcTemplate.update(DELETE_BOOKING_BY_CATEGORY, categoryId) >= 0;
     }
 }

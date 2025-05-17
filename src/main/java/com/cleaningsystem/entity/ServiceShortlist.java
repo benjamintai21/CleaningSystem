@@ -51,7 +51,7 @@ public class ServiceShortlist {
         int rows_affected = jdbcTemplate.update(SAVE_SHORTLISTED_SERVICE, 
             homeownerId, serviceId);
 
-        return rows_affected > 0;
+        return rows_affected >= 0;
     }
 
     public List<ServiceShortlist> searchShortlistedService(int homeownerId, String keyword) {
@@ -67,15 +67,15 @@ public class ServiceShortlist {
         return jdbcTemplate.query(GET_NO_OF_VIEWS, listingRowMapper, cleanerId);
     }
 
-    public boolean checkShortlistedServices(int serviceId) {
-        List<ServiceShortlist> shortlists = jdbcTemplate.query(CHECK_SHORTLISTED_SERVICES, listingRowMapper, serviceId);
+    public boolean checkShortlistedServices(int serviceId, int homeowner_Id) {
+        List<ServiceShortlist> shortlists = jdbcTemplate.query(CHECK_SHORTLISTED_SERVICES, listingRowMapper, serviceId,homeowner_Id);
         return !shortlists.isEmpty();
     }
     public boolean deleteShortlistedServices(int homeownerId, int serviceId) {
-        return jdbcTemplate.update(DELETE_SHORTLISTED_SERVICES, homeownerId, serviceId) > 0;
+        return jdbcTemplate.update(DELETE_SHORTLISTED_SERVICES, homeownerId, serviceId) >= 0;
     }
 
     public boolean deleteShortlistedServicesByCategory(int categoryId) {
-        return jdbcTemplate.update(DELETE_SHORTLISTED_SERVICES_BY_CATEGORY, categoryId) > 0;
+        return jdbcTemplate.update(DELETE_SHORTLISTED_SERVICES_BY_CATEGORY, categoryId) >= 0;
     }
 }

@@ -60,8 +60,8 @@ public class CleanerShortlist {
         return jdbcTemplate.query(SEARCH_SHORTLISTED_CLEANER_BY_USERNAME, listingRowMapper2, homeownerId, pattern);
     }
 
-    public boolean checkShortlistedCleaners(int cleanerId) {
-        List<CleanerShortlist> shortlists = jdbcTemplate.query(CHECK_SHORTLISTED_CLEANERS, listingRowMapper2, cleanerId);
+    public boolean checkShortlistedCleaners(int cleanerId, int homeowner_Id) {
+        List<CleanerShortlist> shortlists = jdbcTemplate.query(CHECK_SHORTLISTED_CLEANERS, listingRowMapper2, cleanerId,   homeowner_Id);
         return !shortlists.isEmpty();
     }
 

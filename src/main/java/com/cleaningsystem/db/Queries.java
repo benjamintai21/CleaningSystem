@@ -30,6 +30,8 @@ public class Queries {
 
     public static final String GET_PROFILE_ID_BY_NAME = "SELECT profileId FROM USERPROFILE WHERE profilename = ?";
 
+    public static final String GET_NEXT_PROFILE = "SELECT * FROM USERPROFILE WHERE profileId = (SELECT MAX(profileId) FROM USERPROFILE)";
+
     public static final String UPDATE_USER_PROFILE = "UPDATE USERPROFILE SET profilename = ?, description = ?, suspension = ? WHERE profileId = ?"; 
 
     public static final String SET_PROFILE_SUSPENSION_STATUS = "UPDATE USERPROFILE SET suspension = ? WHERE profileId = ?";
@@ -101,9 +103,9 @@ public class Queries {
 
     public static final String SEARCH_SHORTLISTED_CLEANER_BY_USERNAME = "SELECT sc.* FROM SHORTLISTEDCLEANERS sc JOIN USERACCOUNT ua ON ua.UId = sc.cleanerId WHERE sc.homeownerId = ? AND ua.username LIKE ?";
 
-    public static final String CHECK_SHORTLISTED_SERVICES = "SELECT * FROM SHORTLISTEDSERVICES WHERE serviceId = ?";
+    public static final String CHECK_SHORTLISTED_SERVICES = "SELECT * FROM SHORTLISTEDSERVICES WHERE serviceId = ? AND homeownerId = ?";
 
-    public static final String CHECK_SHORTLISTED_CLEANERS = "SELECT * FROM SHORTLISTEDCLEANERS WHERE cleanerId = ?";
+    public static final String CHECK_SHORTLISTED_CLEANERS = "SELECT * FROM SHORTLISTEDCLEANERS WHERE cleanerId = ? AND homeownerId = ?";
 
     public  static final String DELETE_SHORTLISTED_SERVICES = "DELETE FROM SHORTLISTEDSERVICES WHERE homeownerId = ? AND serviceId = ?";
     

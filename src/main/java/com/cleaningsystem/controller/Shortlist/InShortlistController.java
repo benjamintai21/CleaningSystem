@@ -15,11 +15,11 @@ public class InShortlistController {
     @Autowired
 	private CleanerShortlist cleanerShortlist;
 
-    public boolean isInServiceShortlist(int serviceId) {
-        return serviceShortlist.checkShortlistedServices(serviceId);
+    public boolean isInServiceShortlist(int serviceId, int homeownerId) {
+        return serviceShortlist.checkShortlistedServices(serviceId,homeownerId);
     }
 
-    public boolean isInCleanerShortlist(int cleanerId) {
-        return cleanerShortlist.checkShortlistedCleaners(cleanerId);
+    public boolean isInCleanerShortlist(int cleanerId, int homeownerId) {
+        return cleanerShortlist.checkShortlistedCleaners(cleanerId,homeownerId);
     }
 }

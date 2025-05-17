@@ -125,6 +125,7 @@ public class ServiceCategory {
     @Transactional
     public boolean deleteServiceCategory(int categoryId){
         try {
+
             boolean deleteRelatedBookings = booking.deleteBookingByCategory(categoryId);
             if(!deleteRelatedBookings){
                 throw new RuntimeException("Failed to delete related bookings with category ID: " + categoryId + ".");
@@ -136,9 +137,10 @@ public class ServiceCategory {
             }
             
             boolean deleteRelatedListings = serviceListing.deleteListingByCategory(categoryId);
-            if(!deleteRelatedListings){
+            if(!deleteRelatedListings){      
                 throw new RuntimeException("Failed to delete related service listings with category ID: " + categoryId + ".");
             }
+            
 
             int rowsAffected = jdbcTemplate.update(DELETE_SERVICE_CATEGORY, categoryId);
 

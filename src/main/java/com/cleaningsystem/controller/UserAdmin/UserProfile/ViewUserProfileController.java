@@ -14,4 +14,8 @@ public class ViewUserProfileController {
 	public UserProfile viewUserProfile(int profileId) {
 		return userProfile.viewUserProfile(profileId);
 	}
+
+	public UserProfile viewUserProfile() {
+		return userProfile.viewUserProfile();
+	}
 }

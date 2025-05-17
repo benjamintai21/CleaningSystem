@@ -23,7 +23,7 @@
     <div class="form-title">Create Service Category</div>
 
     <div class="register-container">
-        <a href="javascript:history.back()" class="back-btn">← Back</a>
+        <a th:href="@{/PlatformManagerHome}" class="back-btn">← Back</a>
       
         <div class="form-box">
           <form class="service-form"  th:action="@{/CreateServiceCategory}" method="post" th:object="${serviceCategory}">

@@ -440,7 +440,8 @@ public class Boundary {
         boolean isSuccessful = createUserProfileC.createUserProfile(userProfile.getProfileName(), userProfile.getDescription(), userProfile.isSuspended());
 
         if (isSuccessful) {
-            model.addAttribute("userProfileInfo", userProfile);
+            UserProfile newProfile = viewUserProfileC.viewUserProfile();
+            model.addAttribute("userProfileInfo", newProfile);
             return "user_profile_info";
         } else {
             model.addAttribute("error", "Profile creation failed! Please try again.");
@@ -484,7 +485,7 @@ public class Boundary {
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
         UserProfile userProfile = viewUserProfileC.viewUserProfile(profileId);
-        model.addAttribute("updateUserProfileForm", userProfile);
+        model.addAttribute("userProfileInfo", userProfile);
         return "user_profile_update";
     }
 
@@ -940,12 +941,17 @@ public class Boundary {
     // View Services and Cleaners
     @GetMapping("/ViewServiceListing")
     public String showServices(@RequestParam int serviceId, HttpSession session, Model model) {
+        
         Optional<Integer> result = checkAccess(session, "Home Owner");
-        if (result.isPresent()) { } else { return "redirect:/Login"; }
+        if (result.isPresent()) {
+            
+         } else { return "redirect:/Login"; }
+         Object uidObj = session.getAttribute("uid");
 
+        int uid = (int) uidObj;
         // this function will auto +1 to view
         ServiceListing listing = viewServiceListingC.viewServiceListingAsHomeOwner(serviceId);
-        boolean isInServiceShortlist = inShortlistC.isInServiceShortlist(serviceId);
+        boolean isInServiceShortlist = inShortlistC.isInServiceShortlist(serviceId, uid);
 
         UserAccount user = viewUserAccountC.viewUserAccount(listing.getCleanerId());
         String cleanerName = user.getName();
@@ -968,10 +974,13 @@ public class Boundary {
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
         UserAccount cleaner = viewUserAccountC.viewUserAccount(cleanerId);
+        Object uidObj = session.getAttribute("uid");
 
+        int uid = (int) uidObj;
         String query = "";
         List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing(cleanerId, query);
-        boolean isInCleanerShortlist = inShortlistC.isInCleanerShortlist(cleanerId);
+        boolean isInCleanerShortlist = inShortlistC.isInCleanerShortlist(cleanerId,uid);
+        
         List<String> categoriesName = searchServiceCategoryNamesC.searchAllServiceCategoryNames(serviceListings);
         int servicesCount = serviceListings.size();
 
@@ -989,7 +998,7 @@ public class Boundary {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) { } else { return "redirect:/Login"; }
 
-        List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing(query);
+        List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing(query );
         
         List<String> cleanersName = searchUserAccountC.searchUserAccountNamesByServiceListings(serviceListings);
         List<String> categoriesName = searchServiceCategoryNamesC.searchServiceCategoryNamesByServiceListings(serviceListings);

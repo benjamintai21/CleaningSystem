@@ -20,6 +20,8 @@ public class AddToShortlistController {
     private ServiceListing serviceListing;
 
     public boolean shortlistService(int homeownerId, int serviceId){
+        
+            
         if(serviceListing.updateShortlisting(serviceId)){
             return serviceShortlist.shortlistService(homeownerId, serviceId);
         } else {

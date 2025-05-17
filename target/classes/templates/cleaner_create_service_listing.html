@@ -42,7 +42,6 @@
           <div class="form-group full-width">
             <label for="S_Category">Service Category*</label>
             <select id="S_Category" class="dropdown" th:field="*{categoryId}" required>
-              <option value="0" disabled selected>Select a category</option>
               <option th:each="category : ${serviceCategories}" 
                       th:value="${category.categoryId}" 
                       th:text="${category.type + ' - ' + category.name}">
