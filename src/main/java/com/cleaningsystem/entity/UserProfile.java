@@ -111,28 +111,30 @@ public class UserProfile {
 	@Transactional
 	public boolean suspendUserProfile(int profileId, boolean suspension) {
 		List<UserAccount> userAccounts = userAccount.searchUserAccount(profileId);
-	
+
 		try {
 			for (UserAccount user : userAccounts) {
 				boolean userSuspensionUpdated = userAccount.suspendUserAccount(user.getUid(), suspension);
-				
+
 				if (!userSuspensionUpdated) {
 					throw new RuntimeException("Failed to update user suspension for user ID: " + user.getUid());
 				}
 			}
-			
+
 			int processProfileSuspension = jdbcTemplate.update(SET_PROFILE_SUSPENSION_STATUS, suspension, profileId);
-		
+
 			if (processProfileSuspension <= 0) {
 				throw new RuntimeException("Failed to update profile suspension status for profile ID: " + profileId);
 			}
 
 			return true;
-	
+
 		} catch (Exception e) {
+			System.out.println("Exception in suspendUserProfile: " + e.getMessage());
 			return false;
 		}
 	}
+
 
 	public List<String> getAllProfileNames() {
 		return jdbcTemplate.query(GET_ALL_PROFILE_NAMES, (rs, rowNum) -> rs.getString("profilename"));

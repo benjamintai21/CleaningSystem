@@ -116,9 +116,9 @@ public class Queries {
     
     public static final String SEARCH_HOMEOWNER_BOOKINGS = "SELECT b.* FROM BOOKING b JOIN SERVICELISTINGS sl ON b.serviceId = sl.serviceId WHERE b.homeownerId = ? AND sl.name LIKE ?";
 
-    public static final String GET_CONFIRMED_MATCHES = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ?";
+    public static final String GET_CONFIRMED_MATCHES = "SELECT bh.*, sl.name FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE sl.cleanerId = ?";
 
-    public static final String SEARCH_CONFIRMED_MATCHES = "SELECT bh.* FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE bh.status = 'completed' AND sl.cleanerId = ? AND sl.name LIKE ?";
+    public static final String SEARCH_CONFIRMED_MATCHES = "SELECT bh.* FROM BOOKING bh JOIN SERVICELISTINGS sl ON bh.serviceId = sl.serviceId WHERE sl.cleanerId = ? AND sl.name LIKE ?";
 
     //New Account Created
     public static final String GET_DAILY_CREATED = "SELECT COUNT(*) FROM UserAccount WHERE profileId = ? AND accountCreated >= ? AND accountCreated < DATE_ADD(?, INTERVAL 1 DAY)";
