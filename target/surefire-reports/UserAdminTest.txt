@@ -1,0 +1,183 @@
+-------------------------------------------------------------------------------
+Test set: UserAdminTest
+-------------------------------------------------------------------------------
+Tests run: 45, Failures: 18, Errors: 6, Skipped: 0, Time elapsed: 0.355 s <<< FAILURE! - in UserAdminTest
+UserAdminTest.testSearchUserAccountEntity_All  Time elapsed: 0.017 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <0>
+	at UserAdminTest.testSearchUserAccountEntity_All(UserAdminTest.java:635)
+
+UserAdminTest.testCreateUserProfile_Success  Time elapsed: 0.017 s  <<< ERROR!
+org.mockito.exceptions.misusing.WrongTypeOfReturnValue: 
+
+Boolean cannot be returned by searchUserAccount()
+searchUserAccount() should return List
+***
+If you're unsure why you're getting above error read on.
+Due to the nature of the syntax above problem might occur because:
+1. This exception *might* occur in wrongly written multi-threaded tests.
+   Please refer to Mockito FAQ on limitations of concurrency testing.
+2. A spy is stubbed using when(spy.foo()).then() syntax. It is safer to stub spies - 
+   - with doReturn|Throw() family of methods. More in javadocs for Mockito.spy() method.
+
+	at UserAdminTest.testCreateUserProfile_Success(UserAdminTest.java:375)
+
+UserAdminTest.testSearchUserProfile_All  Time elapsed: 0.006 s  <<< ERROR!
+org.mockito.exceptions.misusing.WrongTypeOfReturnValue: 
+
+ArrayList cannot be returned by viewUserAccount()
+viewUserAccount() should return UserAccount
+***
+If you're unsure why you're getting above error read on.
+Due to the nature of the syntax above problem might occur because:
+1. This exception *might* occur in wrongly written multi-threaded tests.
+   Please refer to Mockito FAQ on limitations of concurrency testing.
+2. A spy is stubbed using when(spy.foo()).then() syntax. It is safer to stub spies - 
+   - with doReturn|Throw() family of methods. More in javadocs for Mockito.spy() method.
+
+	at UserAdminTest.testSearchUserProfile_All(UserAdminTest.java:385)
+
+UserAdminTest.testUpdateUserProfile_Success  Time elapsed: 0.007 s  <<< ERROR!
+org.mockito.exceptions.misusing.MissingMethodInvocationException: 
+
+when() requires an argument which has to be 'a method call on a mock'.
+For example:
+    when(mock.getArticles()).thenReturn(articles);
+
+Also, this error might show up because:
+1. you stub either of: final/private/equals()/hashCode() methods.
+   Those methods *cannot* be stubbed/verified.
+   Mocking methods declared on non-public parent classes is not supported.
+2. inside when() you don't call method on mock but on some other object.
+
+	at UserAdminTest.testUpdateUserProfile_Success(UserAdminTest.java:448)
+
+UserAdminTest.testSuspendUserAccountEntity_Success  Time elapsed: 0.004 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at UserAdminTest.testSuspendUserAccountEntity_Success(UserAdminTest.java:590)
+
+UserAdminTest.testSuspendUserProfile_FailureDueToUserSuspendFail  Time elapsed: 0.007 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <false> but was: <true>
+	at UserAdminTest.testSuspendUserProfile_FailureDueToUserSuspendFail(UserAdminTest.java:762)
+
+UserAdminTest.testSearchUserAccountEntity_ByProfileId  Time elapsed: 0.008 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at UserAdminTest.testSearchUserAccountEntity_ByProfileId(UserAdminTest.java:621)
+
+UserAdminTest.testLogin_Success  Time elapsed: 0.005 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: not <null>
+	at UserAdminTest.testLogin_Success(UserAdminTest.java:483)
+
+UserAdminTest.testCreateUserProfileEntity_Success  Time elapsed: 0.011 s  <<< FAILURE!
+org.mockito.exceptions.verification.WantedButNotInvoked: 
+
+Wanted but not invoked:
+jdbcTemplate.update(
+    <any string>,
+    "Admin",
+    "Admin profile",
+    false
+);
+-> at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:1024)
+Actually, there were zero interactions with this mock.
+
+	at UserAdminTest.testCreateUserProfileEntity_Success(UserAdminTest.java:655)
+
+UserAdminTest.testSearchUserProfileNamesForUserAccounts  Time elapsed: 0.007 s  <<< ERROR!
+org.mockito.exceptions.misusing.MissingMethodInvocationException: 
+
+when() requires an argument which has to be 'a method call on a mock'.
+For example:
+    when(mock.getArticles()).thenReturn(articles);
+
+Also, this error might show up because:
+1. you stub either of: final/private/equals()/hashCode() methods.
+   Those methods *cannot* be stubbed/verified.
+   Mocking methods declared on non-public parent classes is not supported.
+2. inside when() you don't call method on mock but on some other object.
+
+	at UserAdminTest.testSearchUserProfileNamesForUserAccounts(UserAdminTest.java:409)
+
+UserAdminTest.testCreateUserProfile_Failure  Time elapsed: 0.005 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <false> but was: <true>
+	at UserAdminTest.testCreateUserProfile_Failure(UserAdminTest.java:664)
+
+UserAdminTest.testUpdateUserAccountEntity_Success  Time elapsed: 0.005 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at UserAdminTest.testUpdateUserAccountEntity_Success(UserAdminTest.java:570)
+
+UserAdminTest.testUpdateUserProfile_Failure  Time elapsed: 0.004 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <false> but was: <true>
+	at UserAdminTest.testUpdateUserProfile_Failure(UserAdminTest.java:726)
+
+UserAdminTest.testSearchUserProfileEntity_All  Time elapsed: 0.006 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at UserAdminTest.testSearchUserProfileEntity_All(UserAdminTest.java:798)
+
+UserAdminTest.testSearchUserProfile_ByKeyword  Time elapsed: 0.004 s  <<< ERROR!
+org.mockito.exceptions.misusing.WrongTypeOfReturnValue: 
+
+ArrayList cannot be returned by suspendUserAccount()
+suspendUserAccount() should return boolean
+***
+If you're unsure why you're getting above error read on.
+Due to the nature of the syntax above problem might occur because:
+1. This exception *might* occur in wrongly written multi-threaded tests.
+   Please refer to Mockito FAQ on limitations of concurrency testing.
+2. A spy is stubbed using when(spy.foo()).then() syntax. It is safer to stub spies - 
+   - with doReturn|Throw() family of methods. More in javadocs for Mockito.spy() method.
+
+	at UserAdminTest.testSearchUserProfile_ByKeyword(UserAdminTest.java:397)
+
+UserAdminTest.testSuspendUserProfileEntity_Success  Time elapsed: 0.005 s  <<< FAILURE!
+org.mockito.exceptions.verification.WantedButNotInvoked: 
+
+Wanted but not invoked:
+userAccount.suspendUserAccount(100, true);
+-> at UserAdminTest$UserAccount.suspendUserAccount(UserAdminTest.java:72)
+Actually, there were zero interactions with this mock.
+
+	at UserAdminTest.testSuspendUserProfileEntity_Success(UserAdminTest.java:746)
+
+UserAdminTest.testGetProfileNameByUid  Time elapsed: 0.005 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Admin> but was: <null>
+	at UserAdminTest.testGetProfileNameByUid(UserAdminTest.java:645)
+
+UserAdminTest.testSearchUserProfileEntity_ByKeyword  Time elapsed: 0.006 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at UserAdminTest.testSearchUserProfileEntity_ByKeyword(UserAdminTest.java:787)
+
+UserAdminTest.testViewUserProfile_Success  Time elapsed: 0.005 s  <<< ERROR!
+org.mockito.exceptions.misusing.MissingMethodInvocationException: 
+
+when() requires an argument which has to be 'a method call on a mock'.
+For example:
+    when(mock.getArticles()).thenReturn(articles);
+
+Also, this error might show up because:
+1. you stub either of: final/private/equals()/hashCode() methods.
+   Those methods *cannot* be stubbed/verified.
+   Mocking methods declared on non-public parent classes is not supported.
+2. inside when() you don't call method on mock but on some other object.
+
+	at UserAdminTest.testViewUserProfile_Success(UserAdminTest.java:462)
+
+UserAdminTest.testCreateAccount_Success_Entity  Time elapsed: 0.008 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at UserAdminTest.testCreateAccount_Success_Entity(UserAdminTest.java:520)
+
+UserAdminTest.testSearchUserProfileNamesForUserAccountsEntity  Time elapsed: 0.02 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <[Admin, User]> but was: <[]>
+	at UserAdminTest.testSearchUserProfileNamesForUserAccountsEntity(UserAdminTest.java:819)
+
+UserAdminTest.testSuspendUserProfile_FailureDueToProfileSuspendFail  Time elapsed: 0.007 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <false> but was: <true>
+	at UserAdminTest.testSuspendUserProfile_FailureDueToProfileSuspendFail(UserAdminTest.java:777)
+
+UserAdminTest.testSearchUserAccountEntity_ByKeyword  Time elapsed: 0.005 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at UserAdminTest.testSearchUserAccountEntity_ByKeyword(UserAdminTest.java:610)
+
+UserAdminTest.testViewUserProfile_NotFound  Time elapsed: 0.006 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <null> but was: <UserAdminTest$UserProfile@5dbbb292>
+	at UserAdminTest.testViewUserProfile_NotFound(UserAdminTest.java:685)
+
