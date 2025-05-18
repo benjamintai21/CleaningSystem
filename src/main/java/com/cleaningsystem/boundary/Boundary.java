@@ -19,7 +19,8 @@ import com.cleaningsystem.controller.Booking.SearchBookingHistoryController;
 import com.cleaningsystem.controller.Booking.SearchCompletedBookingController;
 import com.cleaningsystem.controller.Booking.ViewBookingHistoryController;
 import com.cleaningsystem.controller.Booking.ViewCompletedBookingController;
-import com.cleaningsystem.controller.Login.LoginController;
+import com.cleaningsystem.controller.LoginLogout.LoginController;
+import com.cleaningsystem.controller.LoginLogout.LogoutController;
 import com.cleaningsystem.controller.Report.GenerateDailyReportC;
 import com.cleaningsystem.controller.Report.GenerateMonthlyReportC;
 import com.cleaningsystem.controller.Report.GenerateWeeklyReportC;
@@ -74,6 +75,9 @@ public class Boundary {
 
     @Autowired
     private LoginController LoginC;
+
+    @Autowired
+    private LogoutController LogoutC;
 
     // User Admin
     // User Account --------------------------------------------
@@ -236,7 +240,7 @@ public class Boundary {
 
     @GetMapping("/Logout")
     public String logout(HttpSession session) {
-        session.invalidate(); 
+        LogoutC.logout(session);
         return "redirect:/Login";
     }
 

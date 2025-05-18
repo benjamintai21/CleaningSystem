@@ -10,6 +10,7 @@ UserAdminTest$SearchUserAccountController.class
 UserAdminTest$SearchUserProfileController.class
 BoundaryTest.class
 UserAdminTest.class
+LoginLogoutTest.class
 UserAdminTest$ServiceListing.class
 UserAdminTest$UserProfileRowMapper.class
 UserAdminTest$ServiceListing$Status.class
@@ -17,5 +18,6 @@ CleanerTest.class
 UserAdminTest$CleanerShortlist.class
 UserAdminTest$SuspendUserProfileController.class
 UserAdminTest$UserProfile.class
+HttpSession.class
 HomeOwnerTest.class
 UserAdminTest$SuspendUserAccountController.class

@@ -24,7 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cleaningsystem.boundary.Boundary;
-import com.cleaningsystem.controller.Login.LoginController;
+import com.cleaningsystem.controller.LoginLogout.LoginController;
 import com.cleaningsystem.controller.ServiceListing.OthersServiceListingController;
 import com.cleaningsystem.controller.ServiceListing.SearchServiceListingController;
 import com.cleaningsystem.controller.UserAdmin.UserAccount.CreateUserAccountController;

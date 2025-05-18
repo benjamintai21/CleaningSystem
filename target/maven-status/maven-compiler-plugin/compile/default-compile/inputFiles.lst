@@ -9,6 +9,7 @@ E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\User
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\Booking\ViewCompletedBookingController.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\CleaningSystemApplication.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\Report\GenerateMonthlyReportC.java
+E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\LoginLogout\LoginController.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\db\DatabaseConnection.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\entity\ServiceListing.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\entity\UserProfile.java
@@ -47,6 +48,6 @@ E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\Repo
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\Shortlist\SearchShortlistedCleanerController.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\Shortlist\ViewShortlistedServiceController.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\ServiceListing\OthersServiceListingController.java
+E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\LoginLogout\LogoutController.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\boundary\Boundary.java
-E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\Login\LoginController.java
 E:\UNI\WorkSpace\CleaningSystem\src\main\java\com\cleaningsystem\controller\UserAdmin\UserProfile\SuspendUserProfileController.java

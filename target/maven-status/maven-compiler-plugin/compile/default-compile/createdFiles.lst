@@ -12,6 +12,7 @@ com\cleaningsystem\controller\Shortlist\SearchShortlistedServiceController.class
 com\cleaningsystem\controller\Shortlist\ViewShortlistedCleanerController.class
 com\cleaningsystem\controller\Shortlist\InShortlistController.class
 com\cleaningsystem\controller\ServiceListing\DeleteServiceListingController.class
+com\cleaningsystem\controller\LoginLogout\LoginController.class
 com\cleaningsystem\controller\UserAdmin\UserAccount\ViewUserAccountController.class
 com\cleaningsystem\controller\ServiceListing\UpdateServiceListingController.class
 com\cleaningsystem\controller\ServiceListing\CreateServiceListingController.class
@@ -19,6 +20,7 @@ com\cleaningsystem\controller\ServiceListing\SearchServiceListingController.clas
 com\cleaningsystem\entity\Booking$Status.class
 com\cleaningsystem\controller\Shortlist\SearchShortlistedCleanerController.class
 com\cleaningsystem\entity\UserProfile.class
+com\cleaningsystem\controller\LoginLogout\LogoutController.class
 com\cleaningsystem\db\DatabaseConnection.class
 com\cleaningsystem\entity\ServiceListing.class
 com\cleaningsystem\config\DatabaseConfig.class
@@ -47,7 +49,6 @@ com\cleaningsystem\db\Queries.class
 com\cleaningsystem\controller\Booking\SearchBookingHistoryController.class
 com\cleaningsystem\controller\Booking\SearchCompletedBookingController.class
 com\cleaningsystem\entity\ServiceShortlist.class
-com\cleaningsystem\controller\Login\LoginController.class
 com\cleaningsystem\controller\UserAdmin\UserProfile\SearchUserProfileController.class
 com\cleaningsystem\entity\CleanerShortlist.class
 com\cleaningsystem\controller\ServiceCategory\DeleteServiceCategoryController.class
