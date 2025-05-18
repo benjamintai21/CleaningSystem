@@ -103,7 +103,7 @@ public class HomeOwnerTest {
 
     //     when(userAccount.viewUserAccount(uid)).thenReturn(mockCleaner);
 
-    //     UserAccount result = iewUserAccountController.viewUserAccount(uid);
+    //     UserAccount result = viewUserAccountController.viewUserAccount(uid);
 
     //     assertNotNull(result);
     //     assertEquals(uid, result.getUid());
