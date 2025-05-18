@@ -11,6 +11,8 @@ UserAdminTest$SearchUserProfileController.class
 BoundaryTest.class
 UserAdminTest.class
 UserAdminTest$ServiceListing.class
+UserAdminTest$UserProfileRowMapper.class
+UserAdminTest$ServiceListing$Status.class
 CleanerTest.class
 UserAdminTest$CleanerShortlist.class
 UserAdminTest$SuspendUserProfileController.class
