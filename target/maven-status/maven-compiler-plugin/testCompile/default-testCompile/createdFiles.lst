@@ -21,3 +21,4 @@ UserAdminTest$UserProfile.class
 HttpSession.class
 HomeOwnerTest.class
 UserAdminTest$SuspendUserAccountController.class
+PlatformManagerTest.class

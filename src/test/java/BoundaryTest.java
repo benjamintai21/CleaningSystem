@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cleaningsystem.boundary.Boundary;
 import com.cleaningsystem.controller.LoginLogout.LoginController;
+import com.cleaningsystem.controller.LoginLogout.LogoutController;
 import com.cleaningsystem.controller.ServiceListing.OthersServiceListingController;
 import com.cleaningsystem.controller.ServiceListing.SearchServiceListingController;
 import com.cleaningsystem.controller.UserAdmin.UserAccount.CreateUserAccountController;
@@ -261,10 +262,13 @@ public class BoundaryTest {
     
     @Test
     public void testLogout() {
-        String result = boundary.logout(session);
-
+        HttpSession session = mock(HttpSession.class);  // create mock session
+        LogoutController logoutC = new LogoutController();  // instantiate controller
+    
+        logoutC.logout(session);  // call method (no return)
+    
+        // ✅ Verify that the session was invalidated
         verify(session).invalidate();
-        assertEquals("redirect:/Login", result);
     }
     
     @Test

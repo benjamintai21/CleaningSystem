@@ -232,7 +232,6 @@ public class Report {
         }    
     }
 
-    
     public Report generateWeeklyReport(LocalDate date) {
         int n_homeowners = getNewAccounts(date, "Home Owner", "weekly");
         int n_cleaners = getNewAccounts(date, "Cleaner", "weekly");
