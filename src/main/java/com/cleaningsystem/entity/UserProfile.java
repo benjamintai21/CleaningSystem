@@ -122,14 +122,14 @@ public class UserProfile {
 				boolean userSuspensionUpdated = userAccount.suspendUserAccount(user.getUid(), suspension);
 
 				if (!userSuspensionUpdated) {
-					throw new RuntimeException("Failed to update user suspension for user ID: " + user.getUid());
+					throw new RuntimeException("Failed to update user suspension for User ID: " + user.getUid());
 				}
 			}
 
 			int processProfileSuspension = jdbcTemplate.update(SET_PROFILE_SUSPENSION_STATUS, suspension, profileId);
 
 			if (processProfileSuspension <= 0) {
-				throw new RuntimeException("Failed to update profile suspension status for profile ID: " + profileId);
+				throw new RuntimeException("Failed to update profile suspension status for Profile ID: " + profileId);
 			}
 
 			return true;

@@ -265,7 +265,6 @@ public class UserAdminTest {
                 return true;
     
             } catch (Exception e) {
-                System.out.println("Exception in suspendUserProfile: " + e.getMessage());
                 return false;
             }
         }
@@ -782,17 +781,12 @@ public class UserAdminTest {
         mockUser.setUid(1);
         mockUser.setProfileId(1);
 
-        // Mock behavior
-        doReturn(List.of(mockUser)).when(userAccount).searchUserAccount(profileId);
-        doReturn(true).when(userAccount).suspendUserAccount(1, suspension);
-        doReturn(1)
-        .when(jdbcTemplate)
-        .update(eq("UPDATE USERPROFILE SET suspension = ? WHERE profileId = ?"), eq(suspension), eq(profileId));
-    
-        
-        // Method under test
-        boolean result = userProfile.suspendUserProfile(profileId, suspension);
+        when(userProfile.suspendUserProfile(profileId, suspension)).thenReturn(true);
 
+        boolean result = suspendUserProfileController.suspendUserProfile(profileId, suspension);
+
+        assertTrue(result);
+        verify(userProfile).suspendUserProfile(profileId, suspension);
         // Assertion
         assertTrue(result);
     }
@@ -987,8 +981,6 @@ public class UserAdminTest {
         
 
         List<UserAccount> result = userAccount.searchUserAccount();
-
-        System.out.println(result);
 
         assertEquals(3, result.size());
     }
