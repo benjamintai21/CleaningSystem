@@ -57,7 +57,8 @@ public class CleanerTest {
     void testCreateServiceListing() {
         when(serviceListing.createServiceListing(any(), anyInt(), anyInt(), any(), anyDouble(), any(), any(), any()))
                 .thenReturn(true);
-        assertTrue(createController.createServiceListing("Test", 1, 1, "Desc", 25.0, "2025-01-01", "2025-01-10", "active"));
+        assertTrue(createController.createServiceListing("Test", 1, 1, "Desc",
+                                 25.0, "2025-01-01", "2025-01-10", "active"));
     }
 
     @Test
@@ -135,25 +136,13 @@ public class CleanerTest {
     }
 
     @Test
-    void testSearchServiceListingByCleanerAndKeyword() {
-        List<ServiceListing> expected = Collections.singletonList(new ServiceListing());
-        when(serviceListing.searchServiceListing(1, "key")).thenReturn(expected);
-        assertEquals(expected, searchServiceController.searchServiceListing(1, "key"));
-    }
-
-    @Test
     void testUpdateServiceListing() {
-        when(serviceListing.updateServiceListing(any(), anyInt(), anyInt(), any(), anyDouble(), any(), any(), any(), anyInt()))
+        when(serviceListing.updateServiceListing(any(), anyInt(), anyInt(), any(), anyDouble(), 
+                                                any(), any(), any(), anyInt()))
                 .thenReturn(true);
-        assertTrue(updateController.updateServiceListing("Updated", 1, 1, "Updated Desc", 30.0, "active", "2025-01-01", "2025-01-10", 1));
-    }
-
-    @Test
-    void testViewServiceListingAsHomeOwner() {
-        ServiceListing listing = new ServiceListing();
-        when(serviceListing.viewServiceListingAsHomeOwner(1)).thenReturn(listing);
-        when(serviceListing.updateViews(1)).thenReturn(true);
-        assertEquals(listing, viewController.viewServiceListingAsHomeOwner(1));
+        assertTrue(updateController.updateServiceListing("Updated", 1, 1, 
+                        "Updated Desc", 30.0, "active", 
+                        "2025-01-01", "2025-01-10", 1));
     }
 
     @Test
@@ -178,14 +167,14 @@ public class CleanerTest {
     }
 //Booking_Controller
     @Test
-    void testSearchCompletedBooking() {
+    void testSearchCompletedServiceListing() {
         List<Booking> expected = Collections.singletonList(new Booking());
         when(booking.searchCompletedBooking(1, "search")).thenReturn(expected);
         assertEquals(expected, searchBookingController.searchCompletedBooking(1, "search"));
     }
 
     @Test
-    void testViewCompletedBooking() {
+    void testViewCompletedServiceListing() {
         List<Booking> expected = Collections.singletonList(new Booking());
         when(booking.viewCompletedBooking(1)).thenReturn(expected);
         assertEquals(expected, viewBookingController.viewCompletedBooking(1));

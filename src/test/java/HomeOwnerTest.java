@@ -1,12 +1,15 @@
 import com.cleaningsystem.controller.Booking.AddtoBookingController;
 import com.cleaningsystem.controller.Booking.SearchBookingHistoryController;
 import com.cleaningsystem.controller.Booking.ViewBookingHistoryController;
+import com.cleaningsystem.controller.ServiceListing.SearchServiceListingController;
+import com.cleaningsystem.controller.ServiceListing.ViewServiceListingController;
 import com.cleaningsystem.controller.Shortlist.*;
-
+import com.cleaningsystem.controller.UserAdmin.UserAccount.ViewUserAccountController;
 import com.cleaningsystem.entity.Booking;
 import com.cleaningsystem.entity.CleanerShortlist;
 import com.cleaningsystem.entity.ServiceListing;
 import com.cleaningsystem.entity.ServiceShortlist;
+import com.cleaningsystem.entity.UserAccount;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,11 +27,15 @@ import static org.mockito.Mockito.*;
 
 public class HomeOwnerTest {
 
+    private static UserAccount userAccount;
+
     @Mock private Booking booking;
     @Mock private ServiceShortlist serviceShortlist;
     @Mock private CleanerShortlist cleanerShortlist;
     @Mock private ServiceListing serviceListing;
-
+    
+    @InjectMocks private ViewServiceListingController viewController;
+    @InjectMocks private SearchServiceListingController searchServiceController;
     @InjectMocks private ViewBookingHistoryController viewBookingHistoryController;
     @InjectMocks private SearchBookingHistoryController searchBookingHistoryController;
     @InjectMocks private AddtoBookingController addtoBookingController;
@@ -48,6 +55,7 @@ public class HomeOwnerTest {
 
     @Mock private JdbcTemplate jdbcTemplate;
 
+    
     @BeforeEach
     void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);
@@ -71,6 +79,37 @@ public class HomeOwnerTest {
     }
 
     // Controller Tests
+    @Test
+    void testSearchServiceListingByCleanerAndKeyword() {
+        List<ServiceListing> expected = Collections.singletonList(new ServiceListing());
+        when(serviceListing.searchServiceListing(1, "key")).thenReturn(expected);
+        assertEquals(expected, searchServiceController.searchServiceListing(1, "key"));
+    }
+
+    @Test
+    void testViewServiceListingAsHomeOwner() {
+        ServiceListing listing = new ServiceListing();
+        when(serviceListing.viewServiceListingAsHomeOwner(1)).thenReturn(listing);
+        when(serviceListing.updateViews(1)).thenReturn(true);
+        assertEquals(listing, viewController.viewServiceListingAsHomeOwner(1));
+    }
+
+    // @Test
+    // public void testViewCleanerProfile_Success() {
+    //     int uid = 101;
+    //     UserAccount mockCleaner = new UserAccount();
+    //     mockCleaner.setUid(uid);
+    //     mockCleaner.setUsername("viewuser");
+
+    //     when(userAccount.viewUserAccount(uid)).thenReturn(mockCleaner);
+
+    //     UserAccount result = iewUserAccountController.viewUserAccount(uid);
+
+    //     assertNotNull(result);
+    //     assertEquals(uid, result.getUid());
+    //     assertEquals("viewuser", result.getUsername());
+    //     verify(userAccount).viewUserAccount(uid);
+    // }
 
     @Test
     void testViewBookingHistory() {

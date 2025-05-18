@@ -624,7 +624,7 @@ public class UserAdminTest {
         List<String> result = searchController.searchUserAccountNamesByServiceListings(listings);
     
         assertEquals(expectedNames, result);
-        verify(userAccount).searchUserAccountNamesByServiceListings(listings);  // Optional: if your method delegates
+        verify(userAccount).searchUserAccountNamesByServiceListings(listings);
     }
 
     @Test
