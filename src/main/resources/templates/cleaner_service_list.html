@@ -38,10 +38,15 @@
         </button>
       </form>    
 
+      <div class="user-card" th:if="${#lists.isEmpty(serviceListings)}">
+        <p>No result found</p>
+      </div>
+
       <!--User Cards-->
       <a th:each="serviceListing, iterStat : ${serviceListings}"
       th:href="@{/ServiceListing(serviceId=${serviceListing.serviceId})}" 
-      class="action_link">
+      class="action_link"
+      th:if="${!#lists.isEmpty(serviceListings)}">
 
 
       <div class="user-card cleanercard">

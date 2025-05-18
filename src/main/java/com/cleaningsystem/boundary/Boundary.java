@@ -702,7 +702,6 @@ public class Boundary {
     public String showPlatformManagerHome(HttpSession session, Model model) {
         Optional<Integer> result = checkAccess(session, "Platform Manager");
         if (result.isPresent()) {
-            Integer id = result.get();
          } else { return "redirect:/Login"; }
 
         model.addAttribute("username", session.getAttribute("username"));
@@ -912,7 +911,6 @@ public class Boundary {
     public String showHomeOwnerHome(HttpSession session, Model model) {
         Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) {
-            Integer id = result.get();
          } else { return "redirect:/Login"; }
 
         List<UserAccount> cleaners = searchUserAccountC.searchUserAccount(4);
@@ -975,15 +973,13 @@ public class Boundary {
 
     @GetMapping("CleanerProfile")
     public String showCleanerProfile(@RequestParam int cleanerId, HttpSession session, Model model) {
-        Optional<Integer> result = checkAccess(session, "Platform Manager");
+        int uid;
+        Optional<Integer> result = checkAccess(session, "Home Owner");
         if (result.isPresent()) {
-            Integer id = result.get();
+            uid = result.get();
          } else { return "redirect:/Login"; }
 
         UserAccount cleaner = viewUserAccountC.viewUserAccount(cleanerId);
-        Object uidObj = session.getAttribute("uid");
-
-        int uid = (int) uidObj;
         String query = "";
         List<ServiceListing> serviceListings = searchServiceListingC.searchServiceListing(cleanerId, query);
         boolean isInCleanerShortlist = inShortlistC.isInCleanerShortlist(cleanerId,uid);

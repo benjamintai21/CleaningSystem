@@ -60,6 +60,8 @@ public class Booking {
 
     // HomeOwner
     public boolean addBooking(int serviceId, int homeownerId, String status) {
+        
+
         return jdbcTemplate.update(CREATE_BOOKING, serviceId, homeownerId, status) > 0;
     }
 
