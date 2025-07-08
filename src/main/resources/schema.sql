@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS DB_CLEANINGSYSTEM;
+-- DROP DATABASE IF EXISTS DB_CLEANINGSYSTEM;
 
-CREATE DATABASE DB_CLEANINGSYSTEM;
+-- CREATE DATABASE DB_CLEANINGSYSTEM;
 
-USE DB_CLEANINGSYSTEM;
+-- USE DB_CLEANINGSYSTEM;
 
 CREATE TABLE USERPROFILE (
     profileId int not null auto_increment,
@@ -63,15 +63,15 @@ CREATE TABLE SERVICELISTINGS (
 ); 
 
 CREATE TABLE REPORT (
-	reportId int(10) not null auto_increment,
+	reportId int not null auto_increment,
 	type varchar(15) not null,
 	date date not null,
-    new_homeOwners int(50) not null,
-    total_homeOwners int(50) not null,
-    new_cleaners int (50) not null,
-    total_cleaners int(50) not null,
-    total_shortlists int (50) not null,
-    total_bookings int (50) not null,
+    new_homeOwners int not null,
+    total_homeOwners int not null,
+    new_cleaners int not null,
+    total_cleaners int not null,
+    total_shortlists int not null,
+    total_bookings int not null,
     
 	PRIMARY KEY (reportId)
 );
@@ -110,15 +110,3 @@ CREATE TABLE BOOKING (
     FOREIGN KEY (serviceId) REFERENCES SERVICELISTINGS(serviceId),
 	FOREIGN KEY (homeownerId) REFERENCES USERACCOUNT(UID)
 );
-
-DELIMITER //
-CREATE TRIGGER after_status_update
-AFTER UPDATE ON SERVICELISTINGS
-FOR EACH ROW
-BEGIN
-    IF NEW.status = 'completed' THEN
-        UPDATE booking SET NEW.status = 'completed' WHERE serviceId = NEW.serviceId;
-    END IF;
-END;
-//
-DELIMITER ;
