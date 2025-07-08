@@ -1,5 +1,5 @@
 INSERT INTO USERPROFILE (profileID, profileName, description, suspension)
-VALUES (-1, 'Unassigned', 'NIL', 0);
+VALUES (0, 'Unassigned', 'NIL', 0);
 
 INSERT INTO USERPROFILE (profileName, description, suspension)
 VALUES ('Platform Manager', 'Maintaining the Platform', 0);
