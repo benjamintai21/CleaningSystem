@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User List</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link th:href="@{/shared.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/cleaner.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}">
+</head>
+
+<body>
+
+  <div class="main-wrapper">
+
+    <!-- Header -->
+    <div class="header-box">
+      <div class="navbar-logo">
+        <img th:src="@{images/logo.png}" alt="" style="width: 70px; height: 70px;">
+      </div>
+      <div class="nav-actions">
+        <a href="#" class="nav-home">Home</a>
+        <a th:href="@{/Logout}" class="logout-btn">Logout</a>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="form-title">Record of completed services</div>
+
+    <!-- Back + Search -->
+    <div class="register-container">
+      <a th:href="@{/CleanerHome}" class="back-btn">← Back</a>
+
+      <!-- Search -->
+      <form class="search-bar" th:action="@{/searchCleanerRecord(query=${query})}" method="GET">
+        <input type="text" placeholder="Search records..." name="query" />
+        <button type="submit" class="search-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+      
+      <!--User Cards -->
+      <a th:each="match, iterStat : ${matches}" 
+      style="text-decoration: none; color: #1C1C1C; display: flex;">
+
+      <div class="user-card cleanercard edit_flex" >
+          <div class="flex_row fullsize">
+        <div>
+          <p><strong>Booking ID: </strong><span th:text="${match.bookingId}"></span></p>
+            <div class="emptyspace"></div>
+          <p><strong>Service ID: </strong><span th:text="${match.serviceId}"></span></p>
+          <p><strong>Service Name: </strong><span th:text="${serviceListings[iterStat.index].name}"></span></p>
+        </div>
+          <br>
+        <div>
+            <p><strong>Home Owner ID: </strong><span th:text="${match.homeownerId}"></span></p>
+            <div class="emptyspace"></div>
+           <p><strong>Status: </strong><span th:text="${match.status}"></span></p>
+
+        </div>
+          <!--              auto increment of data tab number pls-->
+            <a th:attr="data-tab=${iterStat.index}" onclick="activate(this)">
+              <div class="thin-arrow cleaner_arrow unactivated" th:attr="id='arrow' + ${iterStat.index}"></div>
+            </a>  
+        </div>
+          <!--          id = card+ datatab value-->
+        
+        <div class="extendedtext edit_flex none" th:attr="id='card' + ${iterStat.index}">
+            <div class="emptyspace"></div>
+            <p class="S_desc_alignment">Start Date: <span th:text="${serviceListings[iterStat.index].startDate}"></span></p>
+            <p class="S_desc_alignment">End Date: <span th:text="${serviceListings[iterStat.index].endDate}"></span></p>
+            <p class="S_desc_alignment"><strong>Service Description: </strong><span th:text="${bookingId}"></span></p>
+            <div class="account-box S_description">
+              <span th:text="${serviceListings[iterStat.index].description}"></span>
+    <!--            insert description data here    -->
+            </div>
+          
+          
+        </div>
+          
+      </div>
+      </a>
+    </div>
+  </div>
+<script th:src="cleaner.js"></script>
+</body>
+</html>

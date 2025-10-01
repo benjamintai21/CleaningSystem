@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Search Services</title>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css}" />
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{HMstyle/HomeOwnerPage.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{HMstyle/Nav_Footer.css}" type="text/css">
+</head>
+
+<body>
+    <!-- Navbar Start -->
+    <div class="navbar-container">
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <img th:src="@{images/logo.png}" alt="">
+            </div>
+            <div class="navbar-links">
+                <a th:href="@{HomeOwnerHome}" class="navbar-link">Home</a>
+                <a th:href="@{HomeOwnerHome#AboutUs}" class="navbar-link">About Us</a>
+                <a th:href="@{ViewAllServices}" class="navbar-link">Services</a>
+                <a th:href="@{CleanerShortlist}" class="navbar-link">Cleaner Shortlist</a>
+                <a th:href="@{ServiceShortlist}" class="navbar-link active">Service Shortlist</a>
+                <a th:href="@{MyBooking}" class="navbar-link">My Booking</a>
+                <a th:href="@{HomeOwnerHome#ContactUs}" class="navbar-link">Contact Us</a>
+            </div>
+            <a th:href="@{Login}" class="navbar-login">Logout</a>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Hero Section Start-->
+    <section class="hero-section" th:style="'background: url(' + @{/images/service%20banner.png} + ');'">
+        <div class="hero-content">
+            <span class="label-tag">My Shortlist</span>
+            <h1 class="form-title">Shortlisted Services</h1>
+        </div>
+    </section>
+    <!-- Hero Section End-->
+    <div class="main-wrapper">
+
+        <!-- Search Bar -->
+        <form class="search-bar" th:action="@{/searchShortlistedServices(query=${query})}" method="GET">
+            <div class="search-input-wrapper">
+                <input type="text" placeholder="Search services by service's name only" name="query" />
+                <button type="submit" class="search-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
+        <!-- Cards -->
+        <div class="service-card" th:if="${#lists.isEmpty(serviceShortList)}">
+            <p>Service Shortlist is Empty</p>
+        </div>
+        
+        <a th:each="listing, iterStat : ${serviceShortList}" 
+        th:href="@{/ViewServiceListing(serviceId=${listing.serviceId})}" 
+        th:if="${!#lists.isEmpty(serviceShortList)}"
+        class="action_link">
+            <div class="service-card">
+                <div class="service-info">
+                    <p><strong>Service Name: </strong><span th:text="${listing.name}"></span></p>
+                    <p><strong>Service Type: </strong><span th:text="${categoriesName[iterStat.index]}"></span></p>
+                    <p><strong>Price: </strong>$<span th:text="${#numbers.formatDecimal(listing.pricePerHour, 1, 2)}"></span>/h</p>
+                    <p><strong>Cleaner Name: </strong><span th:text="${cleanersName[iterStat.index]}"></span></p>
+                </div>
+            
+                <div class="service-engage">
+                    <div class="card-stats">
+                        <img th:src="@{images/view.png}" class="icon" alt="views"><span th:text="${listing.views}"></span>
+                        <img th:src="@{images/shortlist.png}" class="icon" alt="bookmarks"><span th:text="${listing.shortlists}"></span>
+                    </div>
+                    <div class="thin-arrow"></div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <script th:src="@{/homeowner.js}"></script>
+</body>
+
+</html>
